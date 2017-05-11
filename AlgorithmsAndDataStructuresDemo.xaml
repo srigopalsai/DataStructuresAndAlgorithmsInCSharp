@@ -1,0 +1,71 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="DataStructuresAndAlgorithms.AlgorithmsAndDataStructuresDemo"
+        Title="Algorithms And DataStructures C# Samples" Height="Auto" Width="325" d:DesignHeight="924.836"
+        WindowStartupLocation="Manual"  Left="0" Top="0">
+    <Grid>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" x:Name="BasicSamplesDemoButton" Content="  1 - Basic Samples" Click="BasicSamplesDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="1" Grid.Column="1" x:Name="BitwiseOperatorsDemoButton" Content="  2 - Bitwise Operations" Click="BitwiseOperatorsDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="ArrayOperationsDemoButton" Content="  3 - Arrays Samples" Click="ArrayOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="3" Grid.Column="1" x:Name="RecursionDemoButton" Content="  4 - Recursion Samples" Click="RecursionDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="4" Grid.Column="1" x:Name="MatrixOperationsDemoButton" Content="  5 - Matrix Operations" Click="MatrixOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="5" Grid.Column="1" x:Name="SetOperations" Content="  6 - Set Operation" Click="VirtualFunctionButton_Click" HorizontalContentAlignment="Left"/>
+
+            <Button Grid.Row="6" Grid.Column="1" x:Name="StackOperationsDemoButton" Content="  7 - Stack Operations" Click="StackOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="7" Grid.Column="1" x:Name="QueueOperationsDemoButton" Content="  8 - Queue Operations" Click="QueueOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="8" Grid.Column="1" x:Name="LinkedListDemoButton" Content="  9 - Linked List" Click="LinkedListDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="9" Grid.Column="1" x:Name="TreeOperationsDemoButton" Content="  10 - Tree Operations" Click="TreeOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+
+            <Button Grid.Row="10" Grid.Column="1" x:Name="DPDemoButton" Content="  11 - Dynamic Programming" Click="DPDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="11" Grid.Column="1" x:Name="GreedyAlgorithmsButton" Content="  12 - Greedy Algorithms" Click="GreedyAlgorithmsButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="12" Grid.Column="1" x:Name="PVersesNP" Content="  13 - P Verses NP" Click="PVersesNP_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="13" Grid.Column="1" x:Name="GraphOperationsDemoButton" Content="  14 - Graph Operations" Click="GraphOperationsDemoButton_Click" HorizontalContentAlignment="Left"/>
+
+            <Button Grid.Row="14" Grid.Column="1" x:Name="SortingDemo" Content="  15 - Sorting Techniques" Click="SortingDemo_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="15" Grid.Column="1" x:Name="SearchingDemo" Content="  16 - Searching Techniques" Click="SearchingDemo_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="16" Grid.Column="1" x:Name="StringAlgorithmsDemo" Content="  17 - String Algorithms" Click="StringAlgorithmsDemo_Click" HorizontalContentAlignment="Left"/>
+
+            <Button Grid.Row="18" Grid.Column="1" x:Name="VirtualFunctionButton" Content="  18 - Virtual Function" Click="VirtualFunctionButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="19" Grid.Column="1" x:Name="GeneralCodingDemoButton" Content="  19 - General Coding Questions" Click="GeneralDemoButton_Click" HorizontalContentAlignment="Left"/>
+            <Button Grid.Row="20" Grid.Column="1" x:Name="DemoButton" Content="  20 - Other Demos" Click="DemoButton_Click" HorizontalContentAlignment="Left"/>
+
+        </Grid>
+    </Grid>
+</Window>

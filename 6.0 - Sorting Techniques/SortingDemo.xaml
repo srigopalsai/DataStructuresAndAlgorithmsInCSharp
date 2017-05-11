@@ -1,0 +1,35 @@
+﻿<Window x:Class="DataStructuresAndAlgorithms.SortingDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SortingDemo" Height="Auto" Width="300"
+        WindowStartupLocation="Manual"  Left="5" Top="0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="200"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Left" Name="BubbleSortButton" Content=" 1 - Bubble Sort" Click="BubbleSortButton_Click"></Button>
+        <Button Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Left" Name="SelectionSortButton" Content=" 2 - Selection Sort" Click="SelectionSortButton_Click"></Button>
+        <Button Grid.Row="2" Grid.Column="1" HorizontalContentAlignment="Left" Name="InsertionSortButton" Content=" 3 - Insertion Sort" Click="InsertionSortButton_Click"></Button>
+        <Button Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Left" Name="QuickSortButton" Content=" 4 - Quick Sort" Click="QuickSortButton_Click"></Button>
+        <Button Grid.Row="4" Grid.Column="1" HorizontalContentAlignment="Left" Name="MergeSortButton" Content=" 5 - Merge Sort" Click="MergeSortButton_Click"></Button>
+        <Button Grid.Row="5" Grid.Column="1" HorizontalContentAlignment="Left" Name="HeapSortButton" Content=" 6 - Heap Sort" Click="HeapSortButton_Click"></Button>
+        <Button Grid.Row="6" Grid.Column="1" HorizontalContentAlignment="Left" Name="CountingSortButton" Content=" 7 - Counting Sort" Click="CountingSortButton_Click"></Button>
+        <Button Grid.Row="7" Grid.Column="1" HorizontalContentAlignment="Left" Name="OddEvenSortButton" Content=" 8 - Odd Even or Brick Sort" Click="OddEvenSortButton_Click"></Button>
+
+
+    </Grid>
+</Window>

@@ -1,0 +1,42 @@
+﻿<Window x:Class="DataStructuresAndAlgorithms.StringAlgorithmsDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="StringAlgorithmsDemo" Height="500" Width="300"
+        WindowStartupLocation="Manual"  Left="5" Top="0">
+    <Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+
+                <RowDefinition Height="200"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" Name="BruteForceSearchsDemoButton" Content="Brute Force or Naive Search Demo" Click="BruteForceSearchsDemoButton_Click"></Button>
+            <Button Grid.Row="1" Grid.Column="1" Name="BoyerMooreDemoButton" Content="Boyer Moore Search Demo" Click="BoyerMooreDemoButton_Click"></Button>            
+            <Button Grid.Row="2" Grid.Column="1" Name="BoyerMooreHorspoolDemoButton" Content="Boyer Moore Horspool - BMP" Click="BoyerMooreHorspoolDemoButton_Click"></Button>
+            <Button Grid.Row="3" Grid.Column="1" Name="KMPDemoButton" Content="Knuth Morris Pratt - KMP" Click="KMPDemoButton_Click"></Button>
+            <Button Grid.Row="4" Grid.Column="1" Name="ReverseWrodsInStringDemoButton" Content="Reverse Wrods In String" Click="ReverseWrodsInStringDemoButton_Click"></Button>
+            <Button Grid.Row="5" Grid.Column="1" Name="PermutationsDemoButton" Content="String Permutations" Click="PermutationCombinationsDemoButton_Click"></Button>
+            <Button Grid.Row="6" Grid.Column="1" Name="IsPalindromeDemoButton" Content="Is Palindrome" Click="IsPalindromeDemoButton_Click" ></Button>
+            <Button Grid.Row="7" Grid.Column="1" Name="BracesValidationDemoButton" Content="Braces Validation" Click="BracesValidationDemoButton_Click"></Button>
+            <Button Grid.Row="8" Grid.Column="1" Name="BracesPermutationsDemoButton" Content="Braces Permutations" Click="BracesPermutationsDemoButton_Click"></Button>
+            <Button Grid.Row="9" Grid.Column="1" Name="MultipleProgramsDemoButton" Content="Multiple Programs" Click="MultipleProgramsDemoButton_Click"></Button>
+        </Grid>
+    </Grid>
+</Window>

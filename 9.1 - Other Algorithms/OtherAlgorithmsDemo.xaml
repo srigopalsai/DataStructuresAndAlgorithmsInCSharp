@@ -1,0 +1,51 @@
+﻿<Window x:Class="DataStructuresAndAlgorithms.OtherAlgorithms.OtherAlgorithmsDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OtherAlgorithmsDemo"  Height="Auto" Width="325"
+        WindowStartupLocation="Manual"  Left="0" Top="0">
+    <Grid>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" x:Name="NextLargestButton" HorizontalContentAlignment="Left" Content="  1 - Next Largest Number" Click="NextLargestButton_Click" />
+            <Button Grid.Row="1" Grid.Column="1" x:Name="NextLargestButton1" HorizontalContentAlignment="Left" Content="  1 - Next Largest Number"/>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="NextLargestButton2" HorizontalContentAlignment="Left" Content="  1 - Next Largest Number"/>
+            <Button Grid.Row="3" Grid.Column="1" x:Name="NextLargestButton3" HorizontalContentAlignment="Left" Content="  1 - Next Largest Number"/>
+            <Button Grid.Row="4" Grid.Column="1" x:Name="NextLargestButton4" HorizontalContentAlignment="Left" Content="  1 - Next Largest Number"/>
+
+        </Grid>
+    </Grid>
+</Window>

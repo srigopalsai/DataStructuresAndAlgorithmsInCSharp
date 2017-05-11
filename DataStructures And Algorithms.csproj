@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{91B8EBD2-EB6C-4DC8-B61A-1197B6EA45C5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataStructuresAndAlgorithms</RootNamespace>
+    <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="0.0 - Common\0 - Helper Methods.cs" />
+    <Compile Include="0.0 - Common\0 - Notes.cs" />
+    <Compile Include="0.0 - Assembly Language\Notes.cs" />
+    <Compile Include="0.0 - Common\Matrix Point.cs" />
+    <Compile Include="0.0 - Common\OutputWindow.xaml.cs">
+      <DependentUpon>OutputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="0.0 - Common\Test Data.cs" />
+    <Compile Include="0.0 - Recap Maths\1.1 - Pure Maths - Quantity.cs" />
+    <Compile Include="0.0 - Recap Maths\2.2 - Applied Maths - Computational Mathematics.cs" />
+    <Compile Include="0.0 - Recap Maths\2.1 - Applied Maths - Statistics and Decision Sciences.cs" />
+    <Compile Include="0.0 - Recap Maths\1.4 - Pure Maths - Change.cs" />
+    <Compile Include="0.0 - Recap Maths\1.3 - Pure Maths - Space.cs" />
+    <Compile Include="0.0 - Recap Maths\1.2 - Pure Maths - Structure.cs" />
+    <Compile Include="0.1 - Basics\0 - Notes.cs" />
+    <Compile Include="0.1 - Basics\6 - User Defined Types.cs" />
+    <Compile Include="0.1 - Basics\7 - General Programs.cs" />
+    <Compile Include="0.1 - Basics\8 - Compiler Optimizations.cs" />
+    <Compile Include="0.1 - Basics\Random Problems.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\0 - Notes.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\2 - Convertions.cs" />
+    <Compile Include="0.1 - Basics\4 - Control Statements.cs" />
+    <Compile Include="0.1 - Basics\BasicLogics.xaml.cs">
+      <DependentUpon>BasicLogics.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="0.1 - Basics\Convertion - Time.cs" />
+    <Compile Include="0.1 - Basics\DivisionAlgorithm.cs" />
+    <Compile Include="0.1 - Basics\FindOutputOfPrograms.cs" />
+    <Compile Include="0.1 - Basics\LowestCommonMultiple.cs" />
+    <Compile Include="0.1 - Basics\MultiplyLargeNumbersGivenAsStrings.cs" />
+    <Compile Include="0.1 - Basics\1 - BODMAS Operators Precedence.cs" />
+    <Compile Include="0.1 - Basics\NthTriangularNumber.cs" />
+    <Compile Include="0.1 - Basics\ProductPerfectNumber.cs" />
+    <Compile Include="0.1 - Basics\SquaresOfNaturalNumbers.cs" />
+    <Compile Include="0.1 - Basics\TrailingZeorsInFactorialNumber.cs" />
+    <Compile Include="0.1 - Basics\NthCatalanNumber.cs" />
+    <Compile Include="0.1 - Basics\5 - Types.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\3 - Arithmatic Operations On Binary Numbers.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\BitwiseOperationsDemo.xaml.cs">
+      <DependentUpon>BitwiseOperationsDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="0.2 - Binary and Bitwise Operations\FindNumbersWhichAreEvenlyPresent.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\Missing Number in Array.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\Number Occurring Odd Number of Times.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\XOR Operations.cs" />
+    <Compile Include="0.3 - Arrays\5.1 - Search - Max Sum Path In Two Arrays.cs" />
+    <Compile Include="0.3 - Arrays\5.4 - Search - Occurring N by 2 Value - Moores Voting Algorithm.cs" />
+    <Compile Include="0.3 - Arrays\9 - Multiple Problems 2.cs" />
+    <Compile Include="0.3 - Arrays\RearrangeArrayInAlternatingPositiveAndNegative.cs" />
+    <Compile Include="0.3 - Arrays\Shuffle or Rotate Array.cs" />
+    <Compile Include="0.3 - Arrays\2.4 - Sum - Taget Sum - NI.cs" />
+    <Compile Include="0.3 - Arrays\2.2 - Sum - Three Sum Problem.cs" />
+    <Compile Include="0.3 - Arrays\5.3 - Search - Missing 2 Numbers In Array.cs" />
+    <Compile Include="0.3 - Arrays\Compare2Arrays.cs" />
+    <Compile Include="0.3 - Arrays\LeastDifferenceOf2Numbers.cs" />
+    <Compile Include="0.3 - Arrays\IsPalindromeNumber.cs" />
+    <Compile Include="0.3 - Arrays\9.3 - Kandane Max Sub Array With Largest Sum.cs" />
+    <Compile Include="0.3 - Arrays\SortedVector.cs" />
+    <Compile Include="0.3 - Arrays\Vector Implementation.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5- RecursionInLoop.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\Min Max In Array.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\N Queen Problem.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\RecursionDemo.xaml.cs">
+      <DependentUpon>RecursionDemo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="0.5 - Matrix\0.0 - Helper Methods.cs" />
+    <Compile Include="0.5 - Matrix\3.1 - Display - In Spiral Alternate Rectangles.cs" />
+    <Compile Include="0.5 - Matrix\CreateRectangle.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\0 - Notes.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5 - CalculateThePowerOf.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\6 - FibonacciNumbersTillN.cs" />
+    <Compile Include="0.5 - Matrix\8.0 - Matrix - ChainMultiplication.cs" />
+    <Compile Include="0.5 - Matrix\9.2 - Matrix Inverse.cs" />
+    <Compile Include="0.5 - Matrix\3.2 - Display - Diagnally.cs" />
+    <Compile Include="0.5 - Matrix\5.1 - Search - Path From Top Left to Bottom Right.cs" />
+    <Compile Include="0.5 - Matrix\5.3 - Search - Is String Exists.cs" />
+    <Compile Include="0.5 - Matrix\9.3 - Rotate 2D Array.cs" />
+    <Compile Include="0.5 - Matrix\4.1 - Replace - Os WIth Xs If Surrounded By Xs.cs" />
+    <Compile Include="0.5 - Matrix\MatrixOperationsDemo.xaml.cs">
+      <DependentUpon>MatrixOperationsDemo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="0.5 - Matrix\5.1 - Search - Max No Of 1s In A Row.cs" />
+    <Compile Include="0.5 - Matrix\RangeSumQuery2D.cs" />
+    <Compile Include="0.5 - Matrix\Transpose.cs" />
+    <Compile Include="0.5 - Matrix\Using Lists.cs" />
+    <Compile Include="0.5 - Matrix\Z-Order Function.cs" />
+    <Compile Include="0.6 - Sets\Set Operations.cs" />
+    <Compile Include="1.0 - Stack Operations\6 - TowersOfHanoi.cs" />
+    <Compile Include="1.0 - Stack Operations\Implement K Stacks.cs" />
+    <Compile Include="1.0 - Stack Operations\Implement 2 Stacks.cs" />
+    <Compile Include="1.0 - Stack Operations\Stack with Enumeration.cs" />
+    <Compile Include="0.0 - Recap Maths\0.0 - Basics.cs" />
+    <Compile Include="2.0 - Queue Operations\Array Based Queue.cs" />
+    <Compile Include="2.0 - Queue Operations\Linked List Based Queue.cs" />
+    <Compile Include="2.0 - Queue Operations\StackOperationsUsingQueues.cs" />
+    <Compile Include="3.0 - Linked Lists\SortedList.cs" />
+    <Compile Include="3.0 - Linked Lists\TriplyLinkedList.cs" />
+    <Compile Include="4.0 - Trees\0 - Notes.cs" />
+    <Compile Include="4.0 - Trees\1 - Binary Tree Operations.cs" />
+    <Compile Include="4.0 - Trees\2 - Min Max Heaps.cs" />
+    <Compile Include="4.0 - Trees\2 - MaxHeap.cs" />
+    <Compile Include="4.0 - Trees\B and B Plus Trees.cs" />
+    <Compile Include="4.0 - Trees\Generic Tree in Java.cs" />
+    <Compile Include="4.0 - Trees\SegmentTree.cs" />
+    <Compile Include="4.0 - Trees\SortedSLinkedListToBalancedBST.cs" />
+    <Compile Include="4.0 - Trees\SplaTree.cs" />
+    <Compile Include="4.0 - Trees\Ternary Search Tree.cs" />
+    <Compile Include="4.0 - Trees\TournamentTree.cs" />
+    <Compile Include="4.0 - Trees\TrieCompressed.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Kadane - Contiguous Sub Sequence.cs" />
+    <Compile Include="5.1 - Dynamic Programming\LongestIncreasingSubSequence.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Min Cost Path.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Viterbi Algorithm.cs" />
+    <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Bridge Detection - DFS WhiteGrayBlack.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Is Strongly Connected.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Path Finding.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Minimum Steps By Knight.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Graph Traversal.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\Check Removing Edge Disconnects Graph.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\Graph Traversal.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\Handshaking Lamma - Count No Of Edges In Undirected Graph.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\Iterative Deepening Search.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\Minimum Weight Cycle.cs" />
+    <Compile Include="5.4 - Graphs\4 - Incidence List\Graph.cs" />
+    <Compile Include="5.4 - Graphs\Counts and Sums.cs" />
+    <Compile Include="5.4 - Graphs\DisJointSet.cs" />
+    <Compile Include="5.4 - Graphs\FordFulkersonAlgorithm.cs" />
+    <Compile Include="5.4 - Graphs\GraphOperations.xaml.cs">
+      <DependentUpon>GraphOperations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="5.4 - Graphs\GraphStructuredStack.cs" />
+    <Compile Include="6.0 - Sorting Techniques\0.0 - Notes and Helper Methods.cs" />
+    <Compile Include="6.0 - Sorting Techniques\7.0 - CountingSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\8.0 - TimSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.6 - ZigZagSort.cs" />
+    <Compile Include="5.1 - Dynamic Programming\1 - FibonacciNumbersTillN1.cs" />
+    <Compile Include="5.1 - Dynamic Programming\EditDistance.cs" />
+    <Compile Include="5.1 - Dynamic Programming\KnapSackProblem.cs" />
+    <Compile Include="5.1 - Dynamic Programming\MaximumSubSequenceSum.cs" />
+    <Compile Include="5.1 - Dynamic Programming\RodCutting.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.7 - BitonicSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.0 - BogoSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.8 - CockTailSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9 - ComboSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.1 - CycleSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.2 - GnomeSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.3 - LSDRadixSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.4 - PanCakeSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.6 - PostmanSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.7 - QSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.9.8 - StoogeSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\Library Or Gapped Insertion Sort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\SleepSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\6.2 - SmoothSort.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.3 - Binary Search - Find all zeros.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.4 - Binary Search - Incoming Stream.cs" />
+    <Compile Include="7.0 - Searching Techniques\Farthest Point Selection Algorithm.cs" />
+    <Compile Include="7.0 - Searching Techniques\Golden Search.cs" />
+    <Compile Include="7.0 - Searching Techniques\SearchingDemo.xaml.cs">
+      <DependentUpon>SearchingDemo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="7.0 - Searching Techniques\Ternary Search.cs" />
+    <Compile Include="8.0 - String Algorithms\0.0 Helper Methods.cs" />
+    <Compile Include="8.0 - String Algorithms\1 - Search - Minimum Window Substring.cs" />
+    <Compile Include="8.0 - String Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
+    <Compile Include="8.0 - String Algorithms\Custom RegEx.cs" />
+    <Compile Include="8.0 - String Algorithms\ParanthsesPermuations.cs" />
+    <Compile Include="8.0 - String Algorithms\Parentheses Balanced.cs" />
+    <Compile Include="8.0 - String Algorithms\5 - Permutations - InSubString.cs" />
+    <Compile Include="8.0 - String Algorithms\PossibleStringCombinationsForCellNumber.cs" />
+    <Compile Include="8.0 - String Algorithms\Sort Names Alphabetical.cs" />
+    <Compile Include="8.0 - String Algorithms\StringBreak.cs" />
+    <Compile Include="8.0 - String Algorithms\SuffixArray.cs" />
+    <Compile Include="0.3 - Arrays\zAssociativeArrayNI.cs" />
+    <Compile Include="0.3 - Arrays\4 - Remove Duplicates.cs" />
+    <Compile Include="0.3 - Arrays\5.2 - Search - Missing 1 Number In Array.cs" />
+    <Compile Include="0.3 - Arrays\9.1 - Minimum Number Of Jumps To Reach End.cs" />
+    <Compile Include="0.3 - Arrays\zRandomizedAlgorithmNI.cs" />
+    <Compile Include="0.3 - Arrays\zReplaceWithNextLargestElementNI.cs" />
+    <Compile Include="0.3 - Arrays\zDynamicArrayNI.cs" />
+    <Compile Include="0.3 - Arrays\7 - Array Positions Based On Its Elements.cs" />
+    <Compile Include="0.3 - Arrays\zParellelArrayNI.cs" />
+    <Compile Include="0.3 - Arrays\zBitArrayNI.cs" />
+    <Compile Include="0.3 - Arrays\ArraysDemo.xaml.cs">
+      <DependentUpon>ArraysDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="0.3 - Arrays\zArraySlicingNI.cs" />
+    <Compile Include="0.3 - Arrays\8 - Local Minima And Maxima.cs" />
+    <Compile Include="0.3 - Arrays\9 - Move Zeros To Right.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\CalculatePower.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\CharBinaryAddition.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\CountNumberOfOnesTill N.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\NextPowerOfTwo.cs" />
+    <Compile Include="0.5 - Matrix\7.0 - Matrix - Multiplication.cs" />
+    <Compile Include="0.5 - Matrix\1.0 - Fill - FloodFill or SeedFill Algorithm.cs" />
+    <Compile Include="0.5 - Matrix\GameOf15.cs" />
+    <Compile Include="0.5 - Matrix\2.0 - GomukuOrConnectFiveGame.cs" />
+    <Compile Include="0.5 - Matrix\5.0 - Search - Kth Smallest In Sorted Matrix.cs" />
+    <Compile Include="0.5 - Matrix\5.0 - Search - SortedMatrix.cs" />
+    <Compile Include="0.5 - Matrix\9.4 - Sort Matrix.cs" />
+    <Compile Include="0.5 - Matrix\SOSGame.cs" />
+    <Compile Include="0.5 - Matrix\StrassensAlgorithm.cs" />
+    <Compile Include="0.5 - Matrix\TicTacToeGame.cs" />
+    <Compile Include="1.0 - Stack Operations\4 - Return Stack In Reverse Order.cs" />
+    <Compile Include="1.0 - Stack Operations\5 - ConvertDecimalToBinary.cs" />
+    <Compile Include="1.0 - Stack Operations\Evaluation Of An Infix Expression.cs" />
+    <Compile Include="1.0 - Stack Operations\Evaluation Of Postfix Expression.cs" />
+    <Compile Include="1.0 - Stack Operations\Evaluation Of Prefix Expression.cs" />
+    <Compile Include="2.0 - Queue Operations\DoubleEndedQueue.cs" />
+    <Compile Include="3.0 - Linked Lists\SkipList.cs" />
+    <Compile Include="3.0 - Linked Lists\StackOperationsUsingLinkedLists.cs" />
+    <Compile Include="3.0 - Linked Lists\UnRolledLinkedList.cs" />
+    <Compile Include="4.0 - Trees\Hashed Array Tree or HAT.cs" />
+    <Compile Include="4.0 - Trees\2 - MorrisTravel -ThreadedBinaryTree.cs" />
+    <Compile Include="4.0 - Trees\T-Tree.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\GraphOperations.cs" />
+    <Compile Include="5.4 - Graphs\2 - Adjacency List\1 - Graph.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\2 - Un Directed Un Weighted.cs" />
+    <Compile Include="5.4 - Graphs\FindNoOfIslands.cs" />
+    <Compile Include="5.4 - Graphs\ColoringAlgorithm.cs" />
+    <Compile Include="5.4 - Graphs\HamiltonianPath.cs" />
+    <Compile Include="5.4 - Graphs\SkipGraph.cs" />
+    <Compile Include="5.4 - Graphs\UnionFindAlgorithm.cs" />
+    <Compile Include="7.0 - Searching Techniques\JumpSearch.cs" />
+    <Compile Include="7.0 - Searching Techniques\PredectiveSearch.cs" />
+    <Compile Include="7.0 - Searching Techniques\UniformBinarySearch.cs" />
+    <Compile Include="8.0 - String Algorithms\Replace Repated Chars With Its Count In Place.cs" />
+    <Compile Include="8.0 - String Algorithms\WordWrap.cs" />
+    <Compile Include="5.3 - PVersesNP\Notes.cs" />
+    <Compile Include="9.1 - Other Algorithms\BigLittleEndian.cs" />
+    <Compile Include="9.1 - Other Algorithms\BiSectionAlgorithm.cs" />
+    <Compile Include="9.1 - Other Algorithms\BoggleGame.cs" />
+    <Compile Include="9.1 - Other Algorithms\ChiSquaredTestForRandomGeneration.cs" />
+    <Compile Include="9.1 - Other Algorithms\GreedyAlgorithm.cs" />
+    <Compile Include="0.1 - Basics\MultiplicationAlgorithms.cs" />
+    <Compile Include="9.1 - Other Algorithms\Knapsack Problem.cs" />
+    <Compile Include="9.1 - Other Algorithms\LeastRecentlyUsedOrLRUCache.cs" />
+    <Compile Include="9.1 - Other Algorithms\7 - MergeSortedArrays.cs" />
+    <Compile Include="9.1 - Other Algorithms\OtherAlgorithmsDemo.xaml.cs">
+      <DependentUpon>OtherAlgorithmsDemo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="9.1 - Other Algorithms\UglyNumbers.cs" />
+    <Compile Include="9.4 - Problems and Solutions\1 - Stock Span Problem.cs" />
+    <Compile Include="9.4 - Problems and Solutions\2 - Cutting Stock Problem.cs" />
+    <Compile Include="9.5 - Puzzles\1 - Weighing Puzzle.cs" />
+    <Compile Include="9.6 - General\Brain Teaser.cs" />
+    <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
+    <Compile Include="8.0 - String Algorithms\Cut And Paste In A String.cs" />
+    <Compile Include="8.0 - String Algorithms\All Anagrams In Dictionary.cs" />
+    <Compile Include="8.0 - String Algorithms\Remove A and I From String.cs" />
+    <Compile Include="8.0 - String Algorithms\zLexicalAnalysis.cs" />
+    <Compile Include="8.0 - String Algorithms\Reverse A String.cs" />
+    <Compile Include="9.1 - Other Algorithms\LottoryNumberGeneration.cs" />
+    <Compile Include="0.6 - Sets\BloomFilter.cs" />
+    <Compile Include="9.6 - General\GeneralCodingQustionsDemo.xaml.cs">
+      <DependentUpon>GeneralCodingQustionsDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="9.6 - General\PalindromeNumber.cs" />
+    <Compile Include="0.5 - Matrix\5.2 - Search - Biggest Block In Matrix.cs" />
+    <Compile Include="0.5 - Matrix\9.1 - MaximumSubMatrixSum.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\2 - AugmentingRecursion.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - CoRecursion.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\1 - TailRecursion.cs" />
+    <Compile Include="3.0 - Linked Lists\ArrangeDuplicatesInOrderCLL.cs" />
+    <Compile Include="4.0 - Trees\Largest Independent Set Problem.cs" />
+    <Compile Include="5.4 - Graphs\FloydWarshallAlgorithm - Dynamic Programming.cs" />
+    <Compile Include="5.4 - Graphs\zMyGraph.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.3 - BucketSortNI.cs" />
+    <Compile Include="7.0 - Searching Techniques\2 - InterpolationSearch.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.2 - Binary Search In Random Sorted Array.cs" />
+    <Compile Include="0.3 - Arrays\2.3 - Sum - zSummedAreaTableNI.cs" />
+    <Compile Include="0.3 - Arrays\2.1 - Sum - Of 2 Nums In Sorted Array.cs" />
+    <Compile Include="0.3 - Arrays\3 - Tripplet.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Display - In Sprial.cs" />
+    <Compile Include="0.3 - Arrays\1.1 - 2nd Biggest.cs" />
+    <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
+    <Compile Include="0.3 - Arrays\zJudyArrayNI.cs" />
+    <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
+    <Compile Include="0.5 - Matrix\BackJumping.cs" />
+    <Compile Include="0.5 - Matrix\BackTrackingAlgorithm.cs" />
+    <Compile Include="0.5 - Matrix\9.0 - Transpose Matrix.cs" />
+    <Compile Include="0.5 - Matrix\6.0 - Rat In Maze Puzzle PI.cs" />
+    <Compile Include="0.5 - Matrix\4.0 - Replace - ZeroRowsAndColumns.cs" />
+    <Compile Include="0.5 - Matrix\SudokuPuzzle.cs" />
+    <Compile Include="1.0 - Stack Operations\3 - PushPopGetMinWithConstantTime.cs" />
+    <Compile Include="2.0 - Queue Operations\3-EnQueueDeQueueGetMinWithConstantTime.cs" />
+    <Compile Include="2.0 - Queue Operations\3-SortElementsUsing2Queues.cs" />
+    <Compile Include="3.0 - Linked Lists\FoldLinkedList.cs" />
+    <Compile Include="3.0 - Linked Lists\GetFindDeletOOfOneDLL.cs" />
+    <Compile Include="4.0 - Trees\Sorted Array To Binary Tree.cs" />
+    <Compile Include="4.0 - Trees\RedBlackTree.cs" />
+    <Compile Include="5.4 - Graphs\DijkstraGreedyOrPrimsAlgorthm.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\1 - Graph.cs" />
+    <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Minimum Spanning Tree - UnDirected.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.2 - HybridOrIntroSortNI.cs" />
+    <Compile Include="6.0 - Sorting Techniques\8.0 - RadixSortNI.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.5 - Bogo Or Stupid Or SlowSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\9.4 - ShellSort.cs" />
+    <Compile Include="7.0 - Searching Techniques\FibonacciSearch.cs" />
+    <Compile Include="7.0 - Searching Techniques\NearestNeighborSearch.cs" />
+    <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Tabulation DownTop.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Minimum Coin Change.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Cutting A Rod.cs" />
+    <Compile Include="5.1 - Dynamic Programming\DynamicProgrammnigDemo.xaml.cs">
+      <DependentUpon>DynamicProgrammnigDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="5.1 - Dynamic Programming\Egg Dropping Puzzle.cs" />
+    <Compile Include="5.1 - Dynamic Programming\IncreasingArraySubSequence.cs" />
+    <Compile Include="5.1 - Dynamic Programming\LengthOfLongestArithmeticProgression.cs" />
+    <Compile Include="5.1 - Dynamic Programming\LongestCommonSubSequence.cs" />
+    <Compile Include="5.1 - Dynamic Programming\LongestCommonSubString.cs" />
+    <Compile Include="5.1 - Dynamic Programming\2 - Longest Palindromic Sub String Manacher Algorithm.cs" />
+    <Compile Include="5.1 - Dynamic Programming\MaxLenghtOfPairs.cs" />
+    <Compile Include="5.1 - Dynamic Programming\PalindromePartition.cs" />
+    <Compile Include="5.1 - Dynamic Programming\zCountAllPossiblePathsFromTopLeftToBottomRight.cs" />
+    <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
+    <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
+    <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Memorization TopDown.cs" />
+    <Compile Include="8.0 - String Algorithms\2-Longest SubString Without Repeating Characters.cs" />
+    <Compile Include="8.0 - String Algorithms\3-Reverse Words In String.cs" />
+    <Compile Include="8.0 - String Algorithms\Max Repeated Char In String.cs" />
+    <Compile Include="9.6 - General\IsPalindromeString.cs" />
+    <Compile Include="8.0 - String Algorithms\Seperate Words In String.cs" />
+    <Compile Include="8.0 - String Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\zBoyerMoore.cs" />
+    <Compile Include="8.0 - String Algorithms\zFiniteAutomata.cs" />
+    <Compile Include="8.0 - String Algorithms\zMorrisPratt.cs" />
+    <Compile Include="8.0 - String Algorithms\1 - Search - QuickSearch.cs" />
+    <Compile Include="8.0 - String Algorithms\zRabinKarpOrKarpRabinNI.cs" />
+    <Compile Include="8.0 - String Algorithms\zShiftOrAlgorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\zSuffixTreeOrPATTree.cs" />
+    <Compile Include="9.1 - Other Algorithms\BinaryHeapTree.cs" />
+    <Compile Include="9.1 - Other Algorithms\1 - BranchPrediction.cs" />
+    <Compile Include="9.1 - Other Algorithms\CircularBuffer.cs" />
+    <Compile Include="9.1 - Other Algorithms\Container.cs" />
+    <Compile Include="9.1 - Other Algorithms\HashTable.cs" />
+    <Compile Include="9.1 - Other Algorithms\NumberAsText.cs" />
+    <Compile Include="9.1 - Other Algorithms\FindLargestPalindrome.cs" />
+    <Compile Include="9.1 - Other Algorithms\IntroSelect.cs" />
+    <Compile Include="9.1 - Other Algorithms\MedianOfMedians.cs" />
+    <Compile Include="9.1 - Other Algorithms\9 - NextLargestNumber.cs" />
+    <Compile Include="7.0 - Searching Techniques\5 - Selection Algorithms - Kth Smallest.cs" />
+    <Compile Include="1.0 - Stack Operations\1 - StackDemo.cs" />
+    <Compile Include="1.0 - Stack Operations\2 - StackOperation.cs" />
+    <Compile Include="2.0 - Queue Operations\4-PriorityQueueNI.cs" />
+    <Compile Include="2.0 - Queue Operations\1-QueueDemo.cs" />
+    <Compile Include="2.0 - Queue Operations\2-QueueOperationsWithStack.cs" />
+    <Compile Include="3.0 - Linked Lists\1-SingleLinkedList.cs" />
+    <Compile Include="3.0 - Linked Lists\2-CircularQueueAndLinkedList.cs" />
+    <Compile Include="3.0 - Linked Lists\3-DoublyLinkedListDemo.cs" />
+    <Compile Include="3.0 - Linked Lists\LinkedListDemo.xaml.cs">
+      <DependentUpon>LinkedListDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="3.0 - Linked Lists\ListNode.cs" />
+    <Compile Include="4.0 - Trees\1 - Binary Search Tree Operations.cs" />
+    <Compile Include="4.0 - Trees\2 - Heap Operations.cs" />
+    <Compile Include="4.0 - Trees\TreeNode.cs" />
+    <Compile Include="4.0 - Trees\TreesDemo.xaml.cs">
+      <DependentUpon>TreesDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="4.0 - Trees\RadixTree Prefix Tree Digital Tree Space Optimized Trie.cs" />
+    <Compile Include="4.0 - Trees\TrieStandardTree.cs" />
+    <Compile Include="6.0 - Sorting Techniques\6.1 - HeapSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\5.0 - MergeSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\8.0 - OddEven or BrickSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\7.1 - Count or Pigeon Hole Sort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\SortingDemo.xaml.cs">
+      <DependentUpon>SortingDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="6.0 - Sorting Techniques\9.1 - TopologicalSortPI.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.1 - Binary Search.cs" />
+    <Compile Include="7.0 - Searching Techniques\4 - Sequential Or Linear Search.cs" />
+    <Compile Include="7.0 - Searching Techniques\1 - HashTable.cs" />
+    <Compile Include="9.1 - Other Algorithms\1 - GreatestCommonDivisorDemo.cs" />
+    <Compile Include="9.1 - Other Algorithms\2 - IncreaseArraySizeDemo.cs" />
+    <Compile Include="9.1 - Other Algorithms\3 - PalendromeByRecursionDemo.cs" />
+    <Compile Include="9.1 - Other Algorithms\4 - PalindromeByLoopDemo.cs" />
+    <Compile Include="8.0 - String Algorithms\5 - Permutations - All.cs" />
+    <Compile Include="9.1 - Other Algorithms\6 - PermutationCombinationWithFact.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - Multiple Samples.cs" />
+    <Compile Include="8.0 - String Algorithms\3-Boyer Moore Horspool.cs" />
+    <Compile Include="8.0 - String Algorithms\1 - Search - Brute Force Or Naive.cs" />
+    <Compile Include="8.0 - String Algorithms\1 - Search - SubString.cs" />
+    <Compile Include="9.6 - General\Anagrams.cs" />
+    <Compile Include="8.0 - String Algorithms\3-Boyer Moore.cs" />
+    <Compile Include="8.0 - String Algorithms\zCountRepeatedChars.cs" />
+    <Compile Include="8.0 - String Algorithms\zDeterministicFiniteAutomatonAlgorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\zHashTable.cs" />
+    <Compile Include="8.0 - String Algorithms\zLevenshteinDistance.cs" />
+    <Compile Include="8.0 - String Algorithms\StringAlgorithmsDemo.xaml.cs">
+      <DependentUpon>StringAlgorithmsDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="9.1 - Other Algorithms\DesignTime.cs" />
+    <Compile Include="9.1 - Other Algorithms\OnlineAlgorithm.cs" />
+    <Compile Include="9.1 - Other Algorithms\SetOperations.cs" />
+    <Compile Include="9.1 - Other Algorithms\VirtualFunctions.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\1 - Basic Operations.cs" />
+    <Compile Include="0.6 - Sets\1-SetsDemo.cs" />
+    <Compile Include="0.6 - Sets\2-StaticSets.cs" />
+    <Compile Include="0.6 - Sets\3-DynamicSets.cs" />
+    <Compile Include="0.6 - Sets\4-MultiSets.cs" />
+    <Compile Include="0.6 - Sets\5-Tuple.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\BitwiseOperations.cs" />
+    <Compile Include="0.6 - Sets\PartitionProblem.cs" />
+    <Compile Include="5.1 - Dynamic Programming\SubsetSumProblem.cs" />
+    <Compile Include="9.4 - Testing\PrimalityTesting.cs" />
+    <Compile Include="9.4 - Testing\SieveOfEratosthenes.cs" />
+    <Compile Include="5.2 - Greedy Algorithms\Notes.cs" />
+    <Compile Include="Parallel Algorithms\Notes.cs" />
+    <Compile Include="0.0 - Common\1 - Project Euler Problems.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs" />
+    <Compile Include="0.6 - Sets\Notes.cs" />
+    <Compile Include="Settings.Designer.cs" />
+    <Compile Include="9.5 - Temp\QuickSortDemo.cs" />
+    <Compile Include="0.0 - Common\Test Case Guidelines.cs" />
+    <Page Include="0.0 - Common\OutputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="0.1 - Basics\BasicLogics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="0.2 - Binary and Bitwise Operations\BitwiseOperationsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="0.3 - Arrays\ArraysDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="0.4 - Recursion Back Tracking Back Jumping\RecursionDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="0.5 - Matrix\MatrixOperationsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="3.0 - Linked Lists\LinkedListDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4.0 - Trees\TreesDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="5.4 - Graphs\GraphOperations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="6.0 - Sorting Techniques\SortingDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="5.1 - Dynamic Programming\DynamicProgrammnigDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="7.0 - Searching Techniques\SearchingDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="8.0 - String Algorithms\StringAlgorithmsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="9.1 - Other Algorithms\OtherAlgorithmsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="9.6 - General\GeneralCodingQustionsDemo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AlgorithmsAndDataStructuresDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="6.0 - Sorting Techniques\1.0 - BubbleSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\3.0 - InsertionSort.cs" />
+    <Compile Include="6.0 - Sorting Techniques\4.0 - QuickSort.cs" />
+    <Compile Include="9.5 - Temp\BubbleSortDemo.cs" />
+    <Compile Include="6.0 - Sorting Techniques\2.0 - SelectionSort.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AlgorithmsAndDataStructuresDemo.xaml.cs">
+      <DependentUpon>AlgorithmsAndDataStructuresDemo.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="0.0 - Recap Maths\Logarithms Manual Calculation.pdf" />
+    <None Include="0.2 - Binary and Bitwise Operations\Bitwise Operations 50+ Samples.docx" />
+    <Compile Include="0.3 - Arrays\9 - Multiple Problems 1.cs" />
+    <None Include="0.4 - Recursion Back Tracking Back Jumping\Time Complexity Analysis of Recursive Functions.docx" />
+    <Compile Include="0.5 - Matrix\5.4 - Search - Longest Increasing Path.cs" />
+    <None Include="4.0 - Trees\TreeAndGraphs.pptx" />
+    <None Include="6.0 - Sorting Techniques\5.0 - MergeSort.pptx" />
+    <Compile Include="6.0 - Sorting Techniques\5.1 Merge 2 Arrays In Sorted Order.cs" />
+    <None Include="6.0 - Sorting Techniques\6.2 -Smooth Sort.ppt" />
+    <None Include="6.0 - Sorting Techniques\SortingTechniques.pdf" />
+    <None Include="5.1 - Dynamic Programming\Notes.docx" />
+    <None Include="8.0 - String Algorithms\String Matching Algorithms.pdf" />
+    <None Include="Algorithms Analysis.docx" />
+    <None Include="Algorithms Analysis.pdf" />
+    <None Include="app.config" />
+    <None Include="0.0 - Common\NeedfulAnalysisInfo.xlsx" />
+    <None Include="0.0 - Common\Notes.docx" />
+    <AppDesigner Include="Properties\" />
+    <None Include="0.0 - Recap Maths\RecapMaths.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="9.1 - Other Algorithms\HashTableCollision.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="6.0 - Sorting Techniques\4.0 - QuickSort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="8.0 - String Algorithms\6-KnuthMorrisPrattAlgorithm.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="8.0 - String Algorithms\CompareAlgs.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="4.0 - Trees\Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="6.0 - Sorting Techniques\2.0 - SelectionSort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="6.0 - Sorting Techniques\5.0 - MergeSort.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="5.4 - Graphs\3 - Incidence Matrix\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="3.0 - Linked Lists\Reverse Linked List.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="4.0 - Trees\MaxPathSum.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="3.0 - Linked Lists\1-SingleLinkedList - Reverse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="3.0 - Linked Lists\1-SLL Odd Even List.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

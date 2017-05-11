@@ -1,0 +1,32 @@
+﻿<Window x:Class="DataStructuresAndAlgorithms.SearchingDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SearchingDemo" Height="300" Width="300"
+        WindowStartupLocation="Manual"  Left="0" Top="0">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="200"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" Name="BinarySearchDemoButton" Content="Binary Search Demo" Click="BinarySearchDemoButton_Click"></Button>
+            <Button Grid.Row="1" Grid.Column="1" Name="BinarySearchAdvancedDemoButton" Content="Binary Search On Random Sorted Array" Click="BinarySearchAdvancedDemoButton_Click"></Button>
+            <Button Grid.Row="2" Grid.Column="1" Name="SelectNthLargestDemoButton" Content="Find Nth Smallest - Selection Algorithms" Click="SelectNthLargestDemoButton_Click"></Button>
+
+        </Grid>
+    </Grid>
+</Window>
