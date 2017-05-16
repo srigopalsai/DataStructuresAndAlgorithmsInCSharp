@@ -13,10 +13,9 @@ namespace DataStructuresAndAlgorithms
         */
         public void FillOsWIthXsIfSurroundedByXs(char[,] board)
         {
-            if (board.Length == 0 || board.GetLength(0) == 0)
-            {
+            if (board.GetLength(0) == 0 || board.GetLength(1) == 0)         
                 return;
-            }
+
             for (int i = 0; i < board.Length; i++)
             {
                 dfs(board, i, 0);

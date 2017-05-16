@@ -622,6 +622,30 @@ namespace DataStructuresAndAlgorithms
             return previousNode;
         }
 
+        public ListNode MakeListReverseIterative2(ListNode srcHead)
+        {
+            if (srcHead == null || srcHead.NextNode == null)
+                return srcHead;
+
+            ListNode dummyHead = new ListNode(0);
+            dummyHead.NextNode = srcHead;
+
+            ListNode prevNode = dummyHead;
+            ListNode currNode = prevNode.NextNode;
+            ListNode tempNode = null;
+
+            while (currNode.NextNode != null)
+            {
+                tempNode = currNode.NextNode;
+                currNode.NextNode = tempNode.NextNode;
+
+                tempNode.NextNode = prevNode.NextNode;
+                prevNode.NextNode = tempNode;
+            }
+
+            return dummyHead.NextNode;
+        }
+
         public ListNode MakeListReverseRecursive()
         {
             HeadNode = MakeListReverseRecursive(HeadNode);
@@ -704,23 +728,23 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             ListNode dummyHead = new ListNode(0);
             dummyHead.NextNode = srcHead;
 
-            ListNode newList = dummyHead;
+            ListNode prevNode = dummyHead;
 
             int lpCnt = 0;
 
             while (++lpCnt < startPos)
-                newList = newList.NextNode;
+                prevNode = prevNode.NextNode;
 
-            ListNode currNode = newList.NextNode;
-            ListNode nextNode = null;
+            ListNode currNode = prevNode.NextNode;
+            ListNode tempNode = null;
 
             while (lpCnt++ < endPos)
             {
-                nextNode = currNode.NextNode;
-                currNode.NextNode = nextNode.NextNode;
+                tempNode = currNode.NextNode;
+                currNode.NextNode = tempNode.NextNode;
 
-                nextNode.NextNode = newList.NextNode;
-                newList.NextNode = nextNode;
+                tempNode.NextNode = prevNode.NextNode;
+                prevNode.NextNode = tempNode;
             }
 
             return dummyHead.NextNode;
