@@ -338,6 +338,7 @@
     <Compile Include="9.4 - Problems and Solutions\1 - Stock Span Problem.cs" />
     <Compile Include="9.4 - Problems and Solutions\2 - Cutting Stock Problem.cs" />
     <Compile Include="9.5 - Puzzles\1 - Weighing Puzzle.cs" />
+    <Compile Include="9.5 - Temp\Web Crawlers.cs" />
     <Compile Include="9.6 - General\Brain Teaser.cs" />
     <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
     <Compile Include="8.0 - String Algorithms\Cut And Paste In A String.cs" />

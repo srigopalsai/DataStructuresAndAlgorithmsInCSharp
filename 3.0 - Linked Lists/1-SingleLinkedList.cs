@@ -585,6 +585,32 @@ namespace DataStructuresAndAlgorithms
             return result.NodeValue;
         }
 
+        // LC 382 https://leetcode.com/problems/linked-list-random-node/#/description
+        public int GetRandom(ListNode head)
+        {
+            int result = head.NodeValue;
+            ListNode node = head;
+
+            int kResrvoir = 1;
+            int ithNum = 1;
+
+            while (node != null)
+            {
+                double rndVal = random.NextDouble();
+                double reservVal = kResrvoir / (kResrvoir + ithNum * 1.0);
+
+                if (rndVal <= reservVal)
+                {
+                    result = node.NodeValue;
+                }
+
+                ithNum++;
+                node = node.NextNode;
+            }
+
+            return result;
+        }
+
         //=============================================================================================================================================
 
         // 10       20      30      40      50
