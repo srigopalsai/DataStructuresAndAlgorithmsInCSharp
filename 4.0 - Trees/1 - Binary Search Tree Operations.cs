@@ -591,15 +591,11 @@ http://powercollections.codeplex.com
 
                 // Push Right.
                 if (currentNode.RightNode != null)
-                {
                     stack.Push(currentNode.RightNode);
-                }
 
                 // Push Left.
                 if (currentNode.LeftNode != null)
-                {
-                    stack.Push(currentNode.LeftNode);
-                }
+                    stack.Push(currentNode.LeftNode);                
             }
 
             return resultString.ToString();
@@ -623,33 +619,27 @@ http://powercollections.codeplex.com
         }
 
         // Same flow as Recursion just Push and pop between visits. 
-        public string InOrderDisplayIterative(TreeNode currentNode)
+        public string InOrderDisplayIterative(TreeNode currNode)
         {
             resultString.Clear();
 
-            if (currentNode == null)
+            if (currNode == null)
                 return string.Empty;
 
-            Stack<TreeNode> treeElements = new Stack<TreeNode>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
 
-            while (treeElements.Count > 0 || currentNode != null)
+            while (stack.Count > 0 || currNode != null)
             {
-                if (currentNode != null)
+                if (currNode != null)
                 {
-                    // Push Current.
-                    treeElements.Push(currentNode);
-
-                    // Make left Child as Current.
-                    currentNode = currentNode.LeftNode;
+                    stack.Push(currNode);
+                    currNode = currNode.LeftNode;
                 }
                 else
                 {
-                    // Pop Current.
-                    currentNode = treeElements.Pop();
-                    resultString.Append("   " + currentNode.NodeValue);
-
-                    // Make right Child as Current.
-                    currentNode = currentNode.RightNode;
+                    currNode = stack.Pop();
+                    Console.Write(" " + currNode.NodeValue);
+                    currNode = currNode.RightNode;
                 }
             }
 
@@ -677,44 +667,36 @@ http://powercollections.codeplex.com
         public string PostOrderDisplayIterative(TreeNode currentNode)
         {
             resultString.Clear();
-            if (currentNode == null)
-            {
-                return string.Empty;
-            }
 
-            Stack<TreeNode> treeElements = new Stack<TreeNode>();
+            if (currentNode == null)
+                return string.Empty;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
 
             TreeNode peekNode = null;
-            TreeNode lastNodeVisited = null;
+            TreeNode lastVisitedNode = null;
 
-            while (treeElements.Count > 0 || currentNode != null)
+            while (stack.Count > 0 || currentNode != null)
             {
                 if (currentNode != null)
                 {
-                    // Push Current.
-                    treeElements.Push(currentNode);
-
-                    // Make left Child as Current.
+                    stack.Push(currentNode);
                     currentNode = currentNode.LeftNode;
                 }
                 else
                 {
-                    // Pop to peekNode.
-                    peekNode = treeElements.Peek();
+                    peekNode = stack.Peek();
 
-                    if (peekNode.RightNode != null && peekNode.RightNode != lastNodeVisited)
+                    if (peekNode.RightNode != null && peekNode.RightNode != lastVisitedNode)
                     {
-                        // Make right Child as Current.
                         currentNode = peekNode.RightNode;
                     }
                     else
                     {
-                        // Poh current
-                        treeElements.Pop();
+                        stack.Pop();
                         resultString.Append("  " + peekNode.NodeValue);
 
-                        // Make last visited as peekNode
-                        lastNodeVisited = peekNode;
+                        lastVisitedNode = peekNode;
                     }
                 }
             }
@@ -724,30 +706,30 @@ http://powercollections.codeplex.com
 
         // BFS : Also called as Level Order Traversal.
         // We can remove the stack requirement by maintaining parent pointers in each node, or by 'Morris in-order traversal using threading'
-        public string BreadthFirstSearchUsingQueue(TreeNode currentNode)
+        public string BreadthFirstSearchUsingQueue(TreeNode parentNode)
         {
-            if (currentNode == null)
+            if (parentNode == null)
                 return string.Empty;
 
             resultString.Clear();
-            Queue<TreeNode> treeQueue = new Queue<TreeNode>();
+            Queue<TreeNode> queue = new Queue<TreeNode>();
 
-            // Enque currentNode to Queue
-            treeQueue.Enqueue(currentNode);
+            // Enque parentNode to Queue
+            queue.Enqueue(parentNode);
 
-            while (treeQueue.Count > 0)
+            while (queue.Count > 0)
             {
                 // Dequeue currentNode from Queue
-                currentNode = treeQueue.Dequeue();
-                resultString.Append("  " + currentNode.NodeValue);
+                parentNode = queue.Dequeue();
+                resultString.Append("  " + parentNode.NodeValue);
 
                 //Enque leftChild.
-                if (currentNode.LeftNode != null)
-                    treeQueue.Enqueue(currentNode.LeftNode);
+                if (parentNode.LeftNode != null)
+                    queue.Enqueue(parentNode.LeftNode);
 
                 //Enque rightChild.
-                if (currentNode.RightNode != null)
-                    treeQueue.Enqueue(currentNode = currentNode.RightNode);
+                if (parentNode.RightNode != null)
+                    queue.Enqueue(parentNode.RightNode);
             }
             return Convert.ToString(resultString);
         }

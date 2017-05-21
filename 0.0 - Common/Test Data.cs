@@ -97,6 +97,8 @@ namespace DataStructuresAndAlgorithms
             public const string Thirty10nd20nd40 = "Thirty10nd20nd40";
             public const string Random00To60 = "Random00To60";
 
+            public const string FourByFour1 = "FourByFour1";
+            public const string FourByFour2 = "FourByFour2";
             public const string FiveByFive1 = "FiveByFive1";
             public const string FiveByFive2 = "FiveByFive2";
             public const string SevenBySeven1 = "SevenBySeven1";
@@ -226,21 +228,21 @@ namespace DataStructuresAndAlgorithms
                 BinaryMatrixCollection.Add(Keys.OneAndOne, new int[,] { { 1 }, { 1 } });
                 BinaryMatrixCollection.Add(Keys.OneElementMinus, new int[,] { { -1 } });
 
-                BinaryMatrixCollection.Add("FourByFour2", new int[,] {
+                BinaryMatrixCollection.Add(Keys.FourByFour2, new int[,] {
                                                                 { 1, 1, 0, 0 },
                                                                 { 1, 1, 0, 0 },
                                                                 { 0, 0, 1, 0 },
                                                                 { 0, 1, 1, 0 },
                                                                 { 1, 0, 1, 1 }});
 
-                BinaryMatrixCollection.Add("FiveByFive1", new int[,] {
+                BinaryMatrixCollection.Add(Keys.FiveByFive1, new int[,] {
                                                                 { 1, 1, 1, 0, 0 },
                                                                 { 0, 0, 1, 1, 0 },
                                                                 { 0, 0, 0, 1, 0 },
                                                                 { 0, 0, 0, 1, 1 },
                                                                 { 0, 0, 0, 0, 1 }});
 
-                BinaryMatrixCollection.Add("FiveByFive2", new int[,]{
+                BinaryMatrixCollection.Add(Keys.FiveByFive2, new int[,]{
                                                                 { 1, 1, 0, 0, 0 },
                                                                 { 1, 0, 1, 1, 1 },
                                                                 { 1, 1, 1, 0, 1 },

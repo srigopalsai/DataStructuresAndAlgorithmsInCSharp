@@ -611,6 +611,45 @@ namespace DataStructuresAndAlgorithms
             return result;
         }
 
+        /*
+        When we read the first node head, if the stream ListNode stops here, we can just return the head.val.
+        The possibility is 1/1.
+        When we read the second node, we can decide if we replace the result r or not.
+        The possibility is 1/2. So we just generate a random number between 0 and 1, and check if it is equal to 1. 
+        If it is 1, replace r as the value of the current node, otherwise we don't touch r, so its value is still the value of head.
+        When we read the third node, now the result r is one of value in the head or second node.
+        We just decide if we replace the value of r as the value of current node(third node). 
+        The possibility of replacing it is 1/3, namely the possibility of we don't touch r is 2/3. 
+        So we just generate a random number between 0 ~ 2, and if the result is 2 we replace r.
+        We can continue to do like this until the end of stream ListNode.
+        */
+        //http://www.geeksforgeeks.org/reservoir-sampling/
+        //http://www.geeksforgeeks.org/?p=25111
+        //Guid.NewGuid().GetHashCode());
+       
+        public int getRandom(ListNode head)
+        {
+            Random rand = new Random();
+            ListNode currNode = head;
+
+            int index = 0;
+            int randomVal = currNode.NodeValue;
+
+            while (true)
+            {
+                if (currNode == null)
+                    break;
+
+                if (rand.Next(index + 1) == index)
+                    randomVal = currNode.NodeValue;
+
+                currNode = currNode.NextNode;
+                index++;
+            }
+
+            return randomVal;
+        }
+
         //=============================================================================================================================================
 
         // 10       20      30      40      50
