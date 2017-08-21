@@ -254,7 +254,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="7.0 - Searching Techniques\Ternary Search.cs" />
-    <Compile Include="8.0 - String Algorithms\0.0 Helper Methods.cs" />
     <Compile Include="8.0 - String Algorithms\1 - Search - Minimum Window Substring.cs" />
     <Compile Include="8.0 - String Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
     <Compile Include="8.0 - String Algorithms\Custom RegEx.cs" />
@@ -477,7 +476,7 @@
     <Compile Include="8.0 - String Algorithms\3-Boyer Moore Horspool.cs" />
     <Compile Include="8.0 - String Algorithms\1 - Search - Brute Force Or Naive.cs" />
     <Compile Include="8.0 - String Algorithms\1 - Search - SubString.cs" />
-    <Compile Include="9.6 - General\Anagrams.cs" />
+    <Compile Include="8.0 - String Algorithms\String Samples.cs" />
     <Compile Include="8.0 - String Algorithms\3-Boyer Moore.cs" />
     <Compile Include="8.0 - String Algorithms\zCountRepeatedChars.cs" />
     <Compile Include="8.0 - String Algorithms\zDeterministicFiniteAutomatonAlgorithm.cs" />
