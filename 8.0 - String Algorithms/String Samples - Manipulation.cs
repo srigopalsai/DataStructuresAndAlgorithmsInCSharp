@@ -13,65 +13,76 @@ namespace DataStructuresAndAlgorithms
             String Break:            http://algorithmstuff.wordpress.com/2013/10/14/string-break/
             Sorting:     http://www.sanfoundry.com/c-program-sort-names-alphabetical-order/
 
-            /*
-    http://www.dsalgo.com/2013/02/SeparateWordsInSentence.php.html
+            Seperate Words in Sentence:  http://www.dsalgo.com/2013/02/SeparateWordsInSentence.php.html
+
+            Implement Cut/Paste Functionality.
+
+            Input:
+
+            String      = "SaiSri" 
+            Start       = 0
+            Stop        = 2
+            Destination = 5
+
+            Output:     "SriSai"
     */
-    //   public class SeparateWordsInSentence
- //   {
- //       public static void main(String[] args)
- //{
- // String sentence = "therearesomewordshiddenhere";
- // String[] dictionary =
- // { "the", "a", "i", "here", "so", "hid", "there", "are", "some", "word",
- //   "words", "hid", "hi", "hidden", "he", "here", "her", "rear",
- //   "me", "den" };
- // String[] words = getSeparatedWords(sentence, dictionary);
- // for (String word : words)
- //  Console.WriteLine(word);
 
- //}
+        //   public class SeparateWordsInSentence
+        //   {
+        //       public static void main(String[] args)
+        //{
+        // String sentence = "therearesomewordshiddenhere";
+        // String[] dictionary =
+        // { "the", "a", "i", "here", "so", "hid", "there", "are", "some", "word",
+        //   "words", "hid", "hi", "hidden", "he", "here", "her", "rear",
+        //   "me", "den" };
+        // String[] words = getSeparatedWords(sentence, dictionary);
+        // for (String word : words)
+        //  Console.WriteLine(word);
 
- //       private static String[] getSeparatedWords(String sentence,
- //         String[] dictionary)
- //{
- // Set<String> validWords = new HashSet<String>();
- // for (String validWord : dictionary)
- //  validWords.add(validWord);
- // Stack<String> words = new Stack<String>();
- // if (isSeparable(sentence, validWords, 0, words))
- // {
- //  return words.toArray(new String[] {});
- // }
- // return null;
- //}
+        //}
 
- //       private static boolean isSeparable(String sentence, Set<String> validWords,
- //         int startIndex, Stack<String> foundWords)
- //       {
- //           if (startIndex == sentence.length())
- //               return true;
- //           boolean hasWord = false;
- //           for (int i = startIndex + 1; i <= sentence.length(); ++i)
- //           {
- //               String currentSubstring = sentence.substring(startIndex, i);
- //               if (validWords.contains(currentSubstring))
- //               {
- //                   foundWords.push(currentSubstring);
- //                   if (isSeparable(sentence, validWords, i, foundWords))
- //                   {
- //                       hasWord = true;
- //                       break;
- //                   }
- //                   foundWords.pop();
- //               }
- //           }
- //           if (!hasWord)
- //               return false;
- //           return true;
- //       }
- //   }
+        //       private static String[] getSeparatedWords(String sentence,
+        //         String[] dictionary)
+        //{
+        // Set<String> validWords = new HashSet<String>();
+        // for (String validWord : dictionary)
+        //  validWords.add(validWord);
+        // Stack<String> words = new Stack<String>();
+        // if (isSeparable(sentence, validWords, 0, words))
+        // {
+        //  return words.toArray(new String[] {});
+        // }
+        // return null;
+        //}
 
-                /*
+        //       private static boolean isSeparable(String sentence, Set<String> validWords,
+        //         int startIndex, Stack<String> foundWords)
+        //       {
+        //           if (startIndex == sentence.length())
+        //               return true;
+        //           boolean hasWord = false;
+        //           for (int i = startIndex + 1; i <= sentence.length(); ++i)
+        //           {
+        //               String currentSubstring = sentence.substring(startIndex, i);
+        //               if (validWords.contains(currentSubstring))
+        //               {
+        //                   foundWords.push(currentSubstring);
+        //                   if (isSeparable(sentence, validWords, i, foundWords))
+        //                   {
+        //                       hasWord = true;
+        //                       break;
+        //                   }
+        //                   foundWords.pop();
+        //               }
+        //           }
+        //           if (!hasWord)
+        //               return false;
+        //           return true;
+        //       }
+        //   }
+
+        /*
 ===================================================================================================================================================================================================
 
 Reverse the words in given strings.
@@ -118,5 +129,43 @@ Space Complexity O(N)
 //            MessageBox.Show("Input String : " + inputWord + Environment.NewLine + "Output String : " + newStr);
         }
 
+        // LC 557 https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
+        public string ReverseWords(string srcStr)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr))
+                return srcStr;
+
+            StringBuilder strBldr = new StringBuilder();
+
+            int endPos = -1;
+            int stPos = 0;
+
+            for (int lpIndx = 0; lpIndx < srcStr.Length; lpIndx++)
+            {
+                if (srcStr[lpIndx] != ' ')
+                    continue;
+
+                stPos = lpIndx - 1;
+
+                while (stPos > endPos)
+                {
+                    strBldr.Append(srcStr[stPos]);
+                    stPos--;
+                }
+
+                strBldr.Append(' ');
+                endPos = lpIndx;
+            }
+
+            stPos = srcStr.Length - 1;
+
+            while (stPos > endPos)
+            {
+                strBldr.Append(srcStr[stPos]);
+                stPos--;
+            }
+
+            return strBldr.ToString().Trim();
+        }
     }
 }

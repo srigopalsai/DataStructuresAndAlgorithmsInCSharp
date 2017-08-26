@@ -257,10 +257,9 @@
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Minimum Window Substring.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore Horspool.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore.cs" />
-    <Compile Include="8.0 - String Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
     <Compile Include="8.0 - String Algorithms\Custom RegEx.cs" />
     <Compile Include="8.0 - String Algorithms\ParanthsesPermuations.cs" />
-    <Compile Include="8.0 - String Algorithms\Parentheses Balanced.cs" />
     <Compile Include="8.0 - String Algorithms\5 - Permutations - InSubString.cs" />
     <Compile Include="8.0 - String Algorithms\PossibleStringCombinationsForCellNumber.cs" />
     <Compile Include="8.0 - String Algorithms\String Samples - Manipulation.cs" />
@@ -340,8 +339,6 @@
     <Compile Include="9.5 - Temp\Web Crawlers.cs" />
     <Compile Include="9.6 - General\Brain Teaser.cs" />
     <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
-    <Compile Include="8.0 - String Algorithms\Cut And Paste In A String.cs" />
-    <Compile Include="8.0 - String Algorithms\All Anagrams In Dictionary.cs" />
     <Compile Include="8.0 - String Algorithms\Remove A and I From String.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\zLexicalAnalysis.cs" />
     <Compile Include="8.0 - String Algorithms\Reverse A String.cs" />
@@ -411,9 +408,7 @@
     <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
     <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
     <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Memorization TopDown.cs" />
-    <Compile Include="8.0 - String Algorithms\Max Repeated Char In String.cs" />
     <Compile Include="9.6 - General\IsPalindromeString.cs" />
-    <Compile Include="8.0 - String Algorithms\Seperate Words In String.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\zBoyerMoore.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\zFiniteAutomata.cs" />
