@@ -601,6 +601,37 @@ http://powercollections.codeplex.com
             return resultString.ToString();
         }
 
+        public string PreOrderIterative1(TreeNode rootNode)
+        {
+            resultString.Clear();
+
+            if (rootNode == null)
+            {
+                return string.Empty;
+            }
+
+            TreeNode currNode = rootNode;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            while (currNode != null || stack.Count > 0)
+            {
+                // if this replaced with while , else can be removed.
+                if (currNode != null) 
+                {
+                    stack.Push(currNode);
+                    resultString.Append("   " + currNode.NodeValue);
+                    currNode = currNode.LeftNode;
+                }
+                else
+                {
+                    currNode = stack.Pop();
+                    currNode = currNode.RightNode;
+                }
+            }
+
+            return resultString.ToString();
+        }
+
         public string InOrderDisplay()
         {
             resultString.Clear();
@@ -1937,6 +1968,7 @@ http://powercollections.codeplex.com
             }
             return -1;
         }
+
         public int KthSmallestUsingStack(TreeNode currNode, int kIndx)
         {
             Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -1963,5 +1995,86 @@ http://powercollections.codeplex.com
 
             return currNode.NodeValue;
         }
+
+        // LC 653 https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
+        public bool FindTarget(TreeNode root, int targetVal)
+        {
+            HashSet<int> valsSet = new HashSet<int>();
+            return DfsPreOrderHelper(root, valsSet, targetVal);
+        }
+
+        public bool DfsPreOrderHelper(TreeNode root, HashSet<int> hset, int targetVal)
+        {
+            if (root == null)
+                return false;
+
+            if (hset.Contains(targetVal - root.NodeValue))
+                return true;
+
+            hset.Add(root.NodeValue);
+
+            return  DfsPreOrderHelper(root.LeftNode, hset, targetVal) || 
+                    DfsPreOrderHelper(root.RightNode, hset, targetVal);
+        }
+
+        // 538 https://leetcode.com/problems/convert-bst-to-greater-tree/description/
+        public TreeNode ConvertBST(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            int sum = 0;
+
+            Stack<TreeNode> tnStack = new Stack<TreeNode>();
+            TreeNode currNode = root;
+
+            while (tnStack.Count > 0 || currNode != null)
+            {
+                while (currNode != null)
+                {
+                    tnStack.Push(currNode);
+                    currNode = currNode.RightNode;
+                }
+
+                currNode = tnStack.Pop();
+
+                sum += currNode.NodeValue;
+                currNode.NodeValue = sum;
+
+                currNode = currNode.LeftNode;
+            }
+
+            return root;
+        }
+
+        // 530 https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/
+        public int GetMinimumDifference(TreeNode root)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            TreeNode prev = null;
+            TreeNode curr = root;
+
+            int minAbsDiff = int.MaxValue;
+
+            while (curr != null || stack.Count > 0)
+            {
+                while (curr != null)
+                {
+                    stack.Push(curr);
+                    curr = curr.LeftNode;
+                }
+
+                curr = stack.Pop();
+
+                if (prev != null)
+                    minAbsDiff = Math.Min(minAbsDiff, Math.Abs(prev.NodeValue - curr.NodeValue));
+
+                prev = curr;
+                curr = curr.RightNode;
+
+            }
+            return minAbsDiff;
+        }        
     }
 }
