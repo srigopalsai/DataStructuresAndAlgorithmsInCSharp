@@ -72,6 +72,7 @@ However, it seems to be an implementation bug more then a feature :\
 
     partial class StringAlgorithms
     {
+        static StringBuilder strBldr = new StringBuilder();
         //LINQ        
         // Lexographic http://www.mathblog.dk/project-euler-24-millionth-lexicographic-permutation/
         static IEnumerable<IEnumerable<T>> GetPermutationsByLexicographic<T>(IEnumerable<T> list, int length)

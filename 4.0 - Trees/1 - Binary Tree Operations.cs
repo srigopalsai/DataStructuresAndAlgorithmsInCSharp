@@ -174,6 +174,54 @@ namespace DataStructuresAndAlgorithms
             return HasPathSum(root.LeftNode, sum - root.NodeValue) || HasPathSum(root.RightNode, sum - root.NodeValue);
         }
 
+        // LC 113 https://leetcode.com/problems/path-sum-ii/description/
+        // Iterative Post Order Traversal Approach. 
+
+        public List<List<int>> PathSumIterative(TreeNode root, int sum)
+        {
+            List<int> pathList = new List<int>();
+            List<List<int>> resList = new List<List<int>>();
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            int currSum = 0;
+            TreeNode curNode = root;
+            TreeNode prevNode = null;
+
+            while (curNode != null || stack.Count > 0)
+            {
+                while (curNode != null)
+                {
+                    stack.Push(curNode);
+                    pathList.Add(curNode.NodeValue);
+
+                    currSum = currSum + curNode.NodeValue;
+                    curNode = curNode.LeftNode;
+                }
+
+                curNode = stack.Peek();
+
+                if (curNode.RightNode != null && curNode.RightNode != prevNode)
+                {
+                    curNode = curNode.RightNode;
+                    continue;
+                }
+
+                if (curNode.LeftNode == null && curNode.RightNode == null && currSum == sum)
+                {
+                    resList.Add(new List<int>(pathList));
+                }
+
+                stack.Pop();
+                currSum = currSum - curNode.NodeValue;
+
+                prevNode = curNode;
+                curNode = null;
+
+                pathList.RemoveAt(pathList.Count() - 1);
+            }
+            return resList;
+        }
         /*  Given a binary tree, return all root-to-leaf paths.  E.g. Given the following binary tree: 
 
            1
@@ -604,6 +652,88 @@ namespace DataStructuresAndAlgorithms
             int postOrderPos = postorder.Length - 1;
 
             return BuildTree(inorder, postorder, null, ref inOrderPos, ref postOrderPos);
+        }
+
+        // 543 https://leetcode.com/problems/diameter-of-binary-tree/description/
+        public int DiameterOfBinaryTree(TreeNode root)
+        {
+            int maxDepth = 0;
+            MaxDepth(root, ref maxDepth);
+            return maxDepth;
+        }
+
+        private int MaxDepth(TreeNode root, ref int maxDepth)
+        {
+            if (root == null)
+                return 0;
+
+            int leftMax = MaxDepth(root.LeftNode, ref maxDepth);
+            int rightMax = MaxDepth(root.RightNode, ref maxDepth);
+
+            maxDepth = Math.Max(maxDepth, leftMax + rightMax);
+
+            return 1 + Math.Max(leftMax, rightMax);
+        }
+
+        // 637 https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
+        public IList<double> AverageOfLevels(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            List<double> avgList = new List<double>();
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+
+            tnQ.Enqueue(root);
+            int brdthLen = tnQ.Count();
+
+            TreeNode curNode = null;
+            double sum = 0;
+            int itemCnt = 0;
+
+            while (tnQ.Count() > 0)
+            {
+                while (itemCnt < brdthLen)
+                {
+                    curNode = tnQ.Dequeue();
+                    sum += curNode.NodeValue;
+
+                    if (curNode.LeftNode != null)
+                        tnQ.Enqueue(curNode.LeftNode);
+                    if (curNode.RightNode != null)
+                        tnQ.Enqueue(curNode.RightNode);
+
+                    itemCnt++;
+                }
+
+                avgList.Add((double)sum / brdthLen);
+                brdthLen = tnQ.Count();
+                itemCnt = 0;
+                sum = 0;
+            }
+
+            return avgList;
+        }
+
+        public int FindTilt(TreeNode root)
+        {
+            int result = 0;
+            PostOrderRecursive(root, ref result);
+            return result;
+        }
+
+        // 563 https://leetcode.com/problems/binary-tree-tilt/description/
+        private int PostOrderRecursive(TreeNode root, ref int result)
+        {
+            if (root == null)
+                return 0;
+
+            int left = PostOrderRecursive(root.LeftNode, ref result);
+            int right = PostOrderRecursive(root.RightNode, ref result);
+
+            result += Math.Abs(left - right);
+
+            return left + right + root.NodeValue;
         }
     }
 }

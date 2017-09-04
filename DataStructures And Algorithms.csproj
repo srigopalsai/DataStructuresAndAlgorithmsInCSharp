@@ -253,14 +253,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="7.0 - Searching Techniques\Ternary Search.cs" />
-    <Compile Include="8.0 - String Algorithms\0.0 Helper Methods.cs" />
-    <Compile Include="8.0 - String Algorithms\1 - Search - Minimum Window Substring.cs" />
-    <Compile Include="8.0 - String Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Minimum Window Substring.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore Horspool.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
     <Compile Include="8.0 - String Algorithms\Custom RegEx.cs" />
     <Compile Include="8.0 - String Algorithms\ParanthsesPermuations.cs" />
-    <Compile Include="8.0 - String Algorithms\Parentheses Balanced.cs" />
     <Compile Include="8.0 - String Algorithms\5 - Permutations - InSubString.cs" />
     <Compile Include="8.0 - String Algorithms\PossibleStringCombinationsForCellNumber.cs" />
+    <Compile Include="8.0 - String Algorithms\String Samples - Manipulation.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\SuffixArray.cs" />
+    <Compile Include="0.3 - Arrays\zAssociativeArrayNI.cs" />
     <Compile Include="8.0 - String Algorithms\Sort Names Alphabetical.cs" />
     <Compile Include="8.0 - String Algorithms\StringBreak.cs" />
     <Compile Include="8.0 - String Algorithms\SuffixArray.cs" />
@@ -311,7 +314,6 @@
     <Compile Include="7.0 - Searching Techniques\PredectiveSearch.cs" />
     <Compile Include="7.0 - Searching Techniques\UniformBinarySearch.cs" />
     <Compile Include="8.0 - String Algorithms\Replace Repated Chars With Its Count In Place.cs" />
-    <Compile Include="8.0 - String Algorithms\WordWrap.cs" />
     <Compile Include="5.3 - PVersesNP\Notes.cs" />
     <Compile Include="9.1 - Other Algorithms\BigLittleEndian.cs" />
     <Compile Include="9.1 - Other Algorithms\BiSectionAlgorithm.cs" />
@@ -333,10 +335,8 @@
     <Compile Include="9.5 - Temp\Web Crawlers.cs" />
     <Compile Include="9.6 - General\Brain Teaser.cs" />
     <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
-    <Compile Include="8.0 - String Algorithms\Cut And Paste In A String.cs" />
-    <Compile Include="8.0 - String Algorithms\All Anagrams In Dictionary.cs" />
     <Compile Include="8.0 - String Algorithms\Remove A and I From String.cs" />
-    <Compile Include="8.0 - String Algorithms\zLexicalAnalysis.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zLexicalAnalysis.cs" />
     <Compile Include="8.0 - String Algorithms\Reverse A String.cs" />
     <Compile Include="9.1 - Other Algorithms\LottoryNumberGeneration.cs" />
     <Compile Include="0.6 - Sets\BloomFilter.cs" />
@@ -403,19 +403,15 @@
     <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
     <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
     <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Memorization TopDown.cs" />
-    <Compile Include="8.0 - String Algorithms\2-Longest SubString Without Repeating Characters.cs" />
-    <Compile Include="8.0 - String Algorithms\3-Reverse Words In String.cs" />
-    <Compile Include="8.0 - String Algorithms\Max Repeated Char In String.cs" />
     <Compile Include="9.6 - General\IsPalindromeString.cs" />
-    <Compile Include="8.0 - String Algorithms\Seperate Words In String.cs" />
-    <Compile Include="8.0 - String Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\zBoyerMoore.cs" />
-    <Compile Include="8.0 - String Algorithms\zFiniteAutomata.cs" />
-    <Compile Include="8.0 - String Algorithms\zMorrisPratt.cs" />
-    <Compile Include="8.0 - String Algorithms\1 - Search - QuickSearch.cs" />
-    <Compile Include="8.0 - String Algorithms\zRabinKarpOrKarpRabinNI.cs" />
-    <Compile Include="8.0 - String Algorithms\zShiftOrAlgorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\zSuffixTreeOrPATTree.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zBoyerMoore.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zFiniteAutomata.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zMorrisPratt.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - QuickSearch.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zRabinKarpOrKarpRabinNI.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zShiftOrAlgorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zSuffixTreeOrPATTree.cs" />
     <Compile Include="9.1 - Other Algorithms\BinaryHeapTree.cs" />
     <Compile Include="9.1 - Other Algorithms\1 - BranchPrediction.cs" />
     <Compile Include="9.1 - Other Algorithms\CircularBuffer.cs" />
@@ -465,15 +461,12 @@
     <Compile Include="8.0 - String Algorithms\5 - Permutations - All.cs" />
     <Compile Include="9.1 - Other Algorithms\6 - PermutationCombinationWithFact.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - Multiple Samples.cs" />
-    <Compile Include="8.0 - String Algorithms\3-Boyer Moore Horspool.cs" />
-    <Compile Include="8.0 - String Algorithms\1 - Search - Brute Force Or Naive.cs" />
-    <Compile Include="8.0 - String Algorithms\1 - Search - SubString.cs" />
-    <Compile Include="9.6 - General\Anagrams.cs" />
-    <Compile Include="8.0 - String Algorithms\3-Boyer Moore.cs" />
-    <Compile Include="8.0 - String Algorithms\zCountRepeatedChars.cs" />
-    <Compile Include="8.0 - String Algorithms\zDeterministicFiniteAutomatonAlgorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\zHashTable.cs" />
-    <Compile Include="8.0 - String Algorithms\zLevenshteinDistance.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Brute Force Or Naive.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - SubString.cs" />
+    <Compile Include="8.0 - String Algorithms\String Samples - Search.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zDeterministicFiniteAutomatonAlgorithm.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zHashTable.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\zLevenshteinDistance.cs" />
     <Compile Include="8.0 - String Algorithms\StringAlgorithmsDemo.xaml.cs">
       <DependentUpon>StringAlgorithmsDemo.xaml</DependentUpon>
     </Compile>
@@ -629,13 +622,13 @@
     <Resource Include="6.0 - Sorting Techniques\4.0 - QuickSort.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="8.0 - String Algorithms\6-KnuthMorrisPrattAlgorithm.gif" />
+    <Resource Include="8.0 - String Algorithms\Algorithms\6-KnuthMorrisPrattAlgorithm.gif" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="8.0 - String Algorithms\CompareAlgs.gif" />
+    <Resource Include="8.0 - String Algorithms\Algorithms\CompareAlgs.gif" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="4.0 - Trees\Notes.txt" />
