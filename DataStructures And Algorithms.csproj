@@ -263,10 +263,6 @@
     <Compile Include="8.0 - String Algorithms\PossibleStringCombinationsForCellNumber.cs" />
     <Compile Include="8.0 - String Algorithms\String Samples - Manipulation.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\SuffixArray.cs" />
-    <Compile Include="0.3 - Arrays\zAssociativeArrayNI.cs" />
-    <Compile Include="8.0 - String Algorithms\Sort Names Alphabetical.cs" />
-    <Compile Include="8.0 - String Algorithms\StringBreak.cs" />
-    <Compile Include="8.0 - String Algorithms\SuffixArray.cs" />
     <Compile Include="0.3 - Arrays\4 - Remove Duplicates.cs" />
     <Compile Include="0.3 - Arrays\5.2 - Search - Missing 1 Number In Array.cs" />
     <Compile Include="0.3 - Arrays\9.1 - Minimum Number Of Jumps To Reach End.cs" />
