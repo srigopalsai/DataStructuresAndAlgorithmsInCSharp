@@ -99,7 +99,7 @@
     <Compile Include="0.0 - Recap Maths\1.2 - Pure Maths - Structure.cs" />
     <Compile Include="0.1 - Basics\0 - Notes.cs" />
     <Compile Include="0.1 - Basics\6 - User Defined Types.cs" />
-    <Compile Include="0.1 - Basics\7 - General Programs.cs" />
+    <Compile Include="0.1 - Basics\7 - Math Logic Samples.cs" />
     <Compile Include="0.1 - Basics\8 - Compiler Optimizations.cs" />
     <Compile Include="0.1 - Basics\Random Problems.cs" />
     <Compile Include="0.2 - Binary and Bitwise Operations\0 - Notes.cs" />
@@ -142,7 +142,6 @@
     <Compile Include="0.3 - Arrays\IsPalindromeNumber.cs" />
     <Compile Include="0.3 - Arrays\9.3 - Kandane Max Sub Array With Largest Sum.cs" />
     <Compile Include="0.3 - Arrays\SortedVector.cs" />
-    <Compile Include="0.3 - Arrays\Vector Implementation.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
@@ -265,20 +264,13 @@
     <Compile Include="8.0 - String Algorithms\Sort Names Alphabetical.cs" />
     <Compile Include="8.0 - String Algorithms\StringBreak.cs" />
     <Compile Include="8.0 - String Algorithms\SuffixArray.cs" />
-    <Compile Include="0.3 - Arrays\zAssociativeArrayNI.cs" />
     <Compile Include="0.3 - Arrays\4 - Remove Duplicates.cs" />
     <Compile Include="0.3 - Arrays\5.2 - Search - Missing 1 Number In Array.cs" />
     <Compile Include="0.3 - Arrays\9.1 - Minimum Number Of Jumps To Reach End.cs" />
-    <Compile Include="0.3 - Arrays\zRandomizedAlgorithmNI.cs" />
-    <Compile Include="0.3 - Arrays\zReplaceWithNextLargestElementNI.cs" />
-    <Compile Include="0.3 - Arrays\zDynamicArrayNI.cs" />
     <Compile Include="0.3 - Arrays\7 - Array Positions Based On Its Elements.cs" />
-    <Compile Include="0.3 - Arrays\zParellelArrayNI.cs" />
-    <Compile Include="0.3 - Arrays\zBitArrayNI.cs" />
     <Compile Include="0.3 - Arrays\ArraysDemo.xaml.cs">
       <DependentUpon>ArraysDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="0.3 - Arrays\zArraySlicingNI.cs" />
     <Compile Include="0.3 - Arrays\8 - Local Minima And Maxima.cs" />
     <Compile Include="0.3 - Arrays\9 - Move Zeros To Right.cs" />
     <Compile Include="0.2 - Binary and Bitwise Operations\CalculatePower.cs" />
@@ -370,7 +362,6 @@
     <Compile Include="0.5 - Matrix\3.0 - Display - In Sprial.cs" />
     <Compile Include="0.3 - Arrays\1.1 - 2nd Biggest.cs" />
     <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
-    <Compile Include="0.3 - Arrays\zJudyArrayNI.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
     <Compile Include="0.5 - Matrix\BackJumping.cs" />
     <Compile Include="0.5 - Matrix\BackTrackingAlgorithm.cs" />
