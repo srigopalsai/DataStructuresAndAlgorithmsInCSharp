@@ -102,5 +102,56 @@ namespace DataStructuresAndAlgorithms
 
             return outputArr;
         }
+
+        public void MoveZeroes(int[] nums)
+        {
+            int zeroCnt = 0;
+            int temp = 0;
+
+            for (int index = 0; index < nums.Length; index++)
+            {
+                if (nums[index] == 0)
+                {
+                    zeroCnt++;
+                    continue;
+                }
+
+                temp = nums[index - zeroCnt];
+                nums[index - zeroCnt] = nums[index];
+                nums[index] = temp;
+            }
+        }
+
+        public void MoveZeroes1(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return;
+
+            int index = 0;
+
+            foreach (int num in nums)
+            {
+                if (num != 0)
+                    nums[index++] = num;
+            }
+
+            while (index < nums.Length)
+            {
+                nums[index++] = 0;
+            }
+        }
+
+        // 136 https://leetcode.com/problems/single-number/description/
+        public int SingleNumber(int[] nums)
+        {
+            int result = nums[0];
+
+            for (int index = 1; index < nums.Length; index++)
+            {
+                result ^= nums[index];
+            }
+
+            return result;
+        }
     }
 }

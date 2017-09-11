@@ -31,7 +31,7 @@ namespace DataStructuresAndAlgorithms
     {
         void RabinKarpOrKarpRabinNI(string text, int m, string pattern, int n)
         {
-            int hx, hy, i, j;
+            int hx, hy, i;
 
             // Preprocessing Step 1.
             /* computes d = 2^(m-1) with the left-shift operator */

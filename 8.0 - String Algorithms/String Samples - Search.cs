@@ -201,8 +201,6 @@ namespace DataStructuresAndAlgorithms
 
         public char FindTheDifference1(string srcStr, string trgtStr)
         {
-            int r = 0;
-
             int[] chars = new int[26];
 
             foreach (char ch in srcStr)
@@ -463,22 +461,19 @@ namespace DataStructuresAndAlgorithms
             Console.WriteLine("The character repated most no of times in given string is '" + MaxChar + "' and its count is " + MaxCharCnt);
         }
 
+        //-----------------------------------------------------------------------------------------------------------------------
         /*
-    ===================================================================================================================================================================================================
-
-    Parentheses Balancing:
-    Write a function which verifies parentheses are balanced in a string. Each open parentheses should have a corresponding close parentheses and they should correspond correctly.
+        Parentheses Balancing:
+        Write a function which verifies parentheses are balanced in a string. 
+        Each open parentheses should have a corresponding close parentheses and they should correspond correctly.
     
-    E.g. 1: The function should return true for the following strings:
-    (if (any? x) sum (/1 x))
-    I said (it's not (yet) complete). (she didn't listen)
+        E.g. 1: The function should return true for the following strings:
+        (if (any? x) sum (/1 x))
+        I said (it's not (yet) complete). (she didn't listen)
 
-    E.g. 2: The function should return false for the following strings:
-    :-)
-    ())(
-
-    ===================================================================================================================================================================================================
-    */
+        E.g. 2: The function should return false for the following strings:
+        :-)
+        ())(   */
         public void AreParenthesesBalancedTest()
         {
             strBldr = new StringBuilder();
@@ -608,6 +603,56 @@ namespace DataStructuresAndAlgorithms
         //        }
         //    }
         //}
+
+        // 451 https://leetcode.com/problems/sort-characters-by-frequency/description/
+        public string FrequencySort(string srcStr)
+        {
+            Dictionary<char, int> charsDict = new Dictionary<char, int>();
+
+            foreach (char ch in srcStr)
+            {
+                if (charsDict.ContainsKey(ch))
+                {
+                    charsDict[ch] = charsDict[ch] + 1;
+                }
+                else
+                {
+                    charsDict[ch] = 1;
+                }
+            }
+
+            List<char>[] bucket = new List<char>[srcStr.Length + 1];
+
+            foreach (char key in charsDict.Keys)
+            {
+                int frequency = charsDict[key];
+
+                if (bucket[frequency] == null)
+                {
+                    bucket[frequency] = new List<char>();
+                }
+
+                bucket[frequency].Add(key);
+            }
+
+            StringBuilder strBldr = new StringBuilder();
+
+            for (int index = bucket.Length - 1; index >= 0; index--)
+            {
+                if (bucket[index] != null)
+                {
+                    foreach (char num in bucket[index])
+                    {
+                        for (int i = 0; i < charsDict[num]; i++)
+                        {
+                            strBldr.Append(num);
+                        }
+                    }
+                }
+            }
+
+            return strBldr.ToString();
+        }
     }
     public static class AnagramExtensions
     {

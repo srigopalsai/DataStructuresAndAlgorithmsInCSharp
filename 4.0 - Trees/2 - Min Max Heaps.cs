@@ -186,6 +186,290 @@ namespace DataStructuresAndAlgorithms.Trees.HeapOperations
         }
     }
 
+    /*
+    public class MedianFinder
+{
+    private MinHeap minHeap;
+    private MaxHeap maxHeap;
+    private double median;
+
+    // initialize your data structure here. 
+    public MedianFinder()
+    {
+        minHeap = new MinHeap();
+        maxHeap = new MaxHeap();
+        median = -1;
+    }
+
+    private HeapStatus GetHeapStatus()
+    {
+        if (minHeap.Size == maxHeap.Size)
+            return HeapStatus.Balanced;
+        else if (maxHeap.Size > minHeap.Size)
+            return HeapStatus.LeftHeavy;
+        else
+            return HeapStatus.RightHeavy;
+    }
+
+    public void AddNum(int num)
+    {
+        HeapStatus status = GetHeapStatus();
+
+        switch (status)
+        {
+            case HeapStatus.LeftHeavy:
+                {
+                    if (median > num)
+                    {
+                        int top = maxHeap.ExtractTop();
+                        minHeap.Insert(top);
+                        maxHeap.Insert(num);
+                    }
+                    else
+                    {
+                        minHeap.Insert(num);
+                    }
+
+                    median = ((double)(minHeap.GetTop() + maxHeap.GetTop())) / 2;
+
+                    break;
+                }
+
+            case HeapStatus.RightHeavy:
+                {
+                    if (median < num)
+                    {
+                        int top = minHeap.ExtractTop();
+                        maxHeap.Insert(top);
+                        minHeap.Insert(num);
+                    }
+                    else
+                    {
+                        maxHeap.Insert(num);
+                    }
+
+                    median = ((double)(minHeap.GetTop() + maxHeap.GetTop())) / 2;
+
+                    break;
+                }
+
+            case HeapStatus.Balanced:
+                {
+                    if (median < num)
+                    {
+                        minHeap.Insert(num);
+                        median = minHeap.GetTop();
+                    }
+                    else
+                    {
+                        maxHeap.Insert(num);
+                        median = maxHeap.GetTop();
+                    }
+
+                    break;
+                }
+        }
+    }
+
+    public double FindMedian()
+    {
+        return median;
+    }
+}
+
+public class MaxHeap : Heap
+{
+    private List<int> elements;
+
+    public MaxHeap()
+    {
+        elements = new List<int>();
+    }
+
+    public int Size
+    {
+        get
+        {
+            return elements.Count;
+        }
+    }
+
+    public void Insert(int num)
+    {
+        elements.Add(num);
+
+        int i = elements.Count - 1;
+
+        int parent = GetParent(elements.Count - 1);
+
+        while (parent >= 0 && elements[parent] < elements[i])
+        {
+            Swap(elements, parent, i);
+            i = parent;
+            parent = GetParent(i);
+        }
+    }
+
+    public int GetTop()
+    {
+        return Size > 0 ? elements[0] : -1;
+    }
+
+    public int ExtractTop()
+    {
+        int top = -1;
+
+        if (Size > 0)
+        {
+            top = elements[0];
+
+            Swap(elements, 0, elements.Count - 1);
+
+            elements.RemoveAt(elements.Count - 1);
+
+            MaxHeapify(0);
+        }
+
+        return top;
+    }
+
+    public void MaxHeapify(int i)
+    {
+        int left = GetLeft(i);
+        int right = GetRight(i);
+
+        int largest = i;
+
+        if (left < Size && elements[left] > elements[i])
+        {
+            largest = left;
+        }
+
+        if (right < Size && elements[right] > elements[largest])
+        {
+            largest = right;
+        }
+
+        if (largest != i)
+        {
+            Swap(elements, largest, i);
+            MaxHeapify(largest);
+        }
+    }
+}
+
+public enum HeapStatus
+{
+    LeftHeavy,
+    RightHeavy,
+    Balanced
+}
+
+public class MinHeap : Heap
+{
+    private List<int> elements;
+
+    public MinHeap()
+    {
+        elements = new List<int>();
+    }
+
+    public int Size
+    {
+        get
+        {
+            return elements.Count;
+        }
+    }
+
+    public void Insert(int num)
+    {
+        elements.Add(num);
+
+        int i = elements.Count - 1;
+
+        int parent = GetParent(elements.Count - 1);
+
+        while (parent >= 0 && elements[parent] > elements[i])
+        {
+            Swap(elements, parent, i);
+            i = parent;
+            parent = GetParent(i);
+        }
+    }
+
+    public int GetTop()
+    {
+        return Size > 0 ? elements[0] : -1;
+    }
+
+    public int ExtractTop()
+    {
+        int top = -1;
+
+        if (Size > 0)
+        {
+            top = elements[0];
+
+            Swap(elements, 0, elements.Count - 1);
+
+            elements.RemoveAt(elements.Count - 1);
+
+            MinHeapify(0);
+        }
+
+        return top;
+    }
+
+    public void MinHeapify(int i)
+    {
+        int left = GetLeft(i);
+        int right = GetRight(i);
+
+        int smallest = i;
+
+        if (left < Size && elements[left] < elements[i])
+        {
+            smallest = left;
+        }
+
+        if (right < Size && elements[right] < elements[smallest])
+        {
+            smallest = right;
+        }
+
+        if (smallest != i)
+        {
+            Swap(elements, smallest, i);
+            MinHeapify(smallest);
+        }
+    }
+}
+
+public class Heap
+{
+    public int GetParent(int i)
+    {
+        return (i - 1) / 2;
+    }
+
+    public int GetLeft(int i)
+    {
+        return (2 * i) + 1;
+    }
+
+    public int GetRight(int i)
+    {
+        return (2 * i) + 2;
+    }
+
+    public void Swap(List<int> elements, int i, int j)
+    {
+        int temp = elements[i];
+        elements[i] = elements[j];
+        elements[j] = temp;
+    }
+} */
     public class HeapDemo
     {
         public void HeapTest()

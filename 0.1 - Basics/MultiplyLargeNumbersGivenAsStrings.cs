@@ -23,6 +23,7 @@ namespace DataStructuresAndAlgorithms
 
             MessageBox.Show("Multiplication of 2 Numbers, Num1 : " + num1 + " Num2 : " + num2 + " Result : " + result);
         }
+
         public string Multiply(string num1, string num2)
         {
             try
@@ -46,7 +47,6 @@ namespace DataStructuresAndAlgorithms
                 //--------------------------------------------------------------
                 int product = 0;
                 int carry = 0;
-                int sum = 0;
 
                 string result = string.Empty;
                 string partial = string.Empty;

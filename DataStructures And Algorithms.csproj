@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataStructuresAndAlgorithms</RootNamespace>
     <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -59,6 +60,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -323,6 +325,7 @@
     <Compile Include="9.1 - Other Algorithms\BiSectionAlgorithm.cs" />
     <Compile Include="9.1 - Other Algorithms\BoggleGame.cs" />
     <Compile Include="9.1 - Other Algorithms\ChiSquaredTestForRandomGeneration.cs" />
+    <Compile Include="9.1 - Other Algorithms\Data Stream Problems.cs" />
     <Compile Include="9.1 - Other Algorithms\GreedyAlgorithm.cs" />
     <Compile Include="0.1 - Basics\MultiplicationAlgorithms.cs" />
     <Compile Include="9.1 - Other Algorithms\Knapsack Problem.cs" />
@@ -368,7 +371,7 @@
     <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
     <Compile Include="0.3 - Arrays\zJudyArrayNI.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
-    <Compile Include="0.5 - Matrix\BackJumping.cs" />
+    <Compile Include="0.5 - Matrix\Mutiple Samples.cs" />
     <Compile Include="0.5 - Matrix\BackTrackingAlgorithm.cs" />
     <Compile Include="0.5 - Matrix\9.0 - Transpose Matrix.cs" />
     <Compile Include="0.5 - Matrix\6.0 - Rat In Maze Puzzle PI.cs" />

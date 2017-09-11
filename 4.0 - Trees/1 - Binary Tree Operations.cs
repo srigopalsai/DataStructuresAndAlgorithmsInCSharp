@@ -506,31 +506,33 @@ namespace DataStructuresAndAlgorithms
                 9,8,3
                 2,1
          */
+        // 199 https://leetcode.com/problems/binary-tree-right-side-view/description/
         public IList<int> RightSideViewIterative(TreeNode root)
         {
             List<int> result = new List<int>();
-            Queue<TreeNode> queue = new Queue<TreeNode>();
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
 
-            if (root == null) return result;
+            if (root == null)
+                return result;
 
-            queue.Enqueue(root);
+            tnQ.Enqueue(root);
 
-            while (queue.Count() != 0)
+            while (tnQ.Count() != 0)
             {
-                int size = queue.Count();
+                int nodesInLevel = tnQ.Count();
 
-                for (int levelCnt = 0; levelCnt < size; levelCnt++)
+                for (int index = 0; index < nodesInLevel; index++)
                 {
-                    TreeNode cur = queue.Dequeue();
+                    TreeNode cur = tnQ.Dequeue();
 
-                    if (levelCnt == 0)
+                    if (index == 0)
                         result.Add(cur.NodeValue);
 
                     if (cur.RightNode != null)
-                        queue.Enqueue(cur.RightNode);
+                        tnQ.Enqueue(cur.RightNode);
 
                     if (cur.LeftNode != null)
-                        queue.Enqueue(cur.LeftNode);
+                        tnQ.Enqueue(cur.LeftNode);
                 }
             }
             return result;
@@ -625,6 +627,7 @@ namespace DataStructuresAndAlgorithms
 
             return root;
         }
+
         private TreeNode BuildTree(int[] inorder, int[] postorder, TreeNode endNode, ref int inOrderPos, ref int postOrderPos)
         {
             if (postOrderPos < 0)

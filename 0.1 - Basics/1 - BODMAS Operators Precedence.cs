@@ -81,7 +81,6 @@ namespace DataStructuresAndAlgorithms
     partial class BinaryAndBitwiseOperations
     {
         StringBuilder strRslt = new StringBuilder();
-        Double db = new double();
 
         public void ArithMaticOperators()
         {

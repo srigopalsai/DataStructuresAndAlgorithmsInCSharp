@@ -16,10 +16,7 @@ namespace DataStructuresAndAlgorithms
 
     public class Immutable2DSumRangeQuery
     {
-
         private int[][] T;
-
-
 
         public Immutable2DSumRangeQuery(int[,] matrix)
         {

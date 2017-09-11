@@ -167,5 +167,247 @@ Space Complexity O(N)
 
             return strBldr.ToString().Trim();
         }
+
+        // LC 345 https://leetcode.com/problems/reverse-vowels-of-a-string/description/
+        public string ReverseVowels(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return s;
+
+            char[] chars = s.ToCharArray();
+
+            int lPos = 0;
+            int rPos = s.Length - 1;
+
+            char temp = '\0';
+
+            while (lPos < rPos)
+            {
+                bool isLCOvl = IsVowel(s[lPos]);
+                bool isRCOvl = IsVowel(s[rPos]);
+
+                if (isLCOvl == false)
+                {
+                    lPos++;
+                    continue;
+                }
+                if (isRCOvl == false)
+                {
+                    rPos--;
+                    continue;
+                }
+
+                temp = chars[lPos];
+                chars[lPos] = chars[rPos];
+                chars[rPos] = temp;
+
+                lPos++;
+                rPos--;
+            }
+
+            return new string(chars);
+        }
+
+        public bool IsVowel(char ch)
+        {
+            if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' ||
+               ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+                return true;
+            else
+                return false;
+        }
+
+        // 541 https://leetcode.com/problems/reverse-string-ii/description/
+        public string ReverseStr(string srcStr, int k)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr))
+                return srcStr;
+
+            int frwdIndx = 0;
+            int bkwdIndx = 0;
+
+            char[] chars = new char[srcStr.Length];
+            int kPosIndx = Math.Min(k - 1, srcStr.Length - 1);
+
+            while (frwdIndx < srcStr.Length)
+            {
+                for (bkwdIndx = kPosIndx; frwdIndx <= kPosIndx; bkwdIndx--)
+                {
+                    chars[frwdIndx] = srcStr[bkwdIndx];
+                    frwdIndx++;
+                }
+
+                kPosIndx = Math.Min(kPosIndx + k, srcStr.Length - 1);
+
+                while (frwdIndx <= kPosIndx)
+                {
+                    chars[frwdIndx] = srcStr[frwdIndx];
+                    frwdIndx++;
+                }
+
+                kPosIndx = Math.Min(kPosIndx + k, srcStr.Length - 1);
+            }
+
+            return new string(chars);
+        }
+
+        // 434 https://leetcode.com/problems/number-of-segments-in-a-string/description/
+        public int CountSegments(string srcStr)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr))
+                return 0;
+
+            int spaceCnt = 0;
+
+            for (int index = 0; index < srcStr.Length; index++)
+            {
+                if (srcStr[index] != ' ' && (index == 0 || srcStr[index - 1] == ' '))
+                    spaceCnt++;
+            }
+
+            return spaceCnt;
+        }
+
+        // 125 https://leetcode.com/problems/valid-palindrome/description/
+
+        public bool IsPalindrome(string srcStr)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr))
+                return true;
+
+            int lftPos = 0;
+            int rhtPos = srcStr.Length - 1;
+
+            while (lftPos < rhtPos)
+            {
+                while (lftPos < rhtPos && !IsChar(srcStr[lftPos]))
+                    lftPos++;
+                while (lftPos < rhtPos && !IsChar(srcStr[rhtPos]))
+                    rhtPos--;
+
+                if (lftPos < rhtPos && srcStr[lftPos++] != srcStr[rhtPos--])
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool IsChar(char ch)
+        {
+            return (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+        }
+
+        public bool IsPalindrome1(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return true;
+
+            s = s.ToLower();
+            int lftPos = 0;
+            int rhtPos = s.Length - 1;
+
+            while (true)
+            {
+                while (lftPos <= rhtPos && !char.IsLetterOrDigit(s[lftPos]))
+                    ++lftPos;
+
+                while (rhtPos >= lftPos && !char.IsLetterOrDigit(s[rhtPos]))
+                    --rhtPos;
+
+                if (lftPos >= rhtPos)
+                    return true;
+
+                if (s[lftPos] != s[rhtPos])
+                    return false;
+
+                ++lftPos;
+                --rhtPos;
+            }
+        }
+
+        // LC 49 https://leetcode.com/problems/group-anagrams/discuss/
+        public IList<IList<String>> GroupAnagrams(String[] strs)
+        {
+            if (strs == null || strs.Length == 0)
+            {
+                return null;
+            }
+
+            Dictionary<string, List<String>> anagramMap = new Dictionary<string, List<string>>();
+
+            foreach (String word in strs)
+            {
+                string key = GetKey(word); // Unique for each anagram
+
+                if (anagramMap.ContainsKey(key) == false)
+                {
+                    anagramMap[key] = new List<string>();
+                }
+
+                anagramMap[key].Add(word);
+            }
+
+            return new List<IList<string>>(anagramMap.Values);
+        }
+
+        // Count Sort string. E.g. Input eat. Output aet
+        public string GetKey(String srcStr)
+        {
+            int[] counters = new int[26];
+
+            foreach (char ch in srcStr.ToCharArray())
+            {
+                counters[ch - 'a']++;
+            }
+
+            StringBuilder strBldr = new StringBuilder();
+
+            for (int index = 0; index < counters.Length; index++)
+            {
+                int chrCnt = counters[index];
+
+                for (int lpCnt = 0; lpCnt < chrCnt; lpCnt++)
+                {
+                    strBldr.Append((char)(index + 'a'));
+                }
+            }
+
+            return strBldr.ToString();
+        }
+
+        public IList<IList<String>> GroupAnagramsUsingPrimes(String[] words)
+        {
+            //rod  7 * 97 * 11 // dye 7 * 61 *47
+            int[] primes26 = {  02, 03, 05, 07, 11, 13, 17, 19, 23, 29,
+                            31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+                            73, 79, 83, 89, 97, 101};
+
+            List<IList<String>> resultLists = new List<IList<string>>();
+            Dictionary<int, int> anagramDict = new Dictionary<int, int>();
+
+            foreach (String word in words)
+            {
+                int uniqueKey = 1;
+
+                foreach (char chr in word.ToCharArray())
+                {
+                    uniqueKey *= primes26[chr - 'a'];
+                }
+
+                if (anagramDict.ContainsKey(uniqueKey))
+                {
+                    resultLists[anagramDict[uniqueKey]].Add(word);
+                }
+                else
+                {
+                    List<String> newList = new List<string>();
+                    newList.Add(word);
+
+                    anagramDict[uniqueKey] = resultLists.Count;
+                    resultLists.Add(newList);
+                }
+            }
+            return resultLists;
+        }
     }
 }

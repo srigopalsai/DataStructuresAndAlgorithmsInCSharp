@@ -53,7 +53,36 @@ namespace DataStructuresAndAlgorithms
             } return -1;
 
         }
-        
+
+        //240 https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+        public bool SearchMatrix(int[,] matrix, int target)
+        {
+            if (matrix == null || matrix.Length == 0)
+                return false;
+
+            int rowIndx = 0;
+            int rowLength = matrix.GetLength(0) - 1;
+            int colIndx = matrix.GetLength(1) - 1;
+
+            while (rowIndx <= rowLength && colIndx >= 0)
+            {
+                if (matrix[rowIndx, colIndx] == target)
+                {
+                    return true;
+                }
+                else if (matrix[rowIndx, colIndx] > target)
+                {
+                    --colIndx;
+                }
+                else
+                {
+                    ++rowIndx;
+                }
+            }
+
+            return false;
+        }
+
         //Non-Optimal - but best one in worst case.
         public void SearchSortedMatrixInNLogN(int[,] AssendMatix, int elementToSearch)
         {

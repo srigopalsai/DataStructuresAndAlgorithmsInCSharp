@@ -838,24 +838,24 @@ http://powercollections.codeplex.com
             if (curNode == null)
                 return itemsList;
 
-            Queue<TreeNode> trQ = new Queue<TreeNode>();
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
 
-            trQ.Enqueue(curNode);
-            int levelLen = 0;
+            tnQ.Enqueue(curNode);
+            int lvlNodeCnt = 0;
 
-            while (trQ.Count() > 0)
+            while (tnQ.Count() > 0)
             {
-                levelLen = trQ.Count();
+                lvlNodeCnt = tnQ.Count();
 
-                for (int lpCnt = 0; lpCnt < levelLen; lpCnt++)
+                for (int lpCnt = 0; lpCnt < lvlNodeCnt; lpCnt++)
                 {
-                    TreeNode tr = trQ.Dequeue();
+                    TreeNode tr = tnQ.Dequeue();
                     items.Add(tr.NodeValue);
 
                     if (tr.LeftNode != null)
-                        trQ.Enqueue(tr.LeftNode);
+                        tnQ.Enqueue(tr.LeftNode);
                     if (tr.RightNode != null)
-                        trQ.Enqueue(tr.RightNode);
+                        tnQ.Enqueue(tr.RightNode);
                 }
 
                 itemsList.Add(items);

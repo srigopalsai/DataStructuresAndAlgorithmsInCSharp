@@ -16,11 +16,11 @@ namespace DataStructuresAndAlgorithms
             int[,] cache = new int[matrix.GetLength(0), matrix.GetLength(1)];
             int max = 0;
 
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
                 {
-                    int length = findSmallAround(i, j, matrix, cache, int.MaxValue);
+                    int length = FindLargestAround(rIndx, cIndx, matrix, cache, int.MaxValue);
                     max = Math.Max(length, max);
                 }
             }
@@ -28,29 +28,27 @@ namespace DataStructuresAndAlgorithms
         }
 
 		//Flood Fill Approach
-        private int findSmallAround(int i, int j, int[,] matrix, int[,] cache, int pre)
+        private int FindLargestAround(int rIndx, int cIndx, int[,] matrix, int[,] cache, int prevVal)
         {
             // if out of bond OR current cell value larger than previous cell value.
-            if (i < 0 || i >= matrix.GetLength(0) || j < 0 || j >= matrix.GetLength(1) || matrix[i, j] >= pre)
+            if (rIndx < 0 || rIndx >= matrix.GetLength(0) || cIndx < 0 || cIndx >= matrix.GetLength(1) || matrix[rIndx, cIndx] >= prevVal)
                 return 0;
 
             // if calculated before, no need to do it again
-            if (cache[i, j] > 0)
-                return cache[i, j];
-            else
-            {
-                int cur = matrix[i, j];
-                int tempMax = 0;
+            if (cache[rIndx, cIndx] > 0)
+                return cache[rIndx, cIndx];
 
-                tempMax = Math.Max(findSmallAround(i - 1, j, matrix, cache, cur), tempMax);
-                tempMax = Math.Max(findSmallAround(i + 1, j, matrix, cache, cur), tempMax);
-                tempMax = Math.Max(findSmallAround(i, j - 1, matrix, cache, cur), tempMax);
-                tempMax = Math.Max(findSmallAround(i, j + 1, matrix, cache, cur), tempMax);
+            int cur = matrix[rIndx, cIndx];
+            int tempMax = 0;
 
-                cache[i, j] = ++tempMax;
+            tempMax = Math.Max(FindLargestAround(rIndx - 1, cIndx, matrix, cache, cur), tempMax);
+            tempMax = Math.Max(FindLargestAround(rIndx + 1, cIndx, matrix, cache, cur), tempMax);
+            tempMax = Math.Max(FindLargestAround(rIndx, cIndx - 1, matrix, cache, cur), tempMax);
+            tempMax = Math.Max(FindLargestAround(rIndx, cIndx + 1, matrix, cache, cur), tempMax);
 
-                return tempMax;
-            }
+            cache[rIndx, cIndx] = ++tempMax;
+
+            return tempMax;           
         }
     }
 }
