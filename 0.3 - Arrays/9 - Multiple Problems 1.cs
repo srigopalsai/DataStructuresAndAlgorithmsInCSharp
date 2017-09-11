@@ -5,6 +5,86 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms
 {
+    /*
+        http://en.wikipedia.org/wiki/Array_slicing
+        MSDN Notes http://msdn.microsoft.com/en-us/library/vstudio/26ts046k(v=vs.100).aspx
+        C# Sample http://www.dotnetperls.com/array-slice
+
+        var myArray = new Array(4,3,5,65);
+
+        // Copy all but the last element of myArray
+        // into newArray1.
+        var newArray1 = myArray.slice(0, -1)
+
+        // Copy only the last two elements of MyArray
+        // into newArray2.
+        var newArray2 = myArray.slice(-2)
+        -------------------------
+
+        http://www.sanfoundry.com/java-program-implement-vector/
+
+        ---------------------------
+
+         Associative array, map, symbol table, or dictionary is an abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.
+
+        Operations associated with this data type:
+
+        The addition of pairs to the collection
+        The removal of pairs from the collection
+        The modification of the values of existing pairs
+        The lookup of the value associated with a particular key
+
+        An e.g. By using hash table we can implement associative arrays.
+        Refer Hash table example (work in progress) in 7 - Searching Techniques
+
+        A multimap (sometimes also multihash) is a generalization of a map or associative array abstract data type in which more than one value may be associated with and returned for a given key.
+
+        http://www.sanfoundry.com/java-program-associate-array/
+---------------
+        //http://en.wikipedia.org/wiki/Bit_array
+        //A bit array (also known as bitmap, bitset, bit string, or bit vector) is an array data structure that compactly stores bits.
+        //A bit array is effective at exploiting bit-level parallelism in hardware to perform operations quickly.
+        -----------
+
+            http://en.wikipedia.org/wiki/Dynamic_array
+    A dynamic array, growable array, resizable array, dynamic table, mutable array, or array list is a random access, 
+        variable-size list data structure that allows elements to be added or removed. 
+    It is supplied with standard libraries in many modern mainstream programming languages.
+
+    A dynamic array is not the same thing as a dynamically allocated array, which is a fixed-size array whose size is fixed when the array is allocated.
+    Although a dynamic array may use such a fixed-size array as a back end.[1]
+
+    function insertEnd(dynarray a, element e)
+    if (a.size = a.capacity)
+        // resize a to twice its current capacity:
+        a.capacity ← a.capacity * 2  
+        // (copy the contents to the new memory location here)
+    a[a.size] ← e
+    a.size ← a.size + 1
+-----------------
+    http://en.wikipedia.org/wiki/Judy_array
+    A Judy array is a data structure that has high performance, low memory usage and implements an associative array. 
+    Unlike normal arrays, Judy arrays may be sparse, that is, they may have large ranges of unassigned indices. 
+    They can be used for storing and looking up values using integer or string keys. 
+    The key benefits of using a Judy array is its scalability, high performance, memory efficiency and ease of use
+    Drawbacks: The HP (SourceForge) implementation of Judy arrays appears to be the subject of US patent 6735595
+    http://www.google.com/patents/US6735595
+
+    Find repeated elements.
+    N/2 elements are distinct.
+----------------
+    //http://en.wikipedia.org/wiki/Parallel_array
+    //stride of an array (also referred to as increment, pitch or step size) refers to the number of locations in memory between beginnings of successive array elements, measured in bytes or in units of the size of the array's elements
+
+--------------
+
+    Given an Array, replace each element in the Array with its Next Element(To its RHS) which is Larger than it. If no such element exists, then no need to replace. 
+    Ex: 
+    i/p: {2,12,8,6,5,1,2,10,3,2} 
+    o/p:{12,12,10,10,10,2,10,10,3,2}http://www.careercup.com/question?id=6311825561878528
+
+        */
+
     public partial class ArraySamples
     {
         /*  Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal, 
