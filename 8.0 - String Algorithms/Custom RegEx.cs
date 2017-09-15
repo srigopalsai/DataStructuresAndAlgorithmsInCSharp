@@ -10,7 +10,8 @@ namespace DataStructuresAndAlgorithms
         // 'a' can occur zero or once in the beginning.
         // 'b' can occur once or more after a.
         // 'c' can occur zeor or more after b.
-        string CustomRegEx = "a?b+c*";
+        //string CustomRegEx = "a?b+c*";
+
         public bool MatchCustomRegEx(string inputStr)
         {
             if (string.IsNullOrWhiteSpace(inputStr))

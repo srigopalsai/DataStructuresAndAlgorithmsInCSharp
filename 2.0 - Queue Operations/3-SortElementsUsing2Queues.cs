@@ -49,7 +49,7 @@ namespace DataStructuresAndAlgorithms
             int queue1DequedElement = 0;
             int queue1InitialTempElement = queue1.Peek();
             int lpCntProcessedElemnts = 0;
-            bool isQueueSorted = false;
+            //bool isQueueSorted = false;
 
             //while (isQueueSorted == false)
             while(queue1.Count > 0)
@@ -78,7 +78,7 @@ namespace DataStructuresAndAlgorithms
                 // If Queue2 length is equals to Queue1Lenght then queue is sorted.
                 if (queue2.Count == queue1OriginalLength)
                 {
-                    isQueueSorted = true;
+                    //isQueueSorted = true;
                     break;
                 }
 

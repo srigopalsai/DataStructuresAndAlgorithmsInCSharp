@@ -16,7 +16,7 @@ namespace DataStructuresAndAlgorithms
 
     public class Immutable2DSumRangeQuery
     {
-        private int[][] T;
+        private int[,] mat;
 
         public Immutable2DSumRangeQuery(int[,] matrix)
         {
@@ -34,15 +34,15 @@ namespace DataStructuresAndAlgorithms
 
             }
 
-            int[,] T = new int[row + 1,col + 1];
+            mat = new int[row + 1,col + 1];
 
-            for (int i = 1; i < T.GetLength(0); i++)
+            for (int i = 1; i < mat.GetLength(0); i++)
             {
 
-                for (int j = 1; j < T.GetLength(1); j++)
+                for (int j = 1; j < mat.GetLength(1); j++)
                 {
 
-                    T[i,j] = T[i - 1,j] + T[i,j - 1] + matrix[i - 1,j - 1] - T[i - 1,j - 1];
+                    mat[i,j] = mat[i - 1,j] + mat[i,j - 1] + matrix[i - 1,j - 1] - mat[i - 1,j - 1];
 
                 }
 
@@ -52,14 +52,14 @@ namespace DataStructuresAndAlgorithms
 
 
 
-        public int sumQuery(int row1, int col1, int row2, int col2)
+        public int SumQuery(int row1, int col1, int row2, int col2)
         {
             row1++;
             col1++;
             row2++;
             col2++;
 
-            return T[row2][col2] - T[row1 - 1][col2] - T[row2][col1 - 1] + T[row1 - 1][col1 - 1];
+            return mat[row2,col2] - mat[row1 - 1,col2] - mat[row2,col1 - 1] + mat[row1 - 1,col1 - 1];
         }
 
 
@@ -74,7 +74,7 @@ namespace DataStructuresAndAlgorithms
 
             int[,] input1 = { { 2, 0, -3, 4 }, { 6, 3, 2, -1 }, { 5, 4, 7, 3 }, { 2, -6, 8, 1 } };
             Immutable2DSumRangeQuery isr = new Immutable2DSumRangeQuery(input1);
-            Console.WriteLine(isr.sumQuery(1, 1, 2, 2));
+            Console.WriteLine(isr.SumQuery(1, 1, 2, 2));
         }
     }
 }

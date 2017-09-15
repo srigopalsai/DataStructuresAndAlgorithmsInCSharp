@@ -19,7 +19,7 @@ namespace DataStructuresAndAlgorithms
                                      {'Y','A','H','O'}};
 
             string str2Find1 = "MICROSOFT";
-            string str2Find2 = "YAHOO";
+            //string str2Find2 = "YAHOO";
 
             char[] charArr2Find = str2Find1.ToCharArray();
             bool IsStringExists = IsStringExistsInMatrix(stringMatrix1, charArr2Find, 0, 0, 0);

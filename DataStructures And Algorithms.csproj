@@ -576,7 +576,7 @@
     <None Include="0.2 - Binary and Bitwise Operations\Bitwise Operations 50+ Samples.docx" />
     <Compile Include="0.3 - Arrays\9 - Multiple Problems 1.cs" />
     <None Include="0.4 - Recursion Back Tracking Back Jumping\Time Complexity Analysis of Recursive Functions.docx" />
-    <Compile Include="0.5 - Matrix\5.4 - Search - Longest Increasing Path.cs" />
+    <Compile Include="0.5 - Matrix\Matrix Multiple Problems.cs" />
     <None Include="4.0 - Trees\TreeAndGraphs.pptx" />
     <None Include="6.0 - Sorting Techniques\5.0 - MergeSort.pptx" />
     <Compile Include="6.0 - Sorting Techniques\5.1 Merge 2 Arrays In Sorted Order.cs" />

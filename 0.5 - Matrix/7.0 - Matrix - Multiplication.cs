@@ -22,6 +22,27 @@ namespace DataStructuresAndAlgorithms
     http://en.wikipedia.org/wiki/Don_Coppersmith
     
     */
+    class MatrixMultiplication
+    {
+        public void MultiplyMatrix(int[,] A, int[,] B, int[,] C)
+        {
+            int matLength = C.GetLength(0);
+
+            for (int rIndx = 0; rIndx < matLength; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < matLength; cIndx++)
+                {
+                    C[rIndx, cIndx] = 0;
+
+                    for (int tIndx = 0; tIndx < matLength; tIndx++) // Transpose Indx
+                    {
+                        C[rIndx, cIndx] += A[rIndx, tIndx] * B[tIndx, cIndx];
+                    }
+                }
+            }
+        }
+    }
+
     class CopperSmithWinogradAlgorithm
     {
     }

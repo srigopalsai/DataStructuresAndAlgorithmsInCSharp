@@ -217,7 +217,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         // Greater and Smaller are used as comparators
-        bool Compare(int a, int b)
+        new bool Compare(int a, int b)
         {
             return a > b;
         }
@@ -250,7 +250,7 @@ namespace DataStructuresAndAlgorithms
             return DeleteTop();
         }
 
-        bool Compare(int a, int b)
+        new bool Compare(int a, int b)
         {
             return a < b;
         }

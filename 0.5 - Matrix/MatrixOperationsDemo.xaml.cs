@@ -23,6 +23,7 @@ namespace DataStructuresAndAlgorithms
 
         private void FloodFillAlgorithmDemoButton_Click(object sender, RoutedEventArgs e)
         {
+            MatrixOperationsObj.IsStringExistsInMatrixTest();
             MatrixOperationsObj.FloodFillOrSeedFillAlgorithmTest();
         }
 
@@ -50,8 +51,6 @@ namespace DataStructuresAndAlgorithms
             MatrixOperationsObj.FindBiggestBlockInMatrix();
         }
 
-
-
         private void MazePuzzleDemoButton_Click(object sender, RoutedEventArgs e)
         {
             string result = MatrixOperationsObj.RunMazePuzzle();
@@ -61,6 +60,12 @@ namespace DataStructuresAndAlgorithms
         private void TransposeMatrixtton_Click(object sender, RoutedEventArgs e)
         {
             MatrixOperationsObj.TransposeMatrixTest();
+        }
+
+        private void MultipleSamples_Click(object sender, RoutedEventArgs e)
+        {
+            //MatrixOperationsObj.LongestIncreasingPathTest();
+            MatrixOperationsObj.UpdateMatrixTest();
         }
     }
 }

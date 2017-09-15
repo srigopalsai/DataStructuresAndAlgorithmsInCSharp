@@ -8,7 +8,7 @@ namespace DataStructuresAndAlgorithms
     class BinaryTreeOperations
     {
         public TreeNode RootdNode;
-        StringBuilder resultString;
+        StringBuilder resultString = new StringBuilder();
 
         public string PreOrderDisplay()
         {

@@ -70,12 +70,12 @@ namespace DataStructuresAndAlgorithms.Graphs
         http://www.cs.cornell.edu/~wdtseng/icpc/notes/graph_part3.pdf
     */
     public partial class MatrixOperations
-    {
-
+    {        
         int[,] graph = new int[128,128];
-        int n; // a weighted graph and its size
-
-        void floydWarshall()
+        int n = 0; // a weighted graph and its size
+        
+        // All pairs shortest path
+        void FloydWarshall()
         {
             for (int k = 0; k < n; k++)
             {
@@ -88,13 +88,13 @@ namespace DataStructuresAndAlgorithms.Graphs
                 }
             }
         }
-        void main()
+        void Main()
         {
             // initialize the graph[,] adjacency matrix and n        
             // graph[i,i] should be zero for all i.        
             // graph[i,j] should be "infinity" if edge (i, j) does not exist        
             // otherwise, graph[i,j] is the weight of the edge (i, j)
-            floydWarshall();
+            FloydWarshall();
             // now graph[i,j] is the length of the shortest path from i to j    }
 
         }

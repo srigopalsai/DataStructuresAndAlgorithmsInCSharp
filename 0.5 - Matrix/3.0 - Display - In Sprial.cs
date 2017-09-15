@@ -39,6 +39,113 @@ namespace DataStructuresAndAlgorithms
 
     public partial class MatrixOperations
     {
+
+        // LC 498. https://leetcode.com/problems/diagonal-traverse/description/
+        public int[] FindDiagonalOrder(int[,] matrix)
+        {
+            if (matrix == null || matrix.GetLength(0) == 0)
+            {
+                return new int[0];
+            }
+
+            int rowLength = matrix.GetLength(0);
+            int colLength = matrix.GetLength(1);
+
+            int[] result = new int[rowLength * colLength];
+            int rowIndx = 0;
+            int colIndx = 0;
+            int dIndx = 0;
+
+            int[,] directions = { { -1, 1 }, { 1, -1 } };
+
+            for (int index = 0; index < rowLength * colLength; index++)
+            {
+                result[index] = matrix[rowIndx , colIndx];
+
+                rowIndx += directions[dIndx, 0];
+                colIndx += directions[dIndx, 1];
+
+                if (rowIndx >= rowLength)
+                {
+                    rowIndx = rowLength - 1;
+                    colIndx += 2;
+                    dIndx = 1 - dIndx;
+                }
+                if (colIndx >= colLength)
+                {
+                    colIndx = colLength - 1;
+                    rowIndx += 2;
+                    dIndx = 1 - dIndx;
+                }
+                if (rowIndx < 0)
+                {
+                    rowIndx = 0;
+                    dIndx = 1 - dIndx;
+                }
+                if (colIndx < 0)
+                {
+                    colIndx = 0;
+                    dIndx = 1 - dIndx;
+                }
+            }
+
+            return result;
+        }
+
+        public int[] FindDiagonalOrder1(int[,] matrix)
+        {
+            if (matrix.Length == 0)
+            {
+                return new int[0];
+            }
+
+            int rowIndx = 0;
+            int colIndx = 0;
+            int rowLength = matrix.GetLength(0);
+            int colLength = matrix.GetLength(1);
+
+            int[] resultArray = new int[rowLength * colLength];
+
+            for (int index = 0; index < resultArray.Length; index++)
+            {
+                resultArray[index] = matrix[rowIndx,colIndx];
+
+                if ((rowIndx + colIndx) % 2 == 0) // Move Up
+                {
+                    if (colIndx == colLength - 1)
+                    {
+                        rowIndx++;
+                    }
+                    else if (rowIndx == 0)
+                    {
+                        colIndx++;
+                    }
+                    else
+                    {
+                        rowIndx--;
+                        colIndx++;
+                    }
+                }
+                else // Move Down
+                {
+                    if (rowIndx == rowLength - 1)
+                    {
+                        colIndx++;
+                    }
+                    else if (colIndx == 0)
+                    {
+                        rowIndx++;
+                    }
+                    else
+                    {
+                        rowIndx++;
+                        colIndx--;
+                    }
+                }
+            }
+            return resultArray;
+        }
+
         StringBuilder strRslt = new StringBuilder();
 
         //Need to fix. WIP

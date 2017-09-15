@@ -40,7 +40,7 @@ namespace DataStructuresAndAlgorithms.Graphs.Matrix
             AdjancencyMatrix = new int[graphLenght, graphLenght];
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return ShowAdjacencyMatrix();
         }
@@ -211,7 +211,7 @@ namespace DataStructuresAndAlgorithms.Graphs.Matrix
 
         public bool DetectLoop(int[,] a)
         {
-            int total = 0;
+            //int total = 0;
 
             for (int i = 0; i < a.GetLength(0); i++)
             {

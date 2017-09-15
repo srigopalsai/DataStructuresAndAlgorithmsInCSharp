@@ -8,7 +8,7 @@ namespace DataStructuresAndAlgorithms
 {
     /*
     ============================================================================================================================================================================================================================
-    This problem follow Depth First Search (DFS) apprach of graph, need to use stack if we wanted to avoid recursion
+    Recursive flood fill algorithm is DFS. You can do a BFS to convert it to nonrecursive.
     Refer Time Complexity here http://www.cs.bilkent.edu.tr/~gunduz/teaching/cs201/slides/Recitation4.pdf
     http://en.wikipedia.org/wiki/Flood_fill
     http://www.codecodex.com/wiki/Implementing_the_flood_fill_algorithm
@@ -35,6 +35,181 @@ namespace DataStructuresAndAlgorithms
         //Recursive case where we call recursive function.
     }
 
+    The simple 4-way recursive algorithm is pathological and consumes O(N) bytes of stack space where N is the number of pixels to fill. 
+    The queue method is a lot better, in the normal case you have a ring of O(sqrt(N)) pixels.
+    It is possible to devise an intricate fill pattern where you have more pixels in the queue and I'm not sure what the upper limit is. 
+
+    //Crashes if recursion stack is full
+    void floodFill8(int x, int y, int newColor, int oldColor)
+    {
+      if(x >= 0 && x < w && y >= 0 && y < h && screenBuffer[y][x] == oldColor && screenBuffer[y][x] != newColor)
+      {
+        screenBuffer[y][x] = newColor; //set color before starting recursion!
+
+        floodFill8(x + 1, y    , newColor, oldColor);
+        floodFill8(x - 1, y    , newColor, oldColor);
+        floodFill8(x    , y + 1, newColor, oldColor);
+        floodFill8(x    , y - 1, newColor, oldColor);
+        floodFill8(x + 1, y + 1, newColor, oldColor);
+        floodFill8(x - 1, y - 1, newColor, oldColor);
+        floodFill8(x - 1, y + 1, newColor, oldColor);
+        floodFill8(x + 1, y - 1, newColor, oldColor);
+      }
+    }
+
+        //4-way floodfill using our own stack routines
+void floodFill4Stack(int x, int y, int newColor, int oldColor)
+{
+  if(newColor == oldColor) return; //avoid infinite loop
+  emptyStack();
+
+  static const int dx[4] = {0, 1, 0, -1}; // relative neighbor x coordinates
+  static const int dy[4] = {-1, 0, 1, 0}; // relative neighbor y coordinates
+
+  if(!push(x, y)) return;
+  while(pop(x, y))
+  {
+    screenBuffer[y][x] = newColor;
+    for(int i = 0; i < 4; i++) {
+      int nx = x + dx[i];
+      int ny = y + dy[i];
+      if(nx > 0 && nx < w && ny > 0 && ny < h && screenBuffer[ny][nx] == oldColor) {
+        if(!push(nx, ny)) return;
+      }
+    }
+  }
+}
+
+        //8-way floodfill using our own stack routines
+void floodFill4Stack(int x, int y, int newColor, int oldColor)
+{
+  if(newColor == oldColor) return; //avoid infinite loop
+  emptyStack();
+
+  static const int dx[8] = {0, 1, 1, 1, 0, -1, -1, -1}; // relative neighbor x coordinates
+  static const int dy[8] = {-1, -1, 0, 1, 1, 1, 0, -1}; // relative neighbor y coordinates
+
+  if(!push(x, y)) return;
+  while(pop(x, y))
+  {
+    screenBuffer[y][x] = newColor;
+    for(int i = 0; i < 8; i++) {
+      int nx = x + dx[i];
+      int ny = y + dy[i];
+      if(nx > 0 && nx < w && ny > 0 && ny < h && screenBuffer[ny][nx] == oldColor) {
+        if(!push(nx, ny)) return;
+      }
+    }
+  }
+}
+
+        //stack friendly and fast floodfill algorithm
+void floodFillScanline(int x, int y, int newColor, int oldColor)
+{
+  if(oldColor == newColor) return;
+  if(screenBuffer[y][x] != oldColor) return;
+
+  int x1;
+
+  //draw current scanline from start position to the right
+  x1 = x;
+  while(x1 < w && screenBuffer[y][x1] == oldColor)
+  {
+    screenBuffer[y][x1] = newColor;
+    x1++;
+  }
+
+  //draw current scanline from start position to the left
+  x1 = x - 1;
+  while(x1 >= 0 && screenBuffer[y][x1] == oldColor)
+  {
+    screenBuffer[y][x1] = newColor;
+    x1--;
+  }
+
+  //test for new scanlines above
+  x1 = x;
+  while(x1 < w && screenBuffer[y][x1] == newColor)
+  {
+    if(y > 0 && screenBuffer[y - 1][x1] == oldColor)
+    {
+      floodFillScanline(x1, y - 1, newColor, oldColor);
+    }
+    x1++;
+  }
+  x1 = x - 1;
+  while(x1 >= 0 && screenBuffer[y][x1] == newColor)
+  {
+    if(y > 0 && screenBuffer[y - 1][x1] == oldColor)
+    {
+      floodFillScanline(x1, y - 1, newColor, oldColor);
+    }
+    x1--;
+  }
+
+  //test for new scanlines below
+  x1 = x;
+  while(x1 < w && screenBuffer[y][x1] == newColor)
+  {
+    if(y < h - 1 && screenBuffer[y + 1][x1] == oldColor)
+    {
+      floodFillScanline(x1, y + 1, newColor, oldColor);
+    }
+    x1++;
+  }
+  x1 = x - 1;
+  while(x1 >= 0 && screenBuffer[y][x1] == newColor)
+  {
+    if(y < h - 1 && screenBuffer[y + 1][x1] == oldColor)
+    {
+      floodFillScanline(x1, y + 1, newColor, oldColor);
+    }
+    x1--;
+  }
+}
+
+        //The scanline floodfill algorithm using our own stack routines, faster
+void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
+{
+  if(oldColor == newColor) return;
+  emptyStack();
+
+  int x1;
+  bool spanAbove, spanBelow;
+
+  if(!push(x, y)) return;
+
+  while(pop(x, y))
+  {
+    x1 = x;
+    while(x1 >= 0 && screenBuffer[y][x1] == oldColor) x1--;
+    x1++;
+    spanAbove = spanBelow = 0;
+    while(x1 < w && screenBuffer[y][x1] == oldColor )
+    {
+      screenBuffer[y][x1] = newColor;
+      if(!spanAbove && y > 0 && screenBuffer[y - 1][x1] == oldColor)
+      {
+        if(!push(x1, y - 1)) return;
+        spanAbove = 1;
+      }
+      else if(spanAbove && y > 0 && screenBuffer[y - 1][x1] != oldColor)
+      {
+        spanAbove = 0;
+      }
+      if(!spanBelow && y < h - 1 && screenBuffer[y + 1][x1] == oldColor)
+      {
+        if(!push(x1, y + 1)) return;
+        spanBelow = 1;
+      }
+      else if(spanBelow && y < h - 1 && screenBuffer[y + 1][x1] != oldColor)
+      {
+        spanBelow = 0;
+      }
+      x1++;
+    }
+  }
+}
     ============================================================================================================================================================================================================================
 
     */
@@ -122,82 +297,29 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show(strBlrd.ToString());
         }
 
-        //int FloodFillOrSeedFillAlgorithm(int[,] matrix2Fill, int rowPos, int colPos)
-        //{
-        //    try
-        //    {
-        //        //if (rowPos < 0 || colPos < 0 || rowPos >= matrix2Fill.GetLength(0) || colPos >= matrix2Fill.GetLength(1))
-        //        {
-        //          //  return 0;
-        //        }
-
-        //        if (matrix2Fill[rowPos, colPos] != 1)
-        //        {
-        //            return 0;
-        //        }
-
-        //        // Just fill                 
-        //        matrix2Fill[rowPos, colPos] = 2;
-
-        //        int visitLeft = 0;
-        //        int visitRight = 0;
-        //        int visitTop = 0;
-        //        int visitBottom = 0;
-
-        //        if (rowPos + 1 < matrix2Fill.GetLength(0) && matrix2Fill[rowPos + 1,colPos] != 0)
-        //        {
-        //            visitLeft = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos + 1, colPos);    // East 
-        //        }
-        //        if (colPos - 1 >=0 && matrix2Fill[rowPos, colPos - 1] != 0)
-        //        {
-        //            visitRight = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos, colPos - 1);    // North
-        //        }
-        //        if (rowPos - 1 >=0 && matrix2Fill[rowPos - 1, colPos] != 0)
-        //        {
-        //            visitTop = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos - 1, colPos);    // West
-        //        }
-        //        if (colPos + 1 < matrix2Fill.GetLength(1) && matrix2Fill[rowPos ,colPos + 1] != 0)
-        //        {
-        //            visitBottom = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos, colPos + 1);    // South
-        //        }
-
-        //        return 1 + visitLeft + visitRight + visitTop + visitBottom;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Exception raised " + ex.Message + "\n" + ex.StackTrace);
-        //        return -1;
-        //    }
-        //}
-
-        int FloodFillOrSeedFillAlgorithm(int[,] matrix2Fill, int rowPos, int colPos)
+        int FloodFillOrSeedFillAlgorithm(int[,] matrix, int rIndx, int cIndx)
         {
             try
             {
                 // Base conditions.
-                if (matrix2Fill == null)
+                if (matrix == null || rIndx < 0 || cIndx < 0 || rIndx >= matrix.GetLength(0) || cIndx >= matrix.GetLength(1))
                 {
                     return 0;
                 }
 
-                if (rowPos < 0 || colPos < 0 || rowPos >= matrix2Fill.GetLength(0) || colPos >= matrix2Fill.GetLength(1))
-                {
-                    return 0;
-                }
-
-                if (matrix2Fill[rowPos, colPos] != 1)
+                if (matrix[rIndx, cIndx] != 1)
                 {
                     return 0;
                 }
 
                 // Just fill
-                matrix2Fill[rowPos, colPos] = 2;
+                matrix[rIndx, cIndx] = 2;
 
                 // Visit east, west, north and south
-                int visitLeft = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos - 1, colPos);      // West
-                int visitRight = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos + 1, colPos);     // East 
-                int visitTop = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos, colPos - 1);       // North
-                int visitBottom = FloodFillOrSeedFillAlgorithm(matrix2Fill, rowPos, colPos + 1);    // South
+                int visitLeft = FloodFillOrSeedFillAlgorithm(matrix, rIndx - 1, cIndx);      // West
+                int visitRight = FloodFillOrSeedFillAlgorithm(matrix, rIndx + 1, cIndx);     // East 
+                int visitTop = FloodFillOrSeedFillAlgorithm(matrix, rIndx, cIndx - 1);       // North
+                int visitBottom = FloodFillOrSeedFillAlgorithm(matrix, rIndx, cIndx + 1);    // South
 
                 return 1 + visitLeft + visitRight + visitTop + visitBottom;
             }
@@ -210,38 +332,39 @@ namespace DataStructuresAndAlgorithms
 
         void FloodFillIterative()
         {
-            /*            bool M[128][128];  // adjacency matrix (can have at most 128 vertices)     bool seen[128];   // which vertices have been visited     int n;   // number of vertices         // ... Initialize M to be the adjacency matrix     queue<int> q;  // The BFS queue to represent the visited set     int s = 0;     // the source vertex     
+            /*            bool M[128,128];  // adjacency matrix (can have at most 128 vertices)     bool seen[128];   // which vertices have been visited     int n;   // number of vertices         // ... Initialize M to be the adjacency matrix     queue<int> q;  // The BFS queue to represent the visited set     int s = 0;     // the source vertex     
             CPSC 490 Graph Theory: DFS andBFS 
                 // BFS flood­fill     for( int v = 0; v < n; v++ ) seen[v] = false;   // set all vertices to be "unvisited"     seen[s] = true;     DoColouring( s, some_color );     q.push( s );
-                while (!q.empty() ) {         int u = q.front();  // get first un­touched vertex         q.pop();         for( int v = 0; v < n; v++ ) if( !seen[v] && M[u][v] ) {             seen[v] = true;             DoColouring( v, some_color );             q.push( v );         }     }
+                while (!q.empty() ) {         int u = q.front();  // get first un­touched vertex         q.pop();         for( int v = 0; v < n; v++ ) if( !seen[v] && M[u,v] ) {             seen[v] = true;             DoColouring( v, some_color );             q.push( v );         }     }
                 */
         }
         //Assume array is 100 X 100. Some logic optimization.
-        void FillMatrix(int[][] squareMatrix, int xPosition, int yPosition)
+        void FillMatrix(int[,] matrix, int rIndx, int cIndx)
         {
             try
             {
-                if (squareMatrix[xPosition][yPosition] == 1)
+                if (matrix[rIndx,cIndx] == 1)
                 {
                     return;
                 }
-                squareMatrix[xPosition][yPosition] = 2;
 
-                if (xPosition < 99 && squareMatrix[xPosition + 1][yPosition] != 1)
+                matrix[rIndx,cIndx] = 2;
+
+                if (rIndx < 99 && matrix[rIndx + 1,cIndx] != 1)
                 {
-                    FillMatrix(squareMatrix, xPosition + 1, yPosition);
+                    FillMatrix(matrix, rIndx + 1, cIndx);
                 }
-                if (xPosition > 0 && squareMatrix[xPosition - 1][yPosition] != 1)
+                if (rIndx > 0 && matrix[rIndx - 1,cIndx] != 1)
                 {
-                    FillMatrix(squareMatrix, xPosition - 1, yPosition);
+                    FillMatrix(matrix, rIndx - 1, cIndx);
                 }
-                if (yPosition < 99 && squareMatrix[xPosition][yPosition + 1] != 1)
+                if (cIndx < 99 && matrix[rIndx,cIndx + 1] != 1)
                 {
-                    FillMatrix(squareMatrix, xPosition, yPosition + 1);
+                    FillMatrix(matrix, rIndx, cIndx + 1);
                 }
-                if (yPosition > 0 && squareMatrix[xPosition][yPosition - 1] != 1)
+                if (cIndx > 0 && matrix[rIndx,cIndx - 1] != 1)
                 {
-                    FillMatrix(squareMatrix, xPosition, yPosition - 1);
+                    FillMatrix(matrix, rIndx, cIndx - 1);
                 }
             }
             catch (Exception exception)
@@ -249,5 +372,40 @@ namespace DataStructuresAndAlgorithms
                 throw new Exception("Something went wrong : " + exception.Message + "\n" + exception.StackTrace.ToString());
             }
         }
+
+        void floodFill4Stack(int[,] matrix, int x, int y, int newColor, int oldColor)
+        {
+            if (newColor == oldColor) return; //avoid infinite loop
+
+            Stack<Tuple<int, int>> stack = new Stack<Tuple<int, int>>();
+
+
+            int[] dx = { 0, 1, 1, 1, 0, -1, -1, -1 }; // relative neighbor x coordinates
+            int[] dy = { -1, -1, 0, 1, 1, 1, 0, -1 }; // relative neighbor y coordinates
+
+            stack.Push(new Tuple<int, int>(x, y));
+
+            while (stack.Count > 0)
+            {
+                Tuple<int, int> tpl = stack.Pop();
+
+                x = tpl.Item1;
+                y = tpl.Item2;
+                
+                matrix[y ,x] = newColor;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
+
+                    if (nx > 0 && nx < matrix.GetLength(0) && ny > 0 && ny < matrix.GetLength(1) && matrix[ny,nx] == oldColor)
+                    {
+                        stack.Push(new Tuple<int, int>(nx, ny));
+                    }
+                }
+            }
+        }
+
     }
 }

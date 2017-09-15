@@ -31,7 +31,7 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show("B VDisplay");
         }
 
-        public void Display()
+        public new void Display()
         {
             MessageBox.Show("B Display");
         }

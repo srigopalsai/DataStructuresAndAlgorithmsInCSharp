@@ -216,7 +216,7 @@ namespace DataStructuresAndAlgorithms
 }
 class A
 {
-	public int i;
+	//public int i;
 	public A GetClone()
 	{
 		return (A)this.MemberwiseClone();

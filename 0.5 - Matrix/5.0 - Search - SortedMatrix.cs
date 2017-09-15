@@ -36,7 +36,7 @@ namespace DataStructuresAndAlgorithms
         //http://stackoverflow.com/questions/3723353/how-to-efficiently-search-in-an-ordered-matrix?rq=1
 
 
-        public int BinarySearchOnSortedMatrix(int[,] SortedMatrix, int elementToSearch)
+        public bool BinarySearchOnSortedMatrix(int[,] SortedMatrix, int elementToSearch)
         {
             bool foundFlag = false;
             for (int lpRCnt = SortedMatrix.GetLength(0) - 1; lpRCnt >= 0; )
@@ -50,7 +50,7 @@ namespace DataStructuresAndAlgorithms
                     }
                     //else
                 } 
-            } return -1;
+            } return foundFlag;
 
         }
 

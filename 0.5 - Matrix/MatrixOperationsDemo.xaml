@@ -16,6 +16,8 @@
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="200"></RowDefinition>
             </Grid.RowDefinitions>
 
@@ -32,6 +34,7 @@
             <Button Grid.Row="5" Grid.Column="1"  HorizontalContentAlignment="Left" Name="ReplaceZeroColumnNRows" Content=" 6 - Replace Zero Column and Rows" Click="ReplaceZeroColumnNRows_Click"></Button>
             <Button Grid.Row="6" Grid.Column="1"  HorizontalContentAlignment="Left" Name="MazePuzzleDemoButton" Content=" 7 - Maze Puzzle" Click="MazePuzzleDemoButton_Click"></Button>
             <Button Grid.Row="7" Grid.Column="1"  HorizontalContentAlignment="Left" Name="TransposeMatrixtton" Content=" 8 - Transepose Matrix" Click="TransposeMatrixtton_Click"></Button>
+            <Button Grid.Row="8" Grid.Column="1"  HorizontalContentAlignment="Left" Name="MultipleSamples" Content=" 9 - Multiple Samples" Click="MultipleSamples_Click"></Button>
         </Grid>
     </Grid>
 </Window>
