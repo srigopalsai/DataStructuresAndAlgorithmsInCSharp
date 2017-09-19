@@ -211,7 +211,6 @@
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Minimum Steps By Knight.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Graph Traversal.cs" />
     <Compile Include="5.4 - Graphs\2 - Adjacency List\Check Removing Edge Disconnects Graph.cs" />
-    <Compile Include="5.4 - Graphs\2 - Adjacency List\Graph Traversal.cs" />
     <Compile Include="5.4 - Graphs\2 - Adjacency List\Handshaking Lamma - Count No Of Edges In Undirected Graph.cs" />
     <Compile Include="5.4 - Graphs\2 - Adjacency List\Iterative Deepening Search.cs" />
     <Compile Include="5.4 - Graphs\2 - Adjacency List\Minimum Weight Cycle.cs" />

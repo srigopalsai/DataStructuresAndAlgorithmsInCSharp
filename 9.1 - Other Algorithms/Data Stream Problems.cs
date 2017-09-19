@@ -96,9 +96,11 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
     }
 
     // LC 295 Median from Data Stream
-    //------------------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------------------------------------
     // https://leetcode.com/problems/find-median-from-data-stream/description/
     // https://www.programcreek.com/2015/01/leetcode-find-median-from-data-stream-java/
+
+    // Using Ordered Multi Set (Sorted Set and Dictionary)
     public class MedianFinder
     {
         private class OrderedMultiSet
@@ -181,6 +183,7 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
         }
     }
 
+    // With Custom Priority Queue class (heap)
     public class MedianFinder1
     {
         // minPQ.Count >= maxPQ.Count
@@ -304,8 +307,47 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
         }
     }
 
+    // List & Binary Search
+    public class MedianFinder2
+    {
+        List<int> nums;
+
+        public MedianFinder2()
+        {
+            nums = new List<int>();
+        }
+
+        public void AddNum(int num)
+        {
+            int index = nums.BinarySearch(num);
+
+            if (index < 0)
+            {
+                nums.Insert(~index, num);
+            }
+            else
+            {
+                nums.Insert(index, num);
+            }
+        }
+
+        public double FindMedian()
+        {
+            double median = nums[nums.Count / 2];
+
+            if (nums.Count % 2 == 0)
+            {
+                median += nums[nums.Count / 2 - 1];
+                median /= 2;
+            }
+            return median;
+        }
+    }
+    
+    // Using Sorted Set
     public class MedianFinder3
     {
+        // For threadsafty we can use ImmutableSortedSet.
         SortedSet<Tuple<int, int>> maxSet;
         SortedSet<Tuple<int, int>> minSet;
 
@@ -348,8 +390,53 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
             }
         }
     }
+
+
     // LC 352 Data Stream as Disjoint Interval
     //------------------------------------------------------------------------------------------------------------
     // https://leetcode.com/problems/data-stream-as-disjoint-intervals/description/
     // https://www.programcreek.com/2014/08/leetcode-data-stream-as-disjoint-intervals-java/
+
+    public class SummaryRanges
+    {
+        //TreeMap<Integer, Interval> tree;
+
+        //public SummaryRanges()
+        //{
+        //    tree = new TreeMap<>();
+        //}
+
+        //public void addNum(int val)
+        //{
+        //    if (tree.containsKey(val))
+        //        return;
+
+        //    Integer l = tree.lowerKey(val);
+        //    Integer h = tree.higherKey(val);
+
+        //    if (l != null && h != null && tree.get(l).end + 1 == val && h == val + 1)
+        //    {
+        //        tree.get(l).end = tree.get(h).end;
+        //        tree.remove(h);
+        //    }
+        //    else if (l != null && tree.get(l).end + 1 >= val)
+        //    {
+        //        tree.get(l).end = Math.max(tree.get(l).end, val);
+        //    }
+        //    else if (h != null && h == val + 1)
+        //    {
+        //        tree.put(val, new Interval(val, tree.get(h).end));
+        //        tree.remove(h);
+        //    }
+        //    else
+        //    {
+        //        tree.put(val, new Interval(val, val));
+        //    }
+        //}
+
+        //public List<Interval> getIntervals()
+        //{
+        //    return new ArrayList<>(tree.values());
+        //}
+    }
 }

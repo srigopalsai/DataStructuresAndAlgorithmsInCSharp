@@ -365,9 +365,41 @@ namespace DataStructuresAndAlgorithms
     // Given a stream of unsorted integers, find the median element in sorted order at any given time.
     // http://www.ardendertat.com/2011/11/03/programming-interview-questions-13-median-of-integer-stream/
     // https://gist.github.com/Vedrana/3675434
+    /*
+        Adding number 41
+        MaxHeap lo: [41]           // MaxHeap stores the largest value at the top (index 0)
+        MinHeap hi: []             // MinHeap stores the smallest value at the top (index 0)
+        Median is 41
+        =======================
+        Adding number 35
+        MaxHeap lo: [35]
+        MinHeap hi: [41]
+        Median is 38
+        =======================
+        Adding number 62
+        MaxHeap lo: [41, 35]
+        MinHeap hi: [62]
+        Median is 41
+        =======================
+        Adding number 4
+        MaxHeap lo: [35, 4]
+        MinHeap hi: [41, 62]
+        Median is 38
+        =======================
+        Adding number 97
+        MaxHeap lo: [41, 35, 4]
+        MinHeap hi: [62, 97]
+        Median is 41
+        =======================
+        Adding number 108
+        MaxHeap lo: [41, 35, 4]
+        MinHeap hi: [62, 97, 108]
+        Median is 51.5
+        */
     public class MedianOfIntegerStream
     {
-
+        // A max-heap to store the smaller half of the input numbers
+        // A min-heap to store the larger half of the input numbers
         public Queue<int> MinHeap;
         public Queue<int> MaxHeap;
         public int numOfElements;
@@ -380,6 +412,7 @@ namespace DataStructuresAndAlgorithms
             numOfElements = 0;
         }
 
+        // If Priority Queue O (log n) time for adding.
         public void AddNumberToMediansList(int num)
         {
             MaxHeap.Enqueue(num);
@@ -398,6 +431,8 @@ namespace DataStructuresAndAlgorithms
                     int minHeapRoot = MinHeap.Dequeue();
 
                     MaxHeap.Enqueue(minHeapRoot);
+                    MaxHeap = new Queue<int>(MaxHeap.OrderBy(item => item));
+
                     MinHeap.Enqueue(maxHeapRoot);
                 }
             }

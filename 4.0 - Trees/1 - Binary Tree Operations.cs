@@ -91,6 +91,36 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
+        public bool NewMirrorTreeRecursive(TreeNode root)
+        {
+            if (root == null)
+                return true;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            stack.Push(root.LeftNode);
+            stack.Push(root.RightNode);
+
+            while (stack.Count() > 0)
+            {
+                TreeNode n1Left = stack.Pop();
+                TreeNode n2Left = stack.Pop();
+
+                if (n1Left == null && n2Left == null)
+                    continue;
+
+                if (n1Left == null || n2Left == null || n1Left.NodeValue != n2Left.NodeValue)
+                    return false;
+
+                stack.Push(n1Left.LeftNode);
+                stack.Push(n2Left.RightNode);
+
+                stack.Push(n1Left.RightNode);
+                stack.Push(n2Left.LeftNode);
+            }
+
+            return true;
+        }
+
         // Mirror image of itself 
         public bool IsSymmetric(TreeNode root)
         {
