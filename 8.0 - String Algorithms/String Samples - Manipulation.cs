@@ -409,5 +409,65 @@ Space Complexity O(N)
             }
             return resultLists;
         }
+
+        // 415 Implement LargeInt Additions https://leetcode.com/problems/add-strings/description/
+        public String AddStrings(String num1Str, String num2Str)
+        {
+            StringBuilder strBldr = new StringBuilder();
+
+            int num1 = 0;
+            int num2 = 0;
+
+            int num1Indx = num1Str.Length - 1;
+            int num2Indx = num2Str.Length - 1;
+
+            int carry = 0;
+            int curSum = 0;
+
+            while ( num1Indx >= 0 || num2Indx >= 0 || carry == 1)
+            {
+                num1 = num1Indx < 0 ? 0 : num1Str[num1Indx] - '0';
+                num2 = num2Indx < 0 ? 0 : num2Str[num2Indx] - '0';
+
+                curSum = num1 + num2 + carry;
+
+                strBldr.Append(curSum % 10);
+                carry = curSum / 10;
+
+                num1Indx--;
+                num2Indx--;
+            }
+
+            return  new string(strBldr.ToString().Reverse().ToArray());
+        }
+
+        public string AddStrings2(string num1Str, string num2Str)
+        {
+            StringBuilder strBldr = new StringBuilder();
+            int q = 0;
+            int c = 0;
+
+            int num1Len = num1Str.Length;
+            int num2Len = num2Str.Length;
+
+            for (int index = 0; index < Math.Max(num1Len, num2Len); index++)
+            {
+                int da = index < num1Len ? num1Str[num1Len - index - 1] - '0' : 0;
+                int db = index < num2Len ? num2Str[num2Len - index - 1] - '0' : 0;
+
+                c = da + db + q;
+
+                strBldr.Append((char)((int)'0' + (c % 10)));
+
+                q = c / 10;
+            }
+
+            if (q > 0)
+            {
+                strBldr.Append('1');
+            }
+
+            return new string(strBldr.ToString().Reverse().ToArray());
+        }
     }
 }

@@ -402,5 +402,103 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             }
         }
 
+        // 4 https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+        // FindMedianSortedArrays(new int[] { 10, 30, 50, 70, 90 }, new int[] { 20, 40, 60, 80, 100 });
+        public double FindMedianSortedArrays(int[] nums1, int[] nums2)
+        {
+            int nums1Length = nums1.Length;
+            int Nmus2Length = nums2.Length;
+
+            if (nums1Length < Nmus2Length)
+            {
+                return FindMedianSortedArrays(nums2, nums1);    // Make sure nums2 is the shorter one.
+            }
+
+            int lowIndx = 0;
+            int hiIndx = Nmus2Length * 2;
+
+            while (lowIndx <= hiIndx)
+            {
+                int mid2Indx = (lowIndx + hiIndx) / 2;   // Try Cut 2 
+                int mid1Indx = nums1Length + Nmus2Length - mid2Indx;  // Calculate Cut 1 accordingly
+
+                double nums1LeftMidVal = (mid1Indx == 0) ? int.MinValue : nums1[(mid1Indx - 1) / 2];    // Get L1, R1, L2, R2 respectively
+                double nums2LeftMidVal = (mid2Indx == 0) ? int.MinValue : nums2[(mid2Indx - 1) / 2];
+
+                double nums1RightMidVal = (mid1Indx == nums1Length * 2) ? int.MaxValue : nums1[(mid1Indx) / 2];
+                double nums2RightMidVal = (mid2Indx == Nmus2Length * 2) ? int.MaxValue : nums2[(mid2Indx) / 2];
+
+                if (nums1LeftMidVal > nums2RightMidVal)
+                {
+                    lowIndx = mid2Indx + 1;
+                }
+                else if (nums2LeftMidVal > nums1RightMidVal)
+                {
+                    hiIndx = mid2Indx - 1;
+                }
+                else
+                {
+                    return (Math.Max(nums1LeftMidVal, nums2LeftMidVal) + Math.Min(nums1RightMidVal, nums2RightMidVal)) / 2;
+                }
+            }
+
+            return -1;
+        }
+
+        public double FindMedianSortedArrays2(int[] nums1, int[] nums2)
+        {
+            int nums1Len = nums1.Length;
+            int nums2Len = nums2.Length;
+
+            int totalLen = nums1Len + nums2Len;
+
+            if (totalLen % 2 == 0)
+            {
+                return (FindKthValue(nums1, nums2, totalLen / 2) + FindKthValue(nums1, nums2, totalLen / 2 + 1)) / 2.0;
+            }
+            else
+            {
+                return FindKthValue(nums1, nums2, totalLen / 2 + 1);
+            }
+        }
+
+        private int FindKthValue(int[] nums1, int[] nums2, int kthPos)
+        {
+            int midPos1 = 0;
+            int midPos2 = 0;
+
+            for (int index = 0; index < kthPos - 1; index++)
+            {
+                if (midPos1 >= nums1.Length && midPos2 < nums2.Length)
+                {
+                    midPos2++;
+                }
+                else if (midPos2 >= nums2.Length && midPos1 < nums1.Length)
+                {
+                    midPos1++;
+                }
+                else if (nums1[midPos1] > nums2[midPos2])
+                {
+                    midPos2++;
+                }
+                else
+                {
+                    midPos1++;
+                }
+            }
+
+            if (midPos1 >= nums1.Length)
+            {
+                return nums2[midPos2];
+            }
+            else if (midPos2 >= nums2.Length)
+            {
+                return nums1[midPos1];
+            }
+            else
+            {
+                return Math.Min(nums1[midPos1], nums2[midPos2]);
+            }
+        }
     }
 }
