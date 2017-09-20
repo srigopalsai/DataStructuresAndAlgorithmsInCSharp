@@ -903,6 +903,106 @@ More About Bases
             //=======================================================================================================================================================
             MessageBox.Show(strRslt.ToString());
         }
+        // 67 https://leetcode.com/problems/add-binary/description/
+        //http://www.wikihow.com/Add-Binary-Numbers http://www.wikihow.com/Read-Binary
+        public String AddBinary(String binaryStr1, String binaryStr2)
+        {
+            StringBuilder strBldr = new StringBuilder();
+
+            int str1Indx = binaryStr1.Length - 1;
+            int str2Indx = binaryStr2.Length - 1;
+
+            int carry = 0;
+            int sum = 0;
+
+            while (str1Indx >= 0 || str2Indx >= 0)
+            {
+                sum = carry;
+
+                if (str2Indx >= 0)
+                {
+                    sum += binaryStr2[str2Indx] - '0';
+                    str2Indx--;
+                }
+
+                if (str1Indx >= 0)
+                {
+                    sum += binaryStr1[str1Indx] - '0';
+                    str1Indx--;
+                }
+
+                strBldr.Append(sum % 2);
+                carry = sum / 2;
+            }
+
+            if (carry != 0)
+            {
+                strBldr.Append(carry);
+            }
+
+            return new string(strBldr.ToString().Reverse().ToArray());
+        }
+
+        public List<List<int>> CombinationSum3(int k, int n)
+        {
+            List<List<int>> ans = new List<List<int>>();
+            Combination(ans, new List<int>(), k, 1, n);
+            return ans;
+        }
+
+        private void Combination(List<List<int>> ans, List<int> comb, int k, int start, int n)
+        {
+            if (comb.Count == k && n == 0)
+            {
+                List<int> li = new List<int>(comb);
+                ans.Add(li);
+                return;
+            }
+            for (int index = start; index <= 9; index++)
+            {
+                comb.Add(index);
+
+                Combination(ans, comb, k, index + 1, n - index);
+
+                comb.Remove(comb.Count - 1);
+            }
+        }
+
+        // Failing
+        IList<IList<int>> CombinationSum3Itr(int k, int n)
+        {
+            IList<IList<int>> ret = new List<IList<int>>();
+
+            List<int> path = new List<int>(k);
+            int i = 0;
+            int curSum = 0;
+
+            while (i != -1)
+            {
+                path[i]++;
+                curSum++;
+                if (path[i] > 9 || curSum > n || (i != k - 1 && curSum + path[i] >= n))
+                {
+                    curSum -= path[i];
+                    i--;
+                }
+                else if (i == k - 1)
+                {
+                    if (curSum == n)
+                    {
+                        ret.Add(path);
+                    }
+                }
+                else if (curSum + path[i] < n)
+                {
+                    path[i + 1] = path[i];
+                    curSum += path[i];
+                    i++;
+                }
+            }
+            return ret;
+        }
+
     }
 }
 /*

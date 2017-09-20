@@ -43,13 +43,11 @@ namespace DataStructuresAndAlgorithms
     {
         static int[] ArrayNums = new int[] { 1, 5, 7, 3, 6, 8, 2, 4 };
 
-        // O(N) Extra Space for Pre Processing
-        static HashSet<Int64> CSquaredArrayNums = new HashSet<long>();
-
+        // O(N) Extra Space for Pre Processing       
         public static String FindTripletInArray()
         {
             int NoOfElements = ArrayNums.Length;
-            CSquaredArrayNums.Clear();
+            HashSet<Int64> CSquaredArrayNums = new HashSet<long>();
 
             // O(N) Time for Pre processing.
             for (int lpCnt = 0; lpCnt < NoOfElements ; lpCnt++)

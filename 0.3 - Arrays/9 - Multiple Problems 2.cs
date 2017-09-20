@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace DataStructuresAndAlgorithms
 {
+    /*
+    TODO 
+    Sorted Vector:    http://www.sanfoundry.com/java-program-sorted-vecto/
+    Alternate Positive and Negative     http://www.geeksforgeeks.org/rearrange-array-alternating-positive-negative-items-o1-extra-space/
+
+*/
     class RandomArrayProblems
     {
+        StringBuilder stringBldr = new StringBuilder();
         public void Test()
         {
             int[] srcArray = { 4, 5, 6, 0, 0, 0 };
@@ -122,5 +130,277 @@ namespace DataStructuresAndAlgorithms
 
             return resultSet.ToArray();
         }
+
+        public void LongestPalindromeTest()
+        {
+            int[] palindromeNum = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1 };
+            IsPalindrome(palindromeNum);
+
+            palindromeNum = new int[] { 1, 2, 3, 3, 2, 1 };
+            IsPalindrome(palindromeNum);
+
+        }
+
+        public void IsPalindrome(int[] palindromeNum)
+        {
+            int lpleftCntr = palindromeNum.Length / 2;
+            int lpRightCntr = (lpleftCntr + 1);
+
+            if (palindromeNum.Length % 2 == 0)
+            {
+                lpRightCntr++;
+            }
+
+            while (lpleftCntr >= 0 && lpRightCntr < palindromeNum.Length)
+            {
+                if (palindromeNum[lpleftCntr] != palindromeNum[lpRightCntr])
+                {
+                    break;
+                }
+
+                lpleftCntr--;
+                lpRightCntr++;
+            }
+
+            stringBldr.Clear();
+
+            for (int lpCnt = lpleftCntr + 1; lpCnt < lpRightCntr; lpCnt++)
+            {
+                stringBldr.AppendLine("  " + palindromeNum[lpCnt]);
+            }
+
+            MessageBox.Show(stringBldr.ToString());
+        }
+
+        /*
+===================================================================================================================================================================================================
+
+Input:
+Compare values in 2 are and return true if they are same. Note : they are not in similar order.
+Array 1 :   1   2   3   4   5
+Array 2 :   1   3   2   5   4
+
+Output : True.
+
+Try less than O(n log n) time.
+http://stackoverflow.com/questions/10639661/check-if-array-b-is-a-permutation-of-a
+http://stackoverflow.com/questions/6691184/find-if-two-arrays-contain-the-same-set-of-integers-without-extra-space-and-fast
+
+===================================================================================================================================================================================================    
+*/
+
+        public void Compare2ArraysTest()
+        {
+            int[] Array1 = { 1, 2, 3, 4, 5 };
+            int[] Array2 = { 1, 3, 2, 5, 4 };
+            bool result = false;
+
+            //IntPtr intptr = &Array1;
+
+            char[] chArray1 = new char[Array1.Length];
+            char[] chArray2 = new char[Array2.Length];
+
+            //            Array.ConvertAll(Array1,chArray1, new Converter<int,char>);
+
+            for (int lpCnt = 0; lpCnt < Array2.Length; lpCnt++)
+            {
+                chArray2[lpCnt] = Convert.ToChar(Array2[lpCnt] + '0');
+                //Array1[lpCnt] = chArray1[lpCnt] - '0';
+            }
+
+            stringBldr.Clear();
+
+            stringBldr.AppendLine("Source Array 1 : " + new string(Array1.Select(ch => Convert.ToChar(ch + '0')).ToArray()));
+            stringBldr.AppendLine("Source Array 2 : " + new string(chArray2));
+
+            result = Compare2Arrays(Array1, Array2);
+            stringBldr.AppendLine("Compare 2 Arrays result : " + result);
+
+            MessageBox.Show(stringBldr.ToString());
+
+        }
+
+        public bool Compare2Arrays(int[] array1, int[] array2)
+        {
+            //Dictionary<int, int> intTable = new Dictionary<int, int>();
+            HashSet<int> uniqueTable = new HashSet<int>();
+
+            for (int lpCnt = 0; lpCnt < array1.Length; lpCnt++)
+            {
+                if (!uniqueTable.Contains(array1[lpCnt]))
+                {
+                    uniqueTable.Add(array1[lpCnt]);
+                }
+            }
+
+            bool areSame = true;
+
+            for (int lpCnt = 0; lpCnt < array2.Length; lpCnt++)
+            {
+                if (!uniqueTable.Contains(array2[lpCnt]))
+                {
+                    areSame = false;
+                    break;
+                }
+            }
+
+            return areSame;
+        }
+
+        /*
+===================================================================================================================================================================================================
+
+Find the least difference between any two elements of an integer array.
+
+First sort the elements of the array. 
+Then iterate over the array and find difference between consecutive elements. 
+The least of them would be the least differences between any two elements of the array. 
+
+The complexity will be O(nlogn) because of the sorting step.
+
+===================================================================================================================================================================================================
+*/
+        public void LeastDifferenceOf2Numbers()
+        {
+            int[] arr = { 64, 57, 2, 78, 43, 73, 53, 86 };
+
+            Array.Sort(arr);
+            int minDiff = Int32.MinValue;
+
+            for (int i = 0; i < arr.Length - 1; ++i)
+            {
+                int diff = Math.Abs(arr[i] - arr[i + 1]);
+                if (diff < minDiff)
+                {
+                    minDiff = diff;
+                }
+            }
+            MessageBox.Show("The lease min diff of 2 nums in array is " + minDiff.ToString());
+        }
+
+        /* E.g. If n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,7,1,2,3,4]. 
+
+http://www.geeksforgeeks.org/block-swap-algorithm-for-array-rotation/
+
+Mulitple ways: https://discuss.leetcode.com/topic/9801/summary-of-c-solutions/13
+https://discuss.leetcode.com/topic/24283/a-7-line-time-o-n-in-place-solution-no-reversing
+Roate the given array in 90 degrees.    
+
+Block Swap or Juggling or Reversal or Reversing Algorithms      */
+
+        public void RotateUsing3Reverse(int[] nums, int k)
+        {
+            if (nums == null || nums.Length == 0 || k % nums.Length == 0)
+                return;
+
+            k = k % nums.Length;
+
+            // Reverse Array from first to last.
+            Reverse(nums, 0, nums.Length - 1);
+
+            // Reverse Array from first to k.
+            Reverse(nums, 0, k - 1);
+
+            // Reverse Array from k to last.
+            Reverse(nums, k, nums.Length - 1);
+        }
+
+        private void Reverse(int[] array, int first, int last)
+        {
+            for (int lpLeftIndx = first, lpRightIndx = last; lpLeftIndx < lpRightIndx; lpLeftIndx++, lpRightIndx--)
+            {
+                var temp = array[lpLeftIndx];
+                array[lpLeftIndx] = array[lpRightIndx];
+                array[lpRightIndx] = temp;
+            }
+        }
+        // O(k) Space.
+
+        public void RotateUsingKPercentSpace(int[] nums, int k)
+        {
+            if (nums == null || nums.Length == 0 || k % nums.Length == 0)
+                return;
+
+            //step each time to move
+            int kPos = k % nums.Length;
+
+            int[] tmp = new int[kPos];
+
+            //Move from k to last elements to temp array.
+            for (int lpCnt = 0; lpCnt < kPos; lpCnt++)
+                tmp[lpCnt] = nums[nums.Length - kPos + lpCnt];
+
+            //Start at k pos and traverse back to begin and fill elements from left to right.
+            for (int lpCnt = nums.Length - kPos - 1; lpCnt >= 0; lpCnt--)
+                nums[lpCnt + kPos] = nums[lpCnt];
+
+            // Fetch from temp and fill elements from begin to k.
+            for (int lpCnt = 0; lpCnt < kPos; lpCnt++)
+                nums[lpCnt] = tmp[lpCnt];
+        }
+
+        /* E.g.nums = [1, 2, 3, 4, 5, 6, 7, 8, 9] k = 3
+                The replacing process is as follow:
+          Iteration When swapPos = swapDone.
+                    Step 1) 1->4->7     - Result Array : 7, 2, 3, 1, 5, 6, 4, 8, 9
+                    Step 2) 2->5->8     - Result Array : 7, 8, 3, 1, 2, 6, 4, 5, 9
+                    Step 3) 3->6->9     - Result Array : 7, 8, 9, 1, 2, 3, 4, 5, 6 
+                    
+        k = k % n; Not really necessary if k is always less than n */
+
+        public void Rotate(int[] nums, int k)
+        {
+            if (nums == null || nums.Length == 0 || k % nums.Length == 0)
+                return;
+
+            int swapPos = 0;
+            int nextSwap = 0;
+
+            int tmpVal = 0;
+            int val2Swap = nums[0];
+
+            for (int lpCnt = 0; lpCnt < nums.Length; lpCnt++)
+            {
+                swapPos = (swapPos + k) % nums.Length;
+
+                tmpVal = nums[swapPos];
+                nums[swapPos] = val2Swap;
+
+                if (swapPos == nextSwap)
+                {
+                    nextSwap++;
+                    swapPos = nextSwap;
+                    val2Swap = nums[swapPos];
+                }
+                else
+                    val2Swap = tmpVal;
+            }
+        }
+
+        // Reversing or Reversal Algorithm
+        public void Rotate2(int[] nums, int k)
+        {
+            k %= nums.Length;
+            SwapItems(nums, 0, nums.Length - 1);
+
+            SwapItems(nums, 0, k - 1);
+            SwapItems(nums, k, nums.Length - 1);
+        }
+
+        public void Rotate3ExtraSpace(int[] nums) { /*TODO*/}
+
+        public void SwapItems(int[] nums, int start, int end)
+        {
+            while (start < end)
+            {
+                int temp = nums[start];
+                nums[start] = nums[end];
+                nums[end] = temp;
+
+                start++;
+                end--;
+            }
+        }
+
     }
 }

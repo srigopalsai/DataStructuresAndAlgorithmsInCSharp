@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataStructuresAndAlgorithms</RootNamespace>
     <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -105,7 +105,7 @@
     <Compile Include="0.1 - Basics\8 - Compiler Optimizations.cs" />
     <Compile Include="0.1 - Basics\Random Problems.cs" />
     <Compile Include="0.2 - Binary and Bitwise Operations\0 - Notes.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\2 - Convertions.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\1 - Convertions.cs" />
     <Compile Include="0.1 - Basics\4 - Control Statements.cs" />
     <Compile Include="0.1 - Basics\BasicLogics.xaml.cs">
       <DependentUpon>BasicLogics.xaml</DependentUpon>
@@ -123,27 +123,18 @@
     <Compile Include="0.1 - Basics\TrailingZeorsInFactorialNumber.cs" />
     <Compile Include="0.1 - Basics\NthCatalanNumber.cs" />
     <Compile Include="0.1 - Basics\5 - Types.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\3 - Arithmatic Operations On Binary Numbers.cs" />
     <Compile Include="0.2 - Binary and Bitwise Operations\BitwiseOperationsDemo.xaml.cs">
       <DependentUpon>BitwiseOperationsDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="0.2 - Binary and Bitwise Operations\FindNumbersWhichAreEvenlyPresent.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\Missing Number in Array.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\Number Occurring Odd Number of Times.cs" />
     <Compile Include="0.2 - Binary and Bitwise Operations\XOR Operations.cs" />
     <Compile Include="0.3 - Arrays\5.1 - Search - Max Sum Path In Two Arrays.cs" />
     <Compile Include="0.3 - Arrays\5.4 - Search - Occurring N by 2 Value - Moores Voting Algorithm.cs" />
     <Compile Include="0.3 - Arrays\9 - Multiple Problems 2.cs" />
-    <Compile Include="0.3 - Arrays\RearrangeArrayInAlternatingPositiveAndNegative.cs" />
     <Compile Include="0.3 - Arrays\Shuffle or Rotate Array.cs" />
     <Compile Include="0.3 - Arrays\2.4 - Sum - Taget Sum - NI.cs" />
     <Compile Include="0.3 - Arrays\2.2 - Sum - Three Sum Problem.cs" />
     <Compile Include="0.3 - Arrays\5.3 - Search - Missing 2 Numbers In Array.cs" />
-    <Compile Include="0.3 - Arrays\Compare2Arrays.cs" />
-    <Compile Include="0.3 - Arrays\LeastDifferenceOf2Numbers.cs" />
-    <Compile Include="0.3 - Arrays\IsPalindromeNumber.cs" />
     <Compile Include="0.3 - Arrays\9.3 - Kandane Max Sub Array With Largest Sum.cs" />
-    <Compile Include="0.3 - Arrays\SortedVector.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
@@ -273,10 +264,6 @@
     </Compile>
     <Compile Include="0.3 - Arrays\8 - Local Minima And Maxima.cs" />
     <Compile Include="0.3 - Arrays\9 - Move Zeros To Right.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\CalculatePower.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\CharBinaryAddition.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\CountNumberOfOnesTill N.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\NextPowerOfTwo.cs" />
     <Compile Include="0.5 - Matrix\7.0 - Matrix - Multiplication.cs" />
     <Compile Include="0.5 - Matrix\1.0 - Fill - FloodFill or SeedFill Algorithm.cs" />
     <Compile Include="0.5 - Matrix\GameOf15.cs" />
@@ -472,13 +459,12 @@
     <Compile Include="9.1 - Other Algorithms\OnlineAlgorithm.cs" />
     <Compile Include="9.1 - Other Algorithms\SetOperations.cs" />
     <Compile Include="9.1 - Other Algorithms\VirtualFunctions.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\1 - Basic Operations.cs" />
+    <Compile Include="0.2 - Binary and Bitwise Operations\2 - Multiple Samples.cs" />
     <Compile Include="0.6 - Sets\1-SetsDemo.cs" />
     <Compile Include="0.6 - Sets\2-StaticSets.cs" />
     <Compile Include="0.6 - Sets\3-DynamicSets.cs" />
     <Compile Include="0.6 - Sets\4-MultiSets.cs" />
     <Compile Include="0.6 - Sets\5-Tuple.cs" />
-    <Compile Include="0.2 - Binary and Bitwise Operations\BitwiseOperations.cs" />
     <Compile Include="0.6 - Sets\PartitionProblem.cs" />
     <Compile Include="5.1 - Dynamic Programming\SubsetSumProblem.cs" />
     <Compile Include="9.4 - Testing\PrimalityTesting.cs" />

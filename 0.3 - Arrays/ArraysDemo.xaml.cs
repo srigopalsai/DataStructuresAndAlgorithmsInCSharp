@@ -36,7 +36,7 @@ namespace DataStructuresAndAlgorithms
 
         private void OtherProgramsDemoButton_Click(object sender, RoutedEventArgs e)
         {
-            ArraySamplesObj.Rotate(ArraysCollection[Keys.Sorted9Elements], 3);
+           // ArraySamplesObj.Rotate(ArraysCollection[Keys.Sorted9Elements], 3);
             ArraySamplesObj.ProductExceptSelf(ArraysCollection[Keys.Sorted4Elements]);
         }
 
@@ -68,7 +68,7 @@ namespace DataStructuresAndAlgorithms
 
         private void Compare2ArraysButton_Click(object sender, RoutedEventArgs e)
         {
-            ArraySamplesObj.Compare2ArraysTest();
+            //ArraySamplesObj.Compare2ArraysTest();
         }
 
         private void MaxSumPath_Click(object sender, RoutedEventArgs e)
