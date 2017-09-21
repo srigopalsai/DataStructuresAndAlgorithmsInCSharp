@@ -1361,6 +1361,34 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             }
 
         }
+
+        // 2 https://leetcode.com/problems/add-two-numbers/description/
+        public ListNode AddTwoNumbers(ListNode l1List, ListNode l2List)
+        {
+            int carry = 0;
+            ListNode resultHead = new ListNode(0);
+            ListNode resultNode = resultHead;
+
+            while (l1List != null || l2List != null || carry != 0)
+            {
+                if (l1List != null)
+                {
+                    carry += l1List.NodeValue;
+                    l1List = l1List.NextNode;
+                }
+                if (l2List != null)
+                {
+                    carry += l2List.NodeValue;
+                    l2List = l2List.NextNode;
+                }
+
+                resultNode.NextNode = new ListNode(carry % 10);
+                carry /= 10;
+                resultNode = resultNode.NextNode;
+            }
+
+            return resultHead.NextNode;
+        }
     }
 }
 /*

@@ -337,5 +337,46 @@ http://www.geeksforgeeks.org/find-the-number-occurring-odd-number-of-times/
             return res;
         }
 
+        /*
+        First, we can use "and"("&") operation between a and b to find a carry.
+        carry = a & b, then carry = 0001
+        Second, we can use "xor" ("^") operation between a and b to find the different bit, and assign it to a,
+        Then, we shift carry one position left and assign it to b, b = 0010.
+        Iterate until there is no carry (or b == 0)
+        */
+        public int GetSum(int num1, int num2)
+        {
+            if (num1 == 0)
+                return num2;
+
+            if (num2 == 0)
+                return num1;
+
+            int carry = 0;
+
+            while (num2 != 0)
+            {
+                carry = num1 & num2;
+                num1 = num1 ^ num2;
+                num2 = carry << 1;
+            }
+
+            return num1;
+        }
+
+        // Iterative
+        public int GetSubtract(int a, int b)
+        {
+            while (b != 0)
+            {
+                int borrow = (~a) & b;
+                a = a ^ b;
+                b = borrow << 1;
+            }
+
+            return a;
+        }
+
+
     }
 }

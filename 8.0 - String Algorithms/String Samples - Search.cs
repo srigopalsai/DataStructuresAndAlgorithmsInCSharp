@@ -152,7 +152,7 @@ namespace DataStructuresAndAlgorithms
             }
             return resultList.ToArray();
         }
-       
+
         // LC 412 https://leetcode.com/problems/fizz-buzz/description/
         public IList<string> FizzBuzz(int nLen)
         {
@@ -229,7 +229,7 @@ namespace DataStructuresAndAlgorithms
 
             for (index = 0; index != srcStr.Length; index++)
             {
-                chars[srcStr[index]  - 'a']++;
+                chars[srcStr[index] - 'a']++;
                 chars[trgtStr[index] - 'a']--;
             }
 
@@ -462,6 +462,151 @@ namespace DataStructuresAndAlgorithms
         }
 
         //-----------------------------------------------------------------------------------------------------------------------
+        // 20 https://leetcode.com/problems/valid-parentheses/description/
+        
+        public bool IsValid(String srcStr)
+        {
+            int c1Cntr = 0;
+            int c2Cntr = 0;
+            int c3Cntr = 0;
+
+            for (int index = 0; index < srcStr.Length; index++)
+            {
+                if (srcStr[index] == '(')
+                {
+                    if ((index < srcStr.Length - 1) && ((srcStr[index + 1] == '}') || (srcStr[index + 1] == ']')))
+                    {
+                        return false;
+                    }
+                    c1Cntr++;
+                }
+                else if (srcStr[index] == '[')
+                {
+                    if ((index < srcStr.Length - 1) && ((srcStr[index + 1] == '}') || (srcStr[index + 1] == ')')))
+                    {
+                        return false;
+                    }
+                    c2Cntr++;
+                }
+                else if (srcStr[index] == '{')
+                {
+                    if ((index < srcStr.Length - 1) && ((srcStr[index + 1] == ')') || (srcStr[index + 1] == ']')))
+                    {
+                        return false;
+                    }
+                    c3Cntr++;
+                }
+                if (srcStr[index] == ')')
+                {
+                    c1Cntr--;
+                }
+                else if (srcStr[index] == ']')
+                {
+                    c2Cntr--;
+                }
+                else if (srcStr[index] == '}')
+                {
+                    c3Cntr--;
+                }
+                if (c1Cntr < 0 || c2Cntr < 0 || c3Cntr < 0)
+                {
+                    return false;
+                }
+            }
+
+            if (c1Cntr != 0 || c2Cntr != 0 || c3Cntr != 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        //bool IsValid(string srcStr)
+        //{
+        //    int top = -1;
+
+        //    for (int i = 0; i < srcStr.Length; ++i)
+        //    {
+        //        if (top < 0 || !IsMatch(srcStr[top], srcStr[i]))
+        //        {
+        //            ++top;
+        //            srcStr[top] = srcStr[i];
+        //        }
+        //        else
+        //        {
+        //            --top;
+        //        }
+        //    }
+        //    return top == -1;
+        //}
+        //bool IsMatch(char c1, char c2)
+        //{
+        //    if (c1 == '(' && c2 == ')')
+        //        return true;
+        //    if (c1 == '[' && c2 == ']')
+        //        return true;
+        //    if (c1 == '{' && c2 == '}')
+        //        return true;
+        //    return false;
+        //}
+
+        public bool isValid(String srcStr)
+        {
+            char[] stack = new char[srcStr.Length];
+            int head = 0;
+
+            foreach (char ch in srcStr.ToCharArray())
+            {
+                switch (ch)
+                {
+                    case '{':
+                    case '[':
+                    case '(':
+                        stack[head++] = ch;
+                        break;
+                    case '}':
+                        if (head == 0 || stack[--head] != '{')
+                            return false;
+                        break;
+                    case ')':
+                        if (head == 0 || stack[--head] != '(')
+                            return false;
+                        break;
+                    case ']':
+                        if (head == 0 || stack[--head] != '[')
+                            return false;
+                        break;
+                }
+            }
+            return head == 0;
+
+        }
+        public bool IsValid2(String srcStr)
+        {
+            Stack<char> stack = new Stack<char>();
+
+            foreach (char ch in srcStr.ToCharArray())
+            {
+                if (ch == '(')
+                {
+                    stack.Push(')');
+                }
+                else if (ch == '{')
+                {
+                    stack.Push('}');
+                }
+                else if (ch == '[')
+                {
+                    stack.Push(']');
+                }
+                else if (stack.Count == 0 || stack.Pop() != ch)
+                {
+                    return false;
+                }
+            }
+            return stack.Count == 0;
+        }
+
         /*
         Parentheses Balancing:
         Write a function which verifies parentheses are balanced in a string. 
@@ -653,6 +798,186 @@ namespace DataStructuresAndAlgorithms
 
             return strBldr.ToString();
         }
+
+        // 32 https://leetcode.com/problems/longest-valid-parentheses/description/
+        // O(n) Time O(1) Space
+        public int LongestValidParentheses3(string srcStr)
+        {
+            int longest = 0;
+            int extra = 0;
+            int length = 0;
+
+            for (int index = 0; index < srcStr.Length; index++)
+            {
+                GetLongestStr(srcStr, index, '(', ref extra, ref length, ref longest);
+            }
+
+            length = 0;
+            extra = 0;
+
+            for (int index = srcStr.Length - 1; index >= 0; index--)
+            {
+                GetLongestStr(srcStr, index, ')', ref extra, ref length, ref longest);
+            }
+            return longest;
+        }
+
+        private void GetLongestStr(string srcStr, int index, char ch, ref int extra, ref int length, ref int longest)
+        {
+            if (srcStr[index] == ch)
+            {
+                extra++;
+                length++;
+            }
+            else
+            {
+                if (extra > 0)
+                {
+                    extra--;
+                    length++;
+                    if (extra == 0)
+                    {
+                        longest = Math.Max(longest, length);
+                    }
+                }
+                else
+                {
+                    extra = 0;
+                    length = 0;
+                }
+            }
+        }
+
+        // O(n) Time and Space
+        public int LongestValidParentheses(String srcStr)
+        {
+            Stack<int> stack = new Stack<int>();
+
+            int result = 0;
+            stack.Push(-1);
+
+            for (int index = 0; index < srcStr.Length; index++)
+            {
+                if (srcStr[index] == ')' && stack.Count > 1 && srcStr[stack.Peek()] == '(')
+                {
+                    stack.Pop();
+                    result = Math.Max(result, index - stack.Peek());
+                }
+                else
+                {
+                    stack.Push(index);
+                }
+            }
+            return result;
+        }
+
+        // Dynamic programming O(n) Time and Space
+        // https://leetcode.com/problems/longest-valid-parentheses/description/
+        // https://leetcode.com/articles/longest-valid-parentheses/
+        public int LongestValidParentheses2(String srcStr)
+        {
+            int result = 0;
+
+            int[] dnyPr = new int[srcStr.Length];
+
+            for (int index = 1; index < srcStr.Length; index++)
+            {
+                if (srcStr[index] == ')')
+                {
+                    if (srcStr[index - 1] == '(')
+                    {
+                        dnyPr[index] = (index >= 2 ? dnyPr[index - 2] : 0) + 2;
+                    }
+                    else if (index - dnyPr[index - 1] > 0 && srcStr[index - dnyPr[index - 1] - 1] == '(')
+                    {
+                        dnyPr[index] = dnyPr[index - 1] + ((index - dnyPr[index - 1]) >= 2 ? dnyPr[index - dnyPr[index - 1] - 2] : 0) + 2;
+                    }
+
+                    result = Math.Max(result, dnyPr[index]);
+                }
+            }
+            return result;
+        }
+
+        /*
+                int longestValidParentheses(string s)
+        {
+            int result = 0;
+
+            int left = 0;
+            int right = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                switch (s[i])
+                {
+                    case '(': left++; break;
+                    case ')': right++; break;
+                    default: left = right = 0; continue;
+                }
+
+                if (left == right && left + right > result)
+                    result = left + right;
+                if (right > left)
+                    left = right = 0;
+            }
+
+            left = 0;
+            right = 0;
+            for (int i = s.Length; i > 0; i--)
+            {
+                switch (s[i - 1])
+                {
+                    case '(': left++; break;
+                    case ')': right++; break;
+                    default: left = right = 0; continue;
+                }
+                if (left == right && left + right > result) result = left + right;
+                if (left > right) left = right = 0;
+            }
+
+            return result;
+        }
+
+        int longestValidParentheses2(string s)
+        {
+            int result = 0;
+            int ll = 0, lr = 0, li = 0;  // left paren sum, right paren sum, left index
+            int rl = 0, rr = 0, ri = s.Length;  // left paren sum, right paren sum, right index
+
+            while (li < s.Length && ri > 0)
+            {
+                switch (s[li])
+                {
+                    case '(': ll++; break;
+                    case ')': lr++; break;
+                    default: ll = lr = 0; break;
+                }
+                switch (s[ri - 1])
+                {
+                    case '(': rl++; break;
+                    case ')': rr++; break;
+                    default: rl = rr = 0; break;
+                }
+
+                if (ll == lr && ll + lr > result)
+                    result = ll + lr;
+
+                if (rl == rr && rl + rr > result)
+                    result = rl + rr;
+
+                if (ll < lr)
+                    ll = lr = 0;
+
+                if (rl > rr)
+                    rl = rr = 0;
+
+                li++;
+                ri--;
+            }
+            return result;
+        }
+        */
     }
     public static class AnagramExtensions
     {

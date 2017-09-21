@@ -425,8 +425,8 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 double nums1LeftMidVal = (mid1Indx == 0) ? int.MinValue : nums1[(mid1Indx - 1) / 2];    // Get L1, R1, L2, R2 respectively
                 double nums2LeftMidVal = (mid2Indx == 0) ? int.MinValue : nums2[(mid2Indx - 1) / 2];
 
-                double nums1RightMidVal = (mid1Indx == nums1Length * 2) ? int.MaxValue : nums1[(mid1Indx) / 2];
-                double nums2RightMidVal = (mid2Indx == Nmus2Length * 2) ? int.MaxValue : nums2[(mid2Indx) / 2];
+                double nums1RightMidVal = (mid1Indx == nums1Length * 2) ? int.MaxValue : nums1[mid1Indx / 2];
+                double nums2RightMidVal = (mid2Indx == Nmus2Length * 2) ? int.MaxValue : nums2[mid2Indx / 2];
 
                 if (nums1LeftMidVal > nums2RightMidVal)
                 {
@@ -454,51 +454,128 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             if (totalLen % 2 == 0)
             {
-                return (FindKthValue(nums1, nums2, totalLen / 2) + FindKthValue(nums1, nums2, totalLen / 2 + 1)) / 2.0;
+                return (FindKthValue(nums1, nums2, totalLen / 2) + FindKthValue(nums1, nums2, (totalLen / 2) + 1)) / 2.0;
             }
             else
             {
-                return FindKthValue(nums1, nums2, totalLen / 2 + 1);
+                return FindKthValue(nums1, nums2, (totalLen / 2) + 1);
             }
         }
 
         private int FindKthValue(int[] nums1, int[] nums2, int kthPos)
         {
-            int midPos1 = 0;
-            int midPos2 = 0;
+            int num1Indx = 0;
+            int num2Indx = 0;
 
             for (int index = 0; index < kthPos - 1; index++)
             {
-                if (midPos1 >= nums1.Length && midPos2 < nums2.Length)
+                if (num1Indx >= nums1.Length && num2Indx < nums2.Length)
                 {
-                    midPos2++;
+                    num2Indx++;
                 }
-                else if (midPos2 >= nums2.Length && midPos1 < nums1.Length)
+                else if (num1Indx < nums1.Length && num2Indx >= nums2.Length)
                 {
-                    midPos1++;
+                    num1Indx++;
                 }
-                else if (nums1[midPos1] > nums2[midPos2])
+                else if (nums1[num1Indx] > nums2[num2Indx])
                 {
-                    midPos2++;
+                    num2Indx++;
                 }
                 else
                 {
-                    midPos1++;
+                    num1Indx++;
                 }
             }
 
-            if (midPos1 >= nums1.Length)
+            if (num1Indx >= nums1.Length)
             {
-                return nums2[midPos2];
+                return nums2[num2Indx];
             }
-            else if (midPos2 >= nums2.Length)
+            else if (num2Indx >= nums2.Length)
             {
-                return nums1[midPos1];
+                return nums1[num1Indx];
             }
             else
             {
-                return Math.Min(nums1[midPos1], nums2[midPos2]);
+                return Math.Min(nums1[num1Indx], nums2[num2Indx]);
             }
+        }
+
+        public double FindMedianSortedArrays3(int[] nums1, int[] nums2)
+        {
+            if (nums1 == null || nums1.Length == 0 || nums2 == null || nums2.Length == 0)
+                return 0.0;
+
+            int nums1Indx = 0;
+            int nums2Indx = 0;
+
+            int leftMidVal = 0;
+            int rightMidVal = 0;
+
+            int totalLength = nums1.Length + nums2.Length;
+
+            for (int index = 0; index < totalLength / 2 + 1; index++)
+            {
+                rightMidVal = leftMidVal;
+
+                if (nums2Indx >= nums2.Length || (nums1Indx < nums1.Length && nums1[nums1Indx] <= nums2[nums2Indx]))
+                {
+                    leftMidVal = nums1[nums1Indx];
+                    nums1Indx++;
+                }
+                else
+                {
+                    leftMidVal = nums2[nums2Indx];
+                    nums2Indx++;
+                }
+            }
+
+            if (totalLength % 2 == 1)
+            {
+                return leftMidVal;
+            }
+            else
+            {
+                return (leftMidVal + rightMidVal) / 2.0;
+            }
+        }
+
+
+        //480 https://leetcode.com/problems/sliding-window-median/description/
+        public double[] MedianSlidingWindow(int[] nums, int k)
+        {
+            if (nums == null || nums.Length == 0 || k == 0)
+                return new double[0];
+
+            int liPos1 = (k >> 1);
+            int liPos2 = liPos1 + (k & 1) - 1;
+
+            List<double> llist = new List<double>();
+            List<double> llistSlid = new List<double>();
+
+            for (int index = 0; index < nums.Length; ++index)
+            {
+                if (index >= k)
+                {
+                    llistSlid.Remove(nums[index - k]);
+                }
+
+                int liIndex = llistSlid.BinarySearch(nums[index]);
+
+                if (liIndex < 0)
+                {
+                    liIndex = ~liIndex;
+                }
+
+                llistSlid.Insert(liIndex, nums[index]);
+
+                if (index >= k - 1)
+                {
+                    llist.Add(liPos1 == liPos2 ? llistSlid[liPos1] : ((llistSlid[liPos1] + llistSlid[liPos2]) / 2));
+                }
+            }            
+
+            return llist.ToArray<double>();
         }
     }
 }
