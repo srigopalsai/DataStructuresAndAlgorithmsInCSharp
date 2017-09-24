@@ -577,5 +577,262 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             return llist.ToArray<double>();
         }
+
+        // 128 https://leetcode.com/problems/longest-consecutive-sequence/description/       
+        public int LongestConsecutive(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+
+            HashSet<int> numSet = new HashSet<int>(nums);
+
+            int longestCnt = 1;
+
+            foreach (int currVal in nums)
+            {
+                if (!numSet.Contains(currVal))
+                    continue;
+
+                numSet.Remove(currVal);
+
+                int prevVal = currVal - 1;
+                int nextVal = currVal + 1;
+
+                while (numSet.Contains(prevVal))
+                {
+                    numSet.Remove(prevVal);
+                    prevVal--;
+                }
+
+                while (numSet.Contains(nextVal))
+                {
+                    numSet.Remove(nextVal);
+                    nextVal++;
+                }
+
+                longestCnt = Math.Max(longestCnt, nextVal - prevVal - 1);
+            }
+
+            return longestCnt;
+        }
+
+        public int LongestConsecutive2(int[] nums)
+        {
+            int result = 0;
+            Dictionary<int, int> dictionary = new Dictionary<int, int>();
+
+            foreach (int n in nums)
+            {
+                if (!dictionary.ContainsKey(n))
+                {
+                    int left = dictionary.ContainsKey(n - 1) ? dictionary[n - 1] : 0;
+                    int right = dictionary.ContainsKey(n + 1) ? dictionary[n + 1] : 0;
+
+                    // sum: length of the sequence n is in
+                    int sum = left + right + 1;
+                    dictionary[n] = sum;
+
+                    // keep track of the max length 
+                    result = Math.Max(result, sum);
+
+                    // extend the length to the boundary(s) of the sequence
+                    // will do nothing if n has no neighbors
+                    dictionary[n - left] = sum;
+                    dictionary[n + right] = sum;
+                }
+                else
+                {
+                    // Duplicates
+                    continue;
+                }
+            }
+            return result;
+        }
+
+        // 55 https://leetcode.com/problems/jump-game/
+        // https://leetcode.com/problems/jump-game/solution/
+        bool CanJump(int[] nums)
+        {
+            int currMaxJump = 0;
+            int index = 0;
+
+            while (index < nums.Length && index <= currMaxJump )
+            {
+                currMaxJump = Math.Max(currMaxJump, index + nums[index]);
+                ++index;
+            }
+
+            return index == nums.Length;
+        }
+
+        // 45 https://leetcode.com/problems/jump-game-ii/
+        public int Jump(int[] nums)
+        {
+            int stepCount = 0;
+            int lastMaxJump = 0;
+            int currMaxJump = 0;
+
+            for (int index = 0; index < nums.Length - 1; index++)
+            {
+                currMaxJump = Math.Max(currMaxJump, index + nums[index]);
+
+                if (index == lastMaxJump)
+                {
+                    stepCount++;
+                    lastMaxJump = currMaxJump;
+
+                    Console.WriteLine("stepCount " + stepCount);
+                    Console.WriteLine("numVal " + nums[index]);
+                }
+
+                Console.WriteLine("\nindex " + index);
+                Console.WriteLine("currMaxJump " + currMaxJump);
+                Console.WriteLine("lastMaxJump " + lastMaxJump);
+            }
+
+            return stepCount;
+        }
+
+        /* 300 https://leetcode.com/problems/longest-increasing-subsequence/description/ 
+          http://www.geeksforgeeks.org/longest-increasing-subsequence/
+         The length of the longest increasing subsequence in arr[] of size n */
+
+        public int LengthOfLIS(int[] nums)
+        {
+            int[] dpLkUp = new int[nums.Length];
+            int lisCnt = 0;
+
+            foreach (int num in nums)
+            {
+                int index = Array.BinarySearch(dpLkUp, 0, lisCnt, num);
+
+                if (index < 0)
+                    index = -(index + 1);
+
+                dpLkUp[index] = num;
+
+                if (index == lisCnt)
+                    lisCnt++;
+            }
+
+            return lisCnt;
+        }
+
+        /*  O(n^2) time O(n) Space 
+           O (n log n) here http://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/*/
+        public int LongestIncreasingSubsequence(int[] nums)
+        {
+            int srcNumLen = nums.Length;
+            int[] lookUp = new int[srcNumLen];
+
+            // Initialize LIS values for all indexes
+            for (int index = 0; index < srcNumLen; index++)
+                lookUp[index] = 1;
+
+            // Compute optimized LIS values in bottom up manner
+            for (int indxI = 1; indxI < srcNumLen; indxI++)
+            {
+                for (int indxJ = 0; indxJ < indxI; indxJ++)
+                {
+                    if (nums[indxI] > nums[indxJ] && 
+                         lookUp[indxI] < lookUp[indxJ] + 1)
+                    {
+                        lookUp[indxI] = lookUp[indxJ] + 1;
+                    }
+                }
+            }
+
+            int maxLIS = 0;
+
+            // Pick maximum of all LIS values
+            for (int index = 0; index < srcNumLen; index++)
+            {
+                if (maxLIS < lookUp[index])
+                {
+                    maxLIS = lookUp[index];
+                }
+            }
+            return maxLIS;
+        }
+
+        public void LongestIncreasingSubsequenceTest()
+        {
+            int[] nums = { 10, 22, 9, 33, 21, 50, 41, 60 };
+            Console.WriteLine("Length of lis is " + LongestIncreasingSubsequence(nums) + "n");
+        }
+
+        // 673 https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+        public int FindNumberOfLIS(int[] nums)
+        {
+            int numsLen = nums.Length;
+            int resCnt = 0;
+            int maxLen = 0;
+
+            int[] lenLIS = new int[numsLen];   // Is the length of longest subsequence ending with nums[k];            
+            int[] totalLIS = new int[numsLen]; // Is total number of longest subsequence ending with nums[k];
+
+            for (int indxI = 0; indxI < numsLen; indxI++)
+            {
+                lenLIS[indxI] = totalLIS[indxI] = 1;
+
+                for (int indxJ = 0; indxJ < indxI; indxJ++)
+                {
+                    if (nums[indxI] > nums[indxJ])
+                    {
+                        if (lenLIS[indxI] == lenLIS[indxJ] + 1)
+                        {
+                            totalLIS[indxI] += totalLIS[indxJ];
+                        }
+                        if (lenLIS[indxI] < lenLIS[indxJ] + 1)
+                        {
+                            lenLIS[indxI] = lenLIS[indxJ] + 1;
+                            totalLIS[indxI] = totalLIS[indxJ];
+                        }
+                    }
+                }
+
+                if (maxLen == lenLIS[indxI])
+                {
+                    resCnt += totalLIS[indxI];
+                }
+                else if (maxLen < lenLIS[indxI])
+                {
+                    maxLen = lenLIS[indxI];
+                    resCnt = totalLIS[indxI];
+                }
+            }
+
+            return resCnt;
+        }
+
+        // 334 https://leetcode.com/problems/increasing-triplet-subsequence/description/
+        public bool IncreasingTriplet(int[] nums)
+        {
+            // Start with two largest values, as soon as we find a number bigger than both
+            // while both have been updated, return true.
+
+            int smallVal = int.MaxValue;
+            int bigVal = int.MaxValue;
+
+            foreach (int num in nums)
+            {
+                if (num <= smallVal)
+                {
+                    smallVal = num;
+                } 
+                // Update small if n is smaller than both
+                else if (num <= bigVal)
+                {
+                    bigVal = num;
+                } 
+                // Update big only if greater than small but smaller than big
+                else
+                {
+                    // Return if you find a number bigger than both
+                    return true; 
+                }
+            }
+            return false;
+        }
     }
 }

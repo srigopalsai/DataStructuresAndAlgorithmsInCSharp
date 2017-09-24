@@ -978,7 +978,139 @@ namespace DataStructuresAndAlgorithms
             return result;
         }
         */
+
+        //https://discuss.leetcode.com/topic/9390/c-o-n-m-solution-using-kmp/2
+        public bool IsMatch(String srcStr, String matchStr)
+        {
+            bool[,] matchMatrix = new bool[srcStr.Length + 1, matchStr.Length + 1];
+
+            matchMatrix[srcStr.Length, matchStr.Length] = true;
+
+            for (int index = matchStr.Length - 1; index >= 0; index--)
+            {
+                if (matchStr[index] != '*')
+                {
+                    break;
+                }
+                else
+                {
+                    matchMatrix[srcStr.Length, index] = true;
+                }
+            }
+
+            for (int rIndx = srcStr.Length - 1; rIndx >= 0; rIndx--)
+            {
+                for (int cIndx = matchStr.Length - 1; cIndx >= 0; cIndx--)
+                {
+                    if (srcStr[rIndx] == matchStr[cIndx] || matchStr[cIndx] == '?')
+                    {
+                        matchMatrix[rIndx, cIndx] = matchMatrix[rIndx + 1, cIndx + 1];
+                    }
+                    else if (matchStr[cIndx] == '*')
+                    {
+                        matchMatrix[rIndx, cIndx] = matchMatrix[rIndx + 1, cIndx] || matchMatrix[rIndx, cIndx + 1];
+                    }
+                    else
+                    {
+                        matchMatrix[rIndx, cIndx] = false;
+                    }
+                }
+            }
+
+            return matchMatrix[0, 0];
+        }
+
+        public bool isMatch(String srcStr, String matchStr)
+        {
+            int srcStrIndx = 0;
+            int matchStrIndx = 0;
+            int marked = -1;
+
+            String p2 = matchStr + '^'; // In case that the last char in matchStr is *
+
+            while (srcStrIndx < srcStr.Length && matchStrIndx < p2.Length)
+            {
+                if (srcStr[srcStrIndx] == p2[matchStrIndx] || p2[matchStrIndx] == '?')
+                {
+                    srcStrIndx++;
+                    matchStrIndx++;
+                }
+                else if (p2[matchStrIndx] == '*')
+                {
+                    matchStrIndx++;
+                    marked = matchStrIndx;
+                }
+                else
+                {
+                    if (matchStrIndx == marked)
+                    {
+                        srcStrIndx++;
+                    }
+                    else
+                    {
+                        if (marked != -1)
+                        {
+                            srcStrIndx = srcStrIndx - (matchStrIndx - marked - 1);
+                            matchStrIndx = marked;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            while (matchStrIndx < matchStr.Length)
+            {
+                if (matchStr[matchStrIndx] != '*')
+                {
+                    return false;
+                }
+                matchStrIndx++;
+            }
+
+            return srcStrIndx >= srcStr.Length;
+        }
+
+        // https://leetcode.com/problems/longest-increasing-subsequence/description/
+        // https://en.wikipedia.org/wiki/Diff_utility
+        // https://en.wikipedia.org/wiki/Patience_sorting
+        //NP-Hard https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
+        public int LongestCommonSubSequence(String word1, String word2)
+        {
+            int longest = LongestCommonSubSequenceHelper(word1, word2);
+
+            return word1.Length - longest + word2.Length - longest;
+        }
+
+        private int LongestCommonSubSequenceHelper(String word1, String word2)
+        {
+            int[,] lkUpMtrx = new int[word1.Length + 1, word2.Length + 1];
+
+            int maxLength = 0;
+
+            for (int rIndx = 1; rIndx <= word1.Length; rIndx++)
+            {
+                for (int cIndx = 1; cIndx <= word2.Length; cIndx++)
+                {
+                    if (word1[rIndx - 1] == word2[cIndx - 1])
+                    {
+                        lkUpMtrx[rIndx, cIndx] = lkUpMtrx[rIndx - 1, cIndx - 1] + 1;
+                    }
+                    else
+                    {
+                        lkUpMtrx[rIndx, cIndx] = Math.Max(lkUpMtrx[rIndx - 1, cIndx], lkUpMtrx[rIndx, cIndx - 1]);
+                    }
+
+                    maxLength = Math.Max(lkUpMtrx[rIndx, cIndx], maxLength);
+                }
+            }
+
+            return maxLength;
+        }
     }
+
     public static class AnagramExtensions
     {
         // Using LINQ Sort word1, Sort word2 and compare both

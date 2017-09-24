@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DataStructuresAndAlgorithms</RootNamespace>
     <AssemblyName>DataStructuresAndAlgorithms</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -571,7 +571,9 @@
     <None Include="8.0 - String Algorithms\String Matching Algorithms.pdf" />
     <None Include="Algorithms Analysis.docx" />
     <None Include="Algorithms Analysis.pdf" />
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="0.0 - Common\NeedfulAnalysisInfo.xlsx" />
     <None Include="0.0 - Common\Notes.docx" />
     <AppDesigner Include="Properties\" />
