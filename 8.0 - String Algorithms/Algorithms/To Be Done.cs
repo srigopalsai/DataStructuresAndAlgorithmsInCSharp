@@ -6,6 +6,48 @@ using System.Text;
 namespace DataStructuresAndAlgorithms._8._0___String_Algorithms
 {
     /*
+    To be done: 
+
+    2   - ABC
+    3   - DEF  
+    4   - GHI
+    5   - JKL
+    6   - MNO
+    7   - PQRS
+    8   - TUV
+    9   - WXYZ
+
+    PossibleStringCombinationsForCellNumber
+
+    ReplaceRepatedCharsWithCountInPlace
+    Input   : Google
+    Output  : Go2gle
+
+    Input   : aabbbccccddefff
+    Output  : a2b3c3d2f3
+
+    // DeterministicFiniteAutomatonAlgorithm - DFA Algorithm
+    //http://www-igm.univ-mlv.fr/~lecroq/string/
+
+    http://www.sanfoundry.com/java-program-implement-suffix-array/
+    http://www.sanfoundry.com/java-programming-examples-data-structures/
+    http://www.geeksforgeeks.org/searching-for-patterns-set-5-finite-automata/
+
+    LexicalAnalysis      
+    http://www.careercup.com/question?id=9941232
+
+    http://www.careercup.com/question?id=4128790
+    
+    PAT Tree http://en.wikipedia.org/wiki/Suffix_tree
+
+
+uses bitwise techniques; http://www-igm.univ-mlv.fr/~lecroq/string/node6.html#SECTION0060
+
+efficient if the pattern length is no longer than the memory-word size of the machine;
+preprocessing phase in O(m + sigma) time and space complexity;
+searching phase in O(n) time complexity (independent from the alphabet size and the pattern length);
+adapts easily to approximate string matching.
+
     http://en.wikipedia.org/wiki/Edit_distance
     http://en.wikipedia.org/wiki/Levenshtein_distance
     http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance

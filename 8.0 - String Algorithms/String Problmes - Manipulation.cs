@@ -96,6 +96,27 @@ Space Complexity O(N)
 
  */
 
+        void RemoveAandIFromString(char[] s)
+        {
+            int p = 0;
+            int i = 0;
+
+            for (i = 0; s[i] != 0; i++)
+            {
+                if (s[i] == 'a' || s[i] == 'i')
+                {
+                    p++;
+                }
+                else
+                {
+                    s[i - p] = s[i];
+                }
+                // s[i - p] = 0;
+                // MessageBox.Show(s);
+
+            }
+        }
+
         public static void ReverseWordsInString()
         {
             string newStr = string.Empty;

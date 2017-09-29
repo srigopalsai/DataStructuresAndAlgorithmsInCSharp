@@ -1109,6 +1109,372 @@ namespace DataStructuresAndAlgorithms
 
             return maxLength;
         }
+
+        // 522 https://leetcode.com/problems/longest-uncommon-subsequence-ii/description/
+        public int FindLUSlength(String[] srcStr)
+        {
+            //Arrays.sort(strs);
+            int result = -1;
+
+            for (int indexI = 0; indexI < srcStr.Length; indexI++)
+            {
+                int indxJ = 0;
+
+                while(indxJ < srcStr.Length)
+                {
+                    if (indexI == indxJ)
+                    {
+                        continue;
+                    }
+                    if (IsSubseq(srcStr[indexI], srcStr[indxJ]))
+                    {
+                        break;
+                    }
+                    indxJ++;
+                }
+
+                if (indxJ == srcStr.Length)
+                {
+                    result = Math.Max(result, srcStr[indexI].Length);
+                }
+            }
+            return result;
+        }
+
+        private bool IsSubseq(String srcStr, String trgtStr)
+        {
+            int indxSrc = 0;
+            int indxTrgt = 0;
+
+            while (indxSrc < srcStr.Length && indxTrgt < trgtStr.Length)
+            {
+                if (srcStr[indxSrc] == trgtStr[indxTrgt])
+                {
+                    indxSrc++;
+                    indxTrgt++;
+                }
+                else
+                {
+                    indxTrgt++;
+                }
+            }
+
+            return indxSrc == srcStr.Length;
+        }
+
+        // O (n/2)
+        public static bool IsPalindromeString(string srcStr)
+        {
+            if (string.IsNullOrEmpty(srcStr))
+                return true;
+
+            int lIndx = 0;
+            int rIndx = srcStr.Length - 1;
+
+            while (lIndx <= rIndx)
+            {
+                if (srcStr[lIndx] != srcStr[rIndx])
+                {
+                    break;
+                }
+                lIndx++;
+                rIndx--;
+            }
+            if (lIndx > rIndx)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /*
+        The time complexity of this function in terms of Big-O notation?
+        T(0) = 1 // base case
+        T(1) = 1 // base case
+        T(n) = 1 + T(n-2)// general case T(n-2) = 1 + T(n-4)
+        T(n) = 2 + T(n-4)
+        T(n) = 3 + T(n-6)
+        T(n) = k + T(n-2k) ... n-2k = 1  k= (n-1)/2
+        T(n) = (n-1)/2 + T(1)  O(n)
+        */
+
+        bool IsPalindromeRecursive(string srcStr, int rIndx)
+        {
+            if (rIndx <= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return (srcStr[0] == srcStr[rIndx - 1] && 
+                    IsPalindromeRecursive(srcStr + 1, rIndx - 2));
+            }
+        }
+
+        // https://leetcode.com/problems/longest-palindromic-subsequence/description/
+        public int LongestPalindromeSubseq(String srcStr)
+        {
+            int[,] dpLkUp = new int[srcStr.Length, srcStr.Length];
+
+            for (int index = srcStr.Length - 1; index >= 0; index--)
+            {
+                dpLkUp[index, index] = 1;
+
+                for (int indxJ = index + 1; indxJ < srcStr.Length; indxJ++)
+                {
+                    if (srcStr[index] == srcStr[indxJ])
+                    {
+                        dpLkUp[index, indxJ] = dpLkUp[index + 1, indxJ - 1] + 2;
+                    }
+                    else
+                    {
+                        dpLkUp[index, indxJ] = Math.Max(dpLkUp[index + 1, indxJ],
+                                                        dpLkUp[index, indxJ - 1]);
+                    }
+                }
+            }
+
+            return dpLkUp[0, srcStr.Length - 1];
+        }
+
+        // 65 https://leetcode.com/problems/valid-number/description/
+        public bool IsNumber(String srcStr)
+        {
+            srcStr = srcStr.Trim();
+
+            bool pointSeen = false;
+            bool eSeen = false;
+
+            bool numberSeen = false;
+            bool numberAfterE = true;
+
+            for (int index = 0; index < srcStr.Length; index++)
+            {
+                if ('0' <= srcStr[index] && srcStr[index] <= '9')
+                {
+                    numberSeen = true;
+                    numberAfterE = true;
+                }
+                else if (srcStr[index] == '.')
+                {
+                    if (eSeen ==true || pointSeen == true)
+                    {
+                        return false;
+                    }
+                    pointSeen = true;
+                }
+                else if (srcStr[index] == 'e')
+                {
+                    if (eSeen == true|| !numberSeen == true)
+                    {
+                        return false;
+                    }
+
+                    numberAfterE = false;
+                    eSeen = true;
+                }
+
+                else if (srcStr[index] == '-' || srcStr[index] == '+')
+                {
+                    if (index != 0 && srcStr[index - 1] != 'e')
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return numberSeen && numberAfterE;
+        }
+
+        // 125 https://leetcode.com/problems/valid-palindrome/description/
+        public bool IsPalindrome2(String s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return true;
+            }
+
+            int head = 0;
+            int tail = s.Length - 1;
+
+            while (head <= tail)
+            {
+                if (!Char.IsLetterOrDigit(s[head]))
+                {
+                    head++;
+                }
+                else if (!Char.IsLetterOrDigit(s[tail]))
+                {
+                    tail--;
+                }
+                else
+                {
+                    if (Char.ToLower(s[head]) != Char.ToLower(s[tail]))
+                    {
+                        return false;
+                    }
+                    head++;
+                    tail--;
+                }
+            }
+
+            return true;
+        }
+
+        // 680 https://leetcode.com/problems/valid-palindrome-ii/description/
+        public bool ValidPalindrome(String s)
+        {
+            int i = 0, j = s.Length - 1;
+
+            while (i < j && s[i] == s[j])
+            {
+                i++; j--;
+            }
+
+            if (i >= j)
+            {
+                return true;
+            }
+
+            if (IsPalin(s, i + 1, j) || IsPalin(s, i, j - 1))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsPalin(String s, int i, int j)
+        {
+            while (i < j)
+            {
+                if (s[i] == s[j])
+                {
+                    i++;
+                    j--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 409 https://leetcode.com/problems/longest-palindrome/discuss/
+        public int LongestPalindrome1(String s)
+        {
+            int[] lowercase = new int[26];
+            int[] uppercase = new int[26];
+            int res = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char temp = s[i];
+                if (temp >= 97) lowercase[temp - 'a']++;
+                else uppercase[temp - 'A']++;
+            }
+            for (int i = 0; i < 26; i++)
+            {
+                res += (lowercase[i] / 2) * 2;
+                res += (uppercase[i] / 2) * 2;
+            }
+            return res == s.Length ? res : res + 1;
+        }
+
+        public int LongestPalindrome2(String s)
+        {
+            if (s == null || s.Length == 0)
+                return 0;
+
+            HashSet<Char> hs = new HashSet<Char>();
+            int count = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (hs.Contains(s[i]))
+                {
+                    hs.Remove(s[i]);
+                    count++;
+                }
+                else
+                {
+                    hs.Add(s[i]);
+                }
+            }
+
+            if (hs.Count > 0)
+            {
+                return count * 2 + 1;
+            }
+
+            return count * 2;
+        }
+
+        // 647 https://leetcode.com/problems/palindromic-substrings/description/
+        int count = 0;
+
+        public int CountSubstrings(String s)
+        {
+            count = 0;
+            if (s == null || s.Length == 0) return 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                ExtendPalindrome(s, i, i); // odd length;
+                ExtendPalindrome(s, i, i + 1); // even length
+            }
+
+            return count;
+        }
+
+        private void ExtendPalindrome(String s, int left, int right)
+        {
+            while (left >= 0 && right < s.Length && s[left] == s[right])
+            {
+                count++;
+                left--;
+                right++;
+            }
+        }
+
+        //43 https://leetcode.com/problems/multiply-strings/description/
+        public String Multiply(String num1Str, String num2Str)
+        {
+            int num1StrLen = num1Str.Length;
+            int num2StrLen = num2Str.Length;
+
+            int[] positions = new int[num1StrLen + num2StrLen];
+
+            for (int i = num1StrLen - 1; i >= 0; i--)
+            {
+                for (int j = num2StrLen - 1; j >= 0; j--)
+                {
+                    int mul = (num1Str[i] - '0') * (num2Str[j] - '0');
+                    int p1 = i + j;
+                    int p2 = i + j + 1;
+                    int sum = mul + positions[p2];
+
+                    positions[p1] += sum / 10;
+                    positions[p2] = (sum) % 10;
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (int pos in positions)
+            {
+                if (pos != 0)
+                {
+                    sb.Append(pos);
+                }
+            }
+
+            return sb.Length == 0 ? "0" : sb.ToString();
+        }
     }
 
     public static class AnagramExtensions

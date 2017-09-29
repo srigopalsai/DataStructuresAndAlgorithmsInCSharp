@@ -2131,6 +2131,42 @@ http://powercollections.codeplex.com
             }
         }
 
+        // http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
+        // http://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/
+        bool ValidateBSTPostOrderTraversal(int[] post)
+        {
+            return IsValidBSTHelper(post, 0, post.Length - 1);
+        }
+
+        private static bool IsValidBSTHelper(int[] nums, int lIndx, int rIndx)
+        {
+            if (lIndx >= rIndx)
+            {
+                return true;
+            }
+
+            int root = nums[rIndx];
+            int index = lIndx;
+
+            while (index < rIndx && nums[index] <= root)
+            {
+                index++;
+            }
+
+            int midIndx = index;
+
+            while (index < rIndx)
+            {
+                if (nums[index] < root)
+                    return false;
+
+                index++;
+            }
+
+            return IsValidBSTHelper(nums, lIndx, midIndx - 1)
+                && IsValidBSTHelper(nums, midIndx, rIndx - 1);
+        }
+
         //BST fromPostOrder(value[] nodes)
         //{
         //    // No nodes, no tree

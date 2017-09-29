@@ -693,11 +693,42 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return stepCount;
         }
 
+        //------------------------------------------------------------------------------------
         /* 300 https://leetcode.com/problems/longest-increasing-subsequence/description/ 
           http://www.geeksforgeeks.org/longest-increasing-subsequence/
          The length of the longest increasing subsequence in arr[] of size n */
-
         public int LengthOfLIS(int[] nums)
+        {
+            List<int> list = new List<int>();
+
+            foreach (int num in nums)
+            {
+                if (list.Count == 0)
+                {
+                    list.Add(num);
+                    continue;
+                }
+                if (list[list.Count - 1] < num)
+                {
+                    list.Add(num);
+                    continue;
+                }
+
+                int rightIndx = list.Count - 1;
+                Console.WriteLine("rightIndx " + rightIndx);
+
+                rightIndx = Array.BinarySearch(nums, 0, rightIndx, num);
+
+                if (rightIndx < 0)
+                    rightIndx = -(rightIndx + 1);
+
+                list[rightIndx] = num;
+            }
+
+            return list.Count;
+        }
+
+        public int LengthOfLIS1(int[] nums)
         {
             int[] dpLkUp = new int[nums.Length];
             int lisCnt = 0;
@@ -760,6 +791,8 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             int[] nums = { 10, 22, 9, 33, 21, 50, 41, 60 };
             Console.WriteLine("Length of lis is " + LongestIncreasingSubsequence(nums) + "n");
         }
+        
+        //------------------------------------------------------------------------------------
 
         // 673 https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
         public int FindNumberOfLIS(int[] nums)

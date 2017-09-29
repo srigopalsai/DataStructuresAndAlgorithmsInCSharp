@@ -190,11 +190,7 @@
     <Compile Include="4.0 - Trees\Ternary Search Tree.cs" />
     <Compile Include="4.0 - Trees\TournamentTree.cs" />
     <Compile Include="4.0 - Trees\TrieCompressed.cs" />
-    <Compile Include="5.1 - Dynamic Programming\Kadane - Contiguous Sub Sequence.cs" />
-    <Compile Include="5.1 - Dynamic Programming\LongestIncreasingSubSequence.cs" />
-    <Compile Include="5.1 - Dynamic Programming\Min Cost Path.cs" />
     <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
-    <Compile Include="5.1 - Dynamic Programming\Viterbi Algorithm.cs" />
     <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Bridge Detection - DFS WhiteGrayBlack.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Is Strongly Connected.cs" />
@@ -218,10 +214,6 @@
     <Compile Include="6.0 - Sorting Techniques\8.0 - TimSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\9.6 - ZigZagSort.cs" />
     <Compile Include="5.1 - Dynamic Programming\1 - FibonacciNumbersTillN1.cs" />
-    <Compile Include="5.1 - Dynamic Programming\EditDistance.cs" />
-    <Compile Include="5.1 - Dynamic Programming\KnapSackProblem.cs" />
-    <Compile Include="5.1 - Dynamic Programming\MaximumSubSequenceSum.cs" />
-    <Compile Include="5.1 - Dynamic Programming\RodCutting.cs" />
     <Compile Include="6.0 - Sorting Techniques\9.7 - BitonicSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\9.9.0 - BogoSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\9.8 - CockTailSort.cs" />
@@ -248,13 +240,12 @@
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Minimum Window Substring.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore Horspool.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\3-Boyer Moore.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\Edit Distance In Strings Levenshtein Distance.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\To Be Done.cs" />
     <Compile Include="8.0 - String Algorithms\Custom RegEx.cs" />
+    <Compile Include="8.0 - String Algorithms\Haming Distance.cs" />
     <Compile Include="8.0 - String Algorithms\ParanthsesPermuations.cs" />
     <Compile Include="8.0 - String Algorithms\5 - Permutations - InSubString.cs" />
-    <Compile Include="8.0 - String Algorithms\PossibleStringCombinationsForCellNumber.cs" />
-    <Compile Include="8.0 - String Algorithms\String Samples - Manipulation.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\SuffixArray.cs" />
+    <Compile Include="8.0 - String Algorithms\String Problmes - Manipulation.cs" />
     <Compile Include="0.3 - Arrays\4 - Remove Duplicates.cs" />
     <Compile Include="0.3 - Arrays\5.2 - Search - Missing 1 Number In Array.cs" />
     <Compile Include="0.3 - Arrays\9.1 - Minimum Number Of Jumps To Reach End.cs" />
@@ -297,7 +288,6 @@
     <Compile Include="7.0 - Searching Techniques\JumpSearch.cs" />
     <Compile Include="7.0 - Searching Techniques\PredectiveSearch.cs" />
     <Compile Include="7.0 - Searching Techniques\UniformBinarySearch.cs" />
-    <Compile Include="8.0 - String Algorithms\Replace Repated Chars With Its Count In Place.cs" />
     <Compile Include="5.3 - PVersesNP\Notes.cs" />
     <Compile Include="9.1 - Other Algorithms\BigLittleEndian.cs" />
     <Compile Include="9.1 - Other Algorithms\BiSectionAlgorithm.cs" />
@@ -320,15 +310,11 @@
     <Compile Include="9.5 - Temp\Web Crawlers.cs" />
     <Compile Include="9.6 - General\Brain Teaser.cs" />
     <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
-    <Compile Include="8.0 - String Algorithms\Remove A and I From String.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zLexicalAnalysis.cs" />
-    <Compile Include="8.0 - String Algorithms\Reverse A String.cs" />
     <Compile Include="9.1 - Other Algorithms\LottoryNumberGeneration.cs" />
     <Compile Include="0.6 - Sets\BloomFilter.cs" />
     <Compile Include="9.6 - General\GeneralCodingQustionsDemo.xaml.cs">
       <DependentUpon>GeneralCodingQustionsDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="9.6 - General\PalindromeNumber.cs" />
     <Compile Include="0.5 - Matrix\5.2 - Search - Biggest Block In Matrix.cs" />
     <Compile Include="0.5 - Matrix\9.1 - MaximumSubMatrixSum.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\2 - AugmentingRecursion.cs" />
@@ -372,31 +358,19 @@
     <Compile Include="7.0 - Searching Techniques\NearestNeighborSearch.cs" />
     <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Tabulation DownTop.cs" />
     <Compile Include="5.1 - Dynamic Programming\Minimum Coin Change.cs" />
-    <Compile Include="5.1 - Dynamic Programming\Cutting A Rod.cs" />
     <Compile Include="5.1 - Dynamic Programming\DynamicProgrammnigDemo.xaml.cs">
       <DependentUpon>DynamicProgrammnigDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="5.1 - Dynamic Programming\Egg Dropping Puzzle.cs" />
-    <Compile Include="5.1 - Dynamic Programming\IncreasingArraySubSequence.cs" />
-    <Compile Include="5.1 - Dynamic Programming\LengthOfLongestArithmeticProgression.cs" />
-    <Compile Include="5.1 - Dynamic Programming\LongestCommonSubSequence.cs" />
-    <Compile Include="5.1 - Dynamic Programming\LongestCommonSubString.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Tabulation Bottom Up.cs" />
     <Compile Include="5.1 - Dynamic Programming\2 - Longest Palindromic Sub String Manacher Algorithm.cs" />
-    <Compile Include="5.1 - Dynamic Programming\MaxLenghtOfPairs.cs" />
-    <Compile Include="5.1 - Dynamic Programming\PalindromePartition.cs" />
-    <Compile Include="5.1 - Dynamic Programming\zCountAllPossiblePathsFromTopLeftToBottomRight.cs" />
     <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
     <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
-    <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Memorization TopDown.cs" />
-    <Compile Include="9.6 - General\IsPalindromeString.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Memorization TopDown.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zBoyerMoore.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zFiniteAutomata.cs" />
+    <Compile Include="8.0 - String Algorithms\Algorithms\Multiple Pattern Match Algorithms.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\zMorrisPratt.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - QuickSearch.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\zRabinKarpOrKarpRabinNI.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zShiftOrAlgorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zSuffixTreeOrPATTree.cs" />
     <Compile Include="9.1 - Other Algorithms\BinaryHeapTree.cs" />
     <Compile Include="9.1 - Other Algorithms\1 - BranchPrediction.cs" />
     <Compile Include="9.1 - Other Algorithms\CircularBuffer.cs" />
@@ -441,17 +415,12 @@
     <Compile Include="7.0 - Searching Techniques\1 - HashTable.cs" />
     <Compile Include="9.1 - Other Algorithms\1 - GreatestCommonDivisorDemo.cs" />
     <Compile Include="9.1 - Other Algorithms\2 - IncreaseArraySizeDemo.cs" />
-    <Compile Include="9.1 - Other Algorithms\3 - PalendromeByRecursionDemo.cs" />
-    <Compile Include="9.1 - Other Algorithms\4 - PalindromeByLoopDemo.cs" />
     <Compile Include="8.0 - String Algorithms\5 - Permutations - All.cs" />
     <Compile Include="9.1 - Other Algorithms\6 - PermutationCombinationWithFact.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - Multiple Samples.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Brute Force Or Naive.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - SubString.cs" />
-    <Compile Include="8.0 - String Algorithms\String Samples - Search.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zDeterministicFiniteAutomatonAlgorithm.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zHashTable.cs" />
-    <Compile Include="8.0 - String Algorithms\Algorithms\zLevenshteinDistance.cs" />
+    <Compile Include="8.0 - String Algorithms\String Problmes - Search.cs" />
     <Compile Include="8.0 - String Algorithms\StringAlgorithmsDemo.xaml.cs">
       <DependentUpon>StringAlgorithmsDemo.xaml</DependentUpon>
     </Compile>
@@ -466,7 +435,6 @@
     <Compile Include="0.6 - Sets\4-MultiSets.cs" />
     <Compile Include="0.6 - Sets\5-Tuple.cs" />
     <Compile Include="0.6 - Sets\PartitionProblem.cs" />
-    <Compile Include="5.1 - Dynamic Programming\SubsetSumProblem.cs" />
     <Compile Include="9.4 - Testing\PrimalityTesting.cs" />
     <Compile Include="9.4 - Testing\SieveOfEratosthenes.cs" />
     <Compile Include="5.2 - Greedy Algorithms\Notes.cs" />
