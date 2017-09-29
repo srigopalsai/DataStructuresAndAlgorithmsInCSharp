@@ -307,7 +307,6 @@
     <Compile Include="9.4 - Problems and Solutions\1 - Stock Span Problem.cs" />
     <Compile Include="9.4 - Problems and Solutions\2 - Cutting Stock Problem.cs" />
     <Compile Include="9.5 - Puzzles\1 - Weighing Puzzle.cs" />
-    <Compile Include="9.5 - Temp\Web Crawlers.cs" />
     <Compile Include="9.6 - General\Brain Teaser.cs" />
     <Compile Include="9.6 - General\ConvertStringToFloat.cs" />
     <Compile Include="9.1 - Other Algorithms\LottoryNumberGeneration.cs" />
@@ -444,7 +443,6 @@
     <Compile Include="Resources.Designer.cs" />
     <Compile Include="0.6 - Sets\Notes.cs" />
     <Compile Include="Settings.Designer.cs" />
-    <Compile Include="9.5 - Temp\QuickSortDemo.cs" />
     <Compile Include="0.0 - Common\Test Case Guidelines.cs" />
     <Page Include="0.0 - Common\OutputWindow.xaml">
       <SubType>Designer</SubType>
@@ -513,7 +511,6 @@
     <Compile Include="6.0 - Sorting Techniques\1.0 - BubbleSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\3.0 - InsertionSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\4.0 - QuickSort.cs" />
-    <Compile Include="9.5 - Temp\BubbleSortDemo.cs" />
     <Compile Include="6.0 - Sorting Techniques\2.0 - SelectionSort.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
