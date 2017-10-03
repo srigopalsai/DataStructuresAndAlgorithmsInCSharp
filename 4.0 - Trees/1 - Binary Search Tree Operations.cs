@@ -2164,7 +2164,7 @@ http://powercollections.codeplex.com
             }
 
             return IsValidBSTHelper(nums, lIndx, midIndx - 1)
-                && IsValidBSTHelper(nums, midIndx, rIndx - 1);
+                && IsValidBSTHelper(nums, midIndx + 1, rIndx - 1);
         }
 
         //BST fromPostOrder(value[] nodes)
