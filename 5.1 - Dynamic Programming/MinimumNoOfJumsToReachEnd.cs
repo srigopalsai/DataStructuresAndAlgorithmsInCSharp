@@ -11,35 +11,36 @@ namespace DataStructuresAndAlgorithms
   */
     public partial class DynamicProgrammingSamples
     {
-        public static String GetHopsGuide(int[] arr)
+        public static String GetHopsGuide(int[] nums)
         {
-            if (arr == null || arr.Length == 0 || arr[0] == 0) return "failure";
+            if (nums == null || nums.Length == 0 || nums[0] == 0)
+                return "failure";
 
-            int[] hopsGuide = new int[arr.Length + 1];
+            int[] hopsLkUp = new int[nums.Length + 1];
 
-            for (int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < nums.Length; i++)
             {
-                for (int j = i + 1; j < arr.Length + 1; j++)
+                for (int j = i + 1; j < nums.Length + 1; j++)
                 {
                     int alternatePath = 0;
-                    if (j <= i + arr[i])
+
+                    if (j <= i + nums[i])
                     {
                         alternatePath = j - i;
-                        hopsGuide[j] = Math.Max(hopsGuide[j], alternatePath);
+                        hopsLkUp[j] = Math.Max(hopsLkUp[j], alternatePath);
                     }
                     else
                         break;
-
                 }
             }
 
-            if (hopsGuide[hopsGuide.Length - 1] > 0)
+            if (hopsLkUp[hopsLkUp.Length - 1] > 0)
             {
                 String path = "out";
 
-                for (int i = hopsGuide.Length - 1; i > 0; )
+                for (int i = hopsLkUp.Length - 1; i > 0; )
                 {
-                    i -= hopsGuide[i];
+                    i -= hopsLkUp[i];
                     path = i + " " + path;
                 }
 

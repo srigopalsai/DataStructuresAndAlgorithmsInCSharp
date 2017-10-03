@@ -124,12 +124,12 @@ namespace DataStructuresAndAlgorithms
             }
 
             /*dp[i][j] means from index i to index j, the longest palindromic subsequence*/
-            int[,] lkUp = new int [strLen + 1, strLen + 1];
+            int[,] lkUpMat = new int [strLen + 1, strLen + 1];
 
             /*dp initialization dp[i][i] means contains one character so it equals one*/
             for (int indx = 1; indx <= strLen; ++indx)
             {
-                lkUp[indx , indx] = 1;
+                lkUpMat[indx , indx] = 1;
             }
 
             for (int lIndx = 1; lIndx < strLen; ++lIndx)
@@ -138,17 +138,17 @@ namespace DataStructuresAndAlgorithms
                 {
                     if (str[rIndx] == str[lIndx])
                     {
-                        lkUp[rIndx,lIndx] = Math.Max(lkUp[rIndx + 1,lIndx - 1] + 2, 
-                                            Math.Max(lkUp[rIndx + 1,lIndx], lkUp[rIndx,lIndx - 1]));
+                        lkUpMat[rIndx,lIndx] = Math.Max(lkUpMat[rIndx + 1,lIndx - 1] + 2, 
+                                            Math.Max(lkUpMat[rIndx + 1,lIndx], lkUpMat[rIndx,lIndx - 1]));
                     }
                     else
                     {
-                        lkUp[rIndx,lIndx] = Math.Max(lkUp[rIndx + 1,lIndx - 1],
-                                        Math.Max(lkUp[rIndx + 1,lIndx], lkUp[rIndx,lIndx - 1]));
+                        lkUpMat[rIndx,lIndx] = Math.Max(lkUpMat[rIndx + 1,lIndx - 1],
+                                        Math.Max(lkUpMat[rIndx + 1,lIndx], lkUpMat[rIndx,lIndx - 1]));
                     }
                 }
             }
-            return lkUp[0 ,strLen - 1];
+            return lkUpMat[0 ,strLen - 1];
         }
 
         public int LongestPalindromeSubseq2(String str)
@@ -275,5 +275,94 @@ http://www.geeksforgeeks.org/longest-common-substring/
             MessageBox.Show("Length of Longest Common Substring is " + LongestCommonSubStringDP(str1, str2));
         }
 
+        //===========================================================================================
+
+        //303 https://leetcode.com/problems/range-sum-query-immutable/description/
+        /*
+            Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+            Example:
+            Given nums = [-2, 0, 3, -5, 2, -1]
+
+            sumRange(0, 2) -> 1
+            sumRange(2, 5) -> -1
+            sumRange(0, 5) -> -3
+
+            Note:
+            You may assume that the array does not change.
+            There are many calls to sumRange function.
+                 * */
+        public class NumArray
+        {
+            int[] nums;
+
+            public NumArray(int[] nums)
+            {
+                for (int indx = 1; indx < nums.Length; indx++)
+                {
+                    nums[indx] += nums[indx - 1];
+                }
+                this.nums = nums;
+            }
+
+            public int SumRange(int stIndx, int edIndx)
+            {
+                if (stIndx == 0)
+                {
+                    return nums[edIndx];
+                }
+                return nums[edIndx] - nums[stIndx - 1];
+            }
+        }
+
+        // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/
+        /*
+        Time complexity construction O(n*m)
+        Time complexity of query O(1)
+        Space complexity is O(n*m)
+        */
+
+        public class Immutable2DSumRangeQuery
+        {
+            private int[,] lkUpMat;
+
+            public Immutable2DSumRangeQuery(int[,] srcMatrix)
+            {
+
+                lkUpMat = new int[srcMatrix.GetLength(0) + 1, srcMatrix.GetLength(1) + 1];
+
+                for (int rIndx = 1; rIndx < lkUpMat.GetLength(0); rIndx++)
+                {
+                    for (int cIndx = 1; cIndx < lkUpMat.GetLength(1); cIndx++)
+                    {
+                        lkUpMat[rIndx, cIndx] = lkUpMat[rIndx - 1, cIndx] + lkUpMat[rIndx, cIndx - 1] +
+                                                srcMatrix[rIndx - 1, cIndx - 1] - lkUpMat[rIndx - 1, cIndx - 1];
+                    }
+                }
+            }
+
+            public int SumQuery(int r1, int c1, int r2, int c2)
+            {
+                r1++;
+                c1++;
+                r2++;
+                c2++;
+
+                return lkUpMat[r2, c2] - lkUpMat[r1 - 1, c2] - lkUpMat[r2, c1 - 1]
+                     + lkUpMat[r1 - 1, c1 - 1];
+            }
+
+            public static void Immutable2DSumRangeQueryTest()
+            {
+                int[,] input = {{3, 0, 1, 4, 2},
+                        {5, 6, 3, 2, 1},
+                        {1, 2, 0, 1, 5},
+                        {4, 1, 0, 1, 7},
+                        {1, 0, 3, 0, 5}};
+
+                int[,] input1 = { { 2, 0, -3, 4 }, { 6, 3, 2, -1 }, { 5, 4, 7, 3 }, { 2, -6, 8, 1 } };
+                Immutable2DSumRangeQuery isr = new Immutable2DSumRangeQuery(input1);
+                Console.WriteLine(isr.SumQuery(1, 1, 2, 2));
+            }
+        }
     }
 }

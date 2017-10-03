@@ -92,32 +92,29 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show(resultString);
         }
         
-        public String LargestPalindromeManacherAlgorithm(String sourceString)
+        public String LargestPalindromeManacherAlgorithm(String srcStr)
         {
-            if (sourceString == null || sourceString.Length == 0)
+            if (srcStr == null || srcStr.Length == 0)
             {
                 return string.Empty;
             }
-
-            //O(n) to convert to Char Array.
-            char[] processedCharArray = AddBoundariesPreProcessing(sourceString.ToCharArray());
             
             //O(n) Extra Space
-            int[] processedIndeces = new int[processedCharArray.Length];
+            int[] processedIndeces = new int[srcStr.Length];
 
             int c = 0;
             int r = 0; // Here the first element in s2 has been processed.
 
-            int backwardCntr = 0;
-            int forwardCntr = 0; // The walking indices to compare if two elements are the same
+            int rIndx = 0;
+            int lIndx = 0; // The walking indices to compare if two elements are the same
 
-            for (int lpCnt = 1; lpCnt < processedCharArray.Length; lpCnt++)
+            for (int lpCnt = 1; lpCnt < srcStr.Length; lpCnt++)
             {
                 if (lpCnt > r)
                 {
                     processedIndeces[lpCnt] = 0;
-                    backwardCntr = lpCnt - 1;
-                    forwardCntr = lpCnt + 1;
+                    rIndx = lpCnt - 1;
+                    lIndx = lpCnt + 1;
                 }
                 else
                 {
@@ -126,21 +123,22 @@ namespace DataStructuresAndAlgorithms
                     if (processedIndeces[i2] < (r - lpCnt))
                     {
                         processedIndeces[lpCnt] = processedIndeces[i2];
-                        backwardCntr = -1; // This signals bypassing the while loop below. 
+                        rIndx = -1; // This signals bypassing the while loop below. 
                     }
                     else
                     {
                         processedIndeces[lpCnt] = r - lpCnt;
-                        forwardCntr = r + 1;
-                        backwardCntr = lpCnt * 2 - forwardCntr;
+                        lIndx = r + 1;
+                        rIndx = lpCnt * 2 - lIndx;
                     }
                 }
 
-                while (backwardCntr >= 0 && forwardCntr < processedCharArray.Length && processedCharArray[backwardCntr] == processedCharArray[forwardCntr])
+                while (rIndx >= 0 && lIndx < srcStr.Length && 
+                        srcStr[rIndx] == srcStr[lIndx])
                 {
                     processedIndeces[lpCnt]++; 
-                    backwardCntr--; 
-                    forwardCntr++;
+                    rIndx--; 
+                    lIndx++;
                 }
 
                 if ((lpCnt + processedIndeces[lpCnt]) > r)
@@ -155,7 +153,7 @@ namespace DataStructuresAndAlgorithms
 
             c = 0;
 
-            for (int lpCnt = 1; lpCnt < processedCharArray.Length; lpCnt++)
+            for (int lpCnt = 1; lpCnt < srcStr.Length; lpCnt++)
             {
                 if (len < processedIndeces[lpCnt])
                 {
@@ -164,7 +162,7 @@ namespace DataStructuresAndAlgorithms
                 }
             }
 
-            char[] ss = new char[processedCharArray.Length];
+            char[] ss = new char[srcStr.Length];
             Array.Copy(processedCharArray, c - len, ss, 0, c + len + 1);
 
             return new string(RemoveBoundariesPostProcessing(ss));
@@ -206,6 +204,87 @@ namespace DataStructuresAndAlgorithms
                 filteredCharArray[lpCnt] = sourceCharArray[lpCnt * 2 + 1];
             }
             return filteredCharArray;
+        }
+
+        // 680 https://leetcode.com/problems/valid-palindrome-ii/description/
+        public bool ValidPalindromeII(string s)
+        {
+            int left = 0;
+            int right = s.Length - 1;
+
+            while (left < right)
+            {
+                if (s[left] == s[right])
+                {
+                    left++;
+                    right--;
+                }
+                else
+                {
+                    //remove right
+                    int templeft = left;
+                    int tempright = right - 1;
+
+                    while (templeft < tempright)
+                    {
+                        if (s[templeft] != s[tempright])
+                            break;
+
+                        templeft++;
+                        tempright--;
+
+                        if (templeft >= tempright)
+                            return true;
+                    }
+
+                    //remove left
+                    left++;
+
+                    while (left < right)
+                    {
+                        if (s[left] != s[right])
+                            return false;
+                        left++;
+                        right--;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool ValidPalindromeIIRec(String srcStr)
+        {
+            int lIndx = 0;
+            int rIndx = srcStr.Length - 1;
+
+            while (lIndx < rIndx)
+            {
+                if (srcStr[lIndx] != srcStr[rIndx])
+                {
+                    return  ValidPalindromeIIRecHlpr(srcStr, lIndx + 1, rIndx) || 
+                            ValidPalindromeIIRecHlpr(srcStr, lIndx, rIndx - 1);
+                }
+
+                ++lIndx;
+                --rIndx;
+            }
+            return true;
+        }
+        public bool ValidPalindromeIIRecHlpr(String srcStr, int lIndx, int rIndx)
+        {
+            while (lIndx < rIndx)
+            {
+                if (srcStr[lIndx] == srcStr[rIndx])
+                {
+                    ++lIndx;
+                    --rIndx;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
