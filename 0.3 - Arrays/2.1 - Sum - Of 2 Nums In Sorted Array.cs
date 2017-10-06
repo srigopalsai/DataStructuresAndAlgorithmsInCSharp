@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DataStructuresAndAlgorithms
@@ -19,6 +20,54 @@ namespace DataStructuresAndAlgorithms
     */
     partial class ArraySamples
     {
+        public class TwoSumIII
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+
+            public void Add(int number)
+            {
+                if (dict.ContainsKey(number))
+                {
+                    dict[number] = dict[number] + 1;
+                }
+                else
+                {
+                    dict[number] = 1;
+                }
+            }
+
+            public bool Find(int sum)
+            {
+                foreach (int num in dict.Keys)
+                {
+                    if (sum - num == num)
+                    {
+                        if (dict[num] >= 2)
+                        {
+                            return true;
+                        }
+                    }
+                    else if (dict.ContainsKey(sum - num))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            public static void TwoSumIIITest()
+            {
+                TwoSumIII util = new TwoSumIII();
+                util.Add(1);
+                util.Add(3);
+                util.Add(5);
+
+                Console.WriteLine(util.Find(4));
+                Console.WriteLine(util.Find(7));
+            }
+        }
+
         public bool IsSumOf2NumsExistsInSortedInArray(int[] sortedList, int targetEle)
         {
             //int[] sortedList = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };

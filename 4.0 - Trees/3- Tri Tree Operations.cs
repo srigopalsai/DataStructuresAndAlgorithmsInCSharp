@@ -1,4 +1,30 @@
 ﻿using System;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace DataStructuresAndAlgorithms.Trees
+{
+    /*
+    https://www.youtube.com/watch?v=zIjfhVPRZCg
+    http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/
+    http://en.wikipedia.org/wiki/Trie#Compressing_tries
+
+    */
+    public class TrieNode
+    {
+        public Dictionary<char,TrieNode> Childern { get; set; }
+        public bool IsCompleteWord { get; set; }
+    }
+
+    public class TriTreeOperations
+    {
+
+    }
+}
+/*
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -19,14 +45,14 @@ namespace DataStructuresAndAlgorithms
     When the trie is mostly static, i.e. all insertions or deletions of keys from a prefilled trie are disabled and only lookups are needed, and when the trie nodes are not keyed by node specific data (or if the node's data is common) it is possible to compress the trie representation by merging the common branches
 
     https://www.youtube.com/watch?v=NdfIfxTsVDo
-    */
-    class PrefixTree
+    
+class PrefixTree
+{
+    static void TestTrie()
     {
-        static void TestTrie()
-        {
-            Trie tree = new Trie();
+        Trie tree = new Trie();
 
-            string s = @"   In computer science, a trie, or prefix tree, 
+        string s = @"   In computer science, a trie, or prefix tree, 
                             is an ordered tree data structure that is used to 
                             store an associative array where the keys are strings. 
                             Unlike a binary search tree, no node in the tree 
@@ -39,127 +65,104 @@ namespace DataStructuresAndAlgorithms
                             with every node, only with leaves and some inner nodes 
                             that happen to correspond to keys of interest. ";
 
-            foreach (string str in s.Replace("\r\n", "").Split(' ', ',', ';', '.'))
+        foreach (string str in s.Replace("\r\n", "").Split(' ', ',', ';', '.'))
+        {
+            if (str.Length > 0)
             {
-                if (str.Length > 0)
-                {
-                    tree.Add(str);
-                }
+                tree.Add(str);
             }
-
-            foreach (string word in tree.Find("tr**"))
-            {
-                Console.WriteLine(word);
-            }
-
         }
+
+        foreach (string word in tree.Find("tr**"))
+        {
+            Console.WriteLine(word);
+        }
+
+    }
+}
+
+class TrieNode1
+{
+    private TrieNode1[] _nodes;
+    private bool _isEnd;
+
+    public TrieNode1()
+    {
+        _nodes = new TrieNode1[26];
     }
 
-    class TrieNode
+    private int Index(char c)
     {
-        private TrieNode[] _nodes;
-        private bool _isEnd;
+        if (c < 'a' || c > 'z') throw new ArgumentOutOfRangeException();
+        return (int)(c - 'a');
+    }
 
-        public TrieNode()
+    public bool IsEnd { get { return _isEnd; } set { _isEnd = value; } }
+
+    public IEnumerable<TrieNode1> Nodes { get { return _nodes; } }
+
+    public TrieNode1 this[char c] { get { return _nodes[Index(c)]; } }
+
+    public TrieNode1 AddChild(char c)
+    {
+        TrieNode1 node = this[c];
+        if (node == null)
         {
-            _nodes = new TrieNode[26];
+            node = new TrieNode1();
+            _nodes[Index(c)] = node;
         }
+        return node;
+    }
+}
 
-        private int Index(char c)
+class Trie
+{
+    private TrieNode1 _root;
+
+    public Trie()
+    {
+        _root = new TrieNode1();
+    }
+
+    public void Add(string s)
+    {
+        TrieNode1 node = _root;
+        foreach (char c in s.ToLower())
         {
-            if (c < 'a' || c > 'z') throw new ArgumentOutOfRangeException();
-            return (int)(c - 'a');
+            node = node.AddChild(c);
         }
+        node.IsEnd = true;
+    }
 
-        public bool IsEnd { get { return _isEnd; } set { _isEnd = value; } }
-     
-        public IEnumerable<TrieNode> Nodes { get { return _nodes; } }
-
-        public TrieNode this[char c] { get { return _nodes[Index(c)]; } }
-
-        public TrieNode AddChild(char c)
+    public bool Contains(string s)
+    {
+        TrieNode1 node = _root;
+        foreach (char c in s.ToLower())
         {
-            TrieNode node = this[c];
+            node = node[c];
             if (node == null)
             {
-                node = new TrieNode();
-                _nodes[Index(c)] = node;
+                return false;
             }
-            return node;
         }
+        return node.IsEnd;
     }
 
-    class Trie
+    public List<string> Find(string mask)
     {
-        private TrieNode _root;
+        return Find(mask, _root);
+    }
 
-        public Trie()
+    private List<string> Find(string mask, TrieNode1 node)
+    {
+        char c = mask[0];
+        mask = mask.Substring(1);
+        List<string> list = new List<string>();
+        if (c == '*')
         {
-            _root = new TrieNode();
-        }
-
-        public void Add(string s)
-        {
-            TrieNode node = _root;
-            foreach (char c in s.ToLower())
+            c = 'a';
+            foreach (TrieNode1 child in node.Nodes)
             {
-                node = node.AddChild(c);
-            }
-            node.IsEnd = true;
-        }
-
-        public bool Contains(string s)
-        {
-            TrieNode node = _root;
-            foreach (char c in s.ToLower())
-            {
-                node = node[c];
-                if (node == null)
-                {
-                    return false;
-                }
-            }
-            return node.IsEnd;
-        }
-
-        public List<string> Find(string mask)
-        {
-            return Find(mask, _root);
-        }
-
-        private List<string> Find(string mask, TrieNode node)
-        {
-            char c = mask[0];
-            mask = mask.Substring(1);
-            List<string> list = new List<string>();
-            if (c == '*')
-            {
-                c = 'a';
-                foreach (TrieNode child in node.Nodes)
-                {
-                    if (child != null)
-                    {
-                        if (mask.Length == 0)
-                        {
-                            if (child.IsEnd)
-                            {
-                                list.Add(c.ToString());
-                            }
-                        }
-                        else
-                        {
-                            foreach (string s in Find(mask, child))
-                            {
-                                list.Add(c.ToString() + s);
-                            }
-                        }
-                    }
-                    c++;
-                }
-            }
-            else
-            {
-                TrieNode child = node[c];
                 if (child != null)
                 {
                     if (mask.Length == 0)
@@ -177,10 +180,33 @@ namespace DataStructuresAndAlgorithms
                         }
                     }
                 }
+                c++;
             }
-            return list;
         }
+        else
+        {
+            TrieNode1 child = node[c];
+            if (child != null)
+            {
+                if (mask.Length == 0)
+                {
+                    if (child.IsEnd)
+                    {
+                        list.Add(c.ToString());
+                    }
+                }
+                else
+                {
+                    foreach (string s in Find(mask, child))
+                    {
+                        list.Add(c.ToString() + s);
+                    }
+                }
+            }
+        }
+        return list;
     }
+}
 }
 /*
 public class Trie

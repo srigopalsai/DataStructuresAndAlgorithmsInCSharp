@@ -189,7 +189,7 @@
     <Compile Include="4.0 - Trees\SplaTree.cs" />
     <Compile Include="4.0 - Trees\Ternary Search Tree.cs" />
     <Compile Include="4.0 - Trees\TournamentTree.cs" />
-    <Compile Include="4.0 - Trees\TrieCompressed.cs" />
+    <Compile Include="4.0 - Trees\3- Tri Tree Operations.cs" />
     <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
     <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Bridge Detection - DFS WhiteGrayBlack.cs" />
@@ -401,7 +401,6 @@
       <DependentUpon>TreesDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="4.0 - Trees\RadixTree Prefix Tree Digital Tree Space Optimized Trie.cs" />
-    <Compile Include="4.0 - Trees\TrieStandardTree.cs" />
     <Compile Include="6.0 - Sorting Techniques\6.1 - HeapSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\5.0 - MergeSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\8.0 - OddEven or BrickSort.cs" />
