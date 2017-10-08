@@ -318,13 +318,13 @@ namespace DataStructuresAndAlgorithms
                 return strLen;
             }
 
-            /*dp[i,j] means from index i to index j, the longest palindromic subsequence*/
-            int[,] lkUp = new int [strLen + 1, strLen + 1];
+            /*dp[i][j] means from index i to index j, the longest palindromic subsequence*/
+            int[,] lkUpMat = new int [strLen + 1, strLen + 1];
 
             /*dp initialization dp[i,i] means contains one character so it equals one*/
             for (int indx = 1; indx <= strLen; ++indx)
             {
-                lkUp[indx , indx] = 1;
+                lkUpMat[indx , indx] = 1;
             }
 
             for (int lIndx = 1; lIndx < strLen; ++lIndx)
@@ -333,17 +333,17 @@ namespace DataStructuresAndAlgorithms
                 {
                     if (str[rIndx] == str[lIndx])
                     {
-                        lkUp[rIndx,lIndx] = Math.Max(lkUp[rIndx + 1,lIndx - 1] + 2, 
-                                            Math.Max(lkUp[rIndx + 1,lIndx], lkUp[rIndx,lIndx - 1]));
+                        lkUpMat[rIndx,lIndx] = Math.Max(lkUpMat[rIndx + 1,lIndx - 1] + 2, 
+                                            Math.Max(lkUpMat[rIndx + 1,lIndx], lkUpMat[rIndx,lIndx - 1]));
                     }
                     else
                     {
-                        lkUp[rIndx,lIndx] = Math.Max(lkUp[rIndx + 1,lIndx - 1],
-                                        Math.Max(lkUp[rIndx + 1,lIndx], lkUp[rIndx,lIndx - 1]));
+                        lkUpMat[rIndx,lIndx] = Math.Max(lkUpMat[rIndx + 1,lIndx - 1],
+                                        Math.Max(lkUpMat[rIndx + 1,lIndx], lkUpMat[rIndx,lIndx - 1]));
                     }
                 }
             }
-            return lkUp[0 ,strLen - 1];
+            return lkUpMat[0 ,strLen - 1];
         }
 
         public int LongestPalindromeSubseq2(String str)
