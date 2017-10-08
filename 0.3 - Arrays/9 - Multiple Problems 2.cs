@@ -669,25 +669,18 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
         public int Jump(int[] nums)
         {
             int stepCount = 0;
-            int lastMaxJump = 0;
+            int prevMaxJump = 0;
             int currMaxJump = 0;
 
             for (int index = 0; index < nums.Length - 1; index++)
             {
                 currMaxJump = Math.Max(currMaxJump, index + nums[index]);
 
-                if (index == lastMaxJump)
+                if (index == prevMaxJump)
                 {
                     stepCount++;
-                    lastMaxJump = currMaxJump;
-
-                    Console.WriteLine("stepCount " + stepCount);
-                    Console.WriteLine("numVal " + nums[index]);
+                    prevMaxJump = currMaxJump;
                 }
-
-                Console.WriteLine("\nindex " + index);
-                Console.WriteLine("currMaxJump " + currMaxJump);
-                Console.WriteLine("lastMaxJump " + lastMaxJump);
             }
 
             return stepCount;
@@ -866,6 +859,64 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 }
             }
             return false;
+        }
+
+        // 221 https://leetcode.com/submissions/detail/122418976/
+        // https://leetcode.com/articles/maximal-square/
+        public int MaximalSquare(char[,] matrix)
+        {
+            int[] dpLkUp = new int[matrix.GetLength(1) + 1];
+            int maxSqLen = 0;
+            int prevMax = 0;
+
+            for (int rIndx = 1; rIndx <= matrix.GetLength(0); rIndx++)
+            {
+                for (int cIndx = 1; cIndx <= matrix.GetLength(1); cIndx++)
+                {
+                    int temp = dpLkUp[cIndx];
+
+                    if (matrix[rIndx - 1, cIndx - 1] == '1')
+                    {
+                        dpLkUp[cIndx] = Math.Min(dpLkUp[cIndx], Math.Min(dpLkUp[cIndx - 1], prevMax)) + 1;
+                        maxSqLen = Math.Max(maxSqLen, dpLkUp[cIndx]);
+                    }
+                    else
+                    {
+                        dpLkUp[cIndx] = 0;
+                    }
+
+                    prevMax = temp;
+                }
+            }
+            return maxSqLen * maxSqLen;
+        }
+
+        // 486 https://leetcode.com/problems/predict-the-winner/description/
+        public bool PredictTheWinner(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return true;
+
+            int nLen = nums.Length;
+            int[] dpLkUp = new int[nLen];
+
+            for (int p1Indx = nLen - 1; p1Indx >= 0; p1Indx--)
+            {
+                for (int p2Indx = p1Indx; p2Indx < nLen; p2Indx++)
+                {
+                    if (p1Indx == p2Indx)
+                    {
+                        dpLkUp[p1Indx] = nums[p1Indx];
+                    }
+                    else
+                    {
+                        dpLkUp[p2Indx] = Math.Max(  nums[p1Indx] - dpLkUp[p2Indx], 
+                                                    nums[p2Indx] - dpLkUp[p2Indx - 1]);
+                    }
+                }
+            }
+
+            return dpLkUp[nLen - 1] >= 0;
         }
     }
 }

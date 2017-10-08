@@ -148,7 +148,6 @@ namespace DataStructuresAndAlgorithms
                 }
             }
 
-
             int len = 0;
 
             c = 0;
@@ -162,10 +161,10 @@ namespace DataStructuresAndAlgorithms
                 }
             }
 
-            char[] ss = new char[srcStr.Length];
-            Array.Copy(processedCharArray, c - len, ss, 0, c + len + 1);
+            char[] processedCharArray = new char[srcStr.Length];
+            Array.Copy(processedIndeces, c - len, processedCharArray, 0, c + len + 1);
 
-            return new string(RemoveBoundariesPostProcessing(ss));
+            return new string(RemoveBoundariesPostProcessing(processedCharArray));
         }
 
         //O(n) time

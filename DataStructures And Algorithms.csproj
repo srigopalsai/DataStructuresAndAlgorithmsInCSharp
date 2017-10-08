@@ -190,6 +190,7 @@
     <Compile Include="4.0 - Trees\TournamentTree.cs" />
     <Compile Include="4.0 - Trees\3- Tri Tree Operations.cs" />
     <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Array Problems.cs" />
     <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Bridge Detection - DFS WhiteGrayBlack.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Is Strongly Connected.cs" />
@@ -359,7 +360,7 @@
     <Compile Include="5.1 - Dynamic Programming\DynamicProgrammnigDemo.xaml.cs">
       <DependentUpon>DynamicProgrammnigDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Tabulation Bottom Up.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - String.cs" />
     <Compile Include="5.1 - Dynamic Programming\2 - Longest Palindromic Sub String Manacher Algorithm.cs" />
     <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
     <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
