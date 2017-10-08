@@ -356,14 +356,11 @@
     <Compile Include="7.0 - Searching Techniques\FibonacciSearch.cs" />
     <Compile Include="7.0 - Searching Techniques\NearestNeighborSearch.cs" />
     <Compile Include="5.1 - Dynamic Programming\1 - NthFibonacciNumber - Tabulation DownTop.cs" />
-    <Compile Include="5.1 - Dynamic Programming\Minimum Coin Change.cs" />
     <Compile Include="5.1 - Dynamic Programming\DynamicProgrammnigDemo.xaml.cs">
       <DependentUpon>DynamicProgrammnigDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - String.cs" />
-    <Compile Include="5.1 - Dynamic Programming\2 - Longest Palindromic Sub String Manacher Algorithm.cs" />
     <Compile Include="5.1 - Dynamic Programming\MatixChainMultiplication.cs" />
-    <Compile Include="5.1 - Dynamic Programming\MinimumNoOfJumsToReachEnd.cs" />
     <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Memorization TopDown.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\1 - Search - Knuth Morris Pratt Algorithm.cs" />
     <Compile Include="8.0 - String Algorithms\Algorithms\Multiple Pattern Match Algorithms.cs" />

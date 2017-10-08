@@ -12,18 +12,17 @@ namespace DataStructuresAndAlgorithms
     Time : O(n) Time with O(n) Space.
 
     If we notice here we are storing the previous logic for next iteration by using the Dynamic Programming technique.
-    
-    
+        
     If we see the recursion technique.
-    Time : Exponential Time. O(2^n).
-    Space: O(n) - Call Stack.
+    Time    : Exponential Time. O(2^n).
+    Space   : O(n) - Call Stack.
 
     ===================================================================================================================================================================================================
 
     */
     partial class DynamicProgrammingSamples
     {
-        int GenerateFibonacciSequence(int n)
+        public int GenerateFibonacciSequence(int n)
         {
             int[] resultArray = new int[n + 1];
 
@@ -37,6 +36,7 @@ namespace DataStructuresAndAlgorithms
 
             return resultArray[n];
         }
+
         public void FibonacciSequenceTest()
         {
             int result = GenerateFibonacciSequence(7);

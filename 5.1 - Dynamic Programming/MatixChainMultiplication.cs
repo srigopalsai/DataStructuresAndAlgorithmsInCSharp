@@ -5,39 +5,41 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms
 {
-    /*
-    Given a sequence of matrices, find the most efficient way to multiply these matrices together. 
-    The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
-    
-    We have many options to multiply a chain of matrices because matrix multiplication is associative. 
-    In other words, no matter how we parenthesize the product, the result will be the same. 
-    E.g. If we had four matrices A, B, C, and D, we would have:
-    (ABC)D = (AB)(CD) = A(BCD) = ....
 
-    However, the order in which we parenthesize the product affects the number of simple arithmetic operations needed to compute the product, or the efficiency. 
-    E.g. suppose A is a 10 × 30 matrix, B is a 30 × 5 matrix, and C is a 5 × 60 matrix. Then,
-    (AB)C = (10×30×5) + (10×5×60) = 1500 + 3000 = 4500 operations
-    A(BC) = (30×5×60) + (10×30×60) = 9000 + 18000 = 27000 operations
-
-    Dynamic Programming :
-    1. Optimal Substructure:
-    A simple solution is to place parenthesis at all possible places, calculate the cost for each placement and return the minimum value. 
-    In a chain of matrices of size n, we can place the first set of parenthesis in n-1 ways. 
-
-    E.g. If the given chain is of 4 matrices. 
-    Let the chain be ABCD, then there are 3 way to place first set of parenthesis: A(BCD), (AB)CD and (ABC)D. 
-    So when we place a set of parenthesis, we divide the problem into subproblems of smaller size. 
-     
-    Minimum number of multiplication needed to multiply a chain of size n = Minimum of all n-1 placements (these placements create subproblems of smaller size)
-    
-    2. Overlapping Subproblems:
-    Below Following is a recursive implementation that simply follows the above optimal substructure property. 
-    
-    Therefore, the problem has optimal substructure property and can be easily solved using recursion.
-    http://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
-    */
     class MatixChainMultiplication
     {
+        /*
+Given a sequence of matrices, find the most efficient way to multiply these matrices together. 
+The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplications.
+
+We have many options to multiply a chain of matrices because matrix multiplication is associative. 
+In other words, no matter how we parenthesize the product, the result will be the same. 
+E.g. If we had four matrices A, B, C, and D, we would have:
+(ABC)D = (AB)(CD) = A(BCD) = ....
+
+However, the order in which we parenthesize the product affects the number of simple arithmetic operations needed to compute the product, or the efficiency. 
+E.g. suppose A is a 10 × 30 matrix, B is a 30 × 5 matrix, and C is a 5 × 60 matrix. Then,
+(AB)C = (10×30×5) + (10×5×60) = 1500 + 3000 = 4500 operations
+A(BC) = (30×5×60) + (10×30×60) = 9000 + 18000 = 27000 operations
+
+Dynamic Programming :
+1. Optimal Substructure:
+A simple solution is to place parenthesis at all possible places, calculate the cost for each placement and return the minimum value. 
+In a chain of matrices of size n, we can place the first set of parenthesis in n-1 ways. 
+
+E.g. If the given chain is of 4 matrices. 
+Let the chain be ABCD, then there are 3 way to place first set of parenthesis: A(BCD), (AB)CD and (ABC)D. 
+So when we place a set of parenthesis, we divide the problem into subproblems of smaller size. 
+
+Minimum number of multiplication needed to multiply a chain of size n = Minimum of all n-1 placements (these placements create subproblems of smaller size)
+
+2. Overlapping Subproblems:
+Below Following is a recursive implementation that simply follows the above optimal substructure property. 
+
+Therefore, the problem has optimal substructure property and can be easily solved using recursion.
+http://www.geeksforgeeks.org/dynamic-programming-set-8-matrix-chain-multiplication/
+*/
+
         //O(N^3)
         void multiply(int[][] A, int[][] B, int[][] C)
         {
@@ -134,8 +136,5 @@ namespace DataStructuresAndAlgorithms
 //    getchar();
 //    return 0;
 //}
- 
-
-
     }
 }
