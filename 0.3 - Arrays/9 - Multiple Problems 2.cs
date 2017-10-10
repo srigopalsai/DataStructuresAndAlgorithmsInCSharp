@@ -861,62 +861,66 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return false;
         }
 
-        // 221 https://leetcode.com/submissions/detail/122418976/
-        // https://leetcode.com/articles/maximal-square/
-        public int MaximalSquare(char[,] matrix)
+        //57 - https://leetcode.com/problems/insert-interval/description/
+        public class Interval
         {
-            int[] dpLkUp = new int[matrix.GetLength(1) + 1];
-            int maxSqLen = 0;
-            int prevMax = 0;
-
-            for (int rIndx = 1; rIndx <= matrix.GetLength(0); rIndx++)
-            {
-                for (int cIndx = 1; cIndx <= matrix.GetLength(1); cIndx++)
-                {
-                    int temp = dpLkUp[cIndx];
-
-                    if (matrix[rIndx - 1, cIndx - 1] == '1')
-                    {
-                        dpLkUp[cIndx] = Math.Min(dpLkUp[cIndx], Math.Min(dpLkUp[cIndx - 1], prevMax)) + 1;
-                        maxSqLen = Math.Max(maxSqLen, dpLkUp[cIndx]);
-                    }
-                    else
-                    {
-                        dpLkUp[cIndx] = 0;
-                    }
-
-                    prevMax = temp;
-                }
-            }
-            return maxSqLen * maxSqLen;
+            public int start { get; set; }
+            public int end { get; set; }
         }
 
-        // 486 https://leetcode.com/problems/predict-the-winner/description/
-        public bool PredictTheWinner(int[] nums)
+        public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
         {
-            if (nums == null || nums.Length == 0)
-                return true;
+            List<Interval> result = new List<Interval>();
 
-            int nLen = nums.Length;
-            int[] dpLkUp = new int[nLen];
-
-            for (int p1Indx = nLen - 1; p1Indx >= 0; p1Indx--)
+            foreach (Interval curIntval in intervals)
             {
-                for (int p2Indx = p1Indx; p2Indx < nLen; p2Indx++)
+                if (newInterval == null || curIntval.end < newInterval.start)
                 {
-                    if (p1Indx == p2Indx)
-                    {
-                        dpLkUp[p1Indx] = nums[p1Indx];
-                    }
-                    else
-                    {
-                        dpLkUp[p2Indx] = Math.Max(  nums[p1Indx] - dpLkUp[p2Indx], 
-                                                    nums[p2Indx] - dpLkUp[p2Indx - 1]);
-                    }
+                    result.Add(curIntval);
+                }
+                else if (curIntval.start > newInterval.end)
+                {
+                    result.Add(newInterval);
+                    result.Add(curIntval);
+                    newInterval = null;
+                }
+                else
+                {
+                    newInterval.start = Math.Min(newInterval.start, curIntval.start);
+                    newInterval.end = Math.Max(newInterval.end, curIntval.end);
                 }
             }
 
-            return dpLkUp[nLen - 1] >= 0;
+            if (newInterval != null)
+                result.Add(newInterval);
+
+            return result;
+        }
+
+        // 56 https://leetcode.com/problems/merge-intervals/description/
+        public IList<Interval> Merge(IList<Interval> intervals)
+        {
+            IEnumerable<Interval> sortedList = intervals.OrderBy(item => item.start);
+            intervals = sortedList.ToList();
+
+            List<Interval> resultList = new List<Interval>();
+            Interval prevInterval = null;
+
+            foreach (Interval curInterval in intervals)
+            {
+                if (prevInterval == null || curInterval.start > prevInterval.end)
+                {
+                    resultList.Add(curInterval);
+                    prevInterval = curInterval;
+                }
+                else if (curInterval.end > prevInterval.end)
+                {
+                    // Modify the element already in list
+                    prevInterval.end = curInterval.end;
+                }
+            }
+
+            return resultList;
         }
     }
 }

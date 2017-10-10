@@ -7,16 +7,16 @@ using System.Windows;
 namespace DataStructuresAndAlgorithms
 {
     /*
-    Time Complexity: O(Log n)
-    Extra Space: O(Log n) if we consider the function call stack size, otherwise O(1).
+    Time Complexity : O(Log n)
+    Extra Space     : O(Log n) if we consider the function call stack size, otherwise O(1).
     
     We can do recursive multiplication to get power(M, n)
 
-  */
+    */
     partial class DynamicProgrammingSamples
     {
-        // function that returns nth Fibonacci number
-        static int Fib(int n)
+        // Function that returns nth Fibonacci number
+        public int Fib(int n)
         {
             int[][] F = new int[2][];
             F[0] = new int[2];
@@ -32,7 +32,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         // Optimized version of power() in method 4
-        static void power(int[][] F, int n)
+        public void power(int[][] F, int n)
         {
             if (n == 0 || n == 1)
             {
@@ -49,7 +49,8 @@ namespace DataStructuresAndAlgorithms
                 multiply(F, M);
             }
         }
-        static void multiply(int[][] F, int[][] M)
+
+        public void multiply(int[][] F, int[][] M)
         {
             int x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
             int y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
@@ -80,7 +81,7 @@ namespace DataStructuresAndAlgorithms
         //    return f[n];
         //}
 
-        static void NthFibonacciNumber(string[] args)
+        public void NthFibonacciNumber(string[] args)
         {
             Dictionary<int, int> DP = new Dictionary<int, int>();
             DP[0] = 0;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -87,6 +88,245 @@ namespace DataStructuresAndAlgorithms
 
     public partial class ArraySamples
     {
+        // O(n) Space http://www.geeksforgeeks.org/rearrange-array-maximum-minimum-form/
+
+        public void ReArrange(int[] nums)
+        {
+            // Auxiliary array to hold modified array
+            int[] tmpNums = new int[nums.Length];
+
+            int leftIndx = 0;
+            int rightIndx = nums.Length - 1;
+
+            bool swapFlag = true;
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                if (swapFlag == true)
+                {
+                    tmpNums[indx] = nums[rightIndx--];
+                }
+                else
+                {
+                    tmpNums[indx] = nums[leftIndx++];
+                }
+
+                swapFlag = !swapFlag;
+            }
+
+            Array.Copy(tmpNums, nums, tmpNums.Length);
+        }
+
+        // O(1) Space - Use multiplication and modular trick to store two elements at an index. 
+        /*
+        How does expression “arr[i] += arr[maxIndx] % maxVal * maxVal” work ?
+        The purpose of this expression is to store two elements at index arr[i]. 
+        arr[rightIndx] is stored as multiplier and “arr[i]” is stored as remainder. 
+        For example in {1 2 3 4 5 6 7 8 9}, maxVal is 10 and we store 91 at index 0. 
+        With 91, we can get original element as 91 % 10 and new element as 91/10.
+
+        http://www.geeksforgeeks.org/rearrange-array-maximum-minimum-form-set-2-o1-extra-space/
+        */
+
+        public void ReArrange1(int[] nums)
+        {
+            int leftIndx = 0;
+            int rightIndx = nums.Length - 1;
+
+            // Store maximum element of array + 1
+            int maxVal = nums[nums.Length - 1] + 1;
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                // Put maximum element
+                if (indx % 2 == 0)
+                {
+                    nums[indx] = nums[indx] + (nums[rightIndx] % maxVal) * maxVal;
+                    rightIndx--;
+                }
+
+                // Put minimum element
+                else
+                {
+                    nums[indx] = nums[indx] + (nums[leftIndx] % maxVal) * maxVal;
+                    leftIndx++;
+                }
+            }
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                nums[indx] = nums[indx] / maxVal;
+            }
+        }
+
+        // http://www.geeksforgeeks.org/segregate-0s-and-1s-in-an-array-by-traversing-array-once/
+        public void Segregate0and1(int[] nums)
+        {
+            int left = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
+            {
+                while (nums[left] == 0 && left < right)
+                    left++;
+
+                while (nums[right] == 1 && left < right)
+                    right--;
+
+                // If left is smaller than right then there is a 1 at left and a 0 at right.  Exchange arr[left] and arr[right]
+                if (left < right)
+                {
+                    nums[left] = 0;
+                    nums[right] = 1;
+                    left++;
+                    right--;
+                }
+            }
+        }
+
+        // http://www.geeksforgeeks.org/find-subarray-with-given-sum/
+        public bool SubArraySum(int[] nums, int targetSum)
+        {
+            int start = 0;
+            int curSum = nums[0];
+
+            for (int indx = 1; indx <= nums.Length; indx++)
+            {
+                // If curSum exceeds the sum, then remove the starting elements
+                while (curSum > targetSum && start < indx - 1)
+                {
+                    curSum = curSum - nums[start];
+                    start++;
+                }
+
+                if (curSum == targetSum)
+                {
+                    Console.WriteLine("Sum found between indexes " + start + " and " + (indx - 1));
+                    return true;
+                }
+
+                if (indx < nums.Length)
+                {
+                    curSum = curSum + nums[indx];
+                }
+            }
+
+            Console.WriteLine("No subarray found");
+            return false;
+        }
+
+        //http://www.geeksforgeeks.org/find-maximum-sum-triplets-array-j-k-ai-aj-ak/
+
+        // http://www.geeksforgeeks.org/count-strictly-increasing-subarrays/
+        /*a sorted subarray of length ‘len’ adds len*(len-1)/2 to result. For example, {10, 20, 30, 40} adds 6 to the result.*/
+        public int CountIncreasing(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+
+            int totalIncrCnt = 0; 
+            int curIncrCnt = 1;
+
+            for (int indx = 0; indx < nums.Length - 1; ++indx)
+            {
+                if (nums[indx + 1] > nums[indx])
+                {
+                    curIncrCnt++;
+                }
+                else
+                {
+                    totalIncrCnt += (((curIncrCnt - 1) * curIncrCnt) / 2);
+                    curIncrCnt = 1;
+                }
+            }
+
+            // If last length is more than 1
+            if (curIncrCnt > 1)
+            {
+                totalIncrCnt += (((curIncrCnt - 1) * curIncrCnt) / 2);
+            }
+
+            return totalIncrCnt;
+        }
+
+
+        //http://www.geeksforgeeks.org/maximize-sum-consecutive-differences-circular-array/
+
+        // Return the maximum Sum of difference between consecutive elements.
+        static int maxSum(int[] nums)
+        {
+            int sum = 0;
+
+            Array.Sort(nums);
+
+            // Subtracting a1, a2, a3,....., a(n/2)-1, an/2 twice and adding a(n/2)+1, a(n/2)+2, a(n/2)+3,....., an - 1, an twice.
+            for (int indx = 0; indx < nums.Length / 2; indx++)
+            {
+                sum -= (2 * nums[indx]);
+                sum += (2 * nums[nums.Length - indx - 1]);
+            }
+
+            return sum;
+        }
+
+        // http://www.geeksforgeeks.org/find-a-sorted-subsequence-of-size-3-in-linear-time/
+        public void find3Numbers(int[] arr)
+        {
+            int n = arr.Length;
+            int rightMax = n - 1;
+            int leftMin = 0;
+
+            // Create an array that will store index of a smaller element on left side. 
+            // If there is no smaller element on left side, then smaller[i] will be -1.
+
+            int[] smaller = new int[n];
+            smaller[0] = -1;  // first entry will always be -1
+
+            for (int indx = 1; indx < n; indx++)
+            {
+                if (arr[indx] <= arr[leftMin])
+                {
+                    leftMin = indx;
+                    smaller[indx] = -1;
+                }
+                else
+                    smaller[indx] = leftMin;
+            }
+
+            // Create another array that will store index of a greater element on right side. 
+            // If there is no greater element on right side, then greater[i] will be -1.
+
+            int[] greater = new int[n];
+            greater[n - 1] = -1;  // last entry will always be -1
+
+            for (int indx = n - 2; indx >= 0; indx--)
+            {
+                if (arr[indx] >= arr[rightMax])
+                {
+                    rightMax = indx;
+                    greater[indx] = -1;
+                }
+                else
+                {
+                    greater[indx] = rightMax;
+                }
+            }
+
+            // Now find a number which has both a greater number on right side and smaller number on left side
+            for (int indx = 0; indx < n; indx++)
+            {
+                if (smaller[indx] != -1 && greater[indx] != -1)
+                {
+                    Console.WriteLine(arr[smaller[indx]] + " " + arr[indx] + " " + arr[greater[indx]]);
+                    return;
+                }
+            }
+
+            // If we reach number, then there are no such 3 numbers
+            Console.WriteLine("No such triplet found");
+            return;
+        }
+
         /*  Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal, 
 			where a move is incrementing n - 1 elements by 1.
 

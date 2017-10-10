@@ -151,6 +151,43 @@ http://www.geeksforgeeks.org/dynamic-programming-set-13-cutting-a-rod/
  //}
 
     ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    /*
+    For a given problem, it is usually a good idea to check if DP is applicable to it.
+
+    Dynamic Programming is a technique that takes advantage of overlapping subproblems, optimal substructure, and trades space for time to improve the runtime complexity of algorithms.
+    
+    2 types of Dynamic Programming: 
+
+    1. Top-Down. (often called Memoization)
+        Memoization is a technique that is associated with Dynamic Programming. 
+        The concept is to cache the result of a function given its parameter so that the calculation will not be repeated; it is simply retrieved, or memo-ed. Most of the time a simple array is used for the cache table, but a hash table or map could also be employed.
+
+        By saving the results of calculations when we do them and simply returning that result when asked for the same calcuation later. 
+    
+        array map [0...n] = { 0 => 0, 1 => 1 }
+        fib( n )
+        if ( map( n ) is cached )
+            return map( n )
+        return map( n ) = fib( n - 1 ) + fib( n - 2 )
+
+    2. Bottom-Up. 
+        We start from smaller cases and store the calculated values in a table for future use, an effective strategy to most dependency-based problems. 
+        This avoids calculating the subproblem twice.
+        
+        fib( n )
+            array map [0...n] = { 0 => 0, 1 => 1 }
+            for ( i from 2 to n )
+                map[i] = map[i-1] + map[i-2]
+            return map[ n ]
+
+    
+    http://www.bogotobogo.com/Algorithms/dynamic_programming.php
+    http://www.algorithmist.com/index.php/Dynamic_Programming
+    http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
+    http://www.codeproject.com/Articles/50054/The-Coin-Changing-Problem
+    https://www.youtube.com/watch?v=GafjS0FfAC0&list=PL962BEE1A26238CA3
+    http://comproguide.blogspot.com/2013/12/minimum-coin-change-problem.html
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     http://www.algorithmist.com/index.php/Kadane%27s_Algorithm
 
