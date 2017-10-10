@@ -723,5 +723,56 @@ and make it out of the array at the other end in minimum number of hops.*/
                 Console.WriteLine(isr.SumQuery(1, 1, 2, 2));
             }
         }
+
+
+        // 53 https://leetcode.com/problems/maximum-subarray/
+        public int MaxSubArray(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+
+            int maxSoFar = nums[0];
+            int currMax = nums[0];
+
+            for (int lpCnt = 1; lpCnt < nums.Length; ++lpCnt)
+            {
+                currMax = Math.Max(currMax + nums[lpCnt], nums[lpCnt]);
+                maxSoFar = Math.Max(maxSoFar, currMax);
+            }
+            return maxSoFar;
+        }
+
+        public int MaxProduct(int[] nums)
+        {
+            int maxPro = nums[0];
+            int curMax = maxPro;
+            int curMin = maxPro;
+
+            // Store max/min product of subarray that ends with the current number A[i]
+            for (int indx = 1; indx < nums.Length; indx++)
+            {
+                // multiplied by a negative makes big number smaller, small number bigger
+                // so we redefine the extremums by swapping them
+                if (nums[indx] < 0)
+                    Swap(ref curMax, ref curMin);
+
+                // max/min product for the current number is either the current number itself
+                // or the max/min by the previous number times the current one
+
+                curMax = Math.Max(nums[indx], curMax * nums[indx]);
+                curMin = Math.Min(nums[indx], curMin * nums[indx]);
+                maxPro = Math.Max(maxPro, curMax);
+
+            }
+            return maxPro;
+        }
+
+        private static void Swap<T>(ref T lhs, ref T rhs)
+        {
+            T temp;
+            temp = lhs;
+            lhs = rhs;
+            rhs = temp;
+        }
     }
 }
