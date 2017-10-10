@@ -209,6 +209,51 @@ namespace DataStructuresAndAlgorithms
             }
             return indecisArray;
         }
+
+
+        public bool IsSumOf2ExistsInUnSortedInArray(int[] srcArray, int target)
+        {
+            // O(n) Space worst case.
+            Dictionary<int, int> numsDictionary = new Dictionary<int, int>();
+
+            for (int index = 0; index < srcArray.Length; index++)
+            {
+                int firstNumAsKey = target - srcArray[index];
+
+                // ContainsKey() constant time.
+                if (numsDictionary.ContainsKey(firstNumAsKey))
+                {
+                    return true;
+                }
+
+                // Incase duplicates exists, skip them.            
+                if (!numsDictionary.ContainsKey(srcArray[index]))
+                    numsDictionary.Add(srcArray[index], index);
+            }
+            return false;
+        }
+
+        public bool IsSumOf2ExistsInUnSortedInArray1(int[] nums, int sum)
+        {
+            Dictionary<int, int> itemsDictionary = new Dictionary<int, int>();
+
+            for (int indx = 0; indx < nums.Length;)
+            {
+                int key = sum - nums[indx];
+
+                if (itemsDictionary.ContainsKey(key))
+                {
+                    int val = -1;
+                    itemsDictionary.TryGetValue(key, out val);
+                    return true;
+                }
+
+                ++indx;
+
+                itemsDictionary.Add(nums[indx], indx);
+            }
+            return false;
+        }
     }
 }
 
