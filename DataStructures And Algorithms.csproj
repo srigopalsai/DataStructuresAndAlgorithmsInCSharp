@@ -130,8 +130,6 @@
     <Compile Include="0.3 - Arrays\5.1 - Search - Max Sum Path In Two Arrays.cs" />
     <Compile Include="0.3 - Arrays\5.4 - Search - Occurring N by 2 Value - Moores Voting Algorithm.cs" />
     <Compile Include="0.3 - Arrays\9 - Multiple Problems 2.cs" />
-    <Compile Include="0.3 - Arrays\Shuffle or Rotate Array.cs" />
-    <Compile Include="0.3 - Arrays\2.4 - Sum - Taget Sum - NI.cs" />
     <Compile Include="0.3 - Arrays\2.2 - Sum - Three Sum Problem.cs" />
     <Compile Include="0.3 - Arrays\5.3 - Search - Missing 2 Numbers In Array.cs" />
     <Compile Include="0.3 - Arrays\9.3 - Kandane Max Sub Array With Largest Sum.cs" />

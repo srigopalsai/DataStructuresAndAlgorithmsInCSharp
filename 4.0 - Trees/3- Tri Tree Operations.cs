@@ -14,13 +14,29 @@ namespace DataStructuresAndAlgorithms.Trees
     */
     public class TrieNode
     {
-        public Dictionary<char,TrieNode> Childern { get; set; }
+        public Dictionary<char, TrieNode> Childern { get; set; }
+
         public bool IsCompleteWord { get; set; }
     }
 
     public class TriTreeOperations
     {
+        public void Add()
+        { }
 
+        public bool IsMember()
+        {
+            return true;
+        }
+
+        public void Remove()
+        { }
+
+        public void Create()
+        { }
+
+        public void Destroy()
+        { }
     }
 }
 /*

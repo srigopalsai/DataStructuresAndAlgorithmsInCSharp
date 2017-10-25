@@ -210,6 +210,103 @@ namespace DataStructuresAndAlgorithms
             return matrix[rowLen - 1, colLen - 1];
         }
 
+        // 152 https://leetcode.com/problems/maximum-product-subarray/description/
+        // 2, 3, -2, 4, 5, -6  Output 1440
+        // 2, 3, -2, 0, 5, -6  Output 6
+
+        public int MaxProduct(int[] nums)
+        {
+            int finalMax = nums[0];
+            int curMax = nums[0];
+            int curMin = nums[0];
+
+            for (int indx = 1; indx < nums.Length; indx++)
+            {
+                // Multiplied by a negative makes big number smaller, small number bigger so we redefine the extremums by swapping them
+
+                if (nums[indx] < 0)
+                    Common.Swap(ref curMax, ref curMin);
+
+                curMin = Math.Min(curMin, curMin * nums[indx]);
+                curMax = Math.Max(curMax, curMax * nums[indx]);
+
+                finalMax = Math.Max(finalMax, curMax);
+            }
+            return finalMax;
+        }
+
+        public int MaxProduct1(int[] nums)
+        {
+            int finalMax = nums[0];
+            int curMax = nums[0];
+            int curMin = nums[0];
+
+            for (int indx = 1; indx < nums.Length; indx++)
+            {
+                // Multiplied by a negative makes big number smaller, small number bigger so we redefine the extremums by swapping them
+
+                if (nums[indx] < 0)
+                    Common.Swap(ref curMax, ref curMin);
+
+                if (nums[indx] < curMin * nums[indx])
+                    curMin = nums[indx];
+                else
+                    curMin = curMin * nums[indx];
+
+                if (nums[indx] > curMax * nums[indx])
+                    curMax = nums[indx];
+                else
+                    curMax = curMax * nums[indx];
+
+                finalMax = Math.Max(finalMax, curMax);
+            }
+            return finalMax;
+        }
+
+        // 628 https://leetcode.com/problems/maximum-product-of-three-numbers/description/
+        // 2 3 -3 4 5 -6 Output = 90
+        public int MaximumProduct(int[] nums)
+        {
+            int max1 = int.MinValue;
+            int max2 = int.MinValue;
+            int max3 = int.MinValue;
+
+            int min1 = int.MaxValue;
+            int min2 = int.MaxValue;
+
+            foreach (int num in nums)
+            {
+                if (num > max1)
+                {
+                    max3 = max2;
+                    max2 = max1;
+                    max1 = num;
+                }
+                else if (num > max2)
+                {
+                    max3 = max2;
+                    max2 = num;
+                }
+                else if (num > max3)
+                {
+                    max3 = num;
+                }
+
+                if (num < min1)
+                {
+                    min2 = min1;
+                    min1 = num;
+                }
+                else if (num < min2)
+                {
+                    min2 = num;
+                }
+            }
+
+            return Math.Max(max1 * max2 * max3, 
+                            max1 * min1 * min2);
+        }
+
         // ----------------------------------------------------------------------------------------
 
         // http://www.geeksforgeeks.org/count-possible-paths-top-left-bottom-right-nxm-matrix/

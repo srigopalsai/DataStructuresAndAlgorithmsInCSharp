@@ -1475,6 +1475,146 @@ namespace DataStructuresAndAlgorithms
 
             return sb.Length == 0 ? "0" : sb.ToString();
         }
+
+        // 76 https://leetcode.com/problems/minimum-window-substring/description/
+
+        public string MinWindow(string srcStr, string trgtStr)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr) || string.IsNullOrWhiteSpace(trgtStr) || trgtStr.Length > srcStr.Length)
+                return string.Empty;
+
+            Dictionary<char, int> trgtDict = new Dictionary<char, int>();
+
+            char curChr = 'a';
+            int curStIndx = 0;
+            int curEndIndx = 0;
+
+            int trgtCnt = trgtStr.Length;
+            int minStIndx = 0;
+            int minNoOfChars = Int32.MaxValue;
+
+            foreach (char ch in trgtStr)
+            {
+                if (trgtDict.ContainsKey(ch))
+                {
+                    trgtDict[ch]++;
+                }
+                else
+                {
+                    trgtDict[ch] = 1;
+                }
+            }
+
+            while (curEndIndx < srcStr.Length)
+            {
+                // Until we find all target chars, keep moving curEndIndx
+                curChr = srcStr[curEndIndx];
+
+                if (trgtDict.ContainsKey(curChr)) // On every visit, reduce the char count to consider it as visited.
+                {
+                    if (trgtDict[curChr] > 0)
+                    {
+                        trgtCnt--;
+                    }
+
+                    trgtDict[curChr]--;
+                }
+
+                curEndIndx++;
+
+                while (trgtCnt == 0)
+                {
+                    // Until we found the new startIndx then keep moving the curStart.
+                    curChr = srcStr[curStIndx];
+
+                    if (trgtDict.ContainsKey(curChr))
+                    {
+                        trgtDict[curChr]++;
+
+                        if (trgtDict[curChr] > 0)
+                        {
+                            trgtCnt++;
+                        }
+                    }
+
+                    // Once we done with finding curStart and curEnd, compare with min and update min vals
+                    if (curEndIndx - curStIndx < minNoOfChars)
+                    {
+                        minStIndx = curStIndx;
+                        minNoOfChars = curEndIndx - curStIndx;
+                    }
+
+                    curStIndx++;
+                }
+            }
+
+            if (minNoOfChars != Int32.MaxValue)
+            {
+                return srcStr.Substring(minStIndx, minNoOfChars);
+            }
+
+            return string.Empty;
+        }
+
+        // Earthworm-Moving algorithm 
+        public string MinWindow1(string srcStr, string trgtStr)
+        {
+            if (string.IsNullOrWhiteSpace(srcStr) || string.IsNullOrWhiteSpace(trgtStr) || trgtStr.Length > srcStr.Length)
+            {
+                return string.Empty;
+            }
+
+            int[] map = new int[128];
+
+            int trgtCnt = trgtStr.Length;
+
+            int stIndx = 0;
+            int endIndx = 0;
+
+            int minStart = 0;
+            int minEnd = Int32.MaxValue;
+
+            foreach (char ch in trgtStr.ToCharArray())
+            {
+                map[ch]++;
+            }
+
+            while (endIndx < srcStr.Length)
+            {
+                if (map[srcStr[endIndx]] > 0)
+                {
+                    trgtCnt--;
+                }
+
+                map[srcStr[endIndx]]--;
+                endIndx++;
+
+                while (trgtCnt == 0)
+                {
+                    if (endIndx - stIndx < minEnd)
+                    {
+                        minStart = stIndx;
+                        minEnd = endIndx - stIndx;
+                    }
+
+                    map[srcStr[stIndx]]++;
+
+                    if (map[srcStr[stIndx]] > 0)
+                    {
+                        trgtCnt++;
+                    }
+
+                    stIndx++;
+                }
+            }
+
+            if (minEnd != Int32.MaxValue)
+            {
+                return srcStr.Substring(minStart, minEnd);
+            }
+
+            return string.Empty;
+        }
     }
 
     public static class AnagramExtensions

@@ -173,6 +173,123 @@ namespace DataStructuresAndAlgorithms
             return lkUp[0, str.Length - 1];
         }
 
+        //Palindrom Sub Strings Count
+        public int countSubstrings(String s)
+        {
+            int n = s.Length;
+            int res = 0;
+            bool[,] dp = new bool[n,n];
+
+            for (int i = n - 1; i >= 0; i--)
+            {
+                for (int j = i; j < n; j++)
+                {
+                    dp[i, j] = s[i] == s[j] && (j - i < 3 || dp[i + 1, j - 1]);
+
+                    if (dp[i, j])
+                        ++res;
+                }
+            }
+
+            return res;
+        }
+
+        // https://leetcode.com/problems/repeated-substring-pattern/description/
+        public bool repeatedSubstringPattern(String str)
+        {
+            int l = str.Length;
+
+            for (int i = l / 2; i >= 1; i--)
+            {
+                if (l % i == 0)
+                {
+                    int m = l / i;
+                    String subS = str.Substring(0, i);
+                    StringBuilder sb = new StringBuilder();
+
+                    for (int j = 0; j < m; j++)
+                    {
+                        sb.Append(subS);
+                    }
+
+                    if (sb.ToString().Equals(str))
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        // 22 https://leetcode.com/problems/generate-parentheses/description/
+        /*
+        For each valid parenthesis, there must be a pair whose right parenthesis is at the rightmost location. 
+        Thus, a valid parenthesis has to be of the following form:
+        * ( * )
+        where * denotes the remaining parentheses which are don't yet know (* can be empty, i.e., with 0 pair of parenthesis). 
+        However, we do know the following two important facts:
+        both two * are valid parentheses;
+        they don't overlap at all! (a pair has to be either on the left side or inside (), but cannot be the case where ( is on the left side and ) is inside ())
+        If we put i parentheses inside (), there are n-i-1 to be put on the left side. This gives us a recursive formula as below:
+        P(n) = P(n-i-1) x P(i)
+        where P(n) are all valid parentheses with n parentheses.
+        To this point, we are done with the algorithm, the only remaining task is coding, which is given below:
+
+        */
+
+        public List<String> GenerateParenthesis(int n)
+        {
+            List<String>[] lists = new List<string>[n + 1]; // store all P(k)'s for k=0,1,...,n
+            return helper(n, lists);
+        }
+
+        private List<String> helper(int n, List<String>[] lists)
+        {
+            if (lists[n] != null) return lists[n]; // if computed, reuse
+            List<String> res = new List<string>();
+
+            if (n <= 0)
+            {
+                lists[0] = new List<String>(new string[] { "" });
+                return lists[0];
+            }
+            else if (n == 1)
+            {
+                lists[1] = new List<String>(new string[] { "()" });
+                return lists[1];
+            }
+
+            // the following simply implements the recursive formula derived above
+            for (int i = 0; i <= n - 1; i++)
+            {
+                List<String> left = helper(n - i - 1, lists);
+                List<String> inside = helper(i, lists);
+                foreach (String str1 in left)
+                {
+                    foreach (String str2 in inside)
+                    {
+                        res.Add(str1 + "(" + str2 + ")");
+                    }
+                }
+            }
+
+            lists[n] = res; // store computed results for reuse
+            return res;
+        }
+        /*
+        It seems that it is not to check between pair of strings but on all the strings in the array.
+        For example:
+        {"a","a","b"} should give "" as there is nothing common in all the 3 strings.
+        {"a", "a"} should give "a" as a is longest common prefix in all the strings.
+        {"abca", "abc"} as abc
+        {"ac", "ac", "a", "a"} as a.
+        Logic goes something like this:
+        Pick a character at i=0th location and compare it with the character at that location in every string.
+        If anyone doesn't have that just return ""
+        Else append that character in to the result.
+        Increment i and do steps 1-3 till the length of that string.
+        return result.
+        Make sure proper checks are maintained to avoid index out of bounds error.
+        */
+
         /*
         http://www.dsalgo.com/2013/02/longest-common-subsequence.html
         http://www.geeksforgeeks.org/longest-common-substring/

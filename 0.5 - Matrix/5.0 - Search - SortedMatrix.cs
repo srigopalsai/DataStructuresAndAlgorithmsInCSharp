@@ -383,5 +383,40 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show("Element(s) Search in Sorted Matrix and the result(s) are " + strBldr.ToString());
 
         }
+
+        // http://www.geeksforgeeks.org/mean-median-matrix/
+        double FindMean(int[,] nums)
+        {
+            int sum = 0;
+            int numsLen = nums.GetLength(0);
+
+            for (int rIndx = 0; rIndx < numsLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < numsLen; cIndx++)
+                {
+                    sum += nums[rIndx, cIndx];
+                }
+            }
+
+            return (double)sum / (numsLen * numsLen);
+        }
+
+        // http://www.geeksforgeeks.org/mean-median-matrix/
+        double FindMedian(int[,] a)
+        {
+            int numsLen = a.GetLength(0);
+
+            if (numsLen % 2 != 0)
+                return a[numsLen / 2, numsLen / 2];
+
+            if (numsLen % 2 == 0)
+                return (a[(numsLen - 2) / 2, numsLen - 1] + a[numsLen / 2, 0]) / 2.0;
+
+            return 0.0;
+        }
+
+        // http://www.geeksforgeeks.org/check-given-matrix-sparse-not/
+
+        // http://www.geeksforgeeks.org/cholesky-decomposition-matrix-decomposition/
     }
 }

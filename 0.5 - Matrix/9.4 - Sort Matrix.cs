@@ -73,5 +73,16 @@ namespace DataStructuresAndAlgorithms
 
             }
         }
+
+        // http://www.geeksforgeeks.org/sort-matrix-way-increasing-order/
+        /*  Sorting both diagnals means matrix 
+            Example: arr[2][2] : {1, 2
+                                3, 4}
+            Rows in increasing order:  {1,2} and {3,4}
+            Columns in increasing order:  {1,3} and {2,4}
+            Diagonal in increasing order:  {1,4}
+            Anti-diagonal in increasing order:  {2,3}
+        */
+
     }
 }

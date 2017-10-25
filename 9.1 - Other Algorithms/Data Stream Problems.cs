@@ -11,13 +11,13 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
     public class MovingAverage
     {
         private int size;
-        private int sum;
+        private int curSum;
         private Queue<int> queue;
 
         public MovingAverage(int size)
         {
             this.size = size;
-            this.sum = 0;
+            this.curSum = 0;
             this.queue = new Queue<int>();
         }
 
@@ -27,12 +27,12 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
             if (queue.Count > size)
             {
-                sum -= queue.Dequeue();
+                curSum -= queue.Dequeue();
             }
 
-            sum += val;
+            curSum += val;
 
-            return (double)sum / queue.Count;
+            return (double)curSum / queue.Count;
         }
     }
 
