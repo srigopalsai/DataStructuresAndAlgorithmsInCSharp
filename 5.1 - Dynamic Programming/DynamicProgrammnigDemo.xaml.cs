@@ -26,7 +26,7 @@ namespace DataStructuresAndAlgorithms
 
         private void MinimumCoinChangeButton_Click(object sender, RoutedEventArgs e)
         {
-            DynamicProgrammingSamplesObj.MinimumCoinsTest();
+            //DynamicProgrammingSamplesObj.MinimumCoinsTest();
         }
 
         private void LongestPalindromeStrDemoButton_Click(object sender, RoutedEventArgs e)
