@@ -836,6 +836,38 @@ More About Bases
                                   Convert.ToString(number, numberFormatInfo));
             }
         }
+        
+        // 504 https://leetcode.com/problems/base-7/description/
+        public string ConvertToBase7(int num)
+        {
+            if (num < 0)
+                return '-' + ConvertToBase7(-num);
+
+            if (num < 7)
+                return num + "";
+
+            return ConvertToBase7(num / 7) + num % 7;
+        }
+
+        public string ConvertToBase72(int num)
+        {
+            if (num == 0)
+                return "0";
+
+            string result = string.Empty;
+            string sign = num > 0 ? string.Empty : "-";
+
+            num = num > 0 ? num : -num;
+
+            while (num != 0)
+            {
+                int cur = num % 7;
+                num /= 7;
+                result = cur.ToString() + result;
+            }
+
+            return sign + result;
+        }
 
         //======================================================================================================================================================================================================================
 

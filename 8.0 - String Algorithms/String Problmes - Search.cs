@@ -288,32 +288,31 @@ namespace DataStructuresAndAlgorithms
         }
 
         // 409 https://leetcode.com/problems/longest-palindrome/description/
-        public int LongestPalindrome(string srcStr)
+        public int LongestPalindrome(string s)
         {
-            if (String.IsNullOrWhiteSpace(srcStr))
-                return 0;
+            int[] table = new int[128];
+            int length = s.Length;
 
-            Dictionary<char, int> charsDict = new Dictionary<char, int>();
-
-            foreach (char ch in srcStr)
+            for (int i = 0; i != length; i++)
             {
-                if (charsDict.ContainsKey(ch))
-                    charsDict[ch] += 1;
+                table[s[i]]++;
+            }
+
+            int longest = 0;//count the length of parlindrome
+
+            for (int i = 0; i != 128; i++)
+            {
+                if (((table[i] >> 1) << 1) == table[i])
+                {
+                    //table[i]%2==0
+                    longest += table[i];
+                }
                 else
-                    charsDict.Add(ch, 1);
+                {//if odd,only even number can be used
+                    longest += table[i] - 1;
+                }
             }
-
-            int palCount = 0;
-
-            foreach (KeyValuePair<char, int> keyPair in charsDict)
-            {
-                palCount += keyPair.Value;
-
-                if (keyPair.Value % 2 != 0)
-                    palCount -= 1;
-            }
-
-            return (palCount < srcStr.Length) ? palCount + 1 : palCount;
+            return longest < length ? longest + 1 : longest;//if odd add 1        
         }
 
         //Assuming HashSet methods used below like Add, Clear, Contains takes O(1), based on the unique hashcode.
@@ -1366,47 +1365,30 @@ namespace DataStructuresAndAlgorithms
         }
 
         // 409 https://leetcode.com/problems/longest-palindrome/discuss/
-        public int LongestPalindrome1(String s)
+        public int LongestPalindrome2(String srcStr)
         {
-            int[] lowercase = new int[26];
-            int[] uppercase = new int[26];
-            int res = 0;
-            for (int i = 0; i < s.Length; i++)
+            if (srcStr == null || srcStr.Length == 0)
             {
-                char temp = s[i];
-                if (temp >= 97) lowercase[temp - 'a']++;
-                else uppercase[temp - 'A']++;
-            }
-            for (int i = 0; i < 26; i++)
-            {
-                res += (lowercase[i] / 2) * 2;
-                res += (uppercase[i] / 2) * 2;
-            }
-            return res == s.Length ? res : res + 1;
-        }
-
-        public int LongestPalindrome2(String s)
-        {
-            if (s == null || s.Length == 0)
                 return 0;
+            }
 
-            HashSet<Char> hs = new HashSet<Char>();
+            HashSet<char> hs = new HashSet<char>();
             int count = 0;
 
-            for (int i = 0; i < s.Length; i++)
+            for (int indx = 0; indx < srcStr.Length; indx++)
             {
-                if (hs.Contains(s[i]))
+                if (hs.Contains(srcStr[indx]))
                 {
-                    hs.Remove(s[i]);
+                    hs.Remove(srcStr[indx]);
                     count++;
                 }
                 else
                 {
-                    hs.Add(s[i]);
+                    hs.Add(srcStr[indx]);
                 }
             }
 
-            if (hs.Count > 0)
+            if (hs.Count != 0)
             {
                 return count * 2 + 1;
             }
@@ -1614,6 +1596,26 @@ namespace DataStructuresAndAlgorithms
             }
 
             return string.Empty;
+        }
+
+        //205 Isomorphic https://leetcode.com/problems/isomorphic-strings/description/
+        public bool IsIsomorphic(string srcStr, string trgtStr)
+        {
+            int[] m1 = new int[256];
+            int[] m2 = new int[256];
+            int n = srcStr.Length;
+
+            for (int indx = 0; indx < n; ++indx)
+            {
+                if (m1[srcStr[indx]] != m2[trgtStr[indx]])
+                {
+                    return false;
+                }
+
+                m1[srcStr[indx]] = indx + 1;
+                m2[trgtStr[indx]] = indx + 1;
+            }
+            return true;
         }
     }
 
