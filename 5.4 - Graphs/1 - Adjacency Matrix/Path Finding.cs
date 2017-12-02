@@ -41,8 +41,8 @@ Gabow's algorithm O(E logE/V L)
             //Point dest = new Point { xPos = 2, yPos = 1 };
             //Point dest = new Point { xPos = 5, yPos = 5 }; // 10
             //Point dest = new Point { xPos = 4, yPos = 2 }; // 12
-            Point dest = new Point { xPos = 0, yPos = 5 }; //6
-            int[,] srcMat = TestData.BinaryMatrixCollection[TestData.Keys.TenByTen1];
+            Point dest = new Point { xPos = 2, yPos = 2 }; //6
+            int[,] srcMat = TestData.BinaryMatrixCollection[TestData.Keys.FourByFour2];
             Common.ShowMatrixOnConsole(srcMat, "Source Matrix");
             
             Point destPoint = ShortestPathByLeeBFS(srcMat, source.xPos, source.yPos, dest.xPos, dest.yPos);
@@ -125,7 +125,8 @@ Gabow's algorithm O(E logE/V L)
         public Point ShortestPathByLeeBFS(int[,] srcMaze, int xSrcPos, int ySrcPos, int xDestPos, int yDestPos)
         {
             Queue<Point> pointQueue = new Queue<Point>();
-            pointQueue.Enqueue(new Point(xSrcPos, ySrcPos, null));
+            Point srcPoint = new Point(xSrcPos, ySrcPos, null);
+            ProcessPoint(srcMaze, srcPoint, pointQueue, xSrcPos, ySrcPos);
 
             while (pointQueue.Count > 0)
             {
@@ -148,6 +149,7 @@ Gabow's algorithm O(E logE/V L)
         {
             if (Point.IsSafePoint(srcMaze, xPos, yPos))
             {
+                //currPoint.Visited = true
                 srcMaze[currPoint.xPos, currPoint.yPos] = -1;// Current point visited
                 Point nextP = new Point(xPos, yPos, currPoint);
                 pointQueue.Enqueue(nextP);

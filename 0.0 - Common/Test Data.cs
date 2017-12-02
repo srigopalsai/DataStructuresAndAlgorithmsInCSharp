@@ -229,11 +229,10 @@ namespace DataStructuresAndAlgorithms
                 BinaryMatrixCollection.Add(Keys.OneElementMinus, new int[,] { { -1 } });
 
                 BinaryMatrixCollection.Add(Keys.FourByFour2, new int[,] {
-                                                                { 1, 1, 0, 0 },
-                                                                { 1, 1, 0, 0 },
-                                                                { 0, 0, 1, 0 },
-                                                                { 0, 1, 1, 0 },
-                                                                { 1, 0, 1, 1 }});
+                                                                { 1, 1, 1, 1 },
+                                                                { 1, 0, 0, 1 },
+                                                                { 1, 1, 1, 1 },
+                                                                { 0, 0, 0, 0 }});
 
                 BinaryMatrixCollection.Add(Keys.FiveByFive1, new int[,] {
                                                                 { 1, 1, 1, 0, 0 },

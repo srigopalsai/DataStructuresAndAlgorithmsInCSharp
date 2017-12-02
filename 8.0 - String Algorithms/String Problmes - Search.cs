@@ -315,6 +315,82 @@ namespace DataStructuresAndAlgorithms
             return longest < length ? longest + 1 : longest;//if odd add 1        
         }
 
+        // 5 https://leetcode.com/problems/longest-palindromic-substring/description/
+        public string LongestPalindromeString(String srcStr)
+        {
+            if (srcStr == null || srcStr.Length == 0)
+                return string.Empty;
+
+            int len = srcStr.Length;
+            bool[,] dp = new bool[len, len];
+
+            int start = 0;
+            int end = 0;
+            int max = 0;
+
+            for (int rIndx = 0; rIndx < srcStr.Length; rIndx++)
+            {
+                for (int cIndx = 0; cIndx <= rIndx; cIndx++)
+                {
+                    if (srcStr[rIndx] == srcStr[cIndx] && (rIndx - cIndx <= 2 || dp[cIndx + 1, rIndx - 1]))
+                    {
+                        dp[cIndx, rIndx] = true;
+                    }
+
+                    if (dp[cIndx, rIndx] && max < rIndx - cIndx + 1)
+                    {
+                        max = rIndx - cIndx + 1;
+                        start = cIndx;
+                        end = rIndx;
+                    }
+                }
+            }
+
+            return srcStr.Substring(start, end + 1);
+        }
+
+        public String LongestPalindromeString2(String srcStr)
+        {
+            int strLen = srcStr.Length;
+            int stIndx = 0;
+            int maxLen = 1;
+
+            bool[,] dpLkUp = new bool[strLen, strLen];
+
+            for (int indx = 0; indx < strLen; indx++)
+            {
+                dpLkUp[indx, indx] = true;
+            }
+
+            for (int indx = 0; indx < strLen - 1; indx++)
+            {
+                if (srcStr[indx] == srcStr[indx + 1])
+                {
+                    dpLkUp[indx, indx + 1] = true;
+                    stIndx = indx;
+                    maxLen = 2;
+                }
+            }
+
+            for (int curIndx = 3; curIndx <= strLen; curIndx++)
+            {
+                for (int lIndx = 0; lIndx < strLen - curIndx + 1; lIndx++)
+                {
+                    int rIndx = lIndx + curIndx - 1;
+
+                    if (srcStr[lIndx] == srcStr[rIndx] //1. The left first and right last characters should match 
+                        && dpLkUp[lIndx + 1, rIndx - 1]) //2. Rest of the substring should be a palindrome
+                    {
+                        dpLkUp[lIndx, rIndx] = true;
+                        stIndx = lIndx;
+                        maxLen = curIndx;
+                    }
+                }
+            }
+
+            return srcStr.Substring(stIndx, maxLen + stIndx);
+        }
+
         //Assuming HashSet methods used below like Add, Clear, Contains takes O(1), based on the unique hashcode.
         public static void LongestSubStringWithoutRepeatingCharacters()
         {

@@ -839,7 +839,7 @@ and make it out of the array at the other end in minimum number of hops.*/
             return maxSoFar;
         }
 
-        public int MaxProduct(int[] nums)
+        public int MaxProduct2(int[] nums)
         {
             int maxPro = nums[0];
             int curMax = maxPro;
