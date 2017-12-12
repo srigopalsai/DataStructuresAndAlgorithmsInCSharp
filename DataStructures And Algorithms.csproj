@@ -187,6 +187,7 @@
     <Compile Include="4.0 - Trees\Ternary Search Tree.cs" />
     <Compile Include="4.0 - Trees\TournamentTree.cs" />
     <Compile Include="4.0 - Trees\3- Tri Tree Operations.cs" />
+    <Compile Include="5.1 - Dynamic Programming\Array Problems.cs" />
     <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
     <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Numeric Problems.cs" />
     <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
