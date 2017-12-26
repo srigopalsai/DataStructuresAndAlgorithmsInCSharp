@@ -473,5 +473,39 @@ namespace DataStructuresAndAlgorithms
 
             return result;
         }
+
+        // 561 Array Partition I https://leetcode.com/problems/array-partition-i/description/
+
+        public int ArrayPairSum(int[] nums)
+        {
+            int[] hashArr = new int[20001];
+
+            foreach (int element in nums)
+            {
+                hashArr[element + 10000] += 1;
+            }
+
+            int maxSum = 0;
+            int skipKey = 0;
+
+            for (int index = 0; index < 20001; index++)
+            {
+                if (hashArr[index] == 0)
+                    continue;
+
+                while (hashArr[index] != 0)
+                {
+                    if (skipKey % 2 == 0)
+                    {
+                        maxSum += (index - 10000);
+                    }
+
+                    skipKey++;
+                    hashArr[index]--;
+                }
+            }
+
+            return maxSum;
+        }
     }
 }

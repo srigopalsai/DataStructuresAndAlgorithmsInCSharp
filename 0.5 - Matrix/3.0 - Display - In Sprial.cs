@@ -32,6 +32,9 @@ namespace DataStructuresAndAlgorithms
 
     Yet to refer the logic.
     http://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form/
+    
+    // Anti Spiral
+    http://www.geeksforgeeks.org/print-matrix-antispiral-form/
 
     To display in anti-spiral order we need to visit in spiral order and push them into stack and print them.
     ===================================================================================================================================================================================================
@@ -39,7 +42,6 @@ namespace DataStructuresAndAlgorithms
 
     public partial class MatrixOperations
     {
-
         // LC 498. https://leetcode.com/problems/diagonal-traverse/description/
         public int[] FindDiagonalOrder(int[,] matrix)
         {
@@ -291,6 +293,7 @@ namespace DataStructuresAndAlgorithms
             return spiralList;
         }
 
+        // 59 Generate Spiral Matrix https://leetcode.com/problems/spiral-matrix-ii/description/
         public int[,] GenerateMatrix(int n)
         {
             if (n == 0)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace DataStructuresAndAlgorithms
@@ -99,6 +100,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         /*
+        // 448 https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/discuss/
         Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
 
         Find all the elements of [1, n] inclusive that do not appear in this array.
@@ -133,6 +135,72 @@ namespace DataStructuresAndAlgorithms
             }
 
             return missingNums;
+        }
+
+        // 217 Contains Duplicates https://leetcode.com/problems/contains-duplicate/discuss/
+        public bool ContainsDuplicate(int[] nums)
+        {
+            HashSet<int> numsSet = new HashSet<int>();
+
+            foreach (int num in nums)
+            {
+                if (numsSet.Contains(num))
+                    return true;
+
+                numsSet.Add(num);
+            }
+
+            return false;
+        }
+
+        // 219 https://leetcode.com/problems/contains-duplicate-ii/description/
+        public bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            HashSet<int> set = new HashSet<int>();
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                if (indx > k)
+                {
+                    set.Remove(nums[indx - k - 1]);
+                }
+
+                if (!set.Add(nums[indx]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // https://leetcode.com/problems/contains-duplicate-iii/description/
+        // Failing to be fixed.
+        public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
+        {
+            if (nums == null || nums.Length == 0 || k <= 0)
+                return false;
+
+            SortedSet<int> values = new SortedSet<int>();
+
+            for (int ind = 0; ind < nums.Length; ind++)
+            {
+                int floor = values.LastOrDefault(item => item <= nums[ind] + t);
+                int ceil = values.FirstOrDefault(item => item >= nums[ind] - t);
+
+                if (floor >= nums[ind] || ceil <= nums[ind])
+                {
+                    return true;
+                }
+
+                values.Add(nums[ind]);
+
+                if (ind >= k)
+                {
+                    values.Remove(nums[ind - k]);
+                }
+            }
+
+            return false;
         }
     }
 }

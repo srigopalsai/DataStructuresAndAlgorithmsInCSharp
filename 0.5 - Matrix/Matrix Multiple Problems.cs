@@ -5,21 +5,159 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms
 {
+    /*
+    http://en.wikipedia.org/wiki/Substitution_matrix
+    http://en.wikipedia.org/wiki/Distance_matrix
+    http://en.wikipedia.org/wiki/Similarity_matrix
+    http://en.wikipedia.org/wiki/Transpose
+
+    */
+
     partial class MatrixOperations
     {
+        // 566 https://leetcode.com/problems/reshape-the-matrix/
+        public int[,] MatrixReshape(int[,] nums, int newRLen, int newCLen)
+        {
+            int oldRLen = nums.GetLength(0);
+            int oldCLen = nums.GetLength(1);
+
+            if (newRLen * newCLen != oldRLen * oldCLen)
+            {
+                return nums;
+            }
+
+            int[,] resultMat = new int[newRLen, newCLen];
+
+            for (int index = 0; index < newRLen * newCLen; index++)
+            {
+                resultMat[index / newCLen, index % newCLen] = nums[index / oldCLen, index % oldCLen];
+            }
+
+            return resultMat;
+        }
+
+        // 498 https://leetcode.com/problems/diagonal-traverse/description/
+        public int[] FindDiagonalOrder(int[,] matrix)
+        {
+            if (matrix == null || matrix.Length == 0)
+                return new int[0];
+
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+
+            int[] result = new int[m * n];
+            int row = 0;
+            int col = 0;
+            int d = 0;
+
+            int[,] dirs = { { -1, 1 }, { 1, -1 } };
+
+            for (int indx = 0; indx < m * n; indx++)
+            {
+                result[indx] = matrix[row, col];
+
+                row += dirs[d, 0];
+                col += dirs[d, 1];
+
+                if (row >= m)
+                {
+                    row = m - 1;
+                    col += 2;
+                    d = 1 - d;
+                }
+
+                if (col >= n)
+                {
+                    col = n - 1;
+                    row += 2;
+                    d = 1 - d;
+                }
+
+                if (row < 0)
+                {
+                    row = 0;
+                    d = 1 - d;
+                }
+
+                if (col < 0)
+                {
+                    col = 0;
+                    d = 1 - d;
+                }
+            }
+
+            return result;
+        }
+
+        public int[] FindDiagonalOrder2(int[,] matrix)
+        {
+            if (matrix.Length == 0)
+            {
+                return new int[0];
+            }
+
+            int rIndx = 0;
+            int cIndx = 0;
+
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+
+            int[] arr = new int[rLen * cLen];
+
+            for (int indx = 0; indx < arr.Length; indx++)
+            {
+                arr[indx] = matrix[rIndx, cIndx];
+
+                if ((rIndx + cIndx) % 2 == 0)
+                {
+                    // moving up
+                    if (cIndx == cLen - 1)
+                    {
+                        rIndx++;
+                    }
+                    else if (rIndx == 0)
+                    {
+                        cIndx++;
+                    }
+                    else
+                    {
+                        rIndx--;
+                        cIndx++;
+                    }
+                }
+                else
+                {
+                    // moving down
+                    if (rIndx == rLen - 1)
+                    {
+                        cIndx++;
+                    }
+                    else if (cIndx == 0)
+                    {
+                        rIndx++;
+                    }
+                    else
+                    {
+                        rIndx++;
+                        cIndx--;
+                    }
+                }
+            }
+            return arr;
+        }
         //329 https://leetcode.com/problems/longest-increasing-path-in-a-matrix/?tab=Description
 
         public void LongestIncreasingPathTest()
         {
             int[,] nums1 = {  { 9, 9, 4 },
-                              { 6, 6, 8 },
-                              { 2, 1, 1 } };
+                            { 6, 6, 8 },
+                            { 2, 1, 1 } };
 
             LongestIncreasingPath(nums1);
 
             int[,] nums2 = { { 3, 4, 5 },
-                             { 3, 2, 6},
-                             { 2, 2, 1 } };
+                            { 3, 2, 6},
+                            { 2, 2, 1 } };
 
             LongestIncreasingPath(nums2);
         }
@@ -70,6 +208,61 @@ namespace DataStructuresAndAlgorithms
             cacheMatrix[rIndx, cIndx] = ++maxCount;
 
             return maxCount;
+        }
+
+        public void Rotate(int[,] matrix)
+        {
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                for (int col = row; col < matrix.GetLength(1); col++)
+                {
+                    int temp = 0;
+                    temp = matrix[row, col];
+                    matrix[row, col] = matrix[col, row];
+                    matrix[col, row] = temp;
+                }
+            }
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                for (int col = 0; col < matrix.GetLength(1); col++)
+                {
+                    int temp = 0;
+                    temp = matrix[row, col];
+                    matrix[row, col] = matrix[row, matrix.GetLength(1) - 1 - col];
+                    matrix[row, matrix.GetLength(1) - 1 - col] = temp;
+                }
+            }
+        }
+
+        public void Rotate2(int[,] matrix)
+        {
+            int length = matrix.GetLength(0);
+
+            for (int layer = 0; layer < length / 2; layer++) // Top Left
+            {
+                // For every layer change, consider new left, top, right positions.
+                int top = layer;
+                int left = layer;
+                int right = length - 1 - layer;
+
+                while (top < right)
+                {
+                    int bottom = right - (top - layer);
+
+                    int tempTop = matrix[left, top];
+
+                    matrix[left, top] = matrix[bottom, left];
+
+                    matrix[bottom, left] = matrix[right, bottom];
+
+                    matrix[right, bottom] = matrix[top, right];
+
+                    matrix[top, right] = tempTop;
+
+                    top++;
+                }
+            }
         }
 
         // 541 - 0 1 Matrix https://leetcode.com/problems/01-matrix/description/
@@ -170,6 +363,47 @@ namespace DataStructuresAndAlgorithms
             }
 
             return matrix;
+        }
+
+
+        // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/description/
+        public class NumMatrix
+        {
+            private int[,] dpMat;
+
+            public NumMatrix(int[,] matrix)
+            {
+                if (matrix == null || matrix.Length == 0 )
+                {
+                    return;
+                }
+
+                int rLen = matrix.GetLength(0);
+                int cLen = matrix.GetLength(1);
+
+                dpMat = new int[rLen + 1, cLen + 1];
+
+                for (int rIndx = 1; rIndx <= rLen; rIndx++)
+                {
+                    for (int cIndx = 1; cIndx <= cLen; cIndx++)
+                    {
+                        dpMat[rIndx, cIndx] = dpMat[rIndx - 1, cIndx] + dpMat[rIndx, cIndx - 1] - 
+                                           dpMat[rIndx - 1, cIndx - 1] + matrix[rIndx - 1, cIndx - 1];
+                    }
+                }
+            }
+
+            public int SumRegion(int row1, int col1, int row2, int col2)
+            {
+                int r1Indx = Math.Min(row1, row2);
+                int r2Indx = Math.Max(row1, row2);
+
+                int c1Indx = Math.Min(col1, col2);
+                int c2Indx = Math.Max(col1, col2);
+
+                return  dpMat[r2Indx + 1, c2Indx + 1] - dpMat[r2Indx + 1, c1Indx] - 
+                        dpMat[r1Indx, c2Indx + 1] + dpMat[r1Indx, c1Indx];
+            }
         }
     }
 }

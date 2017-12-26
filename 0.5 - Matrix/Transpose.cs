@@ -6,10 +6,6 @@ using System.Text;
 namespace DataStructuresAndAlgorithms
 {
     /*
-    http://en.wikipedia.org/wiki/Substitution_matrix
- http://en.wikipedia.org/wiki/Distance_matrix
-    http://en.wikipedia.org/wiki/Similarity_matrix
-    http://en.wikipedia.org/wiki/Transpose
     */
     class Transpose
     {

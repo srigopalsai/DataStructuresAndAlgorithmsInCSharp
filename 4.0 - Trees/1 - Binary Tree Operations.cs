@@ -313,6 +313,46 @@ namespace DataStructuresAndAlgorithms
                 return rightParent;
         }
 
+        public TreeNode LowestCommonAncestorItr(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null || root == p || root == q) return root;
+
+            Dictionary<TreeNode, TreeNode> childParentMap = new Dictionary<TreeNode, TreeNode>();
+            Stack<TreeNode> nodeStack = new Stack<TreeNode>();
+            childParentMap.Add(root, null);
+            nodeStack.Push(root);
+
+            while (!childParentMap.ContainsKey(p) || !childParentMap.ContainsKey(q))
+            {
+                var node = nodeStack.Pop();
+                if (node.LeftNode != null)
+                {
+                    childParentMap.Add(node.LeftNode, node);
+                    nodeStack.Push(node.LeftNode);
+                }
+
+                if (node.RightNode != null)
+                {
+                    childParentMap.Add(node.RightNode, node);
+                    nodeStack.Push(node.RightNode);
+                }
+            }
+
+            HashSet<TreeNode> ancestors = new HashSet<TreeNode>();
+            while (p != null)
+            {
+                ancestors.Add(p);
+                p = childParentMap[p];
+            }
+
+            while (!ancestors.Contains(q))
+            {
+                q = childParentMap[q];
+            }
+
+            return q;
+        }
+
         public bool IsValidSerialization(string preorderStr)
         {
             string[] nodesList = preorderStr.Split(',');
