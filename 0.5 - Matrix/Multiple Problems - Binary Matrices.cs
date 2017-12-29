@@ -8,80 +8,107 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
 {
     class Multiple_Problems___Binary_Matrices
     {
-        /*
+        public class Node
+        {
+            public Node right;
+            public Node left;
+            public int Val;
+            public Node(int val)
+            {
+                Val = val;
+            }
+        }
+
         // https://www.geeksforgeeks.org/print-unique-rows/
-        private void printUnique(int[][] matrix)
+        private void PrintUniqueRows(int[,] matrix)
         {
             Node root = new Node(-1);
 
-            for (int i = 0; i < matrix.length; i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 Node node = root;
-                boolean isUnique = false;
+                bool isUnique = false;
 
-                for (int j = 0; j < matrix[0].length; j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    if (matrix[i][j] == 0)
+                    if (matrix[i, j] == 0)
                     {
-                        if (isUnique = node.left == null) node.left = new Node(matrix[i][j]);
+                        if (isUnique = node.left == null)
+                        {
+                            node.left = new Node(matrix[i, j]);
+                        }
+
                         node = node.left;
                     }
                     else
                     {
-                        if (isUnique = node.right == null) node.right = new Node(matrix[i][j]);
+                        if (isUnique = node.right == null)
+                        {
+                            node.right = new Node(matrix[i, j]);
+                        }
                         node = node.right;
                     }
                 }
-                if (!isUnique) continue;
-                System.out.println();
-                for (int j = 0; j < matrix[0].length; j++) System.out.print(matrix[i][j] + " ");
+
+                if (!isUnique)
+                {
+                    continue;
+                }
+
+                Console.WriteLine();
+
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    Console.WriteLine(matrix[i, j] + " ");
+                }
             }
         }
 
-        public static void printMat(int a[][], int r, int c)
+        public static void printMat(int[,] a, int r, int c)
         {
-            //add code here.
+            Dictionary<String, int> map = new Dictionary<String, int>();
+            List<String> list = new List<String>();
 
-            Map<String, Integer> map = new HashMap<String, Integer>();
-            ArrayList<String> list = new ArrayList<String>();
             for (int i = 0; i < r; i++)
             {
                 String s = "";
+
                 for (int j = 0; j < c; j++)
                 {
-                    s += String.valueOf(a[i][j]);
+                    s += String.valueOf(a[i,j]);
                 }
+
                 String k = s;
-                if (!list.contains(s))
+
+                if (!list.Contains(s))
                 {
-                    list.add(k);
+                    list.Add(k);
                 }
-                if (!map.containsKey(k))
+                if (!map.ContainsKey(k))
                 {
-                    map.put(k, 1);
+                    map[k] = 1;
                 }
                 else
                 {
-                    int count = map.get(k);
-                    map.put(k, count + 1);
+                    int count = map[k];
+                    map[k] = count + 1; ;
                 }
             }
 
-            for (int i = 0; i < list.size(); i++)
+            for (int i = 0; i < list.Count(); i++)
             {
 
-                String f = list.get(i);
-                char[] ch = f.toCharArray();
-                for (int j = 0; j < ch.length; j++)
+                String f = list[i];
+
+                for (int j = 0; j < f.Length; j++)
                 {
-                    System.out.print(ch[j] + " ");
+                    Console.WriteLine(f[j] + " ");
                 }
 
-                System.out.print("$");
-
+                Console.Write("$");
             }
         }
-
+/*
         //https://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
         //Given a binary matrix, find out the maximum size square sub-matrix with all 1s. 
         //Algorithm:
