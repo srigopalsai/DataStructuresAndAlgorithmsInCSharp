@@ -161,6 +161,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="0.5 - Matrix\5.1 - Search - Max No Of 1s In A Row.cs" />
+    <Compile Include="0.5 - Matrix\Multiple Problems - Binary Matrices.cs" />
     <Compile Include="0.5 - Matrix\Transpose.cs" />
     <Compile Include="0.5 - Matrix\Using Lists.cs" />
     <Compile Include="0.5 - Matrix\Z-Order Function.cs" />
