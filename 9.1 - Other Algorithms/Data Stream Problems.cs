@@ -253,7 +253,6 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
                 return value;
             }
 
-
             public T Peek() // Or Top
             {
                 if (Count > 0)

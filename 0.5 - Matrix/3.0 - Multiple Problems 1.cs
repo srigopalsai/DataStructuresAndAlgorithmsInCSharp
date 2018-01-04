@@ -5,16 +5,42 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms
 {
-    /*
-    http://en.wikipedia.org/wiki/Substitution_matrix
-    http://en.wikipedia.org/wiki/Distance_matrix
-    http://en.wikipedia.org/wiki/Similarity_matrix
-    http://en.wikipedia.org/wiki/Transpose
-
-    */
+    //http://en.wikipedia.org/wiki/Substitution_matrix
+    //http://en.wikipedia.org/wiki/Distance_matrix
+    //http://en.wikipedia.org/wiki/Similarity_matrix
+    //http://en.wikipedia.org/wiki/Transpose
 
     partial class MatrixOperations
     {
+        public void TransposeMatrixTest()
+        {
+            resultArrayString.Clear();
+            AppendMatrixToResultString(RectangularMatrix4x4, "Input Matrix");
+
+            TransposeMatrix(RectangularMatrix4x4);
+
+            List<int> matrixList = new List<int>();
+
+            AppendMatrixToResultString(RectangularMatrix4x4, "Output Matrix");
+            ShowResultString();
+        }
+
+        // Assuming square matrix.
+        public void TransposeMatrix(int[,] matrix)
+        {
+            int tempElement = 0;
+
+            for (int lpDiagCnt = 0; lpDiagCnt < matrix.GetLength(0); lpDiagCnt++)
+            {
+                for (int lpBackCnt = lpDiagCnt - 1; lpBackCnt >= 0; lpBackCnt--)
+                {
+                    tempElement = matrix[lpDiagCnt, lpBackCnt];
+                    matrix[lpDiagCnt, lpBackCnt] = matrix[lpBackCnt, lpDiagCnt];
+                    matrix[lpBackCnt, lpDiagCnt] = tempElement;
+                }
+            }
+        }
+
         // 566 https://leetcode.com/problems/reshape-the-matrix/
         public int[,] MatrixReshape(int[,] nums, int newRLen, int newCLen)
         {
@@ -37,115 +63,114 @@ namespace DataStructuresAndAlgorithms
         }
 
         // 498 https://leetcode.com/problems/diagonal-traverse/description/
+        // Index Bound Error if we change the order of if condition blocks
+
         public int[] FindDiagonalOrder(int[,] matrix)
         {
-            if (matrix == null || matrix.Length == 0)
-                return new int[0];
-
-            int m = matrix.GetLength(0);
-            int n = matrix.GetLength(1);
-
-            int[] result = new int[m * n];
-            int row = 0;
-            int col = 0;
-            int d = 0;
-
-            int[,] dirs = { { -1, 1 }, { 1, -1 } };
-
-            for (int indx = 0; indx < m * n; indx++)
+            if (matrix == null || matrix.GetLength(0) == 0)
             {
-                result[indx] = matrix[row, col];
+                return new int[0];
+            }
 
-                row += dirs[d, 0];
-                col += dirs[d, 1];
+            int rowLength = matrix.GetLength(0);
+            int colLength = matrix.GetLength(1);
 
-                if (row >= m)
+            int[] result = new int[rowLength * colLength];
+            int rowIndx = 0;
+            int colIndx = 0;
+            int dIndx = 0;
+
+            int[,] directions = { { -1, 1 }, { 1, -1 } };
+
+            for (int index = 0; index < rowLength * colLength; index++)
+            {
+                result[index] = matrix[rowIndx, colIndx];
+
+                rowIndx += directions[dIndx, 0];
+                colIndx += directions[dIndx, 1];
+
+                if (rowIndx >= rowLength)
                 {
-                    row = m - 1;
-                    col += 2;
-                    d = 1 - d;
+                    rowIndx = rowLength - 1;
+                    colIndx += 2;
+                    dIndx = 1 - dIndx;
                 }
-
-                if (col >= n)
+                if (colIndx >= colLength)
                 {
-                    col = n - 1;
-                    row += 2;
-                    d = 1 - d;
+                    colIndx = colLength - 1;
+                    rowIndx += 2;
+                    dIndx = 1 - dIndx;
                 }
-
-                if (row < 0)
+                if (rowIndx < 0)
                 {
-                    row = 0;
-                    d = 1 - d;
+                    rowIndx = 0;
+                    dIndx = 1 - dIndx;
                 }
-
-                if (col < 0)
+                if (colIndx < 0)
                 {
-                    col = 0;
-                    d = 1 - d;
+                    colIndx = 0;
+                    dIndx = 1 - dIndx;
                 }
             }
 
             return result;
         }
 
-        public int[] FindDiagonalOrder2(int[,] matrix)
+        public int[] FindDiagonalOrder1(int[,] matrix)
         {
             if (matrix.Length == 0)
             {
                 return new int[0];
             }
 
-            int rIndx = 0;
-            int cIndx = 0;
+            int rowIndx = 0;
+            int colIndx = 0;
+            int rowLength = matrix.GetLength(0);
+            int colLength = matrix.GetLength(1);
 
-            int rLen = matrix.GetLength(0);
-            int cLen = matrix.GetLength(1);
+            int[] resultArray = new int[rowLength * colLength];
 
-            int[] arr = new int[rLen * cLen];
-
-            for (int indx = 0; indx < arr.Length; indx++)
+            for (int index = 0; index < resultArray.Length; index++)
             {
-                arr[indx] = matrix[rIndx, cIndx];
+                resultArray[index] = matrix[rowIndx, colIndx];
 
-                if ((rIndx + cIndx) % 2 == 0)
+                if ((rowIndx + colIndx) % 2 == 0) // Move Up
                 {
-                    // moving up
-                    if (cIndx == cLen - 1)
+                    if (colIndx == colLength - 1)
                     {
-                        rIndx++;
+                        rowIndx++;
                     }
-                    else if (rIndx == 0)
+                    else if (rowIndx == 0)
                     {
-                        cIndx++;
+                        colIndx++;
                     }
                     else
                     {
-                        rIndx--;
-                        cIndx++;
+                        rowIndx--;
+                        colIndx++;
                     }
                 }
-                else
+                else // Move Down
                 {
-                    // moving down
-                    if (rIndx == rLen - 1)
+                    if (rowIndx == rowLength - 1)
                     {
-                        cIndx++;
+                        colIndx++;
                     }
-                    else if (cIndx == 0)
+                    else if (colIndx == 0)
                     {
-                        rIndx++;
+                        rowIndx++;
                     }
                     else
                     {
-                        rIndx++;
-                        cIndx--;
+                        rowIndx++;
+                        colIndx--;
                     }
                 }
             }
-            return arr;
+            return resultArray;
         }
-        //329 https://leetcode.com/problems/longest-increasing-path-in-a-matrix/?tab=Description
+
+        // 329 https://leetcode.com/problems/longest-increasing-path-in-a-matrix/?tab=Description
 
         public void LongestIncreasingPathTest()
         {
@@ -210,6 +235,14 @@ namespace DataStructuresAndAlgorithms
             return maxCount;
         }
 
+        // https://www.geeksforgeeks.org/inplace-rotate-square-matrix-by-90-degrees/
+        // https://www.geeksforgeeks.org/rotate-matrix-90-degree-without-using-extra-space-set-2/
+        //Uses : Imagae Rotation
+        //http://en.wikipedia.org/wiki/Rotation_matrix
+
+        //http://stackoverflow.com/questions/42519/how-do-you-rotate-a-two-dimensional-array?rq=1
+        //http://stackoverflow.com/questions/2893101/how-to-rotate-a-n-x-n-matrix-by-90-degrees
+
         public void Rotate(int[,] matrix)
         {
             for (int row = 0; row < matrix.GetLength(0); row++)
@@ -266,29 +299,20 @@ namespace DataStructuresAndAlgorithms
         }
 
         // 541 - 0 1 Matrix https://leetcode.com/problems/01-matrix/description/
-        //--------------------------------------------------------------------------------------------------------------------------------
-        /*
-        Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell. 
-        The distance between two adjacent cells is 1. 
+        /*  Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell. 
+            The distance between two adjacent cells is 1. 
 
-        Input:  0 0 0
-                0 1 0
-                0 0 0
-        Output: 0 0 0
-                0 1 0
-                0 0 0
+            Input:  0 0 0                   Output: 0 0 0
+                    0 1 0                           0 1 0
+                    0 0 0                           0 0 0
 
-        Input:  0 0 0
-                0 1 0
-                1 1 1
-        Output: 0 0 0
-                0 1 0
-                1 2 1
+            Input:  0 0 0                   Output: 0 0 0  
+                    0 1 0                           0 1 0
+                    1 1 1                           1 2 1
 
-        Note:   The number of elements of the given matrix will not exceed 10,000.
-                There are at least one 0 in the given matrix.
-                The cells are adjacent in only four directions: up, down, left and right.
-        */
+            Note:   The number of elements of the given matrix will not exceed 10,000.
+                    There are at least one 0 in the given matrix.
+                    The cells are adjacent in only four directions: up, down, left and right.        */
 
         public void UpdateMatrixTest()
         {
@@ -364,7 +388,6 @@ namespace DataStructuresAndAlgorithms
 
             return matrix;
         }
-
 
         // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/description/
         public class NumMatrix

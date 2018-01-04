@@ -7,10 +7,11 @@ namespace DataStructuresAndAlgorithms
 {
     public partial class MatrixOperations
     {
-        /* Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
-           A region is captured by flipping all 'O's into 'X's in that surrounded region.
-           https://leetcode.com/problems/surrounded-regions/
-        */
+        // Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+        // A region is captured by flipping all 'O's into 'X's in that surrounded region.
+        // https://leetcode.com/problems/surrounded-regions/
+        // TBD https://www.geeksforgeeks.org/sparse-matrix-representation/
+
         public void FillOsWIthXsIfSurroundedByXs(char[,] board)
         {
             if (board.GetLength(0) == 0 || board.GetLength(1) == 0)         
