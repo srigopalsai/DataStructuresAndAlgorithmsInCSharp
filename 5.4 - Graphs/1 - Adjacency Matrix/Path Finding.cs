@@ -66,7 +66,11 @@ Gabow's algorithm O(E logE/V L)
             //int[,] solMat = new int[srcMat.GetLength(0), srcMat.GetLength(1)];
             //bool result = GetPath(srcMat, source.xPos, source.yPos, solMat);
         }
-        
+
+        // The Lee algorithm is one possible solution for maze routing problems based on Breadth-first search. 
+        // It always gives an optimal solution, if one exists, but is slow and requires considerable memory.
+        // Time & space complexity for an M × N grid: O(MN) (huge!)
+        // https://en.wikipedia.org/wiki/Lee_algorithm
         public int ShortestPathByLeeBFS(int[,] matrix, Point srcPoint, Point destPoint, Stack<Point> resultPath)
         {
             if (matrix == null || matrix.GetLength(0) == 0 || matrix.GetLength(1) == 0)

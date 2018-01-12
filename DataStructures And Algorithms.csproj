@@ -144,24 +144,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="0.5 - Matrix\0.0 - Helper Methods.cs" />
-    <Compile Include="0.5 - Matrix\3.1 - Display - In Spiral Alternate Rectangles.cs" />
     <Compile Include="0.5 - Matrix\CreateRectangle.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\0 - Notes.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5 - CalculateThePowerOf.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\6 - FibonacciNumbersTillN.cs" />
     <Compile Include="0.5 - Matrix\8.0 - Matrix - ChainMultiplication.cs" />
-    <Compile Include="0.5 - Matrix\9.2 - Matrix Inverse.cs" />
-    <Compile Include="0.5 - Matrix\3.2 - Display - Diagnally.cs" />
     <Compile Include="0.5 - Matrix\5.1 - Search - Path From Top Left to Bottom Right.cs" />
-    <Compile Include="0.5 - Matrix\5.3 - Search - Is String Exists.cs" />
-    <Compile Include="0.5 - Matrix\9.3 - Rotate 2D Array.cs" />
     <Compile Include="0.5 - Matrix\4.1 - Replace - Os WIth Xs If Surrounded By Xs.cs" />
     <Compile Include="0.5 - Matrix\MatrixOperationsDemo.xaml.cs">
       <DependentUpon>MatrixOperationsDemo.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="0.5 - Matrix\5.1 - Search - Max No Of 1s In A Row.cs" />
-    <Compile Include="0.5 - Matrix\Multiple Problems - Binary Matrices.cs" />
     <Compile Include="0.5 - Matrix\Transpose.cs" />
     <Compile Include="0.5 - Matrix\Using Lists.cs" />
     <Compile Include="0.5 - Matrix\Z-Order Function.cs" />
@@ -259,7 +252,6 @@
     <Compile Include="0.5 - Matrix\1.0 - Fill - FloodFill or SeedFill Algorithm.cs" />
     <Compile Include="0.5 - Matrix\GameOf15.cs" />
     <Compile Include="0.5 - Matrix\2.0 - GomukuOrConnectFiveGame.cs" />
-    <Compile Include="0.5 - Matrix\5.0 - Search - Kth Smallest In Sorted Matrix.cs" />
     <Compile Include="0.5 - Matrix\5.0 - Search - SortedMatrix.cs" />
     <Compile Include="0.5 - Matrix\9.4 - Sort Matrix.cs" />
     <Compile Include="0.5 - Matrix\SOSGame.cs" />
@@ -315,7 +307,6 @@
       <DependentUpon>GeneralCodingQustionsDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="0.5 - Matrix\5.2 - Search - Biggest Block In Matrix.cs" />
-    <Compile Include="0.5 - Matrix\9.1 - MaximumSubMatrixSum.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\2 - AugmentingRecursion.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - CoRecursion.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\1 - TailRecursion.cs" />
@@ -329,13 +320,12 @@
     <Compile Include="0.3 - Arrays\2.3 - Sum - zSummedAreaTableNI.cs" />
     <Compile Include="0.3 - Arrays\2.1 - Sum - Of 2 Nums In Sorted Array.cs" />
     <Compile Include="0.3 - Arrays\3 - Tripplet.cs" />
-    <Compile Include="0.5 - Matrix\3.0 - Display - In Sprial.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Multiple Problems - Traversal.cs" />
     <Compile Include="0.3 - Arrays\1.1 - 2nd Biggest.cs" />
     <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
-    <Compile Include="0.5 - Matrix\Mutiple Samples.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Multiple Problmes 2.cs" />
     <Compile Include="0.5 - Matrix\BackTrackingAlgorithm.cs" />
-    <Compile Include="0.5 - Matrix\9.0 - Transpose Matrix.cs" />
     <Compile Include="0.5 - Matrix\6.0 - Rat In Maze Puzzle PI.cs" />
     <Compile Include="0.5 - Matrix\4.0 - Replace - ZeroRowsAndColumns.cs" />
     <Compile Include="0.5 - Matrix\SudokuPuzzle.cs" />
@@ -522,7 +512,7 @@
     <None Include="0.2 - Binary and Bitwise Operations\Bitwise Operations 50+ Samples.docx" />
     <Compile Include="0.3 - Arrays\9 - Multiple Problems 1.cs" />
     <None Include="0.4 - Recursion Back Tracking Back Jumping\Time Complexity Analysis of Recursive Functions.docx" />
-    <Compile Include="0.5 - Matrix\Matrix Multiple Problems.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Multiple Problems 1.cs" />
     <None Include="4.0 - Trees\TreeAndGraphs.pptx" />
     <None Include="6.0 - Sorting Techniques\5.0 - MergeSort.pptx" />
     <Compile Include="6.0 - Sorting Techniques\5.1 Merge 2 Arrays In Sorted Order.cs" />

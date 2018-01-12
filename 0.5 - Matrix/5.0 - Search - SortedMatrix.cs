@@ -35,7 +35,6 @@ namespace DataStructuresAndAlgorithms
         //O(n) Solution
         //http://stackoverflow.com/questions/3723353/how-to-efficiently-search-in-an-ordered-matrix?rq=1
 
-
         public bool BinarySearchOnSortedMatrix(int[,] SortedMatrix, int elementToSearch)
         {
             bool foundFlag = false;
@@ -175,7 +174,7 @@ namespace DataStructuresAndAlgorithms
         .     . .     . .
         g ..... h ..... i
 
-        a, c, g < i --> if not there is no element 
+        a, c, g < i --> if not, there is no element 
 
         a, b, d < e
         b, c, e < f
@@ -385,7 +384,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        double FindMean(int[,] nums)
+        public double FindMean(int[,] nums)
         {
             int sum = 0;
             int numsLen = nums.GetLength(0);
@@ -402,7 +401,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        double FindMedian(int[,] a)
+        public double FindMedian(int[,] a)
         {
             int numsLen = a.GetLength(0);
 
@@ -415,8 +414,130 @@ namespace DataStructuresAndAlgorithms
             return 0.0;
         }
 
+        //LC 378 https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
+        //Input:      1   3    5
+        //            2   4    7
+        //            6   8    9
+        //http://stackoverflow.com/questions/19028613/kth-smallest-element-in-a-matrix-with-sorted-rows-and-columns
+        //Kth Largest :
+        //http://www.dsalgo.com/2013/02/find-kth-largest-element-in-sorted.html
+        //http://www.geeksforgeeks.org/forums/topic/kth-smallest-element-in-a-mxn-matrix/
+
+        //// O(n) linear time
+
+        //Binary Search!
+        //[ 1,  5,  9],
+        //[10, 11, 13],
+        //[12, 13, 15]
+        //8
+
+        //(1 + 15) / 2 = 8, we are searching where 8th smallest is;
+        //We start from 12, 
+        //Case 1: 12 > 8, so move to 10, then to 1 (Target is smaller, move to UP!)
+        //Case 2: 1 < 8, move to 5 (res += 0 + 1), and move to 9 (res += 1 + 1); (Target is larger, move right, but add i + 1 (add the col!))
+
+        //return 2; 2 < 8, that means our guess is too small!
+
+        public int KthSmallest(int[,] matrix, int k)
+        {
+            int rowLen = matrix.GetLength(0) - 1;
+            int colLen = matrix.GetLength(1) - 1;
+
+            int loIndx = matrix[0, 0];
+            int hiIndx = matrix[rowLen, colLen];
+
+            while (loIndx < hiIndx)
+            {
+                int midIndx = loIndx + (hiIndx - loIndx) / 2;
+                int kIndx = 0;
+                int colIndx = colLen;
+
+                for (int rowIndx = 0; rowIndx <= rowLen; rowIndx++)
+                {
+                    while (colIndx >= 0 && matrix[rowIndx, colIndx] > midIndx)
+                    {
+                        colIndx--;
+                    }
+                    kIndx += (colIndx + 1);
+                }
+
+                if (kIndx < k)
+                {
+                    loIndx = midIndx + 1;
+                }
+                else
+                {
+                    hiIndx = midIndx;
+                }
+            }
+
+            return loIndx;
+        }
+
         // http://www.geeksforgeeks.org/check-given-matrix-sparse-not/
+        // Given a matrix of 0s and 1s find the row that contains maximum number of 1s.
+        public void TBD()
+        {
+
+        }
 
         // http://www.geeksforgeeks.org/cholesky-decomposition-matrix-decomposition/
+
+        public void IsStringExistsInMatrixTest()
+        {
+            char[,] stringMatrix1 = {{'A','C','P','R','C'},
+                                    {'X','S','O','P','C'},
+                                    {'V','O','V','N','I'},
+                                    {'W','G','F','M','N'},
+                                    {'Q','A','T','I','T'}};
+
+            char[,] stringMatrix2 = {{'Y','A','A','O'},
+                                     {'A','O','A','O'},
+                                     {'Y','A','O','O'},
+                                     {'H','A','A','O'},
+                                     {'Y','A','H','O'}};
+
+            string str2Find1 = "MICROSOFT";
+            //string str2Find2 = "YAHOO";
+
+            char[] charArr2Find = str2Find1.ToCharArray();
+            bool IsStringExists = IsStringExistsInMatrix(stringMatrix1, charArr2Find, 0, 0, 0);
+
+        }
+
+        //Assume array is 100 X 100. Some logic optimization.
+        bool IsStringExistsInMatrix(char[,] squareMatrix, char[] charArr2Find, int nextCharPos, int xPosition, int yPosition)
+        {
+            try
+            {
+                if (squareMatrix[xPosition, yPosition] == 1)
+                {
+                    return false;
+                }
+                squareMatrix[xPosition, yPosition] = '2';
+
+                if (xPosition < 99 && squareMatrix[xPosition + 1, yPosition] != 1)
+                {
+                    IsStringExistsInMatrix(squareMatrix, charArr2Find, 0, xPosition + 1, yPosition);
+                }
+                if (xPosition > 0 && squareMatrix[xPosition - 1, yPosition] != 1)
+                {
+                    IsStringExistsInMatrix(squareMatrix, charArr2Find, 0, xPosition - 1, yPosition);
+                }
+                if (yPosition < 99 && squareMatrix[xPosition, yPosition + 1] != 1)
+                {
+                    IsStringExistsInMatrix(squareMatrix, charArr2Find, 0, xPosition, yPosition + 1);
+                }
+                if (yPosition > 0 && squareMatrix[xPosition, yPosition - 1] != 1)
+                {
+                    IsStringExistsInMatrix(squareMatrix, charArr2Find, 0, xPosition, yPosition - 1);
+                }
+                return false;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Something went wrong : " + exception.Message + "\n" + exception.StackTrace.ToString());
+            }
+        }
     }
 }

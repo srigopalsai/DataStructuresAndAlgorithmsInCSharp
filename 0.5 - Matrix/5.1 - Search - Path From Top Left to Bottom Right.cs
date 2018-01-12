@@ -35,7 +35,6 @@ namespace DataStructuresAndAlgorithms
 
         public void dfs(int[,] matrix, int xIndx, int yIndx, List<int[]> temp, List<int[]> list)
         {
-
             int matrixLength = matrix.Length;
 
             if (xIndx == matrixLength - 1 && yIndx == matrixLength - 1)

@@ -252,6 +252,7 @@ void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
                 strBlrd.Append("\n");
             }
 
+            Console.WriteLine(strBlrd.ToString());
             strBlrd.Append("Test 2 : \n");
 
             affectedCellCnt = FloodFillOrSeedFillAlgorithm(squareMatrix, 3, 4);
