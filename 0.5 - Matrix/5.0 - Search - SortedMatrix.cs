@@ -59,26 +59,62 @@ namespace DataStructuresAndAlgorithms
             if (matrix == null || matrix.Length == 0)
                 return false;
 
-            int rowIndx = 0;
-            int rowLength = matrix.GetLength(0) - 1;
-            int colIndx = matrix.GetLength(1) - 1;
+            int rIndx = 0;
+            int rLen = matrix.GetLength(0) - 1;
+            int cLen = matrix.GetLength(1) - 1;
 
-            while (rowIndx <= rowLength && colIndx >= 0)
+            while (rIndx <= rLen && cLen >= 0)
             {
-                if (matrix[rowIndx, colIndx] == target)
+                if (matrix[rIndx, cLen] == target)
                 {
                     return true;
                 }
-                else if (matrix[rowIndx, colIndx] > target)
+                else if (matrix[rIndx, cLen] > target)
                 {
-                    --colIndx;
+                    --cLen;
                 }
                 else
                 {
-                    ++rowIndx;
+                    ++rIndx;
                 }
             }
 
+            return false;
+        }
+
+        public bool SearchMatrix2(int[,] matrix, int target)
+        {
+
+            if (matrix == null || matrix.Length == 0)
+                return false;
+
+            if (matrix.Length == 1)
+                return matrix[0, 0] == target;
+
+            int stIndx = 0;
+            int endIndx = matrix.GetLength(0) * matrix.GetLength(1) - 1;
+            int colLen = matrix.GetLength(1);
+
+            while (stIndx <= endIndx)
+            {
+                int midIndx = stIndx + (endIndx - stIndx) / 2;
+
+                int rIndx = midIndx / colLen;
+                int cIndx = midIndx % colLen;
+
+                if (target == matrix[rIndx, cIndx])
+                {
+                    return true;
+                }
+                else if (target < matrix[rIndx, cIndx])
+                {
+                    endIndx = midIndx - 1;
+                }
+                else
+                {
+                    stIndx = midIndx + 1;
+                }
+            }
             return false;
         }
 
@@ -121,6 +157,7 @@ namespace DataStructuresAndAlgorithms
                 }
             }
         }
+
         //O(m+n)
         public bool SearchMatrixTopRightToBottom(int[,] matrix, int target)
         {
