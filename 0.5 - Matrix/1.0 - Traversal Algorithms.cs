@@ -85,7 +85,6 @@ namespace DataStructuresAndAlgorithms
             Array.Sort(JaggaedMatrix4x5, (a, b) => a[0].CompareTo(b[0]));
         }
 
-        // http://www.geeksforgeeks.org/create-a-matrix-with-alternating-rectangles-of-0-and-x/
         // http://algorithmstuff.wordpress.com/2013/10/13/print-a-matrix-in-spiral-order/
 
         public void DisplayMatrixInSpiral(int[][] MatrixArray)
@@ -187,6 +186,45 @@ namespace DataStructuresAndAlgorithms
             }
 
             return spiralList;
+        }
+
+        public void DFSTraversalRecursive(int rIndx, int[,] matrix, bool[] visited)
+        {
+            visited[rIndx] = true;
+
+            for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
+            {
+                if (rIndx == cIndx)
+                    continue;
+
+                if (matrix[rIndx, cIndx] == 1 && visited[cIndx] == false)
+                {
+                    DFSTraversalRecursive(cIndx, matrix, visited);
+                }
+            }
+        }
+
+        public void DFSTraversalIterative(int rIndx, int[,] matrix, bool[] visited)
+        {
+            Stack<int> stack = new Stack<int>();
+            stack.Push(rIndx);
+
+            while (stack.Count > 0)
+            {
+                rIndx = stack.Pop();
+                visited[rIndx] = true;
+
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
+                {
+                    if (rIndx == cIndx)
+                        continue;
+
+                    if (matrix[rIndx, cIndx] == 1 && visited[cIndx] == false)
+                    {
+                        stack.Push(cIndx);
+                    }
+                }
+            }
         }
 
         // https://www.geeksforgeeks.org/print-given-matrix-zigzag-form/
@@ -368,116 +406,161 @@ namespace DataStructuresAndAlgorithms
         // 547 https://leetcode.com/problems/friend-circles/description/
         public int FindCircleNum(int[,] matrix)
         {
-            int result = 0;
+            int circleCnt = 0;
             bool[] visited = new bool[matrix.GetLength(0)];
 
-            for (int rIndx = 0; rIndx <= matrix.GetLength(0) - 1; rIndx++)
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
             {
-                if (!visited[rIndx])
-                {
-                    DFSTraversal(rIndx, matrix, visited);
-                    result++;
-                }
-            }
-            return result;
-        }
-
-        private void DFSTraversal(int startNode, int[,] graph, bool[] visited)
-        {
-            visited[startNode] = true;
-
-            for (int cIndx = 0; cIndx <= graph.GetLength(1) - 1; cIndx++)
-            {
-                if (startNode == cIndx)
-                {
+                if (visited[rIndx] == true)
                     continue;
-                }
 
-                if (graph[startNode, cIndx] == 1 && !visited[cIndx])
-                {
-                    DFSTraversal(cIndx, graph, visited);
-                }
+                DFSTraversalRecursive(rIndx, matrix, visited);
+                circleCnt++;
             }
+
+            return circleCnt;
         }
 
-        /*Union Approach
-         * public class Solution {
-        class UnionFind {
-                private int count = 0;
-                private int[] parent, rank;
-        
-                public UnionFind(int n) {
-                    count = n;
-                    parent = new int[n];
-                    rank = new int[n];
-                    for (int i = 0; i < n; i++) {
-                        parent[i] = i;
-                    }
+        public int FindCircleNum2(int[,] matrix)
+        {
+            int circleCnt = 0;
+
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
+            {
+                if (matrix[rIndx, rIndx] == 1)
+                {
+                    circleCnt++;
+                    FindCircleNum2Bfs(rIndx, matrix);
                 }
-        
-                public int find(int p) {
-        	        while (p != parent[p]) {
-                        parent[p] = parent[parent[p]];    // path compression by halving
-                        p = parent[p];
-                    }
-                    return p;
-                }
-        
-                public void union(int p, int q) {
-                    int rootP = find(p);
-                    int rootQ = find(q);
-                    if (rootP == rootQ) return;
-                    if (rank[rootQ] > rank[rootP]) {
-                        parent[rootP] = rootQ;
-                    }
-                    else {
-                        parent[rootQ] = rootP;
-                        if (rank[rootP] == rank[rootQ]) {
-                            rank[rootP]++;
+            }
+
+            return circleCnt;
+        }
+
+        public void FindCircleNum2Bfs(int rIndx, int[,] matrix)
+        {
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(rIndx);
+
+            while (queue.Count() > 0)
+            {
+                for (int indx = 0; indx < queue.Count(); indx++)
+                {
+                    rIndx = queue.Dequeue();
+                    matrix[rIndx, rIndx] = 2; // Marks as visited
+
+                    for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
+                    {
+                        if (matrix[cIndx, cIndx] == 1 && matrix[rIndx, cIndx] == 1)
+                        {
+                            queue.Enqueue(cIndx);
                         }
                     }
-                    count--;
-                }
-        
-                public int count() {
-                    return count;
                 }
             }
-    
-            public int findCircleNum(int[][] M) {
-                int n = M.length;
-                UnionFind uf = new UnionFind(n);
-                for (int i = 0; i < n - 1; i++) {
-                    for (int j = i + 1; j < n; j++) {
-                        if (M[i][j] == 1) uf.union(i, j);
-                    }
-                }
-                return uf.count();
-            }
-        }
-                 * 
-                 * BFS Approach
-                public int findCircleNum(int[][] M) {
-            int count = 0;
-            for (int i=0; i<M.length; i++)
-                if (M[i][i] == 1) { count++; BFS(i, M); }
-            return count;
         }
 
-        public void BFS(int student, int[][] M) {
-            Queue<Integer> queue = new LinkedList<>();
-            queue.add(student);
-            while (queue.size() > 0) {
-                int queueSize = queue.size();
-                for (int i=0;i<queueSize;i++) {
-                    int j = queue.poll();
-                    M[j][j] = 2; // marks as visited
-                    for (int k=0;k<M[0].length;k++) 
-                        if (M[j][k] == 1 && M[k][k] == 1) queue.add(k);
+        public int FindCircleNum3DP(int[,] matrix)
+        {
+            if (matrix == null || matrix.Length == 0)
+                return 0;
+
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+            int mLen = Math.Max(rLen, cLen);
+
+            int[] setIds = new int[mLen];
+
+            for (int indx = 0; indx < mLen; indx++)
+                setIds[indx] = indx;
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (rIndx == cIndx || matrix[rIndx, cIndx] != 1)
+                        continue;
+
+                    //rIndx != cIndx and rIndx - cIndx friends
+
+                    int small = Math.Min(setIds[rIndx], setIds[cIndx]);
+                    int big = Math.Max(setIds[rIndx], setIds[cIndx]);
+
+                    setIds[rIndx] = setIds[cIndx] = small;
+
+                    if (big != small)
+                    {
+                        setIds[big] = small;
+                    }
                 }
             }
+
+            for (int indx = 0; indx < mLen; indx++)
+            {
+                if (setIds[indx] != indx)
+                {
+                    setIds[indx] = setIds[setIds[indx]];
+                }
+            }
+
+            return new HashSet<int>(setIds).Count;
         }
-        */
+
+        public class FindCircleNum4UnionFind
+        {
+            public int circleCnt;
+            private int[] arr;
+
+            public FindCircleNum4UnionFind(int len)
+            {
+                circleCnt = len;
+                arr = new int[len];
+
+                for (int indx = 0; indx < len; indx++)
+                {
+                    arr[indx] = indx;
+                }
+            }
+
+            public int Find(int x)
+            {
+                if (x == arr[x])
+                    return x;
+                else
+                    return Find(arr[x]);
+            }
+
+            public void Union(int rIndx, int cIndx)
+            {
+                int p = Find(rIndx);
+                int q = Find(cIndx);
+
+                if (p != q)
+                {
+                    this.arr[p] = q;
+                    circleCnt--;
+                }
+            }
+
+            public int FindCircleNum(int[,] matrix)
+            {
+                int rLen = matrix.GetLength(0);
+                FindCircleNum4UnionFind unionFind = new FindCircleNum4UnionFind(rLen);
+
+                for (int rIndx = 0; rIndx < rLen; rIndx++)
+                {
+                    for (int cIndx = 0; cIndx < rLen; cIndx++)
+                    {
+                        if (matrix[rIndx, cIndx] == 1)
+                        {
+                            unionFind.Union(rIndx, cIndx);
+                        }
+                    }
+                }
+
+                return unionFind.circleCnt;
+            }
+        }
 
         // 529 https://leetcode.com/problems/minesweeper/description/
         public char[][] UpdateBoard(char[][] board, int[] click)

@@ -276,6 +276,251 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
+        // Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+        // A region is captured by flipping all 'O's into 'X's in that surrounded region.
+        // https://leetcode.com/problems/surrounded-regions/
+        // TBD https://www.geeksforgeeks.org/sparse-matrix-representation/
+
+        public void FillOsWIthXsIfSurroundedByXs(char[,] board)
+        {
+            if (board.GetLength(0) == 0 || board.GetLength(1) == 0)
+                return;
+
+            for (int rIndx = 0; rIndx < board.GetLength(0); rIndx++)
+            {
+                DfsTraversal(board, rIndx, 0);
+                DfsTraversal(board, rIndx, board.GetLength(0) - 1);
+            }
+
+            for (int cIndx = 0; cIndx < board.GetLength(1); cIndx++)
+            {
+                DfsTraversal(board, 0, cIndx);
+                DfsTraversal(board, board.Length - 1, cIndx);
+            }
+
+            for (int rIndx = 0; rIndx < board.Length; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < board.GetLength(0); cIndx++)
+                {
+                    if (board[rIndx, cIndx] == 'O')
+                    {
+                        board[rIndx, cIndx] = 'X';
+                    }
+                    else if (board[rIndx, cIndx] == '1')
+                    {
+                        board[rIndx, cIndx] = 'O';
+                    }
+                }
+            }
+        }
+
+        private void DfsTraversal(char[,] board, int rIndx, int cIndx)
+        {
+            if (rIndx < 0 || rIndx >= board.Length || cIndx < 0 || cIndx >= board.GetLength(0) 
+                || board[rIndx, cIndx] != 'O')
+            {
+                return;
+            }
+
+            board[rIndx, cIndx] = '1';
+
+            if (rIndx < board.Length - 2)
+            {
+                DfsTraversal(board, rIndx + 1, cIndx);
+            }
+            if (rIndx > 1)
+            {
+                DfsTraversal(board, rIndx - 1, cIndx);
+            }
+            if (cIndx < board.GetLength(0) - 2)
+            {
+                DfsTraversal(board, rIndx, cIndx + 1);
+            }
+            if (cIndx > 1)
+            {
+                DfsTraversal(board, rIndx, cIndx - 1);
+            }
+        }
+
+        public void FillOsWIthXsIfSurroundedByXsTest()
+        {
+            char[,] board ={{'X','X','X','X'},
+                          {'X','X','O','X'},
+                          {'X','O','X','X'},
+                          {'X','X','O','X'}};
+
+            FillOsWIthXsIfSurroundedByXs(board);
+        }
+
         // https://leetcode.com/problems/cut-off-trees-for-golf-event/description/
+        public void TBDCutTrees()
+        {
+
+        }
+
+        // 417 https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+
+        public List<int[]> pacificAtlantic(int[,] matrix)
+        {
+            List<int[]> res = new List<int[]>();
+
+            if (matrix == null || matrix.Length == 0)
+                return res;
+
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+
+            bool[,] pacific = new bool[rLen, cLen];
+            bool[,] atlantic = new bool[rLen, cLen];
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                DfsHelper(matrix, pacific, rIndx, 0);
+                DfsHelper(matrix, atlantic, rIndx, cLen - 1);
+            }
+
+            for (int cIndx = 0; cIndx < cLen; cIndx++)
+            {
+                DfsHelper(matrix, pacific, 0, cIndx);
+                DfsHelper(matrix, atlantic, rLen - 1, cIndx);
+            }
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (pacific[rIndx, cIndx] == true && atlantic[rIndx, cIndx] == true)
+                    {
+                        res.Add(new int[] { rIndx, cIndx });
+                    }
+                }
+            }
+            return res;
+        }
+        int[,] dirs = { { -1, 0 }, { 0, -1 }, { 1, 0 }, { 0, 1 } };
+
+        public void DfsHelper(int[,] matrix, bool[,] visited, int rIndx, int cIndx)
+        {
+            visited[rIndx,cIndx] = true;
+
+            for (int dIndx = 0; dIndx < dirs.GetLength(0); dIndx++)
+            {
+                int crIndx = dirs[dIndx, 0] + rIndx;
+                int ccIndx = dirs[dIndx, 1] + cIndx;
+
+                if (IsValidCell(matrix.GetLength(0), matrix.GetLength(1), crIndx, ccIndx) && !visited[crIndx, ccIndx] && matrix[crIndx, ccIndx] >= matrix[rIndx, cIndx])
+                {
+                    DfsHelper(matrix, visited, crIndx, ccIndx);
+                }
+            }
+        }
+
+        public bool IsValidCell(int rLen, int cLen, int rIndx, int cIndx)
+        {
+            return rIndx >= 0 && rIndx < rLen && cIndx >= 0 && cIndx < cLen;
+        }
+
+        // 207 https://leetcode.com/problems/course-schedule/description/
+        //public bool CanFinish(int numCourses, int[,] prerequisites)
+        //{
+        //    int[] graph = new int[numCourses];
+        //    int[] degree = new int[numCourses];
+        //    Queue queue = new List();
+        //    int count = 0;
+
+        //    for (int i = 0; i < numCourses; i++)
+        //        graph[i] = new int();
+
+        //    for (int i = 0; i < prerequisites.Length; i++)
+        //    {
+        //        degree[prerequisites[i, 1]]++;
+        //        graph[prerequisites[i, 0]].Add(prerequisites[i, 1]);
+        //    }
+
+        //    for (int i = 0; i < degree.Length; i++)
+        //    {
+        //        if (degree[i] == 0)
+        //        {
+        //            queue.Enqueue(i);
+        //            count++;
+        //        }
+        //    }
+
+        //    while (queue.Count != 0)
+        //    {
+        //        int course = (int)queue.Dequeue();
+
+        //        for (int i = 0; i < graph[course].Count; i++)
+        //        {
+        //            int pointer = (int)graph[course, i];
+        //            degree[pointer]--;
+
+        //            if (degree[pointer] == 0)
+        //            {
+        //                queue.Enqueue(pointer);
+        //                count++;
+        //            }
+        //        }
+        //    }
+
+        //    if (count == numCourses)
+        //        return true;
+        //    else
+        //        return false;
+        //}
+
+        //public bool CanFinish2(int numCourses, int[,] prerequisites)
+        //{
+        //    int[] graph = new int[numCourses];
+
+        //    for (int i = 0; i < numCourses; i++)
+        //        graph[i] = new int();
+        //    bool[] visited = new bool[numCourses];
+
+        //    for (int rIndx = 0; rIndx < prerequisites.GetLength(0); rIndx++)
+        //    {
+        //        graph[prerequisites[rIndx, 1]].Add(prerequisites[rIndx, 0]);
+        //    }
+
+        //    for (int i = 0; i < numCourses; i++)
+        //    {
+        //        if (!dfs(graph, visited, i))
+        //            return false;
+        //    }
+        //    return true;
+        //}
+
+        //the return value of this function only contains the ifCycle info and does not interfere dfs process. if there is Cycle, then return false
+
+        public bool TopologicalSort(List<List<int>> graph, Dictionary<int, int> visited, int rIndx)
+        {
+            int visit = visited[rIndx];
+
+            if (visit == 2)
+            {
+                //when visit = 2, which means the subtree whose root is i has been dfs traversed.
+                // and all the nodes in subtree has been put in the result(if we request).
+                // So we do not need to traverse it again
+                return true;
+            }
+
+            if (visit == 1)
+            {
+                return false;
+            }
+
+            visited[rIndx] = 1;
+
+            foreach (int cIndx in graph[rIndx])
+            {
+                if (!TopologicalSort(graph, visited, cIndx))
+                    return false;
+            }
+
+            visited[rIndx] = 2;
+            
+            //res.Add(i); if required.
+            return true;
+        }
     }
 }

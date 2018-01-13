@@ -5,13 +5,11 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms
 {
-    /*
-     * try using Lync,
-     */
     partial class MatrixOperations
     {
         //http://stackoverflow.com/questions/19615106/sorting-matrix-based-on-columns-comparison
         //http://msdn.microsoft.com/en-us/library/85y6y2d3(v=vs.110).aspx
+
         public void SortBruteForce(int[,] Matrix)
         {
             int TempCol1Element = 0;

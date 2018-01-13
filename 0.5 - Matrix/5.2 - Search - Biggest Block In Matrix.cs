@@ -80,7 +80,7 @@ namespace DataStructuresAndAlgorithms
         int maxBlock = 0;
         int foundBlocks = 0;
 
-        public void FindBiggestBlockInMatrix()
+        public void MaxBlock()
         {
             int[,] inputArray = {   {1,0,0,0,1},
                                     {0,0,0,1,0},
@@ -127,7 +127,7 @@ namespace DataStructuresAndAlgorithms
 
                     if (inputArray[lpRCnt, lpCCnt] == 0)
                     {
-                        FindBigBlock(inputArray, lpRCnt, lpCCnt);
+                        MaxBlock(inputArray, lpRCnt, lpCCnt);
                     }
                 }
             }
@@ -137,36 +137,36 @@ namespace DataStructuresAndAlgorithms
 
         }
 
-        public void FindBigBlock(int[,] inputArray, int RIdx, int CIdx)
+        public void MaxBlock(int[,] matrix, int rSrcIdx, int cSrcIdx)
         {
-            int RLen = inputArray.GetLength(0) - 1;
-            int CLen = inputArray.GetLength(1) - 1;
+            int rLen = matrix.GetLength(0) - 1;
+            int cLen = matrix.GetLength(1) - 1;
 
             foundBlocks = 0;
 
-            for (int lpRCnt = RIdx; lpRCnt <= RLen; lpRCnt++)
+            for (int rIndx = rSrcIdx; rIndx <= rLen; rIndx++)
             {
-                for (int lpCCnt = CIdx; lpCCnt <= CLen; lpCCnt++)
+                for (int cIndx = cSrcIdx; cIndx <= cLen; cIndx++)
                 {
                     totalHitsInSideLoops++;
 
-                    if (inputArray[lpRCnt, lpCCnt] == 0)
+                    if (matrix[rIndx, cIndx] == 0)
                     {
                         foundBlocks++;
                     }
                     else
                     {
                         // Rollback logic when 1 found. If column smaller then rollback colum cells else roll back row cells.
-                        if ((RLen - RIdx) > (CLen - CIdx))
+                        if ((rLen - rSrcIdx) > (cLen - cSrcIdx))
                         {
-                            for (int lpCnt = lpCCnt; lpCnt > CIdx; lpCnt--)
+                            for (int indx = cIndx; indx > cSrcIdx; indx--)
                             {
                                 foundBlocks--;
                             }
                         }
                         else
                         {
-                            for (int lpCnt = lpRCnt; lpCnt > RIdx; lpCnt--)
+                            for (int indx = rIndx; indx > rSrcIdx; indx--)
                             {
                                 foundBlocks--;
                             }
@@ -183,6 +183,7 @@ namespace DataStructuresAndAlgorithms
             if (foundBlocks > maxBlock)
             {
                 maxBlock = foundBlocks;
+                return;
             }
         }
 
@@ -197,39 +198,39 @@ namespace DataStructuresAndAlgorithms
             MaxSubMatrixIndexByDP(jaggaedMatrix);
         }
 
-        public void MaxSubMatrixIndexByDP(int[,] sourceMatrix)
+        public void MaxSubMatrixIndexByDP(int[,] srcMatrix)
         {
-            int lpRowCnt = 0;
-            int lpColCnt = 0;
+            int rIndx = 0;
+            int cIndx = 0;
 
-            int[,] tempMatrix = new int[sourceMatrix.GetLength(0), sourceMatrix.GetLength(1)];
+            int[,] tmpMatrix = new int[srcMatrix.GetLength(0), srcMatrix.GetLength(1)];
 
-            for (lpRowCnt = 0; lpRowCnt < sourceMatrix.GetLength(0); lpRowCnt++)
+            for (rIndx = 0; rIndx < srcMatrix.GetLength(0); rIndx++)
             {
-                tempMatrix[lpRowCnt, 0] = sourceMatrix[lpRowCnt, 0];
+                tmpMatrix[rIndx, 0] = srcMatrix[rIndx, 0];
             }
 
-            for (lpColCnt = 0; lpColCnt < sourceMatrix.GetLength(1); lpColCnt++)
+            for (cIndx = 0; cIndx < srcMatrix.GetLength(1); cIndx++)
             {
-                tempMatrix[0, lpColCnt] = sourceMatrix[0, lpColCnt];
+                tmpMatrix[0, cIndx] = srcMatrix[0, cIndx];
             }
 
             int minEntry = 0;
 
-            for (lpRowCnt = 1; lpRowCnt < sourceMatrix.GetLength(0); lpRowCnt++)
+            for (rIndx = 1; rIndx < srcMatrix.GetLength(0); rIndx++)
             {
-                for (lpColCnt = 1; lpColCnt < sourceMatrix.GetLength(1); lpColCnt++)
+                for (cIndx = 1; cIndx < srcMatrix.GetLength(1); cIndx++)
                 {
-                    minEntry = Math.Min(tempMatrix[lpRowCnt, lpColCnt - 1], tempMatrix[lpRowCnt - 1, lpColCnt]);
-                    minEntry = Math.Min(tempMatrix[lpRowCnt - 1, lpColCnt - 1], minEntry);
+                    minEntry = Math.Min(tmpMatrix[rIndx, cIndx - 1], tmpMatrix[rIndx - 1, cIndx]);
+                    minEntry = Math.Min(tmpMatrix[rIndx - 1, cIndx - 1], minEntry);
 
-                    if (sourceMatrix[lpRowCnt, lpColCnt] == 1)
+                    if (srcMatrix[rIndx, cIndx] == 1)
                     {
-                        tempMatrix[lpRowCnt, lpColCnt] = minEntry + 1;
+                        tmpMatrix[rIndx, cIndx] = minEntry + 1;
                     }
                     else
                     {
-                        tempMatrix[lpRowCnt, lpColCnt] = 0;
+                        tmpMatrix[rIndx, cIndx] = 0;
                     }
                 }
             }
@@ -239,103 +240,101 @@ namespace DataStructuresAndAlgorithms
             int rowPos = -1;
             int colPos = -1;
 
-            for (lpRowCnt = 0; lpRowCnt < sourceMatrix.GetLength(0); lpRowCnt++)
+            for (rIndx = 0; rIndx < srcMatrix.GetLength(0); rIndx++)
             {
-                for (lpColCnt = 0; lpColCnt < sourceMatrix.GetLength(1); lpColCnt++)
+                for (cIndx = 0; cIndx < srcMatrix.GetLength(1); cIndx++)
                 {
-                    if (maxSize < tempMatrix[lpRowCnt, lpColCnt])
+                    if (maxSize < tmpMatrix[rIndx, cIndx])
                     {
-                        maxSize = tempMatrix[lpRowCnt, lpColCnt];
-                        rowPos = lpRowCnt;
-                        colPos = lpColCnt;
+                        maxSize = tmpMatrix[rIndx, cIndx];
+                        rowPos = rIndx;
+                        colPos = cIndx;
                     }
                 }
             }
-
-            //r - maxSize + 1, c - maxSize + 1 indicates starting point for required sub-matrix
 
             MessageBox.Show("Size of the Biggest square sub-matrix: " + maxSize);
             MessageBox.Show("It starts at (" + (rowPos - maxSize + 1) + "," + (colPos - maxSize + 1) + ")");
         }
 
         // https://www.geeksforgeeks.org/dynamic-programming-set-27-max-sum-rectangle-in-a-2d-matrix/
-        public void PrintMaxiMumSumSquareMatrix(int[,] mat, int k)
+        public void MaxSumSquareMatrix(int[,] srcMatrix, int kSize)
         {
-            int m = mat.GetLength(0);
-            int n = mat.GetLength(1);
+            int rIndx = 0;
+            int cIndx = 0;
+            int rLen = srcMatrix.GetLength(0);
+            int cLen = srcMatrix.GetLength(1);
 
-            int[,] tmp = new int[m - k + 1, n];
-            int i = 0;
-            int j = 0;
-            int sum = 0;
+            int[,] tmpMatrix = new int[rLen - kSize + 1, cLen];
+            int curSum = 0;
             int maxSum = int.MinValue;
 
-            for (j = 0; j < m; j++)
+            for (cIndx = 0; cIndx < rLen; cIndx++)
             {
-                sum = 0;
-                for (i = 0; i < k; i++)
+                curSum = 0;
+                for (rIndx = 0; rIndx < kSize; rIndx++)
                 {
-                    sum += mat[i, j];
+                    curSum += srcMatrix[rIndx, cIndx];
                 }
 
-                tmp[0, j] = sum;
+                tmpMatrix[0, cIndx] = curSum;
 
-                for (i = 1; i < n - k + 1; i++)
+                for (rIndx = 1; rIndx < cLen - kSize + 1; rIndx++)
                 {
-                    sum = sum - mat[i - 1, j] + mat[i + k - 1, j];
-                    tmp[i, j] = sum;
+                    curSum = curSum - srcMatrix[rIndx - 1, cIndx] + srcMatrix[rIndx + kSize - 1, cIndx];
+                    tmpMatrix[rIndx, cIndx] = curSum;
                 }
             }
 
-            sum = 0;
+            curSum = 0;
 
-            int tSum = 0;
-            int iIndex = -1;
-            int jIndex = -1;
+            int tmpSum = 0;
+            int tmpRIndx = -1;
+            int tmpCIndx = -1;
 
-            for (i = 0; i < tmp.Length; i++)
+            for (rIndx = 0; rIndx < tmpMatrix.Length; rIndx++)
             {
-                tSum = 0;
+                tmpSum = 0;
 
-                for (j = 0; j < k; j++)
+                for (cIndx = 0; cIndx < kSize; cIndx++)
                 {
-                    tSum += tmp[i, j];
+                    tmpSum += tmpMatrix[rIndx, cIndx];
                 }
 
-                if (tSum > maxSum)
+                if (tmpSum > maxSum)
                 {
-                    maxSum = tSum;
-                    iIndex = i;
-                    jIndex = j;
+                    maxSum = tmpSum;
+                    tmpRIndx = rIndx;
+                    tmpCIndx = cIndx;
                 }
 
-                sum = tSum;
+                curSum = tmpSum;
 
-                for (j = 1; j < n - k + 1; j++)
+                for (cIndx = 1; cIndx < cLen - kSize + 1; cIndx++)
                 {
-                    sum = sum - tmp[i, j - 1] + tmp[i, j + k - 1];
+                    curSum = curSum - tmpMatrix[rIndx, cIndx - 1] + tmpMatrix[rIndx, cIndx + kSize - 1];
 
-                    if (sum > maxSum)
+                    if (curSum > maxSum)
                     {
-                        maxSum = sum;
-                        iIndex = i;
-                        jIndex = j;
+                        maxSum = curSum;
+                        tmpRIndx = rIndx;
+                        tmpCIndx = cIndx;
                     }
                 }
             }
 
-            for (i = iIndex; i < iIndex + k; i++)
+            for (rIndx = tmpRIndx; rIndx < tmpRIndx + kSize; rIndx++)
             {
-                for (j = jIndex; j < jIndex + k; j++)
+                for (cIndx = tmpCIndx; cIndx < tmpCIndx + kSize; cIndx++)
                 {
-                    Console.Write(mat[i, j] + " ");
+                    Console.Write(srcMatrix[rIndx, cIndx] + " ");
                 }
 
                 Console.WriteLine();
             }
         }
 
-        public void PrintMaxiMumSumSquareMatrixTest()
+        public void MaxSumSquareMatrixTest()
         {
             int[,] mat = {
                     { 1, 1, 1, 1, 1 },
@@ -348,11 +347,11 @@ namespace DataStructuresAndAlgorithms
 
             int k = 3;
 
-            PrintMaxiMumSumSquareMatrix(mat, k);
+            MaxSumSquareMatrix(mat, k);
         }
 
         // https://www.cdn.geeksforgeeks.org/find-orientation-of-a-pattern-in-a-matrix/
-        public static void StringSearchTest(String[] args)
+        public void StringSearchTest(String[] args)
         {
             char[,] mat3 = {{ 'a', 'b', 'c', 'd', 'e' },
                         { 'f', 'g', 'h', 'i', 'j' },
@@ -376,51 +375,52 @@ namespace DataStructuresAndAlgorithms
             StringSearchByKMP(mat, pattern);
         }
 
-        public static int[] CreateIndexArray(char[,] mat, String type, int index)
+        public int[] CreateIndexArray(char[,] matrix, String type, int index)
         {
             StringBuilder sb = new StringBuilder();
+
             if ("row".Equals(type, StringComparison.CurrentCultureIgnoreCase))
             {
-                for (int i = 0; i < mat.GetLength(0); i++)
+                for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
                 {
-                    sb.Append(mat[index, i]);
+                    sb.Append(matrix[index, rIndx]);
                 }
             }
             else
             {
-                for (int i = 0; i < mat.GetLength(0); i++)
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
                 {
-                    sb.Append(mat[i, index]);
+                    sb.Append(matrix[cIndx, index]);
                 }
             }
 
             return CreateIndexArray(sb.ToString());
         }
 
-        public static int[] CreateIndexArray(String newPattern)
+        public int[] CreateIndexArray(String newPattern)
         {
             int[] indexArr = new int[newPattern.Length];
-            int i = 0, j = 1;
+            int rIndx = 0;
+            int cIndx = 1;
             indexArr[0] = 0;
 
-            while (i < indexArr.Length && j < indexArr.Length)
+            while (rIndx < indexArr.Length && cIndx < indexArr.Length)
             {
                 // If Both index have same character then we have to increment i & j
-                if (newPattern[i] == newPattern[j])
+                if (newPattern[rIndx] == newPattern[cIndx])
                 {
-                    indexArr[j] = i + 1;
-                    i++;
-                    j++;
+                    indexArr[cIndx] = rIndx + 1;
+                    rIndx++;
+                    cIndx++;
                 }
-                else if (i == 0)
+                else if (rIndx == 0)
                 {
-                    indexArr[j++] = 0;
+                    indexArr[cIndx++] = 0;
                 }
-                // If Both index have not same character then we have to set index
-                // of i to i-1's value
+                // If Both index have not same character then we have to set index of i to i-1's value
                 else
                 {
-                    i = indexArr[i - 1];
+                    rIndx = indexArr[rIndx - 1];
                     continue;
                 }
             }
@@ -428,39 +428,43 @@ namespace DataStructuresAndAlgorithms
 
         }
 
-        public static void StringSearchByKMP(char[,] mat, string pattern)
+        public void StringSearchByKMP(char[,] matrix, string pattern)
         {
             // Row wise pattern matching
-            for (int i = 0; i < mat.GetLength(0); i++)
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
             {
-                int[] patternIndexer = CreateIndexArray(mat, "row", i);
-                int maxRow = mat.GetLength(0);
-                int patternLength = pattern.Trim().Length;
-                int l = 0, k = 0;
-                while (l < maxRow && k < patternLength)
+                int[] patternIndexer = CreateIndexArray(matrix, "row", rIndx);
+
+                int rLen = matrix.GetLength(0);
+                int patLen = pattern.Trim().Length;
+
+                int cIndx = 0;
+                int pIndx = 0;
+
+                while (cIndx < rLen && pIndx < patLen)
                 {
-                    if (mat[i, l] == pattern[k])
+                    if (matrix[rIndx, cIndx] == pattern[pIndx])
                     {
-                        k++;
-                        l++;
+                        pIndx++;
+                        cIndx++;
                     }
                     else
                     {
-                        if (k - 1 >= 0 && patternIndexer[k - 1] != 0)
+                        if (pIndx - 1 >= 0 && patternIndexer[pIndx - 1] != 0)
                         {
-                            k = patternIndexer[k - 1];
+                            pIndx = patternIndexer[pIndx - 1];
                         }
-                        else if (k - 1 >= 0 && patternIndexer[k - 1] == 0)
+                        else if (pIndx - 1 >= 0 && patternIndexer[pIndx - 1] == 0)
                         {
-                            k = 0;
+                            pIndx = 0;
                         }
                         else
                         {
-                            l++;
+                            cIndx++;
                         }
                     }
                 }
-                if (k == patternLength)
+                if (pIndx == patLen)
                 {
                     Console.WriteLine("Horizontal");
                     break;
@@ -469,17 +473,17 @@ namespace DataStructuresAndAlgorithms
 
             // Column wise pattern matching
 
-            for (int i = 0; i < mat.GetLength(1); i++)
+            for (int i = 0; i < matrix.GetLength(1); i++)
             {
-                int[] patternIndexer = CreateIndexArray(mat, "column", i);
-                int maxRow = mat.GetLength(0);
+                int[] patternIndexer = CreateIndexArray(matrix, "column", i);
+                int maxRow = matrix.GetLength(0);
                 int patternLength = pattern.Trim().Length;
                 int l = 0;
                 int k = 0;
 
                 while (l < maxRow && k < patternLength)
                 {
-                    if (mat[l, i] == pattern[k])
+                    if (matrix[l, i] == pattern[k])
                     {
                         k++;
                         l++;
@@ -514,55 +518,59 @@ namespace DataStructuresAndAlgorithms
         // The function returns maximum value A(c,d) - A(a,b)
         // over all choices of indexes such that both c > a
         // and d > b.
-        public int FindMaxValue(int[,] mat)
+        public int MaxValue(int[,] matrix)
         {
             int maxValue = int.MinValue;
-            int N = mat.GetLength(0);
+            int rLen = matrix.GetLength(0);
 
-            int[,] maxArr = new int[N, N];
+            int[,] maxMatrix = new int[rLen, rLen];
 
             // last element of maxArr will be same's as of the input matrix
-            maxArr[N - 1, N - 1] = mat[N - 1, N - 1];
+            maxMatrix[rLen - 1, rLen - 1] = matrix[rLen - 1, rLen - 1];
 
-            // preprocess last row
-            int maxv = mat[N - 1, N - 1];  // Initialize max
+            // Pre Process last row
+            int maxVal = matrix[rLen - 1, rLen - 1];  // Initialize max
 
-            for (int j = N - 2; j >= 0; j--)
+            for (int cIndx = rLen - 2; cIndx >= 0; cIndx--)
             {
-                if (mat[N - 1, j] > maxv)
+                if (matrix[rLen - 1, cIndx] > maxVal)
                 {
-                    maxv = mat[N - 1, j];
+                    maxVal = matrix[rLen - 1, cIndx];
                 }
-                maxArr[N - 1, j] = maxv;
+                maxMatrix[rLen - 1, cIndx] = maxVal;
             }
 
-            // preprocess last column
-            maxv = mat[N - 1, N - 1];  // Initialize max
-            for (int i = N - 2; i >= 0; i--)
+            // Pre Process last column
+            maxVal = matrix[rLen - 1, rLen - 1];  // Initialize max
+
+            for (int rIndx = rLen - 2; rIndx >= 0; rIndx--)
             {
-                if (mat[i, N - 1] > maxv)
-                    maxv = mat[i, N - 1];
-                maxArr[i, N - 1] = maxv;
+                if (matrix[rIndx, rLen - 1] > maxVal)
+                {
+                    maxVal = matrix[rIndx, rLen - 1];
+                }
+                maxMatrix[rIndx, rLen - 1] = maxVal;
             }
 
-            // preprocess rest of the matrix from bottom
-            for (int i = N - 2; i >= 0; i--)
+            // Pre Process rest of the matrix from bottom
+            for (int rIndx = rLen - 2; rIndx >= 0; rIndx--)
             {
-                for (int j = N - 2; j >= 0; j--)
+                for (int cIndx = rLen - 2; cIndx >= 0; cIndx--)
                 {
                     // Update maxValue
-                    if (maxArr[i + 1, j + 1] - mat[i, j] > maxValue)
-                        maxValue = maxArr[i + 1, j + 1] - mat[i, j];
+                    if (maxMatrix[rIndx + 1, cIndx + 1] - matrix[rIndx, cIndx] > maxValue)
+                    {
+                        maxValue = maxMatrix[rIndx + 1, cIndx + 1] - matrix[rIndx, cIndx];
+                    }
 
-                    // set maxArr (i, j)
-                    maxArr[i, j] = Math.Max(mat[i, j], Math.Max(maxArr[i, j + 1], maxArr[i + 1, j]));
+                    maxMatrix[rIndx, cIndx] = Math.Max(matrix[rIndx, cIndx], Math.Max(maxMatrix[rIndx, cIndx + 1], maxMatrix[rIndx + 1, cIndx]));
                 }
             }
 
             return maxValue;
         }
 
-        public void FindMaxValueTest()
+        public void MaxValueTest()
         {
             int N = 5;
 
@@ -574,7 +582,7 @@ namespace DataStructuresAndAlgorithms
                       { 0, -4, 10, -5, 1 }
                    };
 
-            Console.WriteLine("Maximum Value is " + FindMaxValue(mat));
+            Console.WriteLine("Maximum Value is " + MaxValue(mat));
         }
     }
 

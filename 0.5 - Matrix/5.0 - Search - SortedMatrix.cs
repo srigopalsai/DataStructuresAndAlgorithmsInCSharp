@@ -33,16 +33,14 @@ namespace DataStructuresAndAlgorithms
     partial class MatrixOperations
     {
         //O(n) Solution
-        //http://stackoverflow.com/questions/3723353/how-to-efficiently-search-in-an-ordered-matrix?rq=1
-
-        public bool BinarySearchOnSortedMatrix(int[,] SortedMatrix, int elementToSearch)
+        public bool SearchMatrixBruteForce(int[,] matrix, int target)
         {
             bool foundFlag = false;
-            for (int lpRCnt = SortedMatrix.GetLength(0) - 1; lpRCnt >= 0; )
+            for (int lpRCnt = matrix.GetLength(0) - 1; lpRCnt >= 0; )
             {
-                for (int lpCCnt = 0 ; lpCCnt < SortedMatrix.GetLength(0);)
+                for (int lpCCnt = 0 ; lpCCnt < matrix.GetLength(0);)
                 {
-                    if (SortedMatrix[lpRCnt, lpCCnt] == elementToSearch)
+                    if (matrix[lpRCnt, lpCCnt] == target)
                     {
                         foundFlag = true; 
                         break;
@@ -53,7 +51,7 @@ namespace DataStructuresAndAlgorithms
 
         }
 
-        //240 https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+        //240 O(M+N) Top Right to Bottom Left https://leetcode.com/problems/search-a-2d-matrix-ii/description/
         public bool SearchMatrix(int[,] matrix, int target)
         {
             if (matrix == null || matrix.Length == 0)
@@ -83,7 +81,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         //Non-Optimal - but best one in worst case.
-        public void SearchSortedMatrixInNLogN(int[,] AssendMatix, int elementToSearch)
+        public void SearchSortedMatrixInNLogN(int[,] matrix, int elementToSearch)
         {
             /*
             O(m log n) Approach
@@ -99,16 +97,16 @@ namespace DataStructuresAndAlgorithms
             int midElementVal = 0;
             int midElementInd = 0;
 
-            if (AssendMatix.Length > AssendMatix.GetLength(1))
+            if (matrix.Length > matrix.GetLength(1))
             {
-                shortLpLen = AssendMatix.GetLength(1);
-                binSearchLpLen = AssendMatix.Length;
+                shortLpLen = matrix.GetLength(1);
+                binSearchLpLen = matrix.Length;
                 isRowShorter = true;
             }
             else
             {
-                shortLpLen = AssendMatix.GetLength(0);
-                binSearchLpLen = AssendMatix.GetLength(1);
+                shortLpLen = matrix.GetLength(0);
+                binSearchLpLen = matrix.GetLength(1);
             }
 
             for (int lpShrtrLpCnt = 0; lpShrtrLpCnt < shortLpLen; lpShrtrLpCnt++)
@@ -116,42 +114,12 @@ namespace DataStructuresAndAlgorithms
                 while (binSearchLpCnt < binSearchLpLen)
                 {
                     midElementInd = binSearchLpLen / 2;
-                    midElementVal = (isRowShorter == true) ? AssendMatix[lpShrtrLpCnt, midElementInd] : AssendMatix[midElementInd, lpShrtrLpCnt];
+                    midElementVal = (isRowShorter == true) ? matrix[lpShrtrLpCnt, midElementInd] : matrix[midElementInd, lpShrtrLpCnt];
 
                 }
             }
         }
-        //O(m+n)
-        public bool SearchMatrixTopRightToBottom(int[,] matrix, int target)
-        {
-            if (matrix == null || matrix.Length == 0)
-                return false;
-
-            int rowLength = matrix.GetLength(0);
-            int colLength = matrix.GetLength(1);
-
-            int rowIndx = 0;
-            int colIndx = colLength - 1;
-
-            while (rowIndx < rowLength && colIndx >= 0)
-            {
-                if (matrix[rowIndx, colIndx] == target)
-                {
-                    return true;
-                }
-                else if (matrix[rowIndx, colIndx] > target)
-                {
-                    --colIndx;
-                }
-                else
-                {
-                    ++rowIndx;
-                }
-            }
-
-            return false;
-        }
-
+        
         /*
         Time Complexity has to be calculated correctly.
 
@@ -384,34 +352,35 @@ namespace DataStructuresAndAlgorithms
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        public double FindMean(int[,] nums)
+        public double FindMean(int[,] matrix)
         {
             int sum = 0;
-            int numsLen = nums.GetLength(0);
+            int rowLen = matrix.GetLength(0);
 
-            for (int rIndx = 0; rIndx < numsLen; rIndx++)
+            for (int rIndx = 0; rIndx < rowLen; rIndx++)
             {
-                for (int cIndx = 0; cIndx < numsLen; cIndx++)
+                for (int cIndx = 0; cIndx < rowLen; cIndx++)
                 {
-                    sum += nums[rIndx, cIndx];
+                    sum += matrix[rIndx, cIndx];
                 }
             }
 
-            return (double)sum / (numsLen * numsLen);
+            return (double)sum / (rowLen * rowLen);
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        public double FindMedian(int[,] a)
+        public double FindMedian(int[,] matrix)
         {
-            int numsLen = a.GetLength(0);
+            int rowLen = matrix.GetLength(0);
 
-            if (numsLen % 2 != 0)
-                return a[numsLen / 2, numsLen / 2];
-
-            if (numsLen % 2 == 0)
-                return (a[(numsLen - 2) / 2, numsLen - 1] + a[numsLen / 2, 0]) / 2.0;
-
-            return 0.0;
+            if (rowLen % 2 != 0)
+            {
+                return matrix[rowLen / 2, rowLen / 2];
+            }
+            else
+            {
+                return (matrix[(rowLen - 2) / 2, rowLen - 1] + matrix[rowLen / 2, 0]) / 2.0;
+            }
         }
 
         //LC 378 https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
@@ -506,7 +475,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         //Assume array is 100 X 100. Some logic optimization.
-        bool IsStringExistsInMatrix(char[,] squareMatrix, char[] charArr2Find, int nextCharPos, int xPosition, int yPosition)
+        public bool IsStringExistsInMatrix(char[,] squareMatrix, char[] charArr2Find, int nextCharPos, int xPosition, int yPosition)
         {
             try
             {

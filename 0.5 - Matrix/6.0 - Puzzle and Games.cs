@@ -6,69 +6,98 @@ using System.Text;
 namespace DataStructuresAndAlgorithms
 {
     /*
-
-    ===================================================================================================================================================================================================
-    Problem:
+    http://en.wikipedia.org/wiki/Fifteen_puzzle
+    http://en.wikipedia.org/wiki/Sliding_puzzle
+    http://en.wikipedia.org/wiki/Rubik%27s_Cube
     
-    Consider a rat in a maze. There is only one entry and one exit. 
-    There are blocks in its path and it can easily take a wrong route or long route. Find a shortest path from the entry to the exit.
-
-    Solution:
-
-    The maze can be viewed as a two dimensional array with 1's in paths that can be taken and 0's in paths that cannot be taken.
-    The best solution can be achieved using backtracking
+    15-puzzle 
+    Also called 
+    1. Gem Puzzle 
+    2. Boss Puzzle
+    3. Game of Fifteen
+    4. Mystic Square and many others) is a sliding puzzle
     
-    _|_|_|_|_|#|_|_|_|_|
+    Description: 15 of the 16 positions in a 4*4 matrix are filled by tiles, leaving one unfilled hole. Tiles adjoining the hole can be shifted into the hole, the object being to form some particular permutation of the tiles (typically forming a picture out of fragments printed on the tiles). 
+    Status: this is a finite problem, but can easily be generalized to n*n matrices. Testing whether a solution exists is in P but finding the solution with the fewest moves is NP-complete.
 
-    _|_|#|_|#|_|_|_|#|#|
+    SudokuPuzzle
 
-    _|#|_|_|_|#|#|#|_|#|
+    S-O-S
+    Two or more players no need to use the same char every time.
+    http://en.wikipedia.org/wiki/SOS_(game)
 
-    _|#|_|_|_|#|_|_|#|_|
+    Concurrency https://www.youtube.com/watch?v=GNiHaKatuJc
 
-    #|_|#|#|_|_|_|_|_|_|
-
-    #|_|_|_|_|_|_|#|_|_|
-
-    #|_|_|#|_|_|_|_|_|_|
-
-    #|_|_|_|_|_|_|_|#|_|
-
-    _|_|_|#|_|#|#|_|_|#|
-
-    #|#|#|#|_|#|_|_|_|_|
-
-    Shortest path : (0,1),(0,2),(0,3),(1,3),(2,3),(2,4),(3,4),(4,4),(4,5),(4,6),(5,6),(6,6),(6,7),(7,7),(8,7),(8,8),(9,8),(9,9)
-
-    Analysis & Approach :
-
-    1. Use BFS - breadth first traversal. 
-    2. Mark the entry point as 1, then all the accessible cells from 1 mark as 2. 
-    3. Then all the accessible cells from 2 that are not already marked are marked as 3. 
-    4. In this way any cell that is accessible from n marked node and not already marked are marked as n+1. 
-    5. In this way when the exit cell is marked. We find the shortest path.
-
-    1. Now to reconstruct the path we start from exit. 
-    2. Note its mark n and any adjacent cell that has marked with  n-1 is the previous cell. 
-    3. Now we add previous cell in the path and search for n-2 in its adjacent cells. 
-    4. In this way when we reach the entry cell our path is constructed.
-
-
-
-    Refernce Links :
-    http://algorithms.tutorialhorizon.com/backtracking-rat-in-a-maze-puzzle/
-    http://www.dsalgo.com/2013/02/find-shortest-path-in-maze.html
-
-    ===================================================================================================================================================================================================
+    http://en.wikipedia.org/wiki/Tic-tac-toe
+    
+    Tricks:
+    http://www.wikihow.com/Win-at-Tic-Tac-Toe
     */
+
+    /*
+
+===================================================================================================================================================================================================
+Problem:
+
+Consider a rat in a maze. There is only one entry and one exit. 
+There are blocks in its path and it can easily take a wrong route or long route. Find a shortest path from the entry to the exit.
+
+Solution:
+
+The maze can be viewed as a two dimensional array with 1's in paths that can be taken and 0's in paths that cannot be taken.
+The best solution can be achieved using backtracking
+
+_|_|_|_|_|#|_|_|_|_|
+
+_|_|#|_|#|_|_|_|#|#|
+
+_|#|_|_|_|#|#|#|_|#|
+
+_|#|_|_|_|#|_|_|#|_|
+
+#|_|#|#|_|_|_|_|_|_|
+
+#|_|_|_|_|_|_|#|_|_|
+
+#|_|_|#|_|_|_|_|_|_|
+
+#|_|_|_|_|_|_|_|#|_|
+
+_|_|_|#|_|#|#|_|_|#|
+
+#|#|#|#|_|#|_|_|_|_|
+
+Shortest path : (0,1),(0,2),(0,3),(1,3),(2,3),(2,4),(3,4),(4,4),(4,5),(4,6),(5,6),(6,6),(6,7),(7,7),(8,7),(8,8),(9,8),(9,9)
+
+Analysis & Approach :
+
+1. Use BFS - breadth first traversal. 
+2. Mark the entry point as 1, then all the accessible cells from 1 mark as 2. 
+3. Then all the accessible cells from 2 that are not already marked are marked as 3. 
+4. In this way any cell that is accessible from n marked node and not already marked are marked as n+1. 
+5. In this way when the exit cell is marked. We find the shortest path.
+
+1. Now to reconstruct the path we start from exit. 
+2. Note its mark n and any adjacent cell that has marked with  n-1 is the previous cell. 
+3. Now we add previous cell in the path and search for n-2 in its adjacent cells. 
+4. In this way when we reach the entry cell our path is constructed.
+
+
+
+Refernce Links :
+http://algorithms.tutorialhorizon.com/backtracking-rat-in-a-maze-puzzle/
+http://www.dsalgo.com/2013/02/find-shortest-path-in-maze.html
+
+===================================================================================================================================================================================================
+*/
     public partial class MatrixOperations
     {
         int[] pathRowArray;
         int[] pathColArray;
         int pathRowIndex = -1;
         int pathColIndex = -1;
-        int mazeRowLenght=0;
-        int mazeColLenght=0;
+        int mazeRowLenght = 0;
+        int mazeColLenght = 0;
 
         public string RunMazePuzzle()
         {
@@ -109,6 +138,7 @@ namespace DataStructuresAndAlgorithms
 
             return Convert.ToString(resultString);
         }
+
         void FindPathForRat(int[,] mazeArray, int mazeRowIndex, int mazeColIndex)
         {
             if (mazeRowIndex < mazeArray.GetLength(0) && mazeColIndex < mazeArray.GetLength(1))
@@ -150,15 +180,11 @@ namespace DataStructuresAndAlgorithms
             {
                 //                Environment.Exit(0);
             }
-            
-            
-        }        
 
 
-    }
-}
+        }
 
-/*
+        /*
  public class RatInMaze {
 
 
@@ -450,3 +476,8 @@ public class ShortestPathInMaze
 }
 
 */
+        class GameOf15
+        {
+        }
+    }
+}
