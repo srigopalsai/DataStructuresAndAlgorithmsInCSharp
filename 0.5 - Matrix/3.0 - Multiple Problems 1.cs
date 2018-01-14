@@ -62,6 +62,28 @@ namespace DataStructuresAndAlgorithms
             return resultMat;
         }
 
+        public int[,] MatrixReshape2(int[,] nums, int nRowLen, int nColLen)
+        {
+            int oRowLen = nums.GetLength(0);
+            int oColLen = nums.GetLength(1);
+
+            if (nRowLen * nColLen != oRowLen * oColLen)
+                return nums;
+
+            int index = 0;
+            int[,] newArr = new int[nRowLen, nColLen];
+
+            for (int oRowIndx = 0; oRowIndx < oRowLen; oRowIndx++)
+            {
+                for (int oColIndx = 0; oColIndx < oColLen; oColIndx++)
+                {
+                    newArr[index / nColLen, index % nColLen] = nums[oRowIndx, oColIndx];
+                    index++;
+                }
+            }
+
+            return newArr;
+        }
         // 498 https://leetcode.com/problems/diagonal-traverse/description/
         // Index Bound Error if we change the order of if condition blocks
 
