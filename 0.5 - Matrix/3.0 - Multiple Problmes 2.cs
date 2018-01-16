@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace DataStructuresAndAlgorithms
 {
-    partial class MatrixSamples
+    public partial class MatrixSamples
     {
         /*  Given a N x N matrix, find K x K Sub-Matrix that has maximum sum. 
 
@@ -376,76 +377,51 @@ namespace DataStructuresAndAlgorithms
         }
 
         // 207 https://leetcode.com/problems/course-schedule/description/
-        //public bool CanFinish(int numCourses, int[,] prerequisites)
-        //{
-        //    int[] graph = new int[numCourses];
-        //    int[] degree = new int[numCourses];
-        //    Queue queue = new List();
-        //    int count = 0;
+        // BFS, Can also solve with DFS, Topological Sort, UnionFind
+        public bool CanFinish(int numCourses, int[,] prerequisites)
+        {
+            int[,] tmpMatrix = new int[numCourses, numCourses]; // i -> j
+            int[] tmpDegree = new int[numCourses];
 
-        //    for (int i = 0; i < numCourses; i++)
-        //        graph[i] = new int();
+            for (int rIndx = 0; rIndx < prerequisites.GetLength(0); rIndx++)
+            {
+                int ready = prerequisites[rIndx, 0];
+                int pre = prerequisites[rIndx, 1];
 
-        //    for (int i = 0; i < prerequisites.Length; i++)
-        //    {
-        //        degree[prerequisites[i, 1]]++;
-        //        graph[prerequisites[i, 0]].Add(prerequisites[i, 1]);
-        //    }
+                if (tmpMatrix[pre, ready] == 0)
+                {
+                    tmpDegree[ready]++; //In case duplicate
+                }
 
-        //    for (int i = 0; i < degree.Length; i++)
-        //    {
-        //        if (degree[i] == 0)
-        //        {
-        //            queue.Enqueue(i);
-        //            count++;
-        //        }
-        //    }
+                tmpMatrix[pre, ready] = 1;
+            }
 
-        //    while (queue.Count != 0)
-        //    {
-        //        int course = (int)queue.Dequeue();
+            int count = 0;
+            Queue<int> queue = new Queue<int>();
 
-        //        for (int i = 0; i < graph[course].Count; i++)
-        //        {
-        //            int pointer = (int)graph[course, i];
-        //            degree[pointer]--;
+            for (int indx = 0; indx < tmpDegree.Length; indx++)
+            {
+                if (tmpDegree[indx] == 0)
+                    queue.Enqueue(indx);
+            }
 
-        //            if (degree[pointer] == 0)
-        //            {
-        //                queue.Enqueue(pointer);
-        //                count++;
-        //            }
-        //        }
-        //    }
+            while (queue.Count() > 0)
+            {
+                int course = queue.Dequeue();
+                count++;
 
-        //    if (count == numCourses)
-        //        return true;
-        //    else
-        //        return false;
-        //}
+                for (int indx = 0; indx < numCourses; indx++)
+                {
+                    if (tmpMatrix[course, indx] != 0)
+                    {
+                        if (--tmpDegree[indx] == 0)
+                            queue.Enqueue(indx);
+                    }
+                }
+            }
 
-        //public bool CanFinish2(int numCourses, int[,] prerequisites)
-        //{
-        //    int[] graph = new int[numCourses];
-
-        //    for (int i = 0; i < numCourses; i++)
-        //        graph[i] = new int();
-        //    bool[] visited = new bool[numCourses];
-
-        //    for (int rIndx = 0; rIndx < prerequisites.GetLength(0); rIndx++)
-        //    {
-        //        graph[prerequisites[rIndx, 1]].Add(prerequisites[rIndx, 0]);
-        //    }
-
-        //    for (int i = 0; i < numCourses; i++)
-        //    {
-        //        if (!dfs(graph, visited, i))
-        //            return false;
-        //    }
-        //    return true;
-        //}
-
-        //the return value of this function only contains the ifCycle info and does not interfere dfs process. if there is Cycle, then return false
+            return count == numCourses;
+        }
 
         public bool TopologicalSort(List<List<int>> graph, Dictionary<int, int> visited, int rIndx)
         {
@@ -476,6 +452,170 @@ namespace DataStructuresAndAlgorithms
             
             //res.Add(i); if required.
             return true;
+        }
+
+        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/
+        //public int maxSumSubmatrix(int[][] matrix, int k)
+        //{
+        //    int row = matrix.GetLength(0);
+        //    int col = matrix.GetLength(1);
+        //    int max = int.MinValue;
+
+        //    for (int rIndx = 0; rIndx < row; rIndx++)
+        //    {
+        //        int[] colSum = new int[col];
+        //        for (int cIndx = rIndx; cIndx < row; cIndx++)
+        //        {
+        //            for (int c = 0; c < col; c++)
+        //            {
+        //                colSum[c] += matrix[cIndx][c];
+        //            }
+        //            max = Math.Max(max, findMax(colSum, k));
+        //        }
+        //    }
+        //    return max;
+        //}
+
+        //private int findMax(int[] nums, int k)
+        //{
+        //    int max = Integer.MIN_VALUE;
+        //    int sum = 0;
+        //    TreeSet<Integer> s = new TreeSet();
+        //    s.add(0);
+
+        //    for (int i = 0; i < nums.length; i++)
+        //    {
+        //        int t = sum + nums[i];
+        //        sum = t;
+        //        Integer gap = s.ceiling(sum - k);
+        //        if (gap != null) max = Math.max(max, sum - gap);
+        //        s.add(t);
+        //    }
+
+        //    return max;
+        //}
+
+        ////Solution I, O(n ^ 4):
+        //public int maxSumSubmatrix(int[,] matrix, int k)
+        //{
+        //    if (matrix == null || matrix.Length == 0)
+        //        return 0;
+
+        //    int rLen = matrix.GetLength(0);
+        //    int cLen = matrix.GetLength(1);
+        //    int[,] areas = new int[rLen, cLen];
+
+        //    for (int rIndx = 0; rIndx < rLen; rIndx++)
+        //    {
+        //        for (int cIndx = 0; cIndx < cLen; cIndx++)
+        //        {
+        //            int area = matrix[rIndx, cIndx];
+
+        //            if (rIndx - 1 >= 0)
+        //                area += areas[rIndx - 1, cIndx];
+
+        //            if (cIndx - 1 >= 0)
+        //                area += areas[rIndx, cIndx - 1];
+
+        //            if (rIndx - 1 >= 0 && cIndx - 1 >= 0)
+        //                area -= areas[rIndx - 1, cIndx - 1];
+
+        //            areas[rIndx, cIndx] = area;
+        //        }
+        //    }
+
+        //    int max = int.MinValue;
+
+        //    for (int rIndx = 0; rIndx < rLen; rIndx++)
+        //    {
+        //        for (int cIndx = 0; cIndx < cLen; cIndx++)
+        //        {
+        //            for (int rIndx2 = rIndx; rIndx2 < rLen; rIndx2++)
+        //            {
+        //                for (int cIndx2 = cIndx; cIndx2 < cLen; cIndx2++)
+        //                {
+        //                    int area = areas[rIndx2,cIndx2];
+
+        //                    if (rIndx - 1 >= 0)
+        //                        area -= areas[rIndx - 1,cIndx2];
+
+        //                    if (cIndx - 1 >= 0)
+        //                        area -= areas[rIndx2,cIndx - 1];
+
+        //                    if (rIndx - 1 >= 0 && cIndx - 1 >= 0)
+        //                        area += areas[rIndx - 1,cIndx - 1];
+
+        //                    if (area <= k)
+        //                        max = Math.Max(max, area);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return max;
+        //}
+
+        //// Solution II(O(n^3logn)
+        //public int maxSumSubmatrix(int[,] matrix, int k)
+        //{
+        //    if (matrix == null || matrix.Length == 0)
+        //        return 0;
+
+        //    int rows = matrix.GetLength(0);
+        //    int cols = matrix.GetLength(1);
+
+        //    int[,] areas = new int[rows,cols];
+
+        //    for (int rIndx = 0; rIndx < rows; rIndx++)
+        //    {
+        //        for (int cIndx = 0; cIndx < cols; cIndx++)
+        //        {
+        //            int area = matrix[rIndx,cIndx];
+
+        //            if (rIndx - 1 >= 0)
+        //                area += areas[rIndx - 1,cIndx];
+
+        //            if (cIndx - 1 >= 0)
+        //                area += areas[rIndx,cIndx - 1];
+
+        //            if (rIndx - 1 >= 0 && cIndx - 1 >= 0)
+        //                area -= areas[rIndx - 1,cIndx - 1];
+
+        //            areas[rIndx,cIndx] = area;
+        //        }
+        //    }
+
+        //    int max = int.MinValue;
+
+        //    for (int rIndx1 = 0; rIndx1 < rows; rIndx1++)
+        //    {
+        //        for (int rIndx2 = rIndx1; rIndx2 < rows; rIndx2++)
+        //        {
+        //            TreeSet<Integer> tree = new TreeSet<>();
+        //            tree.add(0);    // padding
+
+        //            for (int cIndx = 0; cIndx < cols; cIndx++)
+        //            {
+        //                int area = areas[rIndx2,cIndx];
+
+        //                if (rIndx1 - 1 >= 0)
+        //                    area -= areas[rIndx1 - 1,cIndx];
+
+        //                int ceiling = tree.ceiling(area - k);
+
+        //                if (ceiling != 0)
+        //                    max = Math.Max(max, area - ceiling);
+
+        //                tree.add(area);
+        //            }
+        //        }
+        //    }
+        //    return max;
+        //}
+
+        // 407 https://leetcode.com/problems/trapping-rain-water-ii/description/
+        public int TrapRainWater(int[,] heightMap)
+        {
+            return -1;
         }
     }
 }

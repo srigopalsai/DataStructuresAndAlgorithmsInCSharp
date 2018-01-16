@@ -147,8 +147,6 @@
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\0 - Notes.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5 - CalculateThePowerOf.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\6 - FibonacciNumbersTillN.cs" />
-    <Compile Include="0.5 - Matrix\5.1 - Search - Path From Top Left to Bottom Right.cs" />
-    <Compile Include="0.5 - Matrix\4.1 - Replace - Os WIth Xs If Surrounded By Xs.cs" />
     <Compile Include="0.5 - Matrix\MatrixOperationsDemo.xaml.cs">
       <DependentUpon>MatrixOperationsDemo.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -243,12 +241,11 @@
     </Compile>
     <Compile Include="0.3 - Arrays\8 - Local Minima And Maxima.cs" />
     <Compile Include="0.3 - Arrays\9 - Move Zeros To Right.cs" />
-    <Compile Include="0.5 - Matrix\7.0 - Matrix - Multiplication.cs" />
-    <Compile Include="0.5 - Matrix\1.0 - Fill - FloodFill or SeedFill Algorithm.cs" />
+    <Compile Include="0.5 - Matrix\7.0 - Matrix - Arithmatic Operations.cs" />
+    <Compile Include="0.5 - Matrix\1.0 - FloodFill or SeedFill Algorithm DFS or BFS.cs" />
     <Compile Include="0.5 - Matrix\6.0 - Puzzle and Games.cs" />
-    <Compile Include="0.5 - Matrix\2.0 - GomukuOrConnectFiveGame.cs" />
-    <Compile Include="0.5 - Matrix\5.0 - Search - SortedMatrix.cs" />
-    <Compile Include="0.5 - Matrix\9.0 - Sort Matrix.cs" />
+    <Compile Include="0.5 - Matrix\4.0 - Search - SortedMatrix.cs" />
+    <Compile Include="0.5 - Matrix\8.0 - Sort Matrix.cs" />
     <Compile Include="1.0 - Stack Operations\4 - Return Stack In Reverse Order.cs" />
     <Compile Include="1.0 - Stack Operations\5 - ConvertDecimalToBinary.cs" />
     <Compile Include="1.0 - Stack Operations\Evaluation Of An Infix Expression.cs" />
@@ -298,7 +295,7 @@
     <Compile Include="9.6 - General\GeneralCodingQustionsDemo.xaml.cs">
       <DependentUpon>GeneralCodingQustionsDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="0.5 - Matrix\5.2 - Search - Biggest Block In Matrix.cs" />
+    <Compile Include="0.5 - Matrix\5.2 - Dynamic Programming Patterns.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\2 - AugmentingRecursion.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\3 - CoRecursion.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\1 - TailRecursion.cs" />
@@ -317,7 +314,6 @@
     <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
     <Compile Include="0.5 - Matrix\3.0 - Multiple Problmes 2.cs" />
-    <Compile Include="0.5 - Matrix\4.0 - Replace - ZeroRowsAndColumns.cs" />
     <Compile Include="1.0 - Stack Operations\3 - PushPopGetMinWithConstantTime.cs" />
     <Compile Include="2.0 - Queue Operations\3-EnQueueDeQueueGetMinWithConstantTime.cs" />
     <Compile Include="2.0 - Queue Operations\3-SortElementsUsing2Queues.cs" />
@@ -501,7 +497,7 @@
     <None Include="0.2 - Binary and Bitwise Operations\Bitwise Operations 50+ Samples.docx" />
     <Compile Include="0.3 - Arrays\9 - Multiple Problems 1.cs" />
     <None Include="0.4 - Recursion Back Tracking Back Jumping\Time Complexity Analysis of Recursive Functions.docx" />
-    <Compile Include="0.5 - Matrix\3.0 - Multiple Problems 1.cs" />
+    <Compile Include="0.5 - Matrix\2.0 - Multiple Problems 1.cs" />
     <None Include="4.0 - Trees\TreeAndGraphs.pptx" />
     <None Include="6.0 - Sorting Techniques\5.0 - MergeSort.pptx" />
     <Compile Include="6.0 - Sorting Techniques\5.1 Merge 2 Arrays In Sorted Order.cs" />
