@@ -573,7 +573,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 {
                     llist.Add(liPos1 == liPos2 ? llistSlid[liPos1] : ((llistSlid[liPos1] + llistSlid[liPos2]) / 2));
                 }
-            }            
+            }
 
             return llist.ToArray<double>();
         }
@@ -656,7 +656,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             int currMaxJump = 0;
             int index = 0;
 
-            while (index < nums.Length && index <= currMaxJump )
+            while (index < nums.Length && index <= currMaxJump)
             {
                 currMaxJump = Math.Max(currMaxJump, index + nums[index]);
                 ++index;
@@ -758,7 +758,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             {
                 for (int indxJ = 0; indxJ < indxI; indxJ++)
                 {
-                    if (nums[indxI] > nums[indxJ] && 
+                    if (nums[indxI] > nums[indxJ] &&
                          lookUp[indxI] < lookUp[indxJ] + 1)
                     {
                         lookUp[indxI] = lookUp[indxJ] + 1;
@@ -784,7 +784,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             int[] nums = { 10, 22, 9, 33, 21, 50, 41, 60 };
             Console.WriteLine("Length of lis is " + LongestIncreasingSubsequence(nums) + "n");
         }
-        
+
         //------------------------------------------------------------------------------------
 
         // 673 https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
@@ -845,17 +845,17 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 if (num <= smallVal)
                 {
                     smallVal = num;
-                } 
+                }
                 // Update small if n is smaller than both
                 else if (num <= bigVal)
                 {
                     bigVal = num;
-                } 
+                }
                 // Update big only if greater than small but smaller than big
                 else
                 {
                     // Return if you find a number bigger than both
-                    return true; 
+                    return true;
                 }
             }
             return false;
@@ -922,5 +922,89 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             return resultList;
         }
+
+        // https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+        public int LargestRectangleArea1(int[] heights)
+        {
+            Stack<int> stack = new Stack<int>();
+            int top = 0;
+            int indx = 0;
+            int area = 0;
+            int MaxArea = 0;
+
+            while (indx < heights.Length)
+            {
+                if (stack.Count == 0 || heights[stack.Peek()] <= heights[indx])
+                {
+                    stack.Push(indx++);
+                }
+                else
+                {
+                    top = stack.Pop();
+
+                    if (stack.Count == 0)
+                    {
+                        area = heights[top] * indx;
+                    }
+                    else
+                    {
+                        area = heights[top] * (indx - stack.Peek() - 1);
+                    }
+                }
+
+                MaxArea = Math.Max(area, MaxArea);
+            }
+
+            while (stack.Count > 0)
+            {
+                top = stack.Pop();
+
+                if (stack.Count == 0)
+                {
+                    area = heights[top] * indx;
+                }
+                else
+                {
+                    area = heights[top] * (indx - stack.Peek() - 1);
+                }
+
+                MaxArea = Math.Max(area, MaxArea);
+            }
+
+            return MaxArea;
+        }
+
+        public int LargestRectangleArea(int[] heights)
+        {
+            int area = 0;
+            int maxArea = 0;
+
+            Stack<int> stack = new Stack<int>();
+
+            for (int indx = 0; indx <= heights.Length; indx++)
+            {
+                int curHeight = (indx == heights.Length ? 0 : heights[indx]);
+
+                if (stack.Count == 0 || curHeight >= heights[stack.Peek()])
+                {
+                    stack.Push(indx);
+                    continue;
+                }
+
+                while (stack.Count > 0 && curHeight < heights[stack.Peek()])
+                {
+                    int top = stack.Pop();
+
+                    area = heights[top] * (stack.Count == 0 ? indx : indx - 1 - stack.Peek());
+
+                    maxArea = Math.Max(maxArea, area);
+                }
+
+                stack.Push(indx);
+            }
+
+            return maxArea;
+        }
+
     }
 }

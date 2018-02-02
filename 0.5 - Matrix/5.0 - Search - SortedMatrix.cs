@@ -475,40 +475,40 @@ namespace DataStructuresAndAlgorithms
 
         //return 2; 2 < 8, that means our guess is too small!
 
-        public int KthSmallest(int[,] matrix, int k)
+        public int KthSmallest(int[,] matrix, int kPos)
         {
-            int rowLen = matrix.GetLength(0) - 1;
-            int colLen = matrix.GetLength(1) - 1;
+            int rLen = matrix.GetLength(0) - 1;
+            int cLen = matrix.GetLength(1) - 1;
 
-            int loIndx = matrix[0, 0];
-            int hiIndx = matrix[rowLen, colLen];
+            int loVal = matrix[0, 0];
+            int hiVal = matrix[rLen, cLen];
 
-            while (loIndx < hiIndx)
+            while (loVal < hiVal)
             {
-                int midIndx = loIndx + (hiIndx - loIndx) / 2;
-                int kIndx = 0;
-                int colIndx = colLen;
+                int midVal = loVal + (hiVal - loVal) / 2;
+                int curkIndx = 0;
+                int cIndx = cLen;
 
-                for (int rowIndx = 0; rowIndx <= rowLen; rowIndx++)
+                for (int rIndx = 0; rIndx <= rLen; rIndx++)
                 {
-                    while (colIndx >= 0 && matrix[rowIndx, colIndx] > midIndx)
+                    while (cIndx >= 0 && matrix[rIndx, cIndx] > midVal)
                     {
-                        colIndx--;
+                        cIndx--;
                     }
-                    kIndx += (colIndx + 1);
+                    curkIndx += (cIndx + 1);
                 }
 
-                if (kIndx < k)
+                if (curkIndx < kPos)
                 {
-                    loIndx = midIndx + 1;
+                    loVal = midVal + 1;
                 }
                 else
                 {
-                    hiIndx = midIndx;
+                    hiVal = midVal;
                 }
             }
 
-            return loIndx;
+            return loVal;
         }
 
         // http://www.geeksforgeeks.org/check-given-matrix-sparse-not/
