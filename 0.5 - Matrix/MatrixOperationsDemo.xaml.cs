@@ -48,7 +48,7 @@ namespace DataStructuresAndAlgorithms
 
         private void FindBiggestBlockInMatrixDemoButton_Click(object sender, RoutedEventArgs e)
         {
-            MatrixOperationsObj.FindBiggestBlockInMatrix();
+            MatrixOperationsObj.MaxBlock();
         }
 
         private void MazePuzzleDemoButton_Click(object sender, RoutedEventArgs e)

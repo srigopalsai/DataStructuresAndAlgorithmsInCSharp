@@ -672,6 +672,8 @@ and make it out of the array at the other end in minimum number of hops.*/
 
         // 221 https://leetcode.com/submissions/detail/122418976/
         // https://leetcode.com/articles/maximal-square/
+        // Can be solved with DFS 
+        // DP O(m)
         public int MaximalSquare(char[,] matrix)
         {
             int[] dpLkUp = new int[matrix.GetLength(1) + 1];
@@ -699,6 +701,222 @@ and make it out of the array at the other end in minimum number of hops.*/
                 }
             }
             return maxSqLen * maxSqLen;
+        }
+
+        // DP O(m X n)
+        public int MaximalSquare2(char[,] srcMatrix)
+        {
+            if (srcMatrix == null || srcMatrix.Length == 0)
+                return 0;
+
+            int maxSqLen = 0;
+            int cLen = srcMatrix.GetLength(1);
+            int rLen = srcMatrix.GetLength(0);
+
+            int[,] tmpMatrix = new int[cLen + 1, rLen + 1];
+
+            for (int rIndx = 1; rIndx <= cLen; rIndx++)
+            {
+                for (int cIndx = 1; cIndx <= rLen; cIndx++)
+                {
+                    if (srcMatrix[rIndx - 1, cIndx - 1] == '1')
+                    {
+                        tmpMatrix[rIndx, cIndx] = Math.Min(tmpMatrix[rIndx - 1, cIndx - 1], 
+                                                            Math.Min(tmpMatrix[rIndx - 1, cIndx], 
+                                                                     tmpMatrix[rIndx, cIndx - 1])
+                                                           ) + 1;
+                        maxSqLen = Math.Max(maxSqLen, tmpMatrix[rIndx, cIndx]);
+                    }
+                }
+            }
+
+            return maxSqLen * maxSqLen;
+        }
+
+        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/
+        // 85 https://leetcode.com/problems/maximal-rectangle/description/
+        public int MaximalRectangle(char[,] srcMatrix)
+        {
+            int cLen = srcMatrix.GetLength(1);
+            int maxA = 0;
+
+            int[,] tmpMatrix = new int[cLen, 3]; //[i, 0] is left; [i, 1] is right; [i, 2] is height
+
+            for (int rIndx = 0; rIndx < cLen; rIndx++)
+            {
+                tmpMatrix[rIndx, 1] = cLen;
+            }
+
+            for (int rIndx = 0; rIndx < srcMatrix.GetLength(0); rIndx++)
+            {
+                int curLeft = 0;
+                int curRight = cLen;
+
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (srcMatrix[rIndx, cIndx] == '1')     // compute height (can do this from either side)
+                    {
+                        tmpMatrix[cIndx, 2]++;
+                    }
+                    else
+                    {
+                        tmpMatrix[cIndx, 2] = 0;
+                    }
+                    if (srcMatrix[rIndx, cIndx] == '1')     // compute left (from left to right)
+                    {
+                        tmpMatrix[cIndx, 0] = Math.Max(tmpMatrix[cIndx, 0], curLeft);
+                    }
+                    else
+                    {
+                        tmpMatrix[cIndx, 0] = 0;
+                        curLeft = cIndx + 1;
+                    }
+                }
+                // compute right (from right to left)
+                for (int cIndx = cLen - 1; cIndx >= 0; cIndx--)
+                {
+                    if (srcMatrix[rIndx, cIndx] == '1')
+                    {
+                        tmpMatrix[cIndx, 1] = Math.Min(tmpMatrix[cIndx, 1], curRight);
+                    }
+                    else
+                    {
+                        tmpMatrix[cIndx, 1] = cLen;
+                        curRight = cIndx;
+                    }
+                }
+                // compute the area of rectangle (can do this from either side)
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    maxA = Math.Max(maxA, (tmpMatrix[cIndx, 1] - tmpMatrix[cIndx, 0]) * tmpMatrix[cIndx, 2]);
+                }
+            }
+            return maxA;
+        }
+
+        public int MaximalRectangle2BFS(int[,] matrix)
+        {
+            if (matrix.Length == 0)
+                return 0;
+
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+            int maxArea = 0;
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (matrix[rIndx, cIndx] == '1')
+                    {
+                        maxArea = Math.Max(maxArea, BFSHelperForMR(matrix, rIndx, cIndx));
+                    }
+                }
+            }
+            return maxArea;
+        }
+
+        int BFSHelperForMR(int[,] matrix, int curRIndx, int curCIndx)
+        {
+            int trvRIndx = curRIndx - 1;
+            int maxArea = 0;
+
+            while (trvRIndx >= 0 && matrix[trvRIndx,curCIndx] == '1')
+            {
+                trvRIndx--;
+            }
+
+            for (int cIndx = curCIndx; cIndx >= 0 && matrix[curRIndx,cIndx] == '1'; cIndx--)
+            {
+                for (int rIndx = trvRIndx + 1; rIndx <= curRIndx; rIndx++)
+                { 
+                    if (matrix[rIndx,cIndx] == '0')
+                    {
+                        trvRIndx = Math.Max(trvRIndx, rIndx);
+                    }
+
+                    maxArea = Math.Max(maxArea, (curRIndx - trvRIndx) * (curCIndx - cIndx + 1));
+                }
+            }
+            return maxArea;
+        }
+
+        public int MaximalRectangle3DFS(char[,] matrix)
+        {
+            var rLen = matrix.GetLength(0);
+            var cLen = matrix.GetLength(1);
+            int maxArea = 0;
+
+            int[] heightsDP = new int[cLen];
+            Stack<int> stack = new Stack<int>();
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    heightsDP[cIndx] = matrix[rIndx, cIndx] == '0' ? 0 : heightsDP[cIndx] + 1;
+                }
+
+                for (int cIndx = 0; cIndx < cLen + 1; cIndx++)
+                {
+                    var hVal = cIndx == cLen ? 0 : heightsDP[cIndx];
+
+                    if (stack.Count == 0 || heightsDP[stack.Peek()] < hVal)
+                    {
+                        stack.Push(cIndx);
+                    }
+                    else
+                    {
+                        int mid = stack.Pop();
+                        int left = stack.Count == 0 ? -1 : stack.Peek();
+
+                        maxArea = Math.Max(maxArea, heightsDP[mid] * (cIndx-- - left - 1));
+                    }
+                }
+
+                stack.Pop();
+            }
+
+            return maxArea;
+        }
+
+        public int maximalRectangleHistogram(char[,] matrix)
+        {
+            if (matrix.Length == 0)
+                return 0;
+
+            int maxArea = 0;
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+
+            int[] height = new int[cLen]; // height
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (matrix[rIndx,cIndx] == '0')
+                    {
+                        height[cIndx] = 0;
+                        continue;
+                    }
+
+                    height[cIndx]++;
+                    int pre = height[cIndx];
+
+                    for (int cur = cIndx - 1 ; cur >= 0; cur--)
+                    {
+                        if (height[cur] == 0)
+                            break;
+
+                        pre = Math.Min(pre, height[cur]);
+                        maxArea = Math.Max(maxArea, (cIndx - cur + 1) * pre);
+                    }
+
+                    maxArea = Math.Max(maxArea, height[cIndx]);
+                }
+            }
+            return maxArea;
         }
 
         // 486 https://leetcode.com/problems/predict-the-winner/description/

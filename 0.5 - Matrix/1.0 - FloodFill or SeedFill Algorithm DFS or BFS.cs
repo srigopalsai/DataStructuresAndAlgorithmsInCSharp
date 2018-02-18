@@ -6,26 +6,24 @@ using System.Windows;
 
 namespace DataStructuresAndAlgorithms
 {
-    /*
-    ============================================================================================================================================================================================================================
-    Recursive flood fill algorithm is DFS. You can do a BFS to convert it to nonrecursive.
-    Refer Time Complexity here http://www.cs.bilkent.edu.tr/~gunduz/teaching/cs201/slides/Recitation4.pdf
-    http://en.wikipedia.org/wiki/Flood_fill
-    http://www.codecodex.com/wiki/Implementing_the_flood_fill_algorithm
-    https://www.youtube.com/watch?v=n6_s8fpAEEY
+    //Recursive flood fill algorithm is DFS. We can do a BFS to convert it to nonrecursive.
+    //Refer Time Complexity here http://www.cs.bilkent.edu.tr/~gunduz/teaching/cs201/slides/Recitation4.pdf
+    //http://en.wikipedia.org/wiki/Flood_fill
+    //http://www.codecodex.com/wiki/Implementing_the_flood_fill_algorithm
+    //https://www.youtube.com/watch?v=n6_s8fpAEEY
 
-    Used In : 
-    1. Fill Command in Paint. 
-    2. Minesweeper 
-    3. Boundary fill in image editing application
+    //Used In : 
+    //1. Fill Command in Paint. 
+    //2. Minesweeper 
+    //3. Boundary fill in image editing application
     
-    Approaches:
-    1. Recursive Stack Based.
-    2. Iterative Queue Baseed.
-    3. Fixed Memory Method.
+    //Approaches:
+    //1. Recursive Stack Based.
+    //2. Iterative Queue Baseed.
+    //3. Fixed Memory Method.
     
-    Tail recursion can always be translated to an iterative format. That would save even more stack space.
-    
+    //Tail recursion can always be translated to an iterative format. That would save even more stack space.
+    /*
     if()
     {
         //Base case where we dont call recursive function.
@@ -229,11 +227,11 @@ void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
             StringBuilder strBlrd = new StringBuilder();
             strBlrd.Append("Input Matrix : \n");
 
-            for (int lpRCnt = 0; lpRCnt < squareMatrix.GetLength(0); lpRCnt++)
+            for (int rIndx = 0; rIndx < squareMatrix.GetLength(0); rIndx++)
             {
-                for (int lpCCnt = 0; lpCCnt < squareMatrix.GetLength(1); lpCCnt++)
+                for (int cIndx = 0; cIndx < squareMatrix.GetLength(1); cIndx++)
                 {
-                    strBlrd.Append(squareMatrix[lpRCnt, lpCCnt] + "\t");
+                    strBlrd.Append(squareMatrix[rIndx, cIndx] + "\t");
                 }
                 strBlrd.Append("\n");
             }
@@ -243,11 +241,11 @@ void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
             int affectedCellCnt = FloodFillOrSeedFillAlgorithm(squareMatrix, 5, 3);
             strBlrd.Append("\nNo of Cells Affected Cells : " + affectedCellCnt + "\n");
 
-            for (int lpRCnt = 0; lpRCnt < squareMatrix.GetLength(0); lpRCnt++)
+            for (int rIndx = 0; rIndx < squareMatrix.GetLength(0); rIndx++)
             {
-                for (int lpCCnt = 0; lpCCnt < squareMatrix.GetLength(1); lpCCnt++)
+                for (int cIndx = 0; cIndx < squareMatrix.GetLength(1); cIndx++)
                 {
-                    strBlrd.Append(squareMatrix[lpRCnt, lpCCnt] + "\t");
+                    strBlrd.Append(squareMatrix[rIndx, cIndx] + "\t");
                 }
                 strBlrd.Append("\n");
             }
@@ -339,7 +337,9 @@ void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
                 while (!q.empty() ) {         int u = q.front();  // get first un­touched vertex         q.pop();         for( int v = 0; v < n; v++ ) if( !seen[v] && M[u,v] ) {             seen[v] = true;             DoColouring( v, some_color );             q.push( v );         }     }
                 */
         }
+
         //Assume array is 100 X 100. Some logic optimization.
+
         void FillMatrix(int[,] matrix, int rIndx, int cIndx)
         {
             try
@@ -408,5 +408,50 @@ void floodFillScanlineStack(int x, int y, int newColor, int oldColor)
             }
         }
 
+        class Point
+        {
+            public int rIndx;
+            public int cIndx;
+
+            public Point(int rIndx, int cIndx)
+            {
+                this.rIndx = rIndx;
+                this.cIndx = cIndx;
+            }
+        }
+
+        public void FloodFillIterativeStack(int[,] matrix, int rIndx, int cIndx, int newColor, int oldColor)
+        {
+            if (newColor == oldColor)
+                return;
+
+            Stack<Point> stack = new Stack<Point>();
+
+            int[] drIndx = { 0, 1, 1, 1, 0, -1, -1, -1 };
+            int[] dcIndx = { -1, -1, 0, 1, 1, 1, 0, -1 };
+
+            stack.Push(new Point(rIndx, cIndx));
+
+            while (stack.Count > 0)
+            {
+                Point p = stack.Pop();
+
+                for (int indx = 0; indx < 8; indx++)
+                {
+                    int trIndx = rIndx + drIndx[indx];
+                    int tcIndx = cIndx + dcIndx[indx];
+
+                    if (IsValidCell(matrix, trIndx, tcIndx))
+                    {
+                        stack.Push(new Point(trIndx, tcIndx));
+                    }
+                }
+            }
+        }
+
+        private bool IsValidCell(int[,] matrix, int trIndx, int tcIndx)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

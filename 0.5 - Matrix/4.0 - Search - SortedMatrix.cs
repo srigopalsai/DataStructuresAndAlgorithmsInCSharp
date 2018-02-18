@@ -33,16 +33,14 @@ namespace DataStructuresAndAlgorithms
     partial class MatrixOperations
     {
         //O(n) Solution
-        //http://stackoverflow.com/questions/3723353/how-to-efficiently-search-in-an-ordered-matrix?rq=1
-
-        public bool BinarySearchOnSortedMatrix(int[,] SortedMatrix, int elementToSearch)
+        public bool SearchMatrixBruteForce(int[,] matrix, int target)
         {
             bool foundFlag = false;
-            for (int lpRCnt = SortedMatrix.GetLength(0) - 1; lpRCnt >= 0; )
+            for (int lpRCnt = matrix.GetLength(0) - 1; lpRCnt >= 0; )
             {
-                for (int lpCCnt = 0 ; lpCCnt < SortedMatrix.GetLength(0);)
+                for (int lpCCnt = 0 ; lpCCnt < matrix.GetLength(0);)
                 {
-                    if (SortedMatrix[lpRCnt, lpCCnt] == elementToSearch)
+                    if (matrix[lpRCnt, lpCCnt] == target)
                     {
                         foundFlag = true; 
                         break;
@@ -53,124 +51,17 @@ namespace DataStructuresAndAlgorithms
 
         }
 
-        //240 https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+        //240 O(M+N) Top Right to Bottom Left https://leetcode.com/problems/search-a-2d-matrix-ii/description/
         public bool SearchMatrix(int[,] matrix, int target)
         {
             if (matrix == null || matrix.Length == 0)
                 return false;
 
-            int rIndx = 0;
-            int rLen = matrix.GetLength(0) - 1;
-            int cLen = matrix.GetLength(1) - 1;
-
-            while (rIndx <= rLen && cLen >= 0)
-            {
-                if (matrix[rIndx, cLen] == target)
-                {
-                    return true;
-                }
-                else if (matrix[rIndx, cLen] > target)
-                {
-                    --cLen;
-                }
-                else
-                {
-                    ++rIndx;
-                }
-            }
-
-            return false;
-        }
-
-        public bool SearchMatrix2(int[,] matrix, int target)
-        {
-
-            if (matrix == null || matrix.Length == 0)
-                return false;
-
-            if (matrix.Length == 1)
-                return matrix[0, 0] == target;
-
-            int stIndx = 0;
-            int endIndx = matrix.GetLength(0) * matrix.GetLength(1) - 1;
-            int colLen = matrix.GetLength(1);
-
-            while (stIndx <= endIndx)
-            {
-                int midIndx = stIndx + (endIndx - stIndx) / 2;
-
-                int rIndx = midIndx / colLen;
-                int cIndx = midIndx % colLen;
-
-                if (target == matrix[rIndx, cIndx])
-                {
-                    return true;
-                }
-                else if (target < matrix[rIndx, cIndx])
-                {
-                    endIndx = midIndx - 1;
-                }
-                else
-                {
-                    stIndx = midIndx + 1;
-                }
-            }
-            return false;
-        }
-
-        //Non-Optimal - but best one in worst case.
-        public void SearchSortedMatrixInNLogN(int[,] AssendMatix, int elementToSearch)
-        {
-            /*
-            O(m log n) Approach
-            Repeat one loop for row or column which ever is shorter in lenght (In the above matrix it is column).
-            And use binary search technique for other row or column loop.
-            */
-            int shortLpLen = 0;
-            bool isRowShorter = false;
-
-            int binSearchLpCnt = 0;
-            int binSearchLpLen = 0;
-
-            int midElementVal = 0;
-            int midElementInd = 0;
-
-            if (AssendMatix.Length > AssendMatix.GetLength(1))
-            {
-                shortLpLen = AssendMatix.GetLength(1);
-                binSearchLpLen = AssendMatix.Length;
-                isRowShorter = true;
-            }
-            else
-            {
-                shortLpLen = AssendMatix.GetLength(0);
-                binSearchLpLen = AssendMatix.GetLength(1);
-            }
-
-            for (int lpShrtrLpCnt = 0; lpShrtrLpCnt < shortLpLen; lpShrtrLpCnt++)
-            {
-                while (binSearchLpCnt < binSearchLpLen)
-                {
-                    midElementInd = binSearchLpLen / 2;
-                    midElementVal = (isRowShorter == true) ? AssendMatix[lpShrtrLpCnt, midElementInd] : AssendMatix[midElementInd, lpShrtrLpCnt];
-
-                }
-            }
-        }
-
-        //O(m+n)
-        public bool SearchMatrixTopRightToBottom(int[,] matrix, int target)
-        {
-            if (matrix == null || matrix.Length == 0)
-                return false;
-
-            int rowLength = matrix.GetLength(0);
-            int colLength = matrix.GetLength(1);
-
             int rowIndx = 0;
-            int colIndx = colLength - 1;
+            int rowLength = matrix.GetLength(0) - 1;
+            int colIndx = matrix.GetLength(1) - 1;
 
-            while (rowIndx < rowLength && colIndx >= 0)
+            while (rowIndx <= rowLength && colIndx >= 0)
             {
                 if (matrix[rowIndx, colIndx] == target)
                 {
@@ -189,6 +80,46 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
+        //Non-Optimal - but best one in worst case.
+        public void SearchSortedMatrixInNLogN(int[,] matrix, int elementToSearch)
+        {
+            /*
+            O(m log n) Approach
+            Repeat one loop for row or column which ever is shorter in lenght (In the above matrix it is column).
+            And use binary search technique for other row or column loop.
+            */
+            int shortLpLen = 0;
+            bool isRowShorter = false;
+
+            int binSearchLpCnt = 0;
+            int binSearchLpLen = 0;
+
+            int midElementVal = 0;
+            int midElementInd = 0;
+
+            if (matrix.Length > matrix.GetLength(1))
+            {
+                shortLpLen = matrix.GetLength(1);
+                binSearchLpLen = matrix.Length;
+                isRowShorter = true;
+            }
+            else
+            {
+                shortLpLen = matrix.GetLength(0);
+                binSearchLpLen = matrix.GetLength(1);
+            }
+
+            for (int lpShrtrLpCnt = 0; lpShrtrLpCnt < shortLpLen; lpShrtrLpCnt++)
+            {
+                while (binSearchLpCnt < binSearchLpLen)
+                {
+                    midElementInd = binSearchLpLen / 2;
+                    midElementVal = (isRowShorter == true) ? matrix[lpShrtrLpCnt, midElementInd] : matrix[midElementInd, lpShrtrLpCnt];
+
+                }
+            }
+        }
+        
         /*
         Time Complexity has to be calculated correctly.
 
@@ -421,34 +352,35 @@ namespace DataStructuresAndAlgorithms
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        public double FindMean(int[,] nums)
+        public double FindMean(int[,] matrix)
         {
             int sum = 0;
-            int numsLen = nums.GetLength(0);
+            int rowLen = matrix.GetLength(0);
 
-            for (int rIndx = 0; rIndx < numsLen; rIndx++)
+            for (int rIndx = 0; rIndx < rowLen; rIndx++)
             {
-                for (int cIndx = 0; cIndx < numsLen; cIndx++)
+                for (int cIndx = 0; cIndx < rowLen; cIndx++)
                 {
-                    sum += nums[rIndx, cIndx];
+                    sum += matrix[rIndx, cIndx];
                 }
             }
 
-            return (double)sum / (numsLen * numsLen);
+            return (double)sum / (rowLen * rowLen);
         }
 
         // http://www.geeksforgeeks.org/mean-median-matrix/
-        public double FindMedian(int[,] a)
+        public double FindMedian(int[,] matrix)
         {
-            int numsLen = a.GetLength(0);
+            int rowLen = matrix.GetLength(0);
 
-            if (numsLen % 2 != 0)
-                return a[numsLen / 2, numsLen / 2];
-
-            if (numsLen % 2 == 0)
-                return (a[(numsLen - 2) / 2, numsLen - 1] + a[numsLen / 2, 0]) / 2.0;
-
-            return 0.0;
+            if (rowLen % 2 != 0)
+            {
+                return matrix[rowLen / 2, rowLen / 2];
+            }
+            else
+            {
+                return (matrix[(rowLen - 2) / 2, rowLen - 1] + matrix[rowLen / 2, 0]) / 2.0;
+            }
         }
 
         //LC 378 https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
@@ -543,7 +475,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         //Assume array is 100 X 100. Some logic optimization.
-        bool IsStringExistsInMatrix(char[,] squareMatrix, char[] charArr2Find, int nextCharPos, int xPosition, int yPosition)
+        public bool IsStringExistsInMatrix(char[,] squareMatrix, char[] charArr2Find, int nextCharPos, int xPosition, int yPosition)
         {
             try
             {
@@ -575,6 +507,515 @@ namespace DataStructuresAndAlgorithms
             {
                 throw new Exception("Something went wrong : " + exception.Message + "\n" + exception.StackTrace.ToString());
             }
+        }
+
+        int totalHitsInSideLoops = 0;
+        int maxBlock = 0;
+        int foundBlocks = 0;
+
+        public void MaxBlock()
+        {
+            int[,] inputArray = {   {1,0,0,0,1},
+                                    {0,0,0,1,0},
+                                    {0,0,0,0,0},
+                                    {1,0,1,0,1},
+                                    {0,0,0,0,0}
+                                };
+
+            //int[,] inputArray = {   {1,	1,	0,	0,	1},
+            //                        {0,	1,	0,	0,	0},
+            //                        {0,	1,	0,	0,	0},
+            //                        {1,	0,	0,	0,	0},
+            //                        {1,	0,	0,	0,	1}
+            //                    };
+
+            //int[,] inputArray = {   {	0,	0,	0},
+            //                        {	0,	0,	0},
+            //                        {	0,	0,	0},
+            //                        {	0,	0,	1}
+            //                    };
+
+            maxBlock = 0;
+            foundBlocks = 0;
+
+            int RowLen = inputArray.GetLength(0) - 1;
+            int ColLen = inputArray.GetLength(1) - 1;
+
+            totalHitsInSideLoops = 0;
+
+            for (int lpRCnt = 0; lpRCnt <= RowLen; lpRCnt++)
+            {
+                for (int lpCCnt = 0; lpCCnt <= ColLen; lpCCnt++)
+                {
+                    totalHitsInSideLoops++;
+
+                    int RowsRemain = (RowLen + 1) - lpRCnt;
+                    int ColsRemain = (ColLen + 1) - lpRCnt;
+
+                    // Already found Max Block, so break both loops
+                    //if (maxBlock >= (RowsRemain * ColsRemain))
+                    //{
+                    //    goto Break2Loops;
+                    //}
+
+                    if (inputArray[lpRCnt, lpCCnt] == 0)
+                    {
+                        MaxBlock(inputArray, lpRCnt, lpCCnt);
+                    }
+                }
+            }
+
+            //Break2Loops:
+            //            MessageBox.Show("Biggest Zero's Block in the Matrix is " + maxBlock + "\nTotal hits " + totalHitsInSideLoops);
+
+        }
+
+        public void MaxBlock(int[,] matrix, int rSrcIdx, int cSrcIdx)
+        {
+            int rLen = matrix.GetLength(0) - 1;
+            int cLen = matrix.GetLength(1) - 1;
+
+            foundBlocks = 0;
+
+            for (int rIndx = rSrcIdx; rIndx <= rLen; rIndx++)
+            {
+                for (int cIndx = cSrcIdx; cIndx <= cLen; cIndx++)
+                {
+                    totalHitsInSideLoops++;
+
+                    if (matrix[rIndx, cIndx] == 0)
+                    {
+                        foundBlocks++;
+                    }
+                    else
+                    {
+                        // Rollback logic when 1 found. If column smaller then rollback colum cells else roll back row cells.
+                        if ((rLen - rSrcIdx) > (cLen - cSrcIdx))
+                        {
+                            for (int indx = cIndx; indx > cSrcIdx; indx--)
+                            {
+                                foundBlocks--;
+                            }
+                        }
+                        else
+                        {
+                            for (int indx = rIndx; indx > rSrcIdx; indx--)
+                            {
+                                foundBlocks--;
+                            }
+                        }
+
+                        //Once rollback is done, just break 2 loops.
+                        goto Break2Loops;
+                    }
+                }
+            }
+
+            Break2Loops:
+
+            if (foundBlocks > maxBlock)
+            {
+                maxBlock = foundBlocks;
+                return;
+            }
+        }
+
+        public void MaxSubMatrixIndexByDPTest()
+        {
+            int[,] jaggaedMatrix = {{ 0, 0, 0, 0, 0 },
+                                    { 1, 0, 0, 1, 1 },
+                                    { 1, 0, 1, 1, 1 },
+                                    { 0, 1, 1, 1, 1 },
+                                    { 0, 1, 1, 1, 1 } };
+
+            MaxSubMatrixIndexByDP(jaggaedMatrix);
+        }
+
+        public void MaxSubMatrixIndexByDP(int[,] srcMatrix)
+        {
+            int rIndx = 0;
+            int cIndx = 0;
+
+            int[,] tmpMatrix = new int[srcMatrix.GetLength(0), srcMatrix.GetLength(1)];
+
+            for (rIndx = 0; rIndx < srcMatrix.GetLength(0); rIndx++)
+            {
+                tmpMatrix[rIndx, 0] = srcMatrix[rIndx, 0];
+            }
+
+            for (cIndx = 0; cIndx < srcMatrix.GetLength(1); cIndx++)
+            {
+                tmpMatrix[0, cIndx] = srcMatrix[0, cIndx];
+            }
+
+            int minEntry = 0;
+
+            for (rIndx = 1; rIndx < srcMatrix.GetLength(0); rIndx++)
+            {
+                for (cIndx = 1; cIndx < srcMatrix.GetLength(1); cIndx++)
+                {
+                    minEntry = Math.Min(tmpMatrix[rIndx, cIndx - 1], tmpMatrix[rIndx - 1, cIndx]);
+                    minEntry = Math.Min(tmpMatrix[rIndx - 1, cIndx - 1], minEntry);
+
+                    if (srcMatrix[rIndx, cIndx] == 1)
+                    {
+                        tmpMatrix[rIndx, cIndx] = minEntry + 1;
+                    }
+                    else
+                    {
+                        tmpMatrix[rIndx, cIndx] = 0;
+                    }
+                }
+            }
+
+            // Iterate through the temp matrix to get the max size and indices - O (N X M) Time
+            int maxSize = 0;
+            int rowPos = -1;
+            int colPos = -1;
+
+            for (rIndx = 0; rIndx < srcMatrix.GetLength(0); rIndx++)
+            {
+                for (cIndx = 0; cIndx < srcMatrix.GetLength(1); cIndx++)
+                {
+                    if (maxSize < tmpMatrix[rIndx, cIndx])
+                    {
+                        maxSize = tmpMatrix[rIndx, cIndx];
+                        rowPos = rIndx;
+                        colPos = cIndx;
+                    }
+                }
+            }
+
+            MessageBox.Show("Size of the Biggest square sub-matrix: " + maxSize);
+            MessageBox.Show("It starts at (" + (rowPos - maxSize + 1) + "," + (colPos - maxSize + 1) + ")");
+        }
+
+        // https://www.geeksforgeeks.org/dynamic-programming-set-27-max-sum-rectangle-in-a-2d-matrix/
+        public void MaxSumSquareMatrix(int[,] srcMatrix, int kSize)
+        {
+            int rIndx = 0;
+            int cIndx = 0;
+            int rLen = srcMatrix.GetLength(0);
+            int cLen = srcMatrix.GetLength(1);
+
+            int[,] tmpMatrix = new int[rLen - kSize + 1, cLen];
+            int curSum = 0;
+            int maxSum = int.MinValue;
+
+            for (cIndx = 0; cIndx < rLen; cIndx++)
+            {
+                curSum = 0;
+                for (rIndx = 0; rIndx < kSize; rIndx++)
+                {
+                    curSum += srcMatrix[rIndx, cIndx];
+                }
+
+                tmpMatrix[0, cIndx] = curSum;
+
+                for (rIndx = 1; rIndx < cLen - kSize + 1; rIndx++)
+                {
+                    curSum = curSum - srcMatrix[rIndx - 1, cIndx] + srcMatrix[rIndx + kSize - 1, cIndx];
+                    tmpMatrix[rIndx, cIndx] = curSum;
+                }
+            }
+
+            curSum = 0;
+
+            int tmpSum = 0;
+            int tmpRIndx = -1;
+            int tmpCIndx = -1;
+
+            for (rIndx = 0; rIndx < tmpMatrix.Length; rIndx++)
+            {
+                tmpSum = 0;
+
+                for (cIndx = 0; cIndx < kSize; cIndx++)
+                {
+                    tmpSum += tmpMatrix[rIndx, cIndx];
+                }
+
+                if (tmpSum > maxSum)
+                {
+                    maxSum = tmpSum;
+                    tmpRIndx = rIndx;
+                    tmpCIndx = cIndx;
+                }
+
+                curSum = tmpSum;
+
+                for (cIndx = 1; cIndx < cLen - kSize + 1; cIndx++)
+                {
+                    curSum = curSum - tmpMatrix[rIndx, cIndx - 1] + tmpMatrix[rIndx, cIndx + kSize - 1];
+
+                    if (curSum > maxSum)
+                    {
+                        maxSum = curSum;
+                        tmpRIndx = rIndx;
+                        tmpCIndx = cIndx;
+                    }
+                }
+            }
+
+            for (rIndx = tmpRIndx; rIndx < tmpRIndx + kSize; rIndx++)
+            {
+                for (cIndx = tmpCIndx; cIndx < tmpCIndx + kSize; cIndx++)
+                {
+                    Console.Write(srcMatrix[rIndx, cIndx] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public void MaxSumSquareMatrixTest()
+        {
+            int[,] mat = {
+                    { 1, 1, 1, 1, 1 },
+                    { 2, 2, 2, 2, 2 },
+                    { 3, 8, 6, 7, 3 },
+                    { 4, 4, 4, 4, 4 },
+                    { 5, 5, 5, 5, 5 },
+
+                };
+
+            int k = 3;
+
+            MaxSumSquareMatrix(mat, k);
+        }
+
+        // https://www.cdn.geeksforgeeks.org/find-orientation-of-a-pattern-in-a-matrix/
+        public void StringSearchTest(String[] args)
+        {
+            char[,] mat3 = {{ 'a', 'b', 'c', 'd', 'e' },
+                        { 'f', 'g', 'h', 'i', 'j' },
+                        { 'k', 'l', 'm', 'n', 'o' },
+                        { 'p', 'q', 'r', 's', 't' },
+                        { 'u', 'v', 'w', 'x', 'y' } };
+
+            char[,] mat = { { 'a', 'b', 'c', 'd', 'e' },
+                    { 'f', 'p', 'h', 'i', 'j' },
+                    { 'k', 'q', 'm', 'n', 'o' },
+                    { 'g', 'r', 'r', 's', 't' },
+                    { 'u', 's', 'w', 'x', 'y' } };
+
+            char[,] mat2 = {{ 'a', 'b', 'c', 'd', 'e' },
+                    { 'f', 's', 'h', 'i', 'j' },
+                    { 'k', 'r', 'm', 'n', 'o' },
+                    { 'g', 'q', 'r', 's', 't' },
+                    { 'u', 'p', 'w', 'x', 'y' } };
+
+            String pattern = "pqrs";
+            StringSearchByKMP(mat, pattern);
+        }
+
+        public int[] CreateIndexArray(char[,] matrix, String type, int index)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if ("row".Equals(type, StringComparison.CurrentCultureIgnoreCase))
+            {
+                for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
+                {
+                    sb.Append(matrix[index, rIndx]);
+                }
+            }
+            else
+            {
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
+                {
+                    sb.Append(matrix[cIndx, index]);
+                }
+            }
+
+            return CreateIndexArray(sb.ToString());
+        }
+
+        public int[] CreateIndexArray(String newPattern)
+        {
+            int[] indexArr = new int[newPattern.Length];
+            int rIndx = 0;
+            int cIndx = 1;
+            indexArr[0] = 0;
+
+            while (rIndx < indexArr.Length && cIndx < indexArr.Length)
+            {
+                // If Both index have same character then we have to increment i & j
+                if (newPattern[rIndx] == newPattern[cIndx])
+                {
+                    indexArr[cIndx] = rIndx + 1;
+                    rIndx++;
+                    cIndx++;
+                }
+                else if (rIndx == 0)
+                {
+                    indexArr[cIndx++] = 0;
+                }
+                // If Both index have not same character then we have to set index of i to i-1's value
+                else
+                {
+                    rIndx = indexArr[rIndx - 1];
+                    continue;
+                }
+            }
+            return indexArr;
+
+        }
+
+        public void StringSearchByKMP(char[,] matrix, string pattern)
+        {
+            // Row wise pattern matching
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
+            {
+                int[] patternIndexer = CreateIndexArray(matrix, "row", rIndx);
+
+                int rLen = matrix.GetLength(0);
+                int patLen = pattern.Trim().Length;
+
+                int cIndx = 0;
+                int pIndx = 0;
+
+                while (cIndx < rLen && pIndx < patLen)
+                {
+                    if (matrix[rIndx, cIndx] == pattern[pIndx])
+                    {
+                        pIndx++;
+                        cIndx++;
+                    }
+                    else
+                    {
+                        if (pIndx - 1 >= 0 && patternIndexer[pIndx - 1] != 0)
+                        {
+                            pIndx = patternIndexer[pIndx - 1];
+                        }
+                        else if (pIndx - 1 >= 0 && patternIndexer[pIndx - 1] == 0)
+                        {
+                            pIndx = 0;
+                        }
+                        else
+                        {
+                            cIndx++;
+                        }
+                    }
+                }
+                if (pIndx == patLen)
+                {
+                    Console.WriteLine("Horizontal");
+                    break;
+                }
+            }
+
+            // Column wise pattern matching
+
+            for (int i = 0; i < matrix.GetLength(1); i++)
+            {
+                int[] patternIndexer = CreateIndexArray(matrix, "column", i);
+                int maxRow = matrix.GetLength(0);
+                int patternLength = pattern.Trim().Length;
+                int l = 0;
+                int k = 0;
+
+                while (l < maxRow && k < patternLength)
+                {
+                    if (matrix[l, i] == pattern[k])
+                    {
+                        k++;
+                        l++;
+                    }
+                    else
+                    {
+                        if (k - 1 >= 0 && patternIndexer[k - 1] != 0)
+                        {
+                            k = patternIndexer[k - 1];
+                        }
+                        else if (k - 1 >= 0 && patternIndexer[k - 1] == 0)
+                        {
+                            k = 0;
+                        }
+                        else
+                        {
+                            l++;
+                        }
+                    }
+                }
+
+                if (k == patternLength)
+                {
+                    Console.WriteLine("Vertical");
+                    break;
+                }
+            }
+        }
+
+        // https://www.cdn.geeksforgeeks.org/find-a-specific-pair-in-matrix/
+        // Find a specific pair in matrix
+        // The function returns maximum value A(c,d) - A(a,b)
+        // over all choices of indexes such that both c > a
+        // and d > b.
+        public int MaxValue(int[,] matrix)
+        {
+            int maxValue = int.MinValue;
+            int rLen = matrix.GetLength(0);
+
+            int[,] maxMatrix = new int[rLen, rLen];
+
+            // last element of maxArr will be same's as of the input matrix
+            maxMatrix[rLen - 1, rLen - 1] = matrix[rLen - 1, rLen - 1];
+
+            // Pre Process last row
+            int maxVal = matrix[rLen - 1, rLen - 1];  // Initialize max
+
+            for (int cIndx = rLen - 2; cIndx >= 0; cIndx--)
+            {
+                if (matrix[rLen - 1, cIndx] > maxVal)
+                {
+                    maxVal = matrix[rLen - 1, cIndx];
+                }
+                maxMatrix[rLen - 1, cIndx] = maxVal;
+            }
+
+            // Pre Process last column
+            maxVal = matrix[rLen - 1, rLen - 1];  // Initialize max
+
+            for (int rIndx = rLen - 2; rIndx >= 0; rIndx--)
+            {
+                if (matrix[rIndx, rLen - 1] > maxVal)
+                {
+                    maxVal = matrix[rIndx, rLen - 1];
+                }
+                maxMatrix[rIndx, rLen - 1] = maxVal;
+            }
+
+            // Pre Process rest of the matrix from bottom
+            for (int rIndx = rLen - 2; rIndx >= 0; rIndx--)
+            {
+                for (int cIndx = rLen - 2; cIndx >= 0; cIndx--)
+                {
+                    // Update maxValue
+                    if (maxMatrix[rIndx + 1, cIndx + 1] - matrix[rIndx, cIndx] > maxValue)
+                    {
+                        maxValue = maxMatrix[rIndx + 1, cIndx + 1] - matrix[rIndx, cIndx];
+                    }
+
+                    maxMatrix[rIndx, cIndx] = Math.Max(matrix[rIndx, cIndx], Math.Max(maxMatrix[rIndx, cIndx + 1], maxMatrix[rIndx + 1, cIndx]));
+                }
+            }
+
+            return maxValue;
+        }
+
+        public void MaxValueTest()
+        {
+            int N = 5;
+
+            int[,] mat = {
+                      { 1, 2, -1, -4, -20 },
+                      { -8, -3, 4, 2, 1 },
+                      { 3, 8, 6, 1, 3 },
+                      { -4, -1, 1, 7, -6 },
+                      { 0, -4, 10, -5, 1 }
+                   };
+
+            Console.WriteLine("Maximum Value is " + MaxValue(mat));
         }
     }
 }
