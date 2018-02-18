@@ -43,7 +43,7 @@ namespace DataStructuresAndAlgorithms
         }
         private void ReplaceZeroColumnNRows_Click(object sender, RoutedEventArgs e)
         {
-            MatrixOperationsObj.ReplaceZeroRowsAndColumnsTest();
+            //MatrixOperationsObj.ReplaceZeroRowsAndColumnsTest();
         }
 
         private void FindBiggestBlockInMatrixDemoButton_Click(object sender, RoutedEventArgs e)

@@ -75,7 +75,7 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
 
                 for (int j = 0; j < c; j++)
                 {
-                    s += String.valueOf(a[i,j]);
+                    s += a[i,j];
                 }
 
                 String k = s;
