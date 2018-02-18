@@ -21,7 +21,7 @@ namespace DataStructuresAndAlgorithms
 
     ===================================================================================================================================================================================================
     */
-    partial class ArraySamples
+    partial class ArrayProblems
     {
 
         static void JaggedArrayDemo()

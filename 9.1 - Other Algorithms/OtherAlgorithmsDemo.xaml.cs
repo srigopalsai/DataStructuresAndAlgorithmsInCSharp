@@ -41,10 +41,10 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 			A aObj3 = aObj1.GetClone();
 			aObj3.i = 30;
 
-			string result = DataStructuresAndAlgorithms.ArraySamples.FindTripletInArray();
+			string result = DataStructuresAndAlgorithms.ArrayProblems.FindTripletInArray();
 			MessageBox.Show("Triplets in Array\n" + result);
 
-			// result = DataStructuresAndAlgorithms.ArraySamples.PrintInSpiral();
+			// result = DataStructuresAndAlgorithms.ArrayProblems.PrintInSpiral();
 			// MessageBox.Show("Triplets in Array\n" + result);
 			//System.Collections.Concurrent.
 

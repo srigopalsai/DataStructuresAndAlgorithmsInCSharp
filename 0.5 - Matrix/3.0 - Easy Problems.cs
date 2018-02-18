@@ -159,13 +159,9 @@ namespace DataStructuresAndAlgorithms
                 if ((rowIndx + colIndx) % 2 == 0) // Move Up
                 {
                     if (colIndx == colLength - 1)
-                    {
                         rowIndx++;
-                    }
                     else if (rowIndx == 0)
-                    {
                         colIndx++;
-                    }
                     else
                     {
                         rowIndx--;
@@ -175,13 +171,9 @@ namespace DataStructuresAndAlgorithms
                 else // Move Down
                 {
                     if (rowIndx == rowLength - 1)
-                    {
                         colIndx++;
-                    }
                     else if (colIndx == 0)
-                    {
                         rowIndx++;
-                    }
                     else
                     {
                         rowIndx++;
@@ -192,6 +184,83 @@ namespace DataStructuresAndAlgorithms
             return resultArray;
         }
 
+        public void DiagonalOrderDisplay(int[,] matrix)
+        {
+            int ROW = matrix.GetLength(0);
+            int COL = matrix.GetLength(1);
+
+            // There will be ROW+COL-1 lines in the output
+            for (int line = 1; line <= (ROW + COL - 1); line++)
+            {
+                /* Get column index of the first element in this line of output.
+                   The index is 0 for first ROW lines and line - ROW for remaining lines  */
+                int start_col = Math.Max(0, line - ROW);
+
+                /* Get count of elements in this line. 
+                 * The count of elements is equal to minimum of line number, COL-start_col and ROW */
+                int count = Math.Min(line, Math.Min((COL - start_col), ROW));
+
+                for (int j = 0; j < count; j++)
+                {
+                    Console.WriteLine(matrix[Math.Min(ROW, line) - j - 1, start_col + j]);
+                }
+                Console.WriteLine();
+            }
+        }
+
+        // Driver program to test above functions
+        int DiagonalOrderDisplayTest()
+        {
+            int[,] M = {{1, 2, 3, 4},
+                       {5, 6, 7, 8},
+                       {9, 10, 11, 12},
+                       {13, 14, 15, 16},
+                       {17, 18, 19, 20},
+                      };
+
+            Console.WriteLine("\nDiagonal printing of matrix is \n");
+            DiagonalOrderDisplay(M);
+            return 0;
+        }
+
+        public static void DiagnolTraversalTR2BL(int[,] mat)
+        {
+            int rTrvIndx = 0;
+            int cTrvIndx = mat.GetLength(1) - 1;
+
+            while (rTrvIndx < mat.GetLength(0))
+            {
+                int rIndx = rTrvIndx;
+                int cIndx = cTrvIndx;
+                int indx = Math.Abs(cTrvIndx - rTrvIndx);
+
+                while (indx < mat.GetLength(0))
+                {
+                    Console.Write(mat[rIndx, cIndx] + " ");
+                    rIndx++;
+                    cIndx++;
+                    indx++;
+                }
+
+                if (cTrvIndx == 0)
+                    rTrvIndx++;
+                else
+                    cTrvIndx--;
+
+                Console.WriteLine();
+            }
+        }
+
+        static void DiagnolTraversalTR2BLTest(string[] args)
+        {
+            int[,] mat = new int[,] {  {01,02,03,04,05},
+                                        {06,07,08,09,10},
+                                        {11,12,13,14,15},
+                                        {16,17,18,19,20},
+                                        {21,22,23,24,25} };
+
+            DiagnolTraversalTR2BL(mat);
+        }
         // 329 https://leetcode.com/problems/longest-increasing-path-in-a-matrix/?tab=Description
 
         public void LongestIncreasingPathTest()
@@ -411,44 +480,101 @@ namespace DataStructuresAndAlgorithms
             return matrix;
         }
 
-        // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/description/
-        public class NumMatrix
+
+        /**
+         Video link - https://youtu.be/2xvJ41-hsoE
+ 
+         Given a 2D matrix of 0s and 1s. Find largest rectangle of all 1s in this matrix.
+ 
+         Maintain a temp array of same size as number of columns. 
+         Copy first row to this temp array and find largest rectangular area for histogram. 
+         Then keep adding elements of next row to this temp array if they are not zero. 
+         If they are zero then put zero there. Every time calculate max area in histogram.
+ 
+         Time complexity - O(rows*cols)
+         Space complexity - 2 X O(cols) - if number of cols is way higher than rows then do this process for rows and not columns.
+ 
+         References:
+
+         https://leetcode.com/problems/maximal-rectangle/description/
+         */
+
+        public int MaximalRectangle(char[,] matrix)
         {
-            private int[,] dpMat;
+            if (matrix == null || matrix.Length == 0)
+                return 0;
 
-            public NumMatrix(int[,] matrix)
+            int area = 0;
+            int maxArea = 0;
+
+            int[] dpLkUp = new int[matrix.GetLength(1)];
+
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
             {
-                if (matrix == null || matrix.Length == 0 )
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
                 {
-                    return;
-                }
-
-                int rLen = matrix.GetLength(0);
-                int cLen = matrix.GetLength(1);
-
-                dpMat = new int[rLen + 1, cLen + 1];
-
-                for (int rIndx = 1; rIndx <= rLen; rIndx++)
-                {
-                    for (int cIndx = 1; cIndx <= cLen; cIndx++)
+                    if (matrix[rIndx, cIndx] == '0')
                     {
-                        dpMat[rIndx, cIndx] = dpMat[rIndx - 1, cIndx] + dpMat[rIndx, cIndx - 1] - 
-                                           dpMat[rIndx - 1, cIndx - 1] + matrix[rIndx - 1, cIndx - 1];
+                        dpLkUp[cIndx] = 0;
+                    }
+                    else
+                    {
+                        dpLkUp[cIndx] += 1;//(int)Char.GetNumericValue(matrix[rIndx, cIndx]);
                     }
                 }
+
+                area = MaxAreaHistogram(dpLkUp);
+
+                maxArea = Math.Max(area, maxArea);
             }
-
-            public int SumRegion(int row1, int col1, int row2, int col2)
-            {
-                int r1Indx = Math.Min(row1, row2);
-                int r2Indx = Math.Max(row1, row2);
-
-                int c1Indx = Math.Min(col1, col2);
-                int c2Indx = Math.Max(col1, col2);
-
-                return  dpMat[r2Indx + 1, c2Indx + 1] - dpMat[r2Indx + 1, c1Indx] - 
-                        dpMat[r1Indx, c2Indx + 1] + dpMat[r1Indx, c1Indx];
-            }
+            return maxArea;
         }
+
+        public int MaxAreaHistogram(int[] heights)
+        {
+            int area = 0;
+            int maxArea = 0;
+
+            Stack<int> stack = new Stack<int>();
+
+            for (int indx = 0; indx <= heights.Length; indx++)
+            {
+                int curHeight = indx == heights.Length ? 0 : heights[indx];
+
+                if (stack.Count == 0 || curHeight >= heights[stack.Peek()])
+                {
+                    stack.Push(indx);
+                    continue;
+                }
+
+                while (stack.Count > 0 && curHeight < heights[stack.Peek()])
+                {
+                    int top = stack.Pop();
+
+                    area = heights[top] * (stack.Count == 0 ? indx : indx - 1 - stack.Peek());
+
+                    maxArea = Math.Max(maxArea, area);
+                }
+
+                stack.Push(indx);
+            }
+
+            return maxArea;
+        }
+
+        // 223 https://leetcode.com/problems/rectangle-area/description/
+        int ComputeArea(int tl1, int tr1, int bl1, int br1, int tl2, int tr2, int bl2, int br2)
+        {
+
+            int left = Math.Max(tl1, tl2);
+            int right = Math.Max(Math.Min(bl1, bl2), left);
+
+            int bottom = Math.Max(tr1, tr2);
+            int top = Math.Max(Math.Min(br1, br2), bottom);
+
+            return (bl1 - tl1) * (br1 - tr1) -
+                   (right - left) * (top - bottom) +
+                   (bl2 - tl2) * (br2 - tr2);
+        }        
     }
 }

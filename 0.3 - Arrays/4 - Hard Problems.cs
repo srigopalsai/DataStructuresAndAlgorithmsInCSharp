@@ -339,69 +339,6 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 nums[lpCnt] = tmp[lpCnt];
         }
 
-        /* E.g.nums = [1, 2, 3, 4, 5, 6, 7, 8, 9] k = 3
-                The replacing process is as follow:
-          Iteration When swapPos = swapDone.
-                    Step 1) 1->4->7     - Result Array : 7, 2, 3, 1, 5, 6, 4, 8, 9
-                    Step 2) 2->5->8     - Result Array : 7, 8, 3, 1, 2, 6, 4, 5, 9
-                    Step 3) 3->6->9     - Result Array : 7, 8, 9, 1, 2, 3, 4, 5, 6 
-                    
-        k = k % n; Not really necessary if k is always less than n */
-
-        public void Rotate(int[] nums, int k)
-        {
-            if (nums == null || nums.Length == 0 || k % nums.Length == 0)
-                return;
-
-            int swapPos = 0;
-            int nextSwap = 0;
-
-            int tmpVal = 0;
-            int val2Swap = nums[0];
-
-            for (int lpCnt = 0; lpCnt < nums.Length; lpCnt++)
-            {
-                swapPos = (swapPos + k) % nums.Length;
-
-                tmpVal = nums[swapPos];
-                nums[swapPos] = val2Swap;
-
-                if (swapPos == nextSwap)
-                {
-                    nextSwap++;
-                    swapPos = nextSwap;
-                    val2Swap = nums[swapPos];
-                }
-                else
-                    val2Swap = tmpVal;
-            }
-        }
-
-        // Reversing or Reversal Algorithm
-        public void Rotate2(int[] nums, int k)
-        {
-            k %= nums.Length;
-            SwapItems(nums, 0, nums.Length - 1);
-
-            SwapItems(nums, 0, k - 1);
-            SwapItems(nums, k, nums.Length - 1);
-        }
-
-        public void Rotate3ExtraSpace(int[] nums) { /*TODO*/}
-
-        public void SwapItems(int[] nums, int start, int end)
-        {
-            while (start < end)
-            {
-                int temp = nums[start];
-                nums[start] = nums[end];
-                nums[end] = temp;
-
-                start++;
-                end--;
-            }
-        }
-
         // 4 https://leetcode.com/problems/median-of-two-sorted-arrays/description/
         // FindMedianSortedArrays(new int[] { 10, 30, 50, 70, 90 }, new int[] { 20, 40, 60, 80, 100 });
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
@@ -983,7 +920,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             for (int indx = 0; indx <= heights.Length; indx++)
             {
-                int curHeight = (indx == heights.Length ? 0 : heights[indx]);
+                int curHeight = indx == heights.Length ? 0 : heights[indx];
 
                 if (stack.Count == 0 || curHeight >= heights[stack.Peek()])
                 {
@@ -1006,5 +943,34 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return maxArea;
         }
 
+        // https://leetcode.com/problems/container-with-most-water/description/
+        public int MaxArea(int[] heights)
+        {
+            int maxArea = 0;
+            int curMaxArea = 0;
+            int maxHeight = 0;
+
+            int lIndx = 0;
+            int rIndx = heights.Length - 1;
+
+            while (lIndx < rIndx)
+            {
+                maxHeight = Math.Min(heights[lIndx], heights[rIndx]);
+                curMaxArea = (rIndx - lIndx) * maxHeight;
+                maxArea = Math.Max(maxArea, curMaxArea);
+
+                while (heights[lIndx] <= maxHeight && lIndx < rIndx)
+                {
+                    lIndx++;
+                }
+
+                while (heights[rIndx] <= maxHeight && lIndx < rIndx)
+                {
+                    rIndx--;
+                }
+            }
+
+            return maxArea;
+        }
     }
 }

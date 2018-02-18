@@ -747,27 +747,24 @@ and make it out of the array at the other end in minimum number of hops.*/
             You may assume that the array does not change.
             There are many calls to sumRange function.
          */
+
         public class NumArray
         {
-            int[] nums;
+            private int[] sum;
 
             public NumArray(int[] nums)
             {
-                for (int indx = 1; indx < nums.Length; indx++)
+                sum = new int[nums.Length + 1];
+                for (int idx = 0; idx < nums.Length; idx++)
                 {
-                    nums[indx] += nums[indx - 1];
+                    sum[idx + 1] = sum[idx] + nums[idx];
                 }
-                this.nums = nums;
             }
 
-            public int SumRange(int stIndx, int edIndx)
+            public int SumRange(int i, int j)
             {
-                if (stIndx == 0)
-                {
-                    return nums[edIndx];
-                }
-                return nums[edIndx] - nums[stIndx - 1];
-            }       
+                return sum[j + 1] - sum[i];
+            }
         }
 
         // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/
@@ -821,7 +818,6 @@ and make it out of the array at the other end in minimum number of hops.*/
             }
         }
 
-
         // 53 https://leetcode.com/problems/maximum-subarray/
         public int MaxSubArray(int[] nums)
         {
@@ -833,10 +829,28 @@ and make it out of the array at the other end in minimum number of hops.*/
 
             for (int lpCnt = 1; lpCnt < nums.Length; ++lpCnt)
             {
-                currMax = Math.Max(currMax + nums[lpCnt], nums[lpCnt]);
+                currMax = Math.Max(nums[lpCnt], currMax + nums[lpCnt] );
                 maxSoFar = Math.Max(maxSoFar, currMax);
             }
             return maxSoFar;
+        }
+
+        // Kadanes Algorithm  https://en.wikipedia.org/wiki/Maximum_subarray_problem 
+        // Should have one positve number to work
+        public int MaxSubArray2(int[] nums)
+        {
+            int[] dp = new int[nums.Length];
+
+            dp[0] = nums[0];
+            int max = dp[0];
+
+            for (int idx = 1; idx < nums.Length; idx++)
+            {
+                dp[idx] = Math.Max(nums[idx] + dp[idx - 1], nums[idx]);
+                max = Math.Max(max, dp[idx]);
+            }
+
+            return max;
         }
 
         public int MaxProduct2(int[] nums)

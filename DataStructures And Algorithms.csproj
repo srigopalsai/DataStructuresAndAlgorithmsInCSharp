@@ -127,12 +127,7 @@
       <DependentUpon>BitwiseOperationsDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="0.2 - Binary and Bitwise Operations\XOR Operations.cs" />
-    <Compile Include="0.3 - Arrays\5.1 - Search - Max Sum Path In Two Arrays.cs" />
-    <Compile Include="0.3 - Arrays\5.4 - Search - Occurring N by 2 Value - Moores Voting Algorithm.cs" />
-    <Compile Include="0.3 - Arrays\9 - Multiple Problems 2.cs" />
-    <Compile Include="0.3 - Arrays\2.2 - Sum - Three Sum Problem.cs" />
-    <Compile Include="0.3 - Arrays\5.3 - Search - Missing 2 Numbers In Array.cs" />
-    <Compile Include="0.3 - Arrays\9.3 - Kandane Max Sub Array With Largest Sum.cs" />
+    <Compile Include="0.3 - Arrays\4 - Hard Problems.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
@@ -173,9 +168,10 @@
     <Compile Include="4.0 - Trees\1 - Binary Tree Operations.cs" />
     <Compile Include="4.0 - Trees\2 - Min Max Heaps.cs" />
     <Compile Include="4.0 - Trees\2 - MaxHeap.cs" />
-    <Compile Include="4.0 - Trees\B and B Plus Trees.cs" />
+    <Compile Include="4.0 - Trees\2 - B and B Plus Trees.cs" />
+    <Compile Include="4.0 - Trees\5 - Binary Indexed Tree Or FenwickTree.cs" />
     <Compile Include="4.0 - Trees\Generic Tree in Java.cs" />
-    <Compile Include="4.0 - Trees\SegmentTree.cs" />
+    <Compile Include="4.0 - Trees\4 - SegmentTree.cs" />
     <Compile Include="4.0 - Trees\SortedSLinkedListToBalancedBST.cs" />
     <Compile Include="4.0 - Trees\SplaTree.cs" />
     <Compile Include="4.0 - Trees\Ternary Search Tree.cs" />
@@ -239,15 +235,10 @@
     <Compile Include="8.0 - String Algorithms\ParanthsesPermuations.cs" />
     <Compile Include="8.0 - String Algorithms\5 - Permutations - InSubString.cs" />
     <Compile Include="8.0 - String Algorithms\String Problmes - Manipulation.cs" />
-    <Compile Include="0.3 - Arrays\4 - Remove Duplicates.cs" />
-    <Compile Include="0.3 - Arrays\5.2 - Search - Missing 1 Number In Array.cs" />
-    <Compile Include="0.3 - Arrays\9.1 - Minimum Number Of Jumps To Reach End.cs" />
-    <Compile Include="0.3 - Arrays\7 - Array Positions Based On Its Elements.cs" />
+    <Compile Include="0.3 - Arrays\2 - Easy Problems - Searching.cs" />
     <Compile Include="0.3 - Arrays\ArraysDemo.xaml.cs">
       <DependentUpon>ArraysDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="0.3 - Arrays\8 - Local Minima And Maxima.cs" />
-    <Compile Include="0.3 - Arrays\9 - Move Zeros To Right.cs" />
     <Compile Include="0.5 - Matrix\7.0 - Matrix - Multiplication.cs" />
     <Compile Include="0.5 - Matrix\1.0 - Fill - FloodFill or SeedFill Algorithm.cs" />
     <Compile Include="0.5 - Matrix\GameOf15.cs" />
@@ -317,14 +308,11 @@
     <Compile Include="6.0 - Sorting Techniques\9.3 - BucketSortNI.cs" />
     <Compile Include="7.0 - Searching Techniques\2 - InterpolationSearch.cs" />
     <Compile Include="7.0 - Searching Techniques\3.2 - Binary Search In Random Sorted Array.cs" />
-    <Compile Include="0.3 - Arrays\2.3 - Sum - zSummedAreaTableNI.cs" />
-    <Compile Include="0.3 - Arrays\2.1 - Sum - Of 2 Nums In Sorted Array.cs" />
-    <Compile Include="0.3 - Arrays\3 - Tripplet.cs" />
+    <Compile Include="0.3 - Arrays\3 - Medium Problems.cs" />
     <Compile Include="0.5 - Matrix\3.0 - Multiple Problems - Traversal.cs" />
-    <Compile Include="0.3 - Arrays\1.1 - 2nd Biggest.cs" />
-    <Compile Include="0.3 - Arrays\9.2 - JaggedArray.cs" />
+    <Compile Include="0.3 - Arrays\1 - Introduction and Basics.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
-    <Compile Include="0.5 - Matrix\3.0 - Multiple Problmes 2.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Medium Problmes.cs" />
     <Compile Include="0.5 - Matrix\BackTrackingAlgorithm.cs" />
     <Compile Include="0.5 - Matrix\6.0 - Rat In Maze Puzzle PI.cs" />
     <Compile Include="0.5 - Matrix\4.0 - Replace - ZeroRowsAndColumns.cs" />
@@ -510,9 +498,10 @@
   <ItemGroup>
     <None Include="0.0 - Recap Maths\Logarithms Manual Calculation.pdf" />
     <None Include="0.2 - Binary and Bitwise Operations\Bitwise Operations 50+ Samples.docx" />
-    <Compile Include="0.3 - Arrays\9 - Multiple Problems 1.cs" />
+    <Compile Include="0.3 - Arrays\2 - Easy Problems - Manipualations.cs" />
     <None Include="0.4 - Recursion Back Tracking Back Jumping\Time Complexity Analysis of Recursive Functions.docx" />
-    <Compile Include="0.5 - Matrix\3.0 - Multiple Problems 1.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Easy Problems.cs" />
+    <Compile Include="0.5 - Matrix\3.0 - Hard Problems.cs" />
     <None Include="4.0 - Trees\TreeAndGraphs.pptx" />
     <None Include="6.0 - Sorting Techniques\5.0 - MergeSort.pptx" />
     <Compile Include="6.0 - Sorting Techniques\5.1 Merge 2 Arrays In Sorted Order.cs" />

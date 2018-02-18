@@ -225,19 +225,52 @@ namespace DataStructuresAndAlgorithms
             int rowLen = matrix.GetLength(0);
             int colLen = matrix.GetLength(1);
 
-            for (int line = 1; line <= (rowLen + colLen - 1); line++)
+            // There will be ROW+COL-1 lines in the output
+            for (int lineIndx = 1; lineIndx <= (rowLen + colLen - 1); lineIndx++)
             {
                 // Get column index of the first element in this line of output.
                 // The index is 0 for first ROW lines and line - ROW for remaining lines
-                int start_col = Math.Max(0, line - rowLen);
+                int cStIndx = Math.Max(0, lineIndx - rowLen);
 
-                /* The count of elements is equal to minimum of line number, COL-start_col and ROW */
-                int count = Math.Min(line, Math.Min((colLen - start_col), rowLen));
+                /* The count of elements is equal to minimum of line number, COLLen-start_col and ROWLen */
+                // No of items in each line.
+                int itemCount = Math.Min(lineIndx, Math.Min((colLen - cStIndx), rowLen));
 
-                for (int indx = 0; indx < count; indx++)
+                for (int indx = 0; indx < itemCount; indx++)
                 {
-                    Console.Write(matrix[Math.Min(rowLen, line) - indx - 1, start_col + indx]);
+                    int rIndx = Math.Min(rowLen, lineIndx) - indx - 1;
+                    int cIndx = cStIndx + indx;
+
+                    Console.Write(matrix[rIndx, cIndx]);
+                }  
+
+                Console.WriteLine();
+            }
+        }
+
+        public static void DiagnolTraversal(int[,] mat)
+        {
+            int rStartIndx = 0;
+            int cStartIndx = mat.GetLength(1) - 1;
+
+            while (rStartIndx < mat.GetLength(0))
+            {
+                int rIndx = rStartIndx;
+                int cIndx = cStartIndx;
+                int indx = Math.Abs(cStartIndx - rStartIndx);
+
+                while (indx < mat.GetLength(0))
+                {
+                    Console.Write(mat[rIndx, cIndx] + " ");
+                    rIndx++;
+                    cIndx++;
+                    indx++;
                 }
+
+                if (cStartIndx == 0)
+                    rStartIndx++;
+                else
+                    cStartIndx--;
 
                 Console.WriteLine();
             }
