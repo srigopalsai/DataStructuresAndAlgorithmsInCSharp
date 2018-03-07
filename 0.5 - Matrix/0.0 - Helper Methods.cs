@@ -271,68 +271,56 @@ namespace DataStructuresAndAlgorithms
     {
         public static IEnumerable<T> SliceRow<T>(this T[,] array, int row)
         {
-            for (var i = array.GetLowerBound(1); i <= array.GetUpperBound(1); i++)
+            for (int indx = array.GetLowerBound(1); indx <= array.GetUpperBound(1); indx++)
             {
-                yield return array[row, i];
+                yield return array[row, indx];
             }
         }
 
         public static IEnumerable<T> SliceColumn<T>(this T[,] array, int column)
         {
-            for (var i = array.GetLowerBound(0); i <= array.GetUpperBound(0); i++)
+            for (int indx = array.GetLowerBound(0); indx <= array.GetUpperBound(0); indx++)
             {
-                yield return array[i, column];
+                yield return array[indx, column];
             }
         }
 
-        /// <summary>
-        /// Returns the row with number 'row' of this matrix as a 1D-Array.
-        /// </summary>
         public static T[] GetRow<T>(this T[,] matrix, int row)
         {
             var rowLength = matrix.GetLength(1);
             var rowVector = new T[rowLength];
 
-            for (var i = 0; i < rowLength; i++)
-                rowVector[i] = matrix[row, i];
+            for (int indx = 0; indx < rowLength; indx++)
+                rowVector[indx] = matrix[row, indx];
 
             return rowVector;
         }
 
-        /// <summary>
-        /// Sets the row with number 'row' of this 2D-matrix to the parameter 'rowVector'.
-        /// </summary>
         public static void SetRow<T>(this T[,] matrix, int row, T[] rowVector)
         {
-            var rowLength = matrix.GetLength(1);
+            int rowLength = matrix.GetLength(1);
 
-            for (var i = 0; i < rowLength; i++)
-                matrix[row, i] = rowVector[i];
+            for (int indx = 0; indx < rowLength; indx++)
+                matrix[row, indx] = rowVector[indx];
         }
 
-        /// <summary>
-        /// Returns the column with number 'col' of this matrix as a 1D-Array.
-        /// </summary>
         public static T[] GetCol<T>(this T[,] matrix, int col)
         {
-            var colLength = matrix.GetLength(0);
-            var colVector = new T[colLength];
+            int colLength = matrix.GetLength(0);
+            T[] colVector = new T[colLength];
 
-            for (var i = 0; i < colLength; i++)
-                colVector[i] = matrix[i, col];
+            for (int indx = 0; indx < colLength; indx++)
+                colVector[indx] = matrix[indx, col];
 
             return colVector;
         }
 
-        /// <summary>
-        /// Sets the column with number 'col' of this 2D-matrix to the parameter 'colVector'.
-        /// </summary>
         public static void SetCol<T>(this T[,] matrix, int col, T[] colVector)
         {
-            var colLength = matrix.GetLength(0);
+            int colLength = matrix.GetLength(0);
 
-            for (var i = 0; i < colLength; i++)
-                matrix[i, col] = colVector[i];
+            for (int indx = 0; indx < colLength; indx++)
+                matrix[indx, col] = colVector[indx];
         }
     }
 }

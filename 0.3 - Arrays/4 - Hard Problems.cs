@@ -975,22 +975,22 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
         // Hard 41 https://leetcode.com/problems/first-missing-positive/description/
 
-        public int FirstMissingPositive(int[] A, int n)
+        public int FirstMissingPositive(int[] nums, int n)
         {
             for (int indx = 0; indx < n; ++indx)
             {
-                int digit = A[indx];
+                int digit = nums[indx];
 
-                while (digit <= n && digit > 0 && A[digit - 1] != digit)
+                while (digit <= n && digit > 0 && nums[digit - 1] != digit)
                 {
-                    swap(A[digit - 1], A[indx]);
-                    digit = A[indx];
+                    Common.Swap(ref nums[digit - 1], ref nums[indx]);
+                    digit = nums[indx];
                 }
             }
 
             for (int indx = 0; indx < n; ++indx)
             {
-                if (A[indx] != indx + 1)
+                if (nums[indx] != indx + 1)
                 {
                     return indx + 1;
                 }

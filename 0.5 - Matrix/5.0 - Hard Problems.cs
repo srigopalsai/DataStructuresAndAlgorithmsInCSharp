@@ -225,10 +225,10 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
 
         public int[,] ReverseOnDiagonals(int[,] matrix)
         {
-            int[,] result = matrix.Select(a => a.ToArray()).ToArray();
-
             int rLen = matrix.GetLength(0);
             int cLen = matrix.GetLength(1);
+
+            int[,] result = new int[rLen, cLen];
 
             for (int rIndx = 0; rIndx < rLen; rIndx++)
             {
@@ -240,6 +240,7 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
                     }
                 }
             }
+
             return result;
         }
     }

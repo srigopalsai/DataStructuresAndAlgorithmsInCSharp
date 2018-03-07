@@ -163,6 +163,7 @@
     <Compile Include="2.0 - Queue Operations\Array Based Queue.cs" />
     <Compile Include="2.0 - Queue Operations\Linked List Based Queue.cs" />
     <Compile Include="2.0 - Queue Operations\StackOperationsUsingQueues.cs" />
+    <Compile Include="3.0 - Linked Lists\1-SingleLinkedList - Basics.cs" />
     <Compile Include="3.0 - Linked Lists\SortedList.cs" />
     <Compile Include="3.0 - Linked Lists\TriplyLinkedList.cs" />
     <Compile Include="4.0 - Trees\0 - Notes.cs" />
@@ -343,11 +344,11 @@
     <Compile Include="9.1 - Other Algorithms\9 - NextLargestNumber.cs" />
     <Compile Include="7.0 - Searching Techniques\5 - Selection Algorithms - Kth Smallest.cs" />
     <Compile Include="1.0 - Stack Operations\1 - StackDemo.cs" />
-    <Compile Include="1.0 - Stack Operations\2 - StackOperation.cs" />
+    <Compile Include="1.0 - Stack Operations\1 - StackOperation.cs" />
     <Compile Include="2.0 - Queue Operations\4-PriorityQueueNI.cs" />
     <Compile Include="2.0 - Queue Operations\1-QueueDemo.cs" />
     <Compile Include="2.0 - Queue Operations\2-QueueOperationsWithStack.cs" />
-    <Compile Include="3.0 - Linked Lists\1-SingleLinkedList.cs" />
+    <Compile Include="3.0 - Linked Lists\1-SingleLinkedList - Multiple Problems.cs" />
     <Compile Include="3.0 - Linked Lists\2-CircularQueueAndLinkedList.cs" />
     <Compile Include="3.0 - Linked Lists\3-DoublyLinkedListDemo.cs" />
     <Compile Include="3.0 - Linked Lists\LinkedListDemo.xaml.cs">

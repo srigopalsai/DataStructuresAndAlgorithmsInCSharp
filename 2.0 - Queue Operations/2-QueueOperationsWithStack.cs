@@ -5,14 +5,13 @@ using System.Windows;
 
 namespace DataStructuresAndAlgorithms
 {
-    /*
-    Requires 2 Stacks.
+    //Requires 2 Stacks.
 
-    Time Complexity:
-    EnQueue : O(1)
-    DeQueue : O(n)
-    */
+    //Time Complexity:
+    //EnQueue : O(1)
+    //DeQueue : O(n)
 
+    // 232 Easy https://leetcode.com/problems/implement-queue-using-stacks/description/
     public class QueueSamples
     {
         private static Stack<int> inbox = new Stack<int>();
@@ -42,7 +41,7 @@ namespace DataStructuresAndAlgorithms
             inbox.Push(item);
         }
 
-        // Pop elements from inbox and push them into outbox stack. So they will get stored in reverse.
+        // Pop elements from inbox and Push them into outbox stack. So they will get stored in reverse.
         // Pop each element from outbox, so that we will get the first element which got inserted.
         public static int DeQueue()
         {
