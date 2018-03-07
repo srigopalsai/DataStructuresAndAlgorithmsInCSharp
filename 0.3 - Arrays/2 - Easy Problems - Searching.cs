@@ -39,6 +39,156 @@ namespace DataStructuresAndAlgorithms
     */
     partial class ArrayProblems 
     {
+        // 35 https://leetcode.com/problems/search-insert-position/description/
+        public int SearchInsert(int[] nums, int target)
+        {
+            int lIndx = 0;
+            int rIndx = nums.Length - 1;
+
+            while (lIndx <= rIndx)
+            {
+                int mIndx = (lIndx + rIndx) / 2;
+
+                if (nums[mIndx] == target)
+                {
+                    return mIndx;
+                }
+                else if (nums[mIndx] > target)
+                {
+                    rIndx = mIndx - 1;
+                }
+                else
+                {
+                    lIndx = mIndx + 1;
+                }
+            }
+            return lIndx;
+        }
+
+        // https://leetcode.com/problems/first-bad-version/description/
+        public int BinarySearch(int[] nums, int noToFind)
+        {
+            int leftIndx = 0;
+            int rightIndx = nums.Length - 1;
+            int midIndx = 0;
+
+            while (leftIndx <= rightIndx)
+            {
+                midIndx = (leftIndx + rightIndx) / 2;
+
+                if (nums[midIndx] == noToFind)
+                {
+                    return midIndx;
+                }
+                else if (nums[midIndx] < noToFind)
+                {
+                    leftIndx = midIndx + 1;
+                }
+                else
+                {
+                    rightIndx = midIndx - 1;
+                }
+            }
+
+            return -1;
+        }
+
+        // Easy 169 Moore Voting Algorithm https://leetcode.com/problems/majority-element/description/
+        // https://en.wikipedia.org/wiki/Boyer–Moore_majority_vote_algorithm
+        public int MajorityElement(int[] num)
+        {
+            int major = num[0];
+            int count = 1;
+
+            for (int indx = 1; indx < num.Length; indx++)
+            {
+                if (count == 0)
+                {
+                    count++;
+                    major = num[indx];
+                }
+                else if (major == num[indx])
+                {
+                    count++;
+                }
+                else
+                    count--;
+            }
+            return major;
+        }
+
+        // Medium 81 https://leetcode.com/problems/majority-element-ii/description/
+        // Max 2 numbers can be repeated n/3 times in n.
+        public List<int> MajorityElement2(int[] nums)
+        {
+            List<int> majList = new List<int>();
+
+            if (nums == null || nums.Length == 0)
+            {
+                return majList;
+            }
+
+            int num1 = nums[0];
+            int num2 = nums[0];
+            int n1Cnt = 1;
+            int n2Cnt = 0;
+
+            foreach (int val in nums)
+            {
+                if (n1Cnt == 0)
+                {
+                    num1 = val;
+                }
+                if (n2Cnt == 0)
+                {
+                    num2 = val;
+                }
+
+                if (val == num1)
+                {
+                    n1Cnt++;
+                }
+                else if (val == num2)
+                {
+                    n2Cnt++;
+                }
+                else
+                {
+                    n1Cnt--;
+                    n2Cnt--;
+                }
+            }
+
+            n1Cnt = 0;
+            n2Cnt = 0;
+
+            // Get full count of each number.
+            foreach (int val in nums)
+            {
+                if (val == num1)
+                {
+                    n1Cnt++;
+                }
+                else if (val == num2)
+                {
+                    n2Cnt++;
+                }
+            }
+
+            // Ensure the found numbers are really Len/3
+            if (n1Cnt > nums.Length / 3)
+            {
+                majList.Add(num1);
+            }
+
+            if (n2Cnt > nums.Length / 3)
+            {
+                majList.Add(num2);
+            }
+
+            return majList;
+        }
+        
         // 643 https://leetcode.com/problems/maximum-average-subarray-i/description/
         public double FindMaxAverage(int[] nums, int k)
         {
@@ -455,5 +605,133 @@ From this we can calculate a and b, the two missing numbers.
         //  printf("\n MIN steps : %d\n",find_min_steps(arr,len));
         //}
 
+        // Easy 414. https://leetcode.com/problems/third-maximum-number/description/
+        public int ThirdMax(int[] nums)
+        {
+            int? max1st = null;
+            int? max2nd = null;
+            int? max3rd = null;
+
+            foreach (int num in nums)
+            {
+                if (num == max1st || num == max2nd || num == max3rd)
+                {
+                    continue;
+                }
+
+                if (max1st == null || num > max1st)
+                {
+                    max3rd = max2nd;
+                    max2nd = max1st;
+                    max1st = num;
+                }
+                else if (max2nd == null || num > max2nd)
+                {
+                    max3rd = max2nd;
+                    max2nd = num;
+                }
+                else if (max3rd == null || num > max3rd)
+                {
+                    max3rd = num;
+                }
+            }
+
+            return max3rd == null ? (int)max1st : (int)max3rd;
+        }
+
+        public int ThirdMax2(int[] nums)
+        {
+            long max1st = long.MinValue;
+            long max2nd = long.MinValue;
+            long max3rd = long.MinValue;
+
+            foreach (int num in nums)
+            {
+                if (num > max1st)
+                {
+                    max3rd = max2nd;
+                    max2nd = max1st;
+                    max1st = num;
+                }
+                else if (num == max1st)
+                {
+                    continue;
+                }
+                else if (num > max2nd)
+                {
+                    max3rd = max2nd;
+                    max2nd = num;
+                }
+                else if (num == max2nd)
+                {
+                    continue;
+                }
+                else if (num > max3rd)
+                {
+                    max3rd = num;
+                }
+            }
+
+            return max3rd == long.MinValue ? (int)max1st : (int)max3rd;
+        }
+
+        // 485 Easy https://leetcode.com/problems/max-consecutive-ones/description/
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+
+            int maxCnt = 0;
+            int curCnt = 0;
+
+            foreach (int num in nums)
+            {
+                if (num == 1)
+                {
+                    curCnt++;
+                }
+                else
+                {
+                    curCnt = 0;
+                }
+
+                if (maxCnt < curCnt)
+                {
+                    maxCnt = curCnt;
+                }
+            }
+
+            return maxCnt;
+        }
+
+        // 268 Easy https://leetcode.com/problems/missing-number/description/
+        // Gauss Formula
+        public int MissingNumber(int[] nums)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+            }
+
+            int totalSum = nums.Length * (nums.Length + 1) / 2;
+            int missingNum = totalSum - sum;
+
+            return missingNum;
+        }
+
+        public int MissingNumber2(int[] nums)
+        {
+            int indx;
+            int diff = 0;
+
+            for (indx = 0; indx < nums.Length; ++indx)
+            {
+                diff += indx - nums[indx];
+            }
+
+            return diff + indx;
+        }
     }
 }

@@ -151,12 +151,12 @@ Studies entirely abstract concepts. Is not necessarily applied mathematics.
         1. Calculus                 http://ocw.mit.edu/courses/mathematics/18-014-calculus-with-theory-fall-2010/
                                     http://ocw.mit.edu/resources/res-18-005-highlights-of-calculus-spring-2010/
 
-        1.1. Vector Calculus
-        1.2. Lambda Calculus        http://en.wikipedia.org/wiki/Lambda_calculus
-        3. Differential Equations 
-        4. Dynamical Systems 
-        5. Chaos Theory 
-        6. Complex Analysis 
+            1.1. Vector Calculus
+            1.2. Lambda Calculus        http://en.wikipedia.org/wiki/Lambda_calculus
+        2. Differential Equations 
+        3. Dynamical Systems 
+        4. Chaos Theory 
+        5. Complex Analysis 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -175,9 +175,9 @@ Deals with mathematical methods that find use in science, engineering, business,
         1.  Fluid Dynamics 
         2.  Numerical Analysis 
         3.  Optimization 
-        6.  Probability Theory          Concerned with probability, the analysis of random phenomena.   http://en.wikipedia.org/wiki/Probability_theory
-        4.  Statistics                  http://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/
-        5.  Cryptography 
+        4.  Probability Theory          Concerned with probability, the analysis of random phenomena.   http://en.wikipedia.org/wiki/Probability_theory
+        5.  Statistics                  http://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/
+        6.  Cryptography 
 
         7.  Game Theory
         8.  Control Theory

@@ -11,7 +11,9 @@ namespace DataStructuresAndAlgorithms
 
         public int yPos { get; set; }
 
-        Point PreviousPoint { get; set; }
+        public bool Visited { get; set; }
+
+        public Point PreviousPoint { get; set; }
 
         public Point() { }
 
@@ -20,11 +22,6 @@ namespace DataStructuresAndAlgorithms
             this.xPos = x;
             this.yPos = y;
             this.PreviousPoint = prevPoint;
-        }
-
-        public Point GetPreviousPoint()
-        {
-            return this.PreviousPoint;
         }
 
         public static bool IsSafePoint(int[,] matrix, int xPos, int yPos, int safeVal = 1)

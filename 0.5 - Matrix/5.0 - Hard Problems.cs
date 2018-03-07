@@ -3,11 +3,88 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataStructuresAndAlgorithms.OtherAlgorithms;
 
 namespace DataStructuresAndAlgorithms._0._5___Matrix
 {
     public class HardProblems
     {
+        // 42 https://leetcode.com/problems/trapping-rain-water/description/
+        // O(N) Time O(1) Space
+        public int Trap(int[] height)
+        {
+            int lIndx = 0;
+            int rIndx = height.Length - 1;
+
+            int maxUnits = 0;
+            int curMinUnits = 0;
+            int prevMinUnits = 0;
+
+            while (lIndx <= rIndx)
+            {
+                curMinUnits = Math.Min(height[lIndx], height[rIndx]);
+
+                if (prevMinUnits < curMinUnits)
+                {
+                    prevMinUnits = curMinUnits;
+                }
+
+                if (height[lIndx] < height[rIndx])
+                {
+                    maxUnits += prevMinUnits - height[lIndx];
+                    lIndx++;
+                }
+                else
+                {
+                    maxUnits += prevMinUnits - height[rIndx];
+                    rIndx--;
+                }
+            }
+
+            return maxUnits;
+        }
+
+        // O(n) Space and Time
+        public int trap(int[] heights)
+        {
+            if (heights == null || heights.Length == 0)
+                return 0;
+
+            Stack<int> indxStack = new Stack<int>();
+
+            int maxWater = 0;
+            int maxBotWater = 0;
+
+            int indx = 0;
+            int prevIndx = 0;
+            int currIndx = 0;
+
+            while (indx < heights.Length)
+            {
+                if (indxStack.Count() == 0 || heights[indx] <= heights[indxStack.Peek()])
+                {
+                    indxStack.Push(indx++);
+                }
+                else
+                {
+                    currIndx = indxStack.Pop();
+
+                    if (indxStack.Count == 0) // empty means no il
+                    {
+                        maxBotWater = 0;
+                    }
+                    else
+                    {
+                        prevIndx = indxStack.Peek();
+                        maxBotWater = (Math.Min(heights[prevIndx], heights[indx]) - heights[currIndx]) * (indx - prevIndx - 1);
+                    }
+                    maxWater += maxBotWater;
+                }
+            }
+
+            return maxWater;
+        }
+
         // Binary indexed tree or Fenwick Tree
         // https://github.com/mission-peace/interview/blob/master/src/com/interview/tree/FenwickTree.java
         // https://www.youtube.com/watch?v=CWDQJGaN1gY
@@ -82,5 +159,88 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
          * obj.update(row,col,val);
          * int param_2 = obj.sumRegion(row1,col1,row2,col2);
          */
+
+        //https://leetcode.com/problems/trapping-rain-water-ii/description/
+        // https://leetcode.com/problems/trapping-rain-water-ii/discuss/89460/Alternative-approach-using-Dijkstra-in-O(rc-max(log-r-log-c))-time
+        int[,] dirs = new int[,] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+
+        public int trapRainWater(int[,] heightMap)
+        {
+            int m = heightMap.GetLength(0);
+
+            int n = (m == 0 ? 0 : heightMap.GetLength(1));
+            int res = 0;
+
+//            PriorityQueue<int[]> pq = new PriorityQueue<>( (a, b)->a[2] - b[2]);
+
+            //bool[,] visited = new bool[m,n];
+
+            //for (int i = 0; i < m; i++)
+            //{
+            //    pq.Enqueue(new int[] { i, 0, heightMap[i,0] });
+            //    pq.Enqueue(new int[] { i, n - 1, heightMap[i,n - 1] });
+
+            //    visited[i,0] = visited[i,n - 1] = true;
+            //}
+
+            //for (int j = 1; j < n - 1; j++)
+            //{
+            //    pq.Enqueue(new int[] { 0, j, heightMap[0,j] });
+            //    pq.Enqueue(new int[] { m - 1, j, heightMap[m - 1, j] });
+            //    visited[0,j] = visited[m - 1,j] = true;
+            //}
+
+            //while (pq.Count > 0)
+            //{
+            //    int[] cell = pq.Dequeue();
+
+            //    //for (int[] d : dirs)
+            //    //{
+            //    //    int i = cell[0] + d[0], j = cell[1] + d[1];
+            //    //    if (i < 0 || i >= m || j < 0 || j >= n || visited[i,j])
+            //    //        continue;
+
+            //    //    res += Math.Max(0, cell[2] - heightMap[i,j]);
+
+            //    //    pq.Enqueue(new int[] { i, j, Math.Max(heightMap[i,j], cell[2]) });
+
+            //    //    visited[i,j] = true;
+            //    //}
+            //}
+
+            return res;
+        }
+
+        /*
+         https://codefightssolver.wordpress.com/2016/11/04/reverse-on-diagonals/
+
+         Input  [[1, 2, 3],
+                 [4, 5, 6],
+                 [7, 8, 9]]
+
+         Output [[9, 2, 7],
+                 [4, 5, 6],
+                 [3, 8, 1]]
+        */
+
+        public int[,] ReverseOnDiagonals(int[,] matrix)
+        {
+            int[,] result = matrix.Select(a => a.ToArray()).ToArray();
+
+            int rLen = matrix.GetLength(0);
+            int cLen = matrix.GetLength(1);
+
+            for (int rIndx = 0; rIndx < rLen; rIndx++)
+            {
+                for (int cIndx = 0; cIndx < cLen; cIndx++)
+                {
+                    if (rIndx == cIndx || rIndx + cIndx + 1 == rLen)
+                    {
+                        result[rIndx, cIndx] = matrix[rLen - 1 - rIndx, cLen - 1 - cIndx];
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

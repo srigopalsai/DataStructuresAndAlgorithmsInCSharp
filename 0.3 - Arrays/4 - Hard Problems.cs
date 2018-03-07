@@ -972,5 +972,30 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             return maxArea;
         }
+
+        // Hard 41 https://leetcode.com/problems/first-missing-positive/description/
+
+        public int FirstMissingPositive(int[] A, int n)
+        {
+            for (int indx = 0; indx < n; ++indx)
+            {
+                int digit = A[indx];
+
+                while (digit <= n && digit > 0 && A[digit - 1] != digit)
+                {
+                    swap(A[digit - 1], A[indx]);
+                    digit = A[indx];
+                }
+            }
+
+            for (int indx = 0; indx < n; ++indx)
+            {
+                if (A[indx] != indx + 1)
+                {
+                    return indx + 1;
+                }
+            }
+            return n + 1;
+        }
     }
 }

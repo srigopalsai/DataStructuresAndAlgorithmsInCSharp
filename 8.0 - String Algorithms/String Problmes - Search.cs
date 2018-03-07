@@ -1693,6 +1693,39 @@ namespace DataStructuresAndAlgorithms
             }
             return true;
         }
+
+        // Medium 17 - https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/
+
+        public IList<string> LetterCombinations(string digits)
+        {
+            string[] alphaStr = new string[] { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+
+            if (digits.Length == 0)
+            {
+                return new List<string>();
+            }
+
+            Queue<string> ansQ = new Queue<string>();
+
+            ansQ.Enqueue("");
+
+            for (int indx = 0; indx < digits.Length; indx++)
+            {
+                int digit = digits[indx] - '0';
+
+                while (ansQ.Peek().Length == indx)
+                {
+                    String str = ansQ.Dequeue();
+
+                    foreach (char chr in alphaStr[digit])
+                    {
+                        ansQ.Enqueue(str + chr);
+                    }
+                }
+            }
+
+            return ansQ.ToList();
+        }
     }
 
     public static class AnagramExtensions

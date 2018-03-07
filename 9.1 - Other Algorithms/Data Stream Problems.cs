@@ -5,6 +5,95 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms.OtherAlgorithms
 {
+    public class PriorityQueue<T>
+    {
+        IComparer<T> comparer;
+        T[] heapArray;
+
+        public int Count { get; private set; }
+
+        public PriorityQueue(int capacity = 16, IComparer<T> comparer = null)
+        {
+            this.comparer = comparer ?? Comparer<T>.Default;
+            this.heapArray = new T[capacity];
+        }
+
+        public void Enqueue(T value)
+        {
+            if (Count >= heapArray.Length)
+            {
+                Array.Resize(ref heapArray, Count * 2);
+            }
+
+            heapArray[Count] = value;
+            SiftUp(Count++);
+        }
+
+        public T Dequeue()
+        {
+            T value = Peek();
+            heapArray[0] = heapArray[--Count];
+
+            if (Count > 1)
+            {
+                SiftDown(0);
+            }
+
+            return value;
+        }
+
+        public T Peek() // Or Top
+        {
+            if (Count > 0)
+            {
+                return heapArray[0];
+            }
+
+            throw new InvalidOperationException("");
+        }
+
+        void SiftUp(int curPosition)
+        {
+            T value = heapArray[curPosition];
+
+            for (int index = curPosition / 2; curPosition > 0; curPosition = index, index /= 2)
+            {
+                if (comparer.Compare(value, heapArray[index]) > 0)
+                {
+                    heapArray[curPosition] = heapArray[index];
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            heapArray[curPosition] = value;
+        }
+
+        void SiftDown(int curPosition)
+        {
+            T value = heapArray[curPosition];
+
+            for (int index = curPosition * 2; index < Count; curPosition = index, index *= 2)
+            {
+                if (index + 1 < Count && comparer.Compare(heapArray[index + 1], heapArray[index]) > 0)
+                {
+                    index++;
+                }
+
+                if (comparer.Compare(value, heapArray[index]) >= 0)
+                {
+                    break;
+                }
+
+                heapArray[curPosition] = heapArray[index];
+            }
+
+            heapArray[curPosition] = value;
+        }
+    }
+
     // LC 346 Moving Average Using Queue
     //------------------------------------------------------------------------------------------------------------
     // https://discuss.leetcode.com/category/430/moving-average-from-data-stream
@@ -212,96 +301,6 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
             else
             {
                 return (minPQ.Peek() - maxPQ.Peek()) / 2;
-            }
-        }
-
-        // Max heap
-        public class PriorityQueue<T>
-        {
-            IComparer<T> comparer;
-            T[] heapArray;
-
-            public int Count { get; private set; }
-
-            public PriorityQueue(int capacity = 16, IComparer<T> comparer = null)
-            {
-                this.comparer = comparer ?? Comparer<T>.Default;
-                this.heapArray = new T[capacity];
-            }
-
-            public void Enqueue(T value)
-            {
-                if (Count >= heapArray.Length)
-                {
-                    Array.Resize(ref heapArray, Count * 2);
-                }
-
-                heapArray[Count] = value;
-                SiftUp(Count++);
-            }
-
-            public T Dequeue()
-            {
-                T value = Peek();
-                heapArray[0] = heapArray[--Count];
-
-                if (Count > 1)
-                {
-                    SiftDown(0);
-                }
-
-                return value;
-            }
-
-            public T Peek() // Or Top
-            {
-                if (Count > 0)
-                {
-                    return heapArray[0];
-                }
-
-                throw new InvalidOperationException("");
-            }
-
-            void SiftUp(int curPosition)
-            {
-                T value = heapArray[curPosition];
-
-                for (int index = curPosition / 2; curPosition > 0; curPosition = index, index /= 2)
-                {
-                    if (comparer.Compare(value, heapArray[index]) > 0)
-                    {
-                        heapArray[curPosition] = heapArray[index];
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                heapArray[curPosition] = value;
-            }
-
-            void SiftDown(int curPosition)
-            {
-                T value = heapArray[curPosition];
-
-                for (int index = curPosition * 2; index < Count; curPosition = index, index *= 2)
-                {
-                    if (index + 1 < Count && comparer.Compare(heapArray[index + 1], heapArray[index]) > 0)
-                    {
-                        index++;
-                    }
-
-                    if (comparer.Compare(value, heapArray[index]) >= 0)
-                    {
-                        break;
-                    }
-
-                    heapArray[curPosition] = heapArray[index];
-                }
-
-                heapArray[curPosition] = value;
             }
         }
     }

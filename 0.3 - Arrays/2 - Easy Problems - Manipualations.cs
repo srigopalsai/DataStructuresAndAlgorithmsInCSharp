@@ -89,6 +89,61 @@ namespace DataStructuresAndAlgorithms
 
     public partial class ArrayProblems
     {
+        // 66 https://leetcode.com/problems/plus-one/description/
+        public int[] PlusOne(int[] digits)
+        {
+            for (int indx = digits.Length - 1; indx >= 0; indx--)
+            {
+                if (digits[indx] < 9)
+                {
+                    digits[indx]++;
+                    return digits;
+                }
+
+                digits[indx] = 0;
+            }
+
+            int[] newNumber = new int[digits.Length + 1];
+            newNumber[0] = 1;
+
+            return newNumber;
+        }
+
+        // https://leetcode.com/problems/merge-sorted-array/description/
+        public void Merge(int[] nums1, int nums1Indx, int[] nums2, int nums2Indx)
+        {
+            --nums1Indx;
+            --nums2Indx;
+
+            int indx = nums1.Length - 1; 
+
+            while (indx >= 0)
+            {
+                if (nums1Indx < 0 || nums2Indx < 0)
+                    break;
+
+                if (nums1[nums1Indx] > nums2[nums2Indx])
+                {
+                    nums1[indx] = nums1[nums1Indx];
+                    nums1Indx--;
+                }
+                else
+                {
+                    nums1[indx] = nums2[nums2Indx];
+                    nums2Indx--;
+                }
+
+                indx--;
+            }
+
+            while (nums2Indx >= 0)
+            {
+                nums1[indx] = nums2[nums2Indx];
+                nums2Indx--;
+                indx--;
+            }
+        }
+    
         // 561 Array Partition I https://leetcode.com/problems/array-partition-i/description/
 
         public int ArrayPairSum(int[] nums)
@@ -212,45 +267,7 @@ namespace DataStructuresAndAlgorithms
                 end--;
             }
         }
-
-        // 414 https://leetcode.com/problems/third-maximum-number/description/
-
-        public int ThirdMax(int[] nums)
-        {
-            long max1st = long.MinValue;
-            long max2nd = long.MinValue;
-            long max3rd = long.MinValue; 
-
-            foreach (int num in nums)
-            {
-                if (num > max1st)
-                {
-                    max3rd = max2nd;
-                    max2nd = max1st;
-                    max1st = num;
-                }
-                else if (num == max1st)
-                {
-                    continue;
-                }
-                else if (num > max2nd)
-                {
-                    max3rd = max2nd;
-                    max2nd = num;
-                }
-                else if (num == max2nd)
-                {
-                    continue;
-                }
-                else if (num > max3rd)
-                {
-                    max3rd = num;
-                }
-            }
-
-            return max3rd == long.MinValue ? (int)max1st : (int)max3rd;
-        }
-
+      
         // 532 https://leetcode.com/problems/k-diff-pairs-in-an-array/description/
         public int FindPairs(int[] nums, int k)
         {
@@ -828,7 +845,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // 136 https://leetcode.com/problems/single-number/description/
+        // 136 Easy https://leetcode.com/problems/single-number/description/
         public int SingleNumber(int[] nums)
         {
             int result = nums[0];
@@ -839,6 +856,27 @@ namespace DataStructuresAndAlgorithms
             }
 
             return result;
+        }
+
+        // 2 * (a + b + c) - (a + a + b + b + c) = c
+        public int SingleNumber2(int[] nums)
+        {
+            HashSet<int> hsNums = new HashSet<int>(nums);
+            int fullSum = 0;
+
+            foreach (int num in nums)
+            {
+                fullSum += num;
+            }
+
+            int unqSum = 0;
+
+            foreach (int num in hsNums)
+            {
+                unqSum += num;
+            }
+
+            return 2 * unqSum - fullSum;
         }
 
         /*

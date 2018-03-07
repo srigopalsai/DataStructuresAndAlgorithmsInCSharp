@@ -28,6 +28,76 @@ namespace DataStructuresAndAlgorithms
     */
     partial class ArrayProblems
     {
+        // 287 Medium https://leetcode.com/problems/find-the-duplicate-number/description/
+        public int FindDuplicate(int[] nums)
+        {
+            if (nums.Length <= 1)
+                return 0;
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                if (nums[Math.Abs(nums[indx])] < 0)
+                {
+                    return Math.Abs(nums[indx]);
+                }
+
+                nums[Math.Abs(nums[indx])] *= -1;
+
+            }
+
+            return 0;
+        }
+
+        public int FindDuplicate2(int[] nums)
+        {
+            int slPtr = nums[0];
+            int fsPtr = nums[nums[0]];
+
+            while (fsPtr != slPtr)
+            {
+                slPtr = nums[slPtr];
+                fsPtr = nums[nums[fsPtr]];
+            }
+
+            fsPtr = 0;
+
+            while (fsPtr != slPtr)
+            {
+                slPtr = nums[slPtr];
+                fsPtr = nums[fsPtr];
+            }
+
+            return slPtr;
+        }
+
+        public int FindDuplicate3(int[] nums)
+        {
+            int lIndx = 0;
+            int rIndx = nums.Length - 1;
+
+            while (lIndx <= rIndx)
+            {
+                int mIndx = lIndx + (rIndx - lIndx) / 2;
+                int count = 0;
+
+                foreach (int num in nums)
+                {
+                    if (num <= mIndx)
+                    {
+                        count++;
+                    }
+                }
+
+                if (count <= mIndx)
+                    lIndx = mIndx + 1;
+                else
+                    rIndx = mIndx - 1;
+            }
+
+            return lIndx;
+        }
+
+
         public class TwoSumIII
         {
             Dictionary<int, int> dict = new Dictionary<int, int>();
@@ -139,27 +209,6 @@ namespace DataStructuresAndAlgorithms
                 }
             }
             return resultArray;
-        }
-
-        public int BinarySearch(int[] nums, int noToFind)
-        {
-            int leftIndx = 0;
-            int rightIndx = nums.Length - 1;
-            int midIndx = 0;
-
-            while (leftIndx <= rightIndx)
-            {
-                midIndx = (leftIndx + rightIndx) / 2;
-
-                if (nums[midIndx] == noToFind)
-                    return midIndx;
-                else if (nums[midIndx] < noToFind)
-                    leftIndx = midIndx + 1;
-                else
-                    rightIndx = midIndx - 1;
-            }
-
-            return -1;
         }
 
         /* 

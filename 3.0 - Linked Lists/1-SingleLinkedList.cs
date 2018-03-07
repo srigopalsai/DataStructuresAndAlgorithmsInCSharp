@@ -650,6 +650,41 @@ namespace DataStructuresAndAlgorithms
             return randomVal;
         }
 
+        // https://www.programcreek.com/2014/08/leetcode-plus-one-linked-list-java/
+        public ListNode PlusOne(ListNode head)
+        {
+            ListNode head2 = MakeListReverseIterative(head);
+
+            ListNode trav2 = head2;
+
+            while (trav2 != null)
+            {
+                if (trav2.NodeValue < 9)
+                {
+                    trav2.NodeValue = trav2.NodeValue + 1;
+                    break;
+                }
+                else
+                {
+                    trav2.NodeValue = 0;
+
+                    if (trav2.NextNode == null)
+                    {
+                        //trav2.NextNode = new ListNode(1);
+                        //break;
+
+                        ListNode newNode = new ListNode(1);
+                        newNode.NextNode = head2;
+                        return newNode;
+                    }
+
+                    trav2 = trav2.NextNode;
+                }
+            }
+
+            return MakeListReverseIterative(head2);
+        }
+
         //=============================================================================================================================================
 
         // 10       20      30      40      50

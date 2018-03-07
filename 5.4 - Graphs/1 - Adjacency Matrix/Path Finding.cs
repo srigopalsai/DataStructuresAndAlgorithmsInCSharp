@@ -53,10 +53,10 @@ Gabow's algorithm O(E logE/V L)
             else
             {
                 Console.WriteLine("Shortest Path Traverse Positions");
-                while (destPoint.GetPreviousPoint() != null)
+                while (destPoint.PreviousPoint != null)
                 {
                     Console.WriteLine(destPoint.xPos + "  " + destPoint.yPos);
-                    destPoint = destPoint.GetPreviousPoint();
+                    destPoint = destPoint.PreviousPoint;
                 }
             }
 
@@ -153,8 +153,8 @@ Gabow's algorithm O(E logE/V L)
         {
             if (Point.IsSafePoint(srcMaze, xPos, yPos))
             {
-                //currPoint.Visited = true
-                srcMaze[currPoint.xPos, currPoint.yPos] = -1;// Current point visited
+                currPoint.Visited = true;
+                //srcMaze[currPoint.xPos, currPoint.yPos] = -1;// Current point visited
                 Point nextP = new Point(xPos, yPos, currPoint);
                 pointQueue.Enqueue(nextP);
             }

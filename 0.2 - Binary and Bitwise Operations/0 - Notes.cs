@@ -221,7 +221,7 @@ Arithmatic Operations on Binary Numbers :
 
         8421
 +
-            111 - 7
+         111 - 7
         1000 - 8
 ------------
         1111 - 15
