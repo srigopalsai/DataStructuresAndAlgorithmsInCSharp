@@ -29,7 +29,7 @@ namespace DataStructuresAndAlgorithms
     partial class ArrayProblems
     {
         // 287 Medium https://leetcode.com/problems/find-the-duplicate-number/description/
-        public int FindDuplicate(int[] nums)
+        public int FindDuplicate(int[] nums) //Modify Array
         {
             if (nums.Length <= 1)
                 return 0;
@@ -50,6 +50,9 @@ namespace DataStructuresAndAlgorithms
 
         public int FindDuplicate2(int[] nums)
         {
+            if (nums == null || nums.Length == 0)
+                return -1;
+
             int slPtr = nums[0];
             int fsPtr = nums[nums[0]];
 
@@ -96,7 +99,6 @@ namespace DataStructuresAndAlgorithms
 
             return lIndx;
         }
-
 
         public class TwoSumIII
         {
@@ -185,7 +187,7 @@ namespace DataStructuresAndAlgorithms
             for (int lpIndex = 0; lpIndex < numbers.Length; lpIndex++)
             {
                 int complement = target - numbers[lpIndex];
-               
+
                 secondNumIndex = BinarySearch(numbers, complement);
 
                 if (secondNumIndex != -1)
@@ -266,7 +268,6 @@ namespace DataStructuresAndAlgorithms
             }
             return indecisArray;
         }
-
 
         public bool IsSumOf2ExistsInUnSortedInArray(int[] srcArray, int target)
         {
@@ -628,6 +629,204 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
             return Math.Max(Math.Max(leftMax, rightMax), leftCellMax + righCellMax);
         }
 
+
+        public int MinSubArrayLen(int s, int[] nums)
+        {
+            int cSum = 0;
+            int indx1 = 0;
+            int sLen = int.MaxValue;
+
+            for (int indx2 = 0; indx2 < nums.Length; indx2++)
+            {
+                cSum += nums[indx2];
+
+                while (cSum >= s)
+                {
+                    sLen = Math.Min(sLen, indx2 - indx1 + 1);
+                    cSum -= nums[indx1];
+                    indx1++;
+                }
+            }
+
+            return (sLen == int.MaxValue) ? 0 : sLen;
+        }
+
+        // 162 Medium https://leetcode.com/problems/find-peak-element
+        public int FindPeakElement(int[] num)
+        {
+            int lIndx = 0;
+            int rIndx = num.Length - 1;
+
+            while (lIndx < rIndx)
+            {
+                int mIndx1 = (lIndx + rIndx) / 2;
+                int mIndx2 = mIndx1 + 1;
+
+                if (num[mIndx1] < num[mIndx2])
+                    lIndx = mIndx2;
+                else
+                    rIndx = mIndx1;
+            }
+
+            return lIndx;
+        }
+
+        // 729 Medium https://leetcode.com/problems/my-calendar-i/
+        public class MyCalendar
+        {
+            Dictionary<int, int> bookings = new Dictionary<int, int>();
+
+            public bool Book(int start, int end)
+            {
+                if (start > end)
+                    return false;
+
+                foreach (KeyValuePair<int, int> kvp in bookings)
+                {
+                    if (start >= kvp.Key && start < kvp.Value)
+                        return false;
+
+                    //if(end > kvp.Key && end <= kvp.Value)
+                    //  return false;
+
+                    if (start <= kvp.Key && end > kvp.Key)
+                        return false;
+                }
+
+                bookings.Add(start, end);
+                return true;
+            }
+        }
+
+        public class MyCalendar2
+        {
+            public struct Interval
+            {
+                public int Start;
+                public int End;
+
+                public Interval(int start, int end)
+                {
+                    Start = start;
+                    End = end;
+                }
+            }
+
+            List<Interval> bookings;
+
+            public MyCalendar2()
+            {
+                bookings = new List<Interval>();
+            }
+
+            public int BinSearchInsertPos(List<Interval> bookings, int start)
+            {
+                int lIndx = 0;
+                int rIndx = bookings.Count - 1;
+
+                while (lIndx <= rIndx)
+                {
+                    int mid = (lIndx + rIndx) / 2;
+
+                    if (bookings[mid].Start == start)
+                        return -1;
+
+                    if (bookings[mid].Start < start)
+                        lIndx = mid + 1;
+                    else
+                        rIndx = mid - 1;
+                }
+
+                return lIndx;
+            }
+
+            // First we find an insert position using binary search according to the start point of the interval
+            // Then we compare the end point of the previous one (if exists) with the start point of the new one and
+            // we compare the end point of the new one with the start point of the next one (if exists)
+            // If it is suitable we insert it to the list and return true, otherwise we return false
+            // After each call of the funciton the list stays sorted according to the start points of the intervals
+            public bool Book(int start, int end)
+            {
+                Interval interval = new Interval(start, end - 1);
+                int position = 0;
+                if (bookings.Count > 0)
+                {
+                    position = BinSearchInsertPos(bookings, start);
+
+                    if (position == -1) //if start point exists we cannot insert it to the list
+                        return false;
+
+                    if (position <= bookings.Count - 1 && interval.End >= bookings[position].Start)
+                        return false;
+
+                    if (position >= 1 && bookings[position - 1].End >= interval.Start)
+                        return false;
+                }
+
+                bookings.Insert(position, interval);
+                return true;
+            }
+        }
+
+        // 731 WIP Medium https://leetcode.com/problems/my-calendar-ii/description/
+        public class MyCalendarTwo
+        {
+            public struct Interval
+            {
+                public int Start;
+                public int End;
+                public bool IsOverride;
+
+                public Interval(int start, int end, bool isOverride)
+                {
+                    Start = start;
+                    End = end;
+                    IsOverride = isOverride;
+                }
+            }
+
+            List<Interval> bkList = new List<Interval>();
+
+            public bool Book(int start, int end)
+            {
+                if (start > end)
+                    return false;
+
+                foreach (Interval interval in bkList)
+                {
+                    if (start >= interval.Start && start < interval.End && interval.IsOverride == true)
+                        return false;
+
+                    //if(end > kvp.Key && end <= kvp.Value)
+                    //  return false;
+
+                    if (interval.Start > start && interval.Start <= end && interval.IsOverride == true)
+                        return false;
+                }
+
+                bool foundOL = false;
+
+                for (int indx = 0; indx < bkList.Count; indx++)
+                {
+                    Interval interval = bkList[indx];
+
+                    if (start >= bkList[indx].Start && start < bkList[indx].End)
+                    {
+                        interval.IsOverride = true;
+                        foundOL = true;
+                    }
+
+                    if (start > bkList[indx].Start && start <= bkList[indx].End && bkList[indx].IsOverride == true)
+                    {
+                        interval.IsOverride = true;
+                        foundOL = true;
+                    }
+                }
+
+                bkList.Add(new Interval(start, end, foundOL));
+                return true;
+            }
+        }
     }
 }
 

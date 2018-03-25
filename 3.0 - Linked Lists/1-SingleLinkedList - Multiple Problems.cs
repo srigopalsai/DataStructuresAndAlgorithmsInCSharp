@@ -111,6 +111,7 @@ namespace DataStructuresAndAlgorithms
             return dummyHead.NextNode;
         }
 
+        // 203 Easy https://leetcode.com/problems/remove-linked-list-elements/description/
         public ListNode RemoveElements(ListNode head, int val)
         {
             if (head == null) return null;
@@ -148,7 +149,7 @@ namespace DataStructuresAndAlgorithms
 
             return fakeHead.NextNode;
         }
-
+ 
         public ListNode RemoveElementsRecursive(ListNode head, int val)
         {
             if (head == null) return null;
@@ -193,6 +194,7 @@ namespace DataStructuresAndAlgorithms
 
         //=============================================================================================================================================
 
+        // 234 Easy https://leetcode.com/problems/palindrome-linked-list/description/
         // Using global start pointer and recursion.
         ListNode front = null;
         public bool IsPalindrome1(ListNode head)
@@ -228,7 +230,7 @@ namespace DataStructuresAndAlgorithms
             ListNode prevNode = null;
             ListNode nextNode = null;
 
-            for (int lpCnt = 0; lpCnt < length / 2; lpCnt++)
+            for (int indx = 0; indx < length / 2; indx++)
             {
                 nextNode = currNode.NextNode;
                 currNode.NextNode = prevNode;
@@ -239,7 +241,7 @@ namespace DataStructuresAndAlgorithms
 
             // Step 3: Preserve these 2 pointers to reset the list back in Step 6.
             head = prevNode;
-            ListNode midNode = currNode;
+            ListNode midNode = currNode; // 2nd half
 
             // Step 4: if odd list then skip the midNode.
             if (length % 2 != 0)
@@ -295,6 +297,8 @@ namespace DataStructuresAndAlgorithms
             }
             return -1;
         }
+
+        // 160 Easy https://leetcode.com/problems/intersection-of-two-linked-lists/description/
 
         /*• Maintain two pointers pA and pB initialized at the head of A and B, respectively. 
               Then let them both traverse through the lists, one node at a time.
@@ -483,28 +487,29 @@ namespace DataStructuresAndAlgorithms
             return previousNode;
         }
 
-        public ListNode MakeListReverseIterative2(ListNode srcHead)
+        // 206 Easy https://leetcode.com/problems/reverse-linked-list/description/
+        public ListNode ReverseList(ListNode head)
         {
-            if (srcHead == null || srcHead.NextNode == null)
-                return srcHead;
+            if (head == null || head.NextNode == null)
+                return head;
 
-            ListNode dummyHead = new ListNode(0);
-            dummyHead.NextNode = srcHead;
+            ListNode current = head;
+            ListNode previous = null;
+            ListNode NextNode = null;
 
-            ListNode prevNode = dummyHead;
-            ListNode currNode = prevNode.NextNode;
-            ListNode tempNode = null;
-
-            while (currNode.NextNode != null)
+            while (current != null)
             {
-                tempNode = currNode.NextNode;
-                currNode.NextNode = tempNode.NextNode;
+                NextNode = current.NextNode;
 
-                tempNode.NextNode = prevNode.NextNode;
-                prevNode.NextNode = tempNode;
+                // Change and move the link.            
+                current.NextNode = previous;
+
+                // Move currentNode and previousNode pointers by 1 node              
+                previous = current;
+                current = NextNode;
             }
 
-            return dummyHead.NextNode;
+            return previous;
         }
 
         public ListNode MakeListReverseRecursive()
@@ -513,19 +518,18 @@ namespace DataStructuresAndAlgorithms
             return HeadNode;
         }
 
-        //Not working
-        ListNode MakeListReverseRecursive(ListNode currentNode)
+        public ListNode MakeListReverseRecursive(ListNode head)
         {
-            if (currentNode == null || currentNode.NextNode == null)
-                return currentNode;
+            if (head == null || head.NextNode == null)
+            {
+                return head;
+            }
 
-            // Traverse till reach tail node first.
-            ListNode head = MakeListReverseRecursive(currentNode.NextNode);
+            ListNode newHead = MakeListReverseRecursive(head.NextNode);
+            head.NextNode.NextNode = head;
+            head.NextNode = null;
 
-            currentNode.NextNode.NextNode = currentNode;
-            currentNode.NextNode = null;
-
-            return head;
+            return newHead;
         }
 
         ListNode MakeListReverseRecursive2(ListNode currentNode, ListNode nextNode)
@@ -646,6 +650,78 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             list2End.NextNode = currNode;
 
             return list1Head.NextNode;
+        }
+
+        // 141 Easy https://leetcode.com/problems/linked-list-cycle/description/
+        public bool HasCycle(ListNode headNode)
+        {
+            if (headNode == null)
+                return false;
+
+            ListNode slowNode = headNode;
+            ListNode fastNode = headNode.NextNode;
+
+            while (fastNode != null && fastNode.NextNode != null)
+            {
+                if (slowNode == fastNode)
+                    return true;
+
+                slowNode = slowNode.NextNode;
+                fastNode = fastNode.NextNode.NextNode;
+            }
+
+            return false;
+        }
+
+        // 21 Easy https://leetcode.com/problems/merge-two-sorted-lists/description/
+        public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            ListNode l3Head = new ListNode(0);
+            ListNode l3 = l3Head;
+
+            while (l1 != null && l2 != null)
+            {
+                if (l1.NodeValue <= l2.NodeValue)
+                {
+                    l3.NextNode = l1;
+                    l1 = l1.NextNode;
+                }
+                else
+                {
+                    l3.NextNode = l2;
+                    l2 = l2.NextNode;
+                }
+
+                l3 = l3.NextNode;
+            }
+
+            if (l1 != null)
+                l3.NextNode = l1;
+
+            if (l2 != null)
+                l3.NextNode = l2;
+
+            return l3Head.NextNode;
+        }
+
+        public ListNode MergeTwoListsRecursive(ListNode l1, ListNode l2)
+        {
+            if (l1 == null)
+                return l2;
+
+            if (l2 == null)
+                return l1;
+
+            if (l1.NodeValue < l2.NodeValue)
+            {
+                l1.NextNode = MergeTwoListsRecursive(l1.NextNode, l2);
+                return l1;
+            }
+            else
+            {
+                l2.NextNode = MergeTwoListsRecursive(l2.NextNode, l1);
+                return l2;
+            }
         }
 
         public ListNode OddEvenList(ListNode srcHead)
@@ -1085,8 +1161,8 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
         2. If we can edit the list then mark each node as visited.
         3. Use lists count diff.
         4. Make one list as Circular first and see 2nd list where
-        5. Store hashcodes of list 1 into hashtable and check if hash code exists for each node in list2. O(n + m) and O(m) Extra Space where m is the lenght of one list.
-        6. Find lenghts of each list, iterate large list till it matchs with 2nd. Then use 1 loop to iterate and compare each node. O(n + m)        */
+        5. Store hashcodes of list 1 into hashtable and check if hash code exists for each node in list2. O(n + m) and O(m) Extra Space where m is the length of one list.
+        6. Find lengths of each list, iterate large list till it matchs with 2nd. Then use 1 loop to iterate and compare each node. O(n + m)        */
 
         public ListNode FindInterSectionOf2Lists(ListNode listNode1, ListNode listNode2)
         {
@@ -1184,6 +1260,110 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             }
 
             return resultHead.NextNode;
+        }
+
+        // 61 Medium https://leetcode.com/problems/rotate-list/description/
+        public ListNode RotateRight(ListNode head, int kPos)
+        {
+            if (head == null)
+                return null;
+
+            int lstLen = 1; // since we are already at head node
+
+            ListNode fsNode = head;
+            ListNode slNode = head;
+
+            while (fsNode.NextNode != null)
+            {
+                lstLen++;
+
+                fsNode = fsNode.NextNode;
+            }
+
+            kPos = kPos % lstLen;
+
+            for (int indx = lstLen - kPos; indx > 1; indx--) // i>1 because we need to put slow.NextNode at the start.
+            {
+                slNode = slNode.NextNode;
+            }
+
+            fsNode.NextNode = head;
+            head = slNode.NextNode;
+            slNode.NextNode = null;
+
+            return head;
+        }
+
+        /**
+         * Definition for singly-linked list.
+         * public class ListNode {
+         *     int NodeValue;
+         *     ListNode NextNode;
+         *     ListNode(int x) { NodeValue = x; }
+         * }
+         */
+        // 23 Hard https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+        class Solution
+        {
+            public ListNode MergeKLists(ListNode[] lists)
+            {
+                if (lists == null || lists.Length == 0)
+                    return null;
+
+                return Partition(lists, 0, lists.Length - 1);
+            }
+
+            public ListNode Partition(ListNode[] lists, int lIndx, int rIndx)
+            {
+                if (lIndx == rIndx)
+                {
+                    return lists[lIndx];
+                }
+
+                int mIndx = lIndx + (rIndx - lIndx) / 2;
+
+                ListNode l1 = Partition(lists, lIndx, mIndx);
+                ListNode l2 = Partition(lists, mIndx + 1, rIndx);
+
+                return Merge2Lists(l1, l2);
+            }
+
+            public ListNode Merge2Lists(ListNode l1, ListNode l2)
+            {
+                ListNode head = new ListNode(0);
+                ListNode dummy = head;
+
+                while (l1 != null || l2 != null)
+                {
+                    if (l1 == null)
+                    {
+                        head.NextNode = l2;
+
+                        l2 = l2.NextNode;
+                    }
+                    else if (l2 == null)
+                    {
+                        head.NextNode = l1;
+                        l1 = l1.NextNode;
+                    }
+                    else
+                    {
+                        if (l1.NodeValue < l2.NodeValue)
+                        {
+                            head.NextNode = l1;
+                            l1 = l1.NextNode;
+                        }
+                        else
+                        {
+                            head.NextNode = l2;
+                            l2 = l2.NextNode;
+                        }
+                    }
+                    head = head.NextNode;
+                }
+                return dummy.NextNode;
+            }
         }
     }
 }

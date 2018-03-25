@@ -238,8 +238,8 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
         }
 
         // initialize your data structure here
-        OrderedMultiSet lowerSet = new OrderedMultiSet(Comparer<int>.Default);
-        OrderedMultiSet higherSet = new OrderedMultiSet(Comparer<int>.Default); //.Create((a, b) => b.CompareTo(a)));
+        OrderedMultiSet lSet = new OrderedMultiSet(Comparer<int>.Default);
+        OrderedMultiSet rSet = new OrderedMultiSet(Comparer<int>.Default); //.Create((a, b) => b.CompareTo(a)));
 
         public MedianFinder()
         {
@@ -247,28 +247,30 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
         public void AddNum(int num)
         {
-            if (this.lowerSet.Count == 0 || this.lowerSet.Top >= num)
-                this.lowerSet.Push(num);
-            else if (this.higherSet.Count == 0 || this.higherSet.Top <= num)
-                this.higherSet.Push(num);
+            if (this.lSet.Count == 0 || this.lSet.Top >= num)
+                this.lSet.Push(num);
+
+            else if (this.rSet.Count == 0 || this.rSet.Top <= num)
+                this.rSet.Push(num);
+
             else
-                this.lowerSet.Push(num);
+                this.lSet.Push(num);
 
-            var reciever = (lowerSet.Count < higherSet.Count) ? lowerSet : higherSet;
-            var supplier = (lowerSet.Count >= higherSet.Count) ? lowerSet : higherSet;
+            OrderedMultiSet recieverSet = (lSet.Count < rSet.Count) ? lSet : rSet;
+            OrderedMultiSet supplierSet = (lSet.Count >= rSet.Count) ? lSet : rSet;
 
-            while (supplier.Count >= reciever.Count + 2)
+            while (supplierSet.Count >= recieverSet.Count + 2)
             {
-                reciever.Push(supplier.Pop());
+                recieverSet.Push(supplierSet.Pop());
             }
         }
 
         public double FindMedian()
         {
-            if (this.lowerSet.Count == this.higherSet.Count)
-                return ((double)this.lowerSet.Top + (double)this.higherSet.Top) / 2;
+            if (this.lSet.Count == this.rSet.Count)
+                return ((double)this.lSet.Top + (double)this.rSet.Top) / 2;
             else
-                return this.lowerSet.Count > this.higherSet.Count ? this.lowerSet.Top : this.higherSet.Top;
+                return this.lSet.Count > this.rSet.Count ? this.lSet.Top : this.rSet.Top;
         }
     }
 
@@ -341,7 +343,7 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
             return median;
         }
     }
-    
+
     // Using Sorted Set
     public class MedianFinder3
     {
@@ -354,11 +356,11 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
         public MedianFinder3()
         {
             maxSet = new SortedSet<Tuple<int, int>>(Comparer<Tuple<int, int>>.Create((a, b) =>
-                  a.Item1 == b.Item1 ? a.Item2 - b.Item2 : a.Item1 - b.Item1
+                    a.Item1 == b.Item1 ? a.Item2 - b.Item2 : a.Item1 - b.Item1
             ));
 
             minSet = new SortedSet<Tuple<int, int>>(Comparer<Tuple<int, int>>.Create((a, b) =>
-                  a.Item1 == b.Item1 ? a.Item2 - b.Item2 : a.Item1 - b.Item1
+                    a.Item1 == b.Item1 ? a.Item2 - b.Item2 : a.Item1 - b.Item1
             ));
         }
 
@@ -437,4 +439,81 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
         //    return new ArrayList<>(tree.values());
         //}
     }
+
+    // https://www.geeksforgeeks.org/kth-largest-element-in-a-stream/
+
+    public class KthSmallest
+    {
+        public void TestKth()
+        {
+            Console.WriteLine("Enter the value of k : ");
+            int k = Convert.ToInt32(Console.ReadLine());
+            PriorityQueue<int> min = new PriorityQueue<int>();
+            //PriorityQueue<integer> min = new PriorityQueue<>(k, new Comparator<integer>() {
+
+            //int compare(int a, int b)
+            //{
+            //if(a < b) {
+            //return -1;
+            //}else if( a > b) {
+            //return 1;
+            //}
+            //return 0;
+            //}
+            //});
+
+            while (true)
+            {
+                Console.WriteLine("Enter the next Element : ");
+                int n = Convert.ToInt32(Console.ReadLine());
+
+                if (n == -1)
+                {
+                    break;
+                }
+                FindKth(min, n, k);
+            }
+        }
+
+        private void FindKth(PriorityQueue<int> min, int n, int k)
+        {
+            int count = min.Count;
+
+            if (count < k - 1)
+            {
+                min.Enqueue(n);
+                Console.WriteLine("_");
+            }
+            else
+            {
+
+                if (count == k - 1)
+                {
+                    min.Enqueue(n);
+                }
+                else
+                {
+
+                    if (n > min.Peek())
+                    {
+                        min.Dequeue();
+                        min.Enqueue(n);
+                    }
+                }
+                Console.WriteLine(min.Peek());
+            }
+        }
+
+        // https://www.geeksforgeeks.org/select-a-random-number-from-stream-with-o1-space/
+
+        // https://www.geeksforgeeks.org/find-first-non-repeating-character-stream-characters/
+
+        // https://www.geeksforgeeks.org/online-algorithm-for-checking-palindrome-in-a-stream/
+    }
+
+    // https://www.geeksforgeeks.org/online-algorithm-for-checking-palindrome-in-a-stream/
+
+    // https://www.geeksforgeeks.org/rank-element-stream/
+
+    // https://www.geeksforgeeks.org/find-top-k-or-most-frequent-numbers-in-a-stream/
 }

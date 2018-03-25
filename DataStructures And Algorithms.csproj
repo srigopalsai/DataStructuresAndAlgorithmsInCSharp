@@ -219,8 +219,8 @@
     <Compile Include="6.0 - Sorting Techniques\Library Or Gapped Insertion Sort.cs" />
     <Compile Include="6.0 - Sorting Techniques\SleepSort.cs" />
     <Compile Include="6.0 - Sorting Techniques\6.2 - SmoothSort.cs" />
-    <Compile Include="7.0 - Searching Techniques\3.3 - Binary Search - Find all zeros.cs" />
-    <Compile Include="7.0 - Searching Techniques\3.4 - Binary Search - Incoming Stream.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.2 - Binary Search - Medium.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.4 - Binary Search - Hard.cs" />
     <Compile Include="7.0 - Searching Techniques\Farthest Point Selection Algorithm.cs" />
     <Compile Include="7.0 - Searching Techniques\Golden Search.cs" />
     <Compile Include="7.0 - Searching Techniques\SearchingDemo.xaml.cs">
@@ -299,7 +299,6 @@
     <Compile Include="5.4 - Graphs\zMyGraph.cs" />
     <Compile Include="6.0 - Sorting Techniques\9.3 - BucketSortNI.cs" />
     <Compile Include="7.0 - Searching Techniques\2 - InterpolationSearch.cs" />
-    <Compile Include="7.0 - Searching Techniques\3.2 - Binary Search In Random Sorted Array.cs" />
     <Compile Include="0.3 - Arrays\3 - Medium Problems.cs" />
     <Compile Include="0.3 - Arrays\1 - Introduction and Basics.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
@@ -370,7 +369,7 @@
       <DependentUpon>SortingDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="6.0 - Sorting Techniques\9.1 - TopologicalSortPI.cs" />
-    <Compile Include="7.0 - Searching Techniques\3.1 - Binary Search.cs" />
+    <Compile Include="7.0 - Searching Techniques\3.1 - Binary Search - Easy.cs" />
     <Compile Include="7.0 - Searching Techniques\4 - Sequential Or Linear Search.cs" />
     <Compile Include="7.0 - Searching Techniques\1 - HashTable.cs" />
     <Compile Include="9.1 - Other Algorithms\1 - GreatestCommonDivisorDemo.cs" />
