@@ -182,6 +182,7 @@
     <Compile Include="5.1 - Dynamic Programming\Array Problems.cs" />
     <Compile Include="5.1 - Dynamic Programming\Notes.cs" />
     <Compile Include="5.1 - Dynamic Programming\Overlapping Subproblems - Numeric Problems.cs" />
+    <Compile Include="5.1 - Dynamic Programming\String - Hard.cs" />
     <Compile Include="5.4 - Graphs\0 - Notes Read Me Frist.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Bridge Detection - DFS WhiteGrayBlack.cs" />
     <Compile Include="5.4 - Graphs\1 - Adjacency Matrix\Is Strongly Connected.cs" />

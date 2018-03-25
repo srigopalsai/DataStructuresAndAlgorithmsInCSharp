@@ -20,61 +20,46 @@ namespace DataStructuresAndAlgorithms
         // nums1 = [1, 2]
         // nums2 = [3, 4]
 
-        // The median is (2 + 3)/2 = 2.5
+// The median is (2 + 3)/2 = 2.5
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
-            int nums1Len = nums1.Length;
-            int nums2Len = nums2.Length;
+            int n1Len = nums1.Length;
+            int n2Len = nums2.Length;
 
-            int totalLen = nums1Len + nums2Len;
-
-            if (totalLen % 2 == 0)
+            if (n1Len < n2Len)
             {
-                return (FindKthValue(nums1, nums2, totalLen / 2) + FindKthValue(nums1, nums2, (totalLen / 2) + 1)) / 2.0;
+                return FindMedianSortedArrays(nums2, nums1);    // Make sure nums2 is the shorter one.
             }
-            else
-            {
-                return FindKthValue(nums1, nums2, (totalLen / 2) + 1);
-            }
-        }
 
-        private int FindKthValue(int[] nums1, int[] nums2, int kthPos)
-        {
-            int num1Indx = 0;
-            int num2Indx = 0;
+            int lIndx = 0;
+            int rIndx = n2Len * 2;
 
-            for (int index = 0; index < kthPos - 1; index++)
+            while (lIndx <= rIndx)
             {
-                if (num1Indx >= nums1.Length && num2Indx < nums2.Length)
+                int m2Indx = (lIndx + rIndx) / 2;   // Try Cut 2 
+                int m1Indx = n1Len + n2Len - m2Indx;  // Calculate Cut 1 accordingly
+
+                double n1LMidVal = (m1Indx == 0) ? int.MinValue : nums1[(m1Indx - 1) / 2];    // Get L1, R1, L2, R2 respectively
+                double n2LMidVal = (m2Indx == 0) ? int.MinValue : nums2[(m2Indx - 1) / 2];
+
+                double n1RMidVal = (m1Indx == n1Len * 2) ? int.MaxValue : nums1[(m1Indx) / 2];
+                double n2RMidVal = (m2Indx == n2Len * 2) ? int.MaxValue : nums2[(m2Indx) / 2];
+
+                if (n1LMidVal > n2RMidVal)
                 {
-                    num2Indx++;
+                    lIndx = m2Indx + 1;
                 }
-                else if (num1Indx < nums1.Length && num2Indx >= nums2.Length)
+                else if (n2LMidVal > n1RMidVal)
                 {
-                    num1Indx++;
-                }
-                else if (nums1[num1Indx] > nums2[num2Indx])
-                {
-                    num2Indx++;
+                    rIndx = m2Indx - 1;
                 }
                 else
                 {
-                    num1Indx++;
+                    return (Math.Max(n1LMidVal, n2LMidVal) + Math.Min(n1RMidVal, n2RMidVal)) / 2;
                 }
             }
 
-            if (num1Indx >= nums1.Length)
-            {
-                return nums2[num2Indx];
-            }
-            else if (num2Indx >= nums2.Length)
-            {
-                return nums1[num1Indx];
-            }
-            else
-            {
-                return Math.Min(nums1[num1Indx], nums2[num2Indx]);
-            }
-        }
+            return -1;
+        }        
     }
 }

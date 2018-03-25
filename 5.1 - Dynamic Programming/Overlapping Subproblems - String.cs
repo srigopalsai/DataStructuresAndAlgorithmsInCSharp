@@ -82,7 +82,7 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show("Length of LCS is \n" + LongestCommonSubSequenceDP(str1, str2));
         }
 
-        // https://leetcode.com/problems/longest-uncommon-subsequence-ii/description/
+        // 522 Medium https://leetcode.com/problems/longest-uncommon-subsequence-ii/description/
         int LongestUnCommonSubSequenceDP(string str1, string str2)
         {
             int[,] lkUpMtrx = new int[str1.Length + 1, str2.Length + 1];
@@ -533,7 +533,7 @@ So the number of overall comparisons is a most 2N.
             return filteredCharArray;
         }
 
-        // 680 https://leetcode.com/problems/valid-palindrome-ii/description/
+        // 680 Easy https://leetcode.com/problems/valid-palindrome-ii/description/
         public bool ValidPalindromeII(string s)
         {
             int left = 0;
@@ -614,5 +614,7 @@ So the number of overall comparisons is a most 2N.
             }
             return true;
         }
+
+
     }
 }
