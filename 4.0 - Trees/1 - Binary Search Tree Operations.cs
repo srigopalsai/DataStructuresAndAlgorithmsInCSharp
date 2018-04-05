@@ -2209,103 +2209,108 @@ http://powercollections.codeplex.com
                 && IsValidBSTHelper(nums, midIndx + 1, rIndx - 1);
         }
 
-        //BST fromPostOrder(value[] nodes)
-        //{
-        //    // No nodes, no tree
-        //    if (nodes == null) return null;
-        //    return recursiveFromPostOrder(nodes, 0, nodes.length - 1);
-        //}
+        // 105 Medium https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
+        // Given preorder and inorder traversal of a tree, construct the binary tree.
+        // Note:
+        // You may assume that duplicates do not exist in the tree.
+        // E.g
+        // preorder = [3, 9, 20, 15, 7]
+        // inorder = [9, 3, 15, 20, 7]
+        // Return the following binary tree:
+        //     3
+        //    / \
+        //   9  20
+        //     /  \
+        //    15   7
+        // Time O(N^2)
+        public TreeNode BuildTreeFromPreAndInOrder(int[] preOrder, int[] inOrder)
+        {
+            if (preOrder == null || preOrder.Length == 0 || inOrder == null || inOrder.Length == 0)
+                return null;
 
-        //// Construct a BST from a segment of the nodes array
-        //// That segment is assumed to be the post-order traversal of some subtree
-        //private BST recursiveFromPostOrder(value[] nodes,
-        //                                   int leftIndex, int rightIndex)
-        //{
-        //    // Empty segment -> empty tree
-        //    if (rightIndex < leftIndex) return null;
-        //    // single node -> single element tree
-        //    if (rightIndex == leftIndex) return new BST(nodes[leftIndex]);
+            int preIndx = 0;
+            return BuildTreeFromPreAndInOrderHelper(preOrder, inOrder, ref preIndx, 0, inOrder.Length - 1);
+        }
 
-        //    // It's a post-order traversal, so the root of the tree 
-        //    // is in the last position
-        //    value rootval = nodes[rightIndex];
+        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inStrt, int inEnd)
+        {
+            if (inStrt > inEnd)
+                return null;
 
-        //    // Construct the root node, the left and right subtrees are then 
-        //    // constructed in recursive calls, after finding their extent
-        //    BST root = new BST(rootval);
+            TreeNode tNode = new TreeNode(preNums[preIndx]);
+            preIndx++;
 
-        //    // It's supposed to be the post-order traversal of a BST, so
-        //    // * left child comes first
-        //    // * all values in the left child are smaller than the root value
-        //    // * all values in the right child are larger than the root value
-        //    // Hence we find the last index in the range [leftIndex .. rightIndex-1]
-        //    // that holds a value smaller than rootval
-        //    int leftLast = findLastSmaller(nodes, leftIndex, rightIndex - 1, rootval);
+            // When there is no childern for the current node then return
+            if (inStrt == inEnd)
+                return tNode;
 
-        //    // The left child occupies the segment [leftIndex .. leftLast]
-        //    // (may be empty) and that segment is the post-order traversal of it
-        //    root.left = recursiveFromPostOrder(nodes, leftIndex, leftLast);
+            // Else find the index of the current node in Inorder traversal
+            int inIndex = SearchIndex(inNums, inStrt, inEnd, tNode.NodeValue);
 
-        //    // The right child occupies the segment [leftLast+1 .. rightIndex-1]
-        //    // (may be empty) and that segment is the post-order traversal of it
-        //    root.right = recursiveFromPostOrder(nodes, leftLast + 1, rightIndex - 1);
+            // Using index in Inorder traversal, construct left and right subtress
+            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inStrt, inIndex - 1);
+            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inEnd);
 
-        //    // Both children constructed and linked to the root, done.
-        //    return root;
-        //}
+            return tNode;
+        }
 
-        //// find the last index of a value smaller than cut in a segment of the array
-        //// using binary search
-        //// supposes that the segment contains the concatenation of the post-order
-        //// traversals of the left and right subtrees of a node with value cut,
-        //// in particular, that the first (possibly empty) part of the segment contains
-        //// only values < cut, and the second (possibly empty) part only values > cut
-        //private int findLastSmaller(value[] nodes, int first, int last, value cut)
-        //{
+        // Do binary search, since in Array is sorted if no duplicates.
+        public int SearchIndex(int[] nums, int start, int end, int val)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
 
-        //    // If the segment is empty, or the first value is larger than cut,
-        //    // by the assumptions, there is no value smaller than cut in the segment,
-        //    // return the position one before the start of the segment
-        //    if (last < first || nodes[first] > cut) return first - 1;
+            int indx = -1;
 
-        //    int low = first, high = last, mid;
+            for (indx = start; indx <= end; indx++)
+            {
+                if (nums[indx] == val)
+                    return indx;
+            }
 
-        //    // binary search for the last index of a value < cut
-        //    // invariants: nodes[low] < cut 
-        //    //             (since cut is the root value and a BST has no dupes)
-        //    // and nodes[high] > cut, or (nodes[high] < cut < nodes[high+1]), or
-        //    // nodes[high] < cut and high == last, the latter two cases mean that
-        //    // high is the last index in the segment holding a value < cut
-        //    while (low < high && nodes[high] > cut)
-        //    {
+            return indx;
+        }
 
-        //        // check the middle of the segment
-        //        // In the case high == low+1 and nodes[low] < cut < nodes[high]
-        //        // we'd make no progress if we chose mid = (low+high)/2, since that
-        //        // would then be mid = low, so we round the index up instead of down
-        //        mid = low + (high - low + 1) / 2;
+        // 106 Medium https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
+        // Given inorder and postorder traversal of a tree, construct the binary tree.
+        // You may assume that duplicates do not exist in the tree.
+        // For example, given inorder = [9, 3, 15, 20, 7]
+        // postorder = [9, 15, 7, 20, 3]
+        // Return the following binary tree:
+        //    3
+        //   / \
+        //  9  20
+        //    /  \
+        //   15   7
+        public TreeNode BuildTreeFromInAndPostOrder(int[] inOrder, int[] postOrder)
+        {
+            if (postOrder == null || postOrder.Length == 0 || inOrder == null || inOrder.Length == 0)
+                return null;
 
-        //        // The choice of mid guarantees low < mid <= high, so whichever
-        //        // case applies, we will either set low to a strictly greater index
-        //        // or high to a strictly smaller one, hence we won't become stuck.
-        //        if (nodes[mid] > cut)
-        //        {
-        //            // The last index of a value < cut is in the first half
-        //            // of the range under consideration, so reduce the upper
-        //            // limit of that. Since we excluded mid as a possible
-        //            // last index, the upper limit becomes mid-1
-        //            high = mid - 1;
-        //        }
-        //        else
-        //        {
-        //            // nodes[mid] < cut, so the last index with a value < cut is
-        //            // in the range [mid .. high]
-        //            low = mid;
-        //        }
-        //    }
-        //    // now either low == high or nodes[high] < cut and high is the result
-        //    // in either case by the loop invariants
-        //    return high;
-        //}
+            int postIndx = postOrder.Length - 1;
+            return BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndx, 0, inOrder.Length - 1);
+        }
+
+        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inStrt, int inEnd)
+        {
+            if (inStrt > inEnd)
+                return null;
+
+            TreeNode node = new TreeNode(postOrder[postIndex]);
+            postIndex--;
+
+            // If current node has has no children then return current node.
+            if (inStrt == inEnd)
+                return node;
+
+            // Else find the index of this node in Inorder  traversal
+            int inCurIndex = SearchIndex(inOrder, inStrt, inEnd, node.NodeValue);
+
+            // Right node first and left node next
+            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inEnd);
+            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inStrt, inCurIndex - 1);
+
+            return node;
+        }
     }
 }
