@@ -7,7 +7,7 @@ namespace DataStructuresAndAlgorithms._4._0___Trees
 {
     /*
     http://www.sanfoundry.com/java-program-implement-segment-tree/
-    // https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestor/#Segment_Trees
+    // https://www.topcoder.com/community/data-science/data-science-tutorials/range-minimum-query-and-lowest-common-ancestorSegment_Trees
     http://codeforces.com/blog/entry/18051
     http://wcipeg.com/wiki/Segment_tree#The_divide-and-conquer_solution
     https://www.geeksforgeeks.org/segment-tree-set-1-sum-of-given-range/

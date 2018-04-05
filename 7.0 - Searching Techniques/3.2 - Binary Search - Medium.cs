@@ -7,7 +7,7 @@ namespace DataStructuresAndAlgorithms
 {
     public partial class SearchingAlgorithms
     {
-        // Medium https://leetcode.com/problems/find-the-duplicate-number/description/
+        // Medium https://leetcode.com/problems/find-the-duplicate-number
         public int FindDuplicate3(int[] nums)
         {
             int lIndx = 0;
@@ -35,7 +35,7 @@ namespace DataStructuresAndAlgorithms
             return lIndx;
         }
 
-        //153 Medium https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+        //153 Medium https://leetcode.com/problems/find-minimum-in-rotated-sorted-array
         // Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
         // (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
         // Find the minimum element.
@@ -68,7 +68,7 @@ namespace DataStructuresAndAlgorithms
             return nums[stPos];
         }
 
-        // 154 Medium https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/description/
+        // 154 Medium https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii
         // Follow up for "Find Minimum in Rotated Sorted Array":
         // What if duplicates are allowed?
         // Would this affect the run-time complexity? How and why?
@@ -102,7 +102,7 @@ namespace DataStructuresAndAlgorithms
             return nums[lIndx];
         }
 
-        // 162 Medium https://leetcode.com/problems/find-peak-element/description/
+        // 162 Medium https://leetcode.com/problems/find-peak-element
         // A peak element is an element that is greater than its neighbors.
         // Given an input array where num[i] ≠ num[i + 1], find a peak element and return its index.
         // The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
@@ -128,7 +128,7 @@ namespace DataStructuresAndAlgorithms
             return lIndx;
         }
 
-        // 33 Medium https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+        // 33 Medium https://leetcode.com/problems/search-in-rotated-sorted-array
         // Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
         // (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
         // You are given a target value to search.If found in the array return its index, otherwise return -1.
@@ -166,7 +166,7 @@ namespace DataStructuresAndAlgorithms
             return -1;
         }
 
-        // 81 Medium https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
+        // 81 Medium https://leetcode.com/problems/search-in-rotated-sorted-array-ii
         // Follow up for "Search in Rotated Sorted Array":
         // What if duplicates are allowed?
         // Would this affect the run-time complexity? How and why?
@@ -265,7 +265,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        // 209 Medium https://leetcode.com/problems/minimum-size-subarray-sum/description/
+        // 209 Medium https://leetcode.com/problems/minimum-size-subarray-sum
         // Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s.
         // If there isn't one, return 0 instead. 
         // For example, given the array[2, 3, 1, 2, 4, 3] and s = 7,
@@ -328,7 +328,7 @@ namespace DataStructuresAndAlgorithms
             return lIndx;
         }
 
-        // 74 Medium https://leetcode.com/problems/search-a-2d-matrix/description/
+        // 74 Medium https://leetcode.com/problems/search-a-2d-matrix
         public bool SearchMatrix(int[,] matrix, int target)
         {
 

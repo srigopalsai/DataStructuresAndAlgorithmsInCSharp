@@ -10,7 +10,7 @@ namespace DataStructuresAndAlgorithms
 
     partial class DynamicProgrammingProblems
     {
-        // 62 https://leetcode.com/problems/unique-paths/description/
+        // 62 https://leetcode.com/problems/unique-paths
         public int UniquePaths(int m, int n)
         {
             int[,] dpLkUp = new int[m, n];
@@ -58,7 +58,7 @@ namespace DataStructuresAndAlgorithms
             return dpLkUp[n - 1];
         }
 
-        // 63 https://leetcode.com/problems/unique-paths-ii/description/
+        // 63 https://leetcode.com/problems/unique-paths-ii
         public int UniquePathsWithObstacles(int[,] obstacleGrid)
         {
             int rowLen = obstacleGrid.GetLength(0);
@@ -124,7 +124,7 @@ namespace DataStructuresAndAlgorithms
             return dpLkUp[matrix.GetLength(0) - 1];
         }
 
-        // 64 https://leetcode.com/problems/minimum-path-sum/description/
+        // 64 https://leetcode.com/problems/minimum-path-sum
         public int MinPathSum(int[,] matrix)
         {
             int[] dpLkUp = new int[matrix.GetLength(1)];
@@ -210,7 +210,7 @@ namespace DataStructuresAndAlgorithms
             return matrix[rowLen - 1, colLen - 1];
         }
 
-        // 152 https://leetcode.com/problems/maximum-product-subarray/description/
+        // 152 https://leetcode.com/problems/maximum-product-subarray
         // 2, 3, -2, 4, 5, -6  Output 1440
         // 2, 3, -2, 0, 5, -6  Output 6
 
@@ -263,7 +263,7 @@ namespace DataStructuresAndAlgorithms
             return finalMax;
         }
 
-        // 628 https://leetcode.com/problems/maximum-product-of-three-numbers/description/
+        // 628 https://leetcode.com/problems/maximum-product-of-three-numbers
         // 2 3 -3 4 5 -6 Output = 90
         public int MaximumProduct(int[] nums)
         {
@@ -733,8 +733,8 @@ and make it out of the array at the other end in minimum number of hops.*/
             return maxSqLen * maxSqLen;
         }
 
-        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/
-        // 85 https://leetcode.com/problems/maximal-rectangle/description/
+        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k
+        // 85 https://leetcode.com/problems/maximal-rectangle
         public int MaximalRectangle(char[,] srcMatrix)
         {
             int cLen = srcMatrix.GetLength(1);
@@ -919,7 +919,7 @@ and make it out of the array at the other end in minimum number of hops.*/
             return maxArea;
         }
 
-        // 486 https://leetcode.com/problems/predict-the-winner/description/
+        // 486 https://leetcode.com/problems/predict-the-winner
         public bool PredictTheWinner(int[] nums)
         {
             if (nums == null || nums.Length == 0)
@@ -951,7 +951,7 @@ and make it out of the array at the other end in minimum number of hops.*/
 
         // ----------------------------------------------------------------------------------------
 
-        //303 https://leetcode.com/problems/range-sum-query-immutable/description/
+        //303 https://leetcode.com/problems/range-sum-query-immutable
         /*
             Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
             Example:

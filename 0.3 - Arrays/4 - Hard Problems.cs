@@ -339,7 +339,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 nums[lpCnt] = tmp[lpCnt];
         }
 
-        // 4 https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+        // 4 https://leetcode.com/problems/median-of-two-sorted-arrays
         // FindMedianSortedArrays(new int[] { 10, 30, 50, 70, 90 }, new int[] { 20, 40, 60, 80, 100 });
         public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         {
@@ -478,7 +478,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
         }
 
 
-        //480 https://leetcode.com/problems/sliding-window-median/description/
+        //480 https://leetcode.com/problems/sliding-window-median
         public double[] MedianSlidingWindow(int[] nums, int k)
         {
             if (nums == null || nums.Length == 0 || k == 0)
@@ -515,7 +515,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return llist.ToArray<double>();
         }
 
-        // 128 https://leetcode.com/problems/longest-consecutive-sequence/description/       
+        // 128 https://leetcode.com/problems/longest-consecutive-sequence       
         public int LongestConsecutive(int[] nums)
         {
             if (nums == null || nums.Length == 0)
@@ -624,7 +624,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
         }
 
         //------------------------------------------------------------------------------------
-        /* 300 https://leetcode.com/problems/longest-increasing-subsequence/description/ 
+        /* 300 https://leetcode.com/problems/longest-increasing-subsequence 
           http://www.geeksforgeeks.org/longest-increasing-subsequence/
          The length of the longest increasing subsequence in arr[] of size n */
         public int LengthOfLIS(int[] nums)
@@ -724,7 +724,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
         //------------------------------------------------------------------------------------
 
-        // 673 https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+        // 673 https://leetcode.com/problems/number-of-longest-increasing-subsequence
         public int FindNumberOfLIS(int[] nums)
         {
             int numsLen = nums.Length;
@@ -768,7 +768,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return resCnt;
         }
 
-        // 334 https://leetcode.com/problems/increasing-triplet-subsequence/description/
+        // 334 https://leetcode.com/problems/increasing-triplet-subsequence
         public bool IncreasingTriplet(int[] nums)
         {
             // Start with two largest values, as soon as we find a number bigger than both
@@ -798,7 +798,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return false;
         }
 
-        //57 - https://leetcode.com/problems/insert-interval/description/
+        //57 - https://leetcode.com/problems/insert-interval
         public class Interval
         {
             public int start { get; set; }
@@ -834,7 +834,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return result;
         }
 
-        // 56 https://leetcode.com/problems/merge-intervals/description/
+        // 56 https://leetcode.com/problems/merge-intervals
         public IList<Interval> Merge(IList<Interval> intervals)
         {
             IEnumerable<Interval> sortedList = intervals.OrderBy(item => item.start);
@@ -860,7 +860,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return resultList;
         }
 
-        // https://leetcode.com/problems/largest-rectangle-in-histogram/description/
+        // https://leetcode.com/problems/largest-rectangle-in-histogram
         public int LargestRectangleArea1(int[] heights)
         {
             Stack<int> stack = new Stack<int>();
@@ -943,7 +943,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return maxArea;
         }
 
-        // https://leetcode.com/problems/container-with-most-water/description/
+        // https://leetcode.com/problems/container-with-most-water
         public int MaxArea(int[] heights)
         {
             int maxArea = 0;
@@ -973,7 +973,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             return maxArea;
         }
 
-        // Hard 41 https://leetcode.com/problems/first-missing-positive/description/
+        // Hard 41 https://leetcode.com/problems/first-missing-positive
 
         public int FirstMissingPositive(int[] nums, int n)
         {

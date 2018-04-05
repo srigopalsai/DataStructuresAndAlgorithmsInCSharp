@@ -11,7 +11,7 @@ namespace DataStructuresAndAlgorithms
     //EnQueue : O(1)
     //DeQueue : O(n)
 
-    // 232 Easy https://leetcode.com/problems/implement-queue-using-stacks/description/
+    // 232 Easy https://leetcode.com/problems/implement-queue-using-stacks
     public class QueueSamples
     {
         private static Stack<int> inbox = new Stack<int>();

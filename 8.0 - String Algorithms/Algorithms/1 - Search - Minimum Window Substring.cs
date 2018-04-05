@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataStructuresAndAlgorithms._8._0___String_Algorithms
 {
-    //https://leetcode.com/problems/minimum-window-substring/#/description
+    //https://leetcode.com/problems/minimum-window-substring
     class _1___Search___Minimum_Window_Substring
     {
     }

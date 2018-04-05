@@ -14,7 +14,7 @@ namespace DataStructuresAndAlgorithms
     partial class MathLogicSamples
     {
         //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        // 633. https://leetcode.com/problems/sum-of-square-numbers/description/
+        // 633. https://leetcode.com/problems/sum-of-square-numbers
         public bool JudgeSquareSum(int num)
         {
             if (num < 0)
@@ -121,7 +121,7 @@ namespace DataStructuresAndAlgorithms
             return a;
         }
 
-        // 273 https://leetcode.com/problems/integer-to-english-words/description/
+        // 273 https://leetcode.com/problems/integer-to-english-words
         String[] LessThan20Pos = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
         String[] TensPos       = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
         String[] ThousandsPos  = {"", "Thousand", "Million", "Billion"};

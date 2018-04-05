@@ -84,7 +84,7 @@ namespace DataStructuresAndAlgorithms
 
             return newArr;
         }
-        // 498 https://leetcode.com/problems/diagonal-traverse/description/
+        // 498 https://leetcode.com/problems/diagonal-traverse
         // Index Bound Error if we change the order of if condition blocks
 
         public int[] FindDiagonalOrder(int[,] matrix)
@@ -389,7 +389,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // 541 - 0 1 Matrix https://leetcode.com/problems/01-matrix/description/
+        // 541 - 0 1 Matrix https://leetcode.com/problems/01-matrix
         /*  Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell. 
             The distance between two adjacent cells is 1. 
 
@@ -496,7 +496,7 @@ namespace DataStructuresAndAlgorithms
  
          References:
 
-         https://leetcode.com/problems/maximal-rectangle/description/
+         https://leetcode.com/problems/maximal-rectangle
          */
 
         public int MaximalRectangle(char[,] matrix)
@@ -562,7 +562,7 @@ namespace DataStructuresAndAlgorithms
             return maxArea;
         }
 
-        // 223 https://leetcode.com/problems/rectangle-area/description/
+        // 223 https://leetcode.com/problems/rectangle-area
         int ComputeArea(int tl1, int tr1, int bl1, int br1, int tl2, int tr2, int bl2, int br2)
         {
 

@@ -20,7 +20,7 @@ namespace DataStructuresAndAlgorithms
 
         http://www.careercup.com/question?id=3353669
          */
-        // LC 242 https://leetcode.com/problems/valid-anagram/description/
+        // LC 242 https://leetcode.com/problems/valid-anagram
         public bool IsAnagram(string srcStr, string trgtStr)
         {
             if (String.IsNullOrWhiteSpace(srcStr) || String.IsNullOrWhiteSpace(trgtStr))
@@ -48,7 +48,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        // LC 87 https://leetcode.com/problems/scramble-string/description/
+        // LC 87 https://leetcode.com/problems/scramble-string
         public bool IsScramble(string s1, string s2)
         {
             return false;
@@ -78,7 +78,7 @@ namespace DataStructuresAndAlgorithms
             return -1;
         }
 
-        // LC 500 https://leetcode.com/problems/keyboard-row/description/
+        // LC 500 https://leetcode.com/problems/keyboard-row
         public string[] FindWords(string[] words)
         {
             if (words == null)
@@ -114,7 +114,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        // LC 599 https://leetcode.com/problems/minimum-index-sum-of-two-lists/description/
+        // LC 599 https://leetcode.com/problems/minimum-index-sum-of-two-lists
         public string[] FindRestaurant(string[] list1, string[] list2)
         {
             if (list1 == null || list2 == null)
@@ -153,7 +153,7 @@ namespace DataStructuresAndAlgorithms
             return resultList.ToArray();
         }
 
-        // LC 412 https://leetcode.com/problems/fizz-buzz/description/
+        // LC 412 https://leetcode.com/problems/fizz-buzz
         public IList<string> FizzBuzz(int nLen)
         {
             List<string> strNums = new List<string>();
@@ -185,7 +185,7 @@ namespace DataStructuresAndAlgorithms
 
         //-----------------------------------------------------------------------------------------------------------------------
 
-        // 389 https://leetcode.com/problems/find-the-difference/description/
+        // 389 https://leetcode.com/problems/find-the-difference
         public char FindTheDifference(string srcStr, string trgtStr)
         {
             int charCode = trgtStr[srcStr.Length];
@@ -264,7 +264,7 @@ namespace DataStructuresAndAlgorithms
 
         //-----------------------------------------------------------------------------------------------------------------------
 
-        // 383 https://leetcode.com/problems/ransom-note/description/
+        // 383 https://leetcode.com/problems/ransom-note
         public bool CanConstruct(string ransomNote, string magazine)
         {
             int[] chars = new int[26];
@@ -287,7 +287,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        // 409 https://leetcode.com/problems/longest-palindrome/description/
+        // 409 https://leetcode.com/problems/longest-palindrome
         public int LongestPalindrome(string s)
         {
             int[] table = new int[128];
@@ -315,7 +315,7 @@ namespace DataStructuresAndAlgorithms
             return longest < length ? longest + 1 : longest;//if odd add 1        
         }
 
-        // 5 https://leetcode.com/problems/longest-palindromic-substring/description/
+        // 5 https://leetcode.com/problems/longest-palindromic-substring
         public string LongestPalindromeString(String srcStr)
         {
             if (srcStr == null || srcStr.Length == 0)
@@ -537,7 +537,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         //-----------------------------------------------------------------------------------------------------------------------
-        // 20 https://leetcode.com/problems/valid-parentheses/description/
+        // 20 https://leetcode.com/problems/valid-parentheses
         
         public bool IsValid(String srcStr)
         {
@@ -824,7 +824,7 @@ namespace DataStructuresAndAlgorithms
         //    }
         //}
 
-        // 451 https://leetcode.com/problems/sort-characters-by-frequency/description/
+        // 451 https://leetcode.com/problems/sort-characters-by-frequency
         public string FrequencySort(string srcStr)
         {
             Dictionary<char, int> charsDict = new Dictionary<char, int>();
@@ -874,7 +874,7 @@ namespace DataStructuresAndAlgorithms
             return strBldr.ToString();
         }
 
-        // 32 https://leetcode.com/problems/longest-valid-parentheses/description/
+        // 32 https://leetcode.com/problems/longest-valid-parentheses
         // O(n) Time O(1) Space
         public int LongestValidParentheses3(string srcStr)
         {
@@ -947,7 +947,7 @@ namespace DataStructuresAndAlgorithms
         }
 
         // Dynamic programming O(n) Time and Space
-        // https://leetcode.com/problems/longest-valid-parentheses/description/
+        // https://leetcode.com/problems/longest-valid-parentheses
         // https://leetcode.com/articles/longest-valid-parentheses/
         public int LongestValidParentheses2(String srcStr)
         {
@@ -1148,7 +1148,7 @@ namespace DataStructuresAndAlgorithms
             return srcStrIndx >= srcStr.Length;
         }
 
-        // https://leetcode.com/problems/longest-increasing-subsequence/description/
+        // https://leetcode.com/problems/longest-increasing-subsequence
         // https://en.wikipedia.org/wiki/Diff_utility
         // https://en.wikipedia.org/wiki/Patience_sorting
         //NP-Hard https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
@@ -1185,7 +1185,7 @@ namespace DataStructuresAndAlgorithms
             return maxLength;
         }
 
-        // 522 https://leetcode.com/problems/longest-uncommon-subsequence-ii/description/
+        // 522 https://leetcode.com/problems/longest-uncommon-subsequence-ii
         public int FindLUSlength(String[] srcStr)
         {
             //Arrays.sort(strs);
@@ -1286,7 +1286,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // https://leetcode.com/problems/longest-palindromic-subsequence/description/
+        // https://leetcode.com/problems/longest-palindromic-subsequence
         public int LongestPalindromeSubseq(String srcStr)
         {
             int[,] dpLkUp = new int[srcStr.Length, srcStr.Length];
@@ -1312,7 +1312,7 @@ namespace DataStructuresAndAlgorithms
             return dpLkUp[0, srcStr.Length - 1];
         }
 
-        // 65 https://leetcode.com/problems/valid-number/description/
+        // 65 https://leetcode.com/problems/valid-number
         public bool IsNumber(String srcStr)
         {
             srcStr = srcStr.Trim();
@@ -1365,7 +1365,7 @@ namespace DataStructuresAndAlgorithms
             return numberSeen && numberAfterE;
         }
 
-        // 125 https://leetcode.com/problems/valid-palindrome/description/
+        // 125 https://leetcode.com/problems/valid-palindrome
         public bool IsPalindrome2(String s)
         {
             if (string.IsNullOrWhiteSpace(s))
@@ -1400,7 +1400,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        // 680 https://leetcode.com/problems/valid-palindrome-ii/description/
+        // 680 https://leetcode.com/problems/valid-palindrome-ii
         public bool ValidPalindrome(String s)
         {
             int i = 0, j = s.Length - 1;
@@ -1472,7 +1472,7 @@ namespace DataStructuresAndAlgorithms
             return count * 2;
         }
 
-        // 647 https://leetcode.com/problems/palindromic-substrings/description/
+        // 647 https://leetcode.com/problems/palindromic-substrings
         int count = 0;
 
         public int CountSubstrings(String s)
@@ -1499,7 +1499,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        //43 https://leetcode.com/problems/multiply-strings/description/
+        //43 https://leetcode.com/problems/multiply-strings
         public String Multiply(String num1Str, String num2Str)
         {
             int num1StrLen = num1Str.Length;
@@ -1534,7 +1534,7 @@ namespace DataStructuresAndAlgorithms
             return sb.Length == 0 ? "0" : sb.ToString();
         }
 
-        // 76 https://leetcode.com/problems/minimum-window-substring/description/
+        // 76 https://leetcode.com/problems/minimum-window-substring
 
         public string MinWindow(string srcStr, string trgtStr)
         {
@@ -1674,7 +1674,7 @@ namespace DataStructuresAndAlgorithms
             return string.Empty;
         }
 
-        //205 Isomorphic https://leetcode.com/problems/isomorphic-strings/description/
+        //205 Isomorphic https://leetcode.com/problems/isomorphic-strings
         public bool IsIsomorphic(string srcStr, string trgtStr)
         {
             int[] m1 = new int[256];

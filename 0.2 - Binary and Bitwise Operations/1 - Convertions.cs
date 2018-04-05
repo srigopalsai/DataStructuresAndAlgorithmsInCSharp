@@ -837,7 +837,7 @@ More About Bases
             }
         }
         
-        // 504 https://leetcode.com/problems/base-7/description/
+        // 504 https://leetcode.com/problems/base-7
         public string ConvertToBase7(int num)
         {
             if (num < 0)
@@ -935,7 +935,7 @@ More About Bases
             //=======================================================================================================================================================
             MessageBox.Show(strRslt.ToString());
         }
-        // 67 https://leetcode.com/problems/add-binary/description/
+        // 67 https://leetcode.com/problems/add-binary
         //http://www.wikihow.com/Add-Binary-Numbers http://www.wikihow.com/Read-Binary
         public String AddBinary(String binaryStr1, String binaryStr2)
         {

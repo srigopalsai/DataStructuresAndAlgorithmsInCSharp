@@ -16,7 +16,7 @@ namespace DataStructuresAndAlgorithms
 
     Refer P Verses NP for Un Sorted. Repat 2 loops and make sum with each element with next element (do same with all other elements in the list).
 
-        https://leetcode.com/problems/subarray-sum-equals-k/#/description
+        https://leetcode.com/problems/subarray-sum-equals-k
 
     TODO: 
     Given set of n integers, each with absolute value bounded by some polynomial in n, contains three elements that sum to zero.
@@ -28,7 +28,7 @@ namespace DataStructuresAndAlgorithms
     */
     partial class ArrayProblems
     {
-        // 287 Medium https://leetcode.com/problems/find-the-duplicate-number/description/
+        // 287 Medium https://leetcode.com/problems/find-the-duplicate-number
         public int FindDuplicate(int[] nums) //Modify Array
         {
             if (nums.Length <= 1)
@@ -768,7 +768,7 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
             }
         }
 
-        // 731 WIP Medium https://leetcode.com/problems/my-calendar-ii/description/
+        // 731 WIP Medium https://leetcode.com/problems/my-calendar-ii
         public class MyCalendarTwo
         {
             public struct Interval

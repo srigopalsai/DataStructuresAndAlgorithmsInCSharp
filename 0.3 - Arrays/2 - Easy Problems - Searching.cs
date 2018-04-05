@@ -39,7 +39,7 @@ namespace DataStructuresAndAlgorithms
     */
     partial class ArrayProblems 
     {
-        // 35 https://leetcode.com/problems/search-insert-position/description/
+        // 35 https://leetcode.com/problems/search-insert-position
         public int SearchInsert(int[] nums, int target)
         {
             int lIndx = 0;
@@ -65,7 +65,7 @@ namespace DataStructuresAndAlgorithms
             return lIndx;
         }
 
-        // https://leetcode.com/problems/first-bad-version/description/
+        // https://leetcode.com/problems/first-bad-version
         public int BinarySearch(int[] nums, int noToFind)
         {
             int leftIndx = 0;
@@ -93,7 +93,7 @@ namespace DataStructuresAndAlgorithms
             return -1;
         }
 
-        // Easy 169 Moore Voting Algorithm https://leetcode.com/problems/majority-element/description/
+        // Easy 169 Moore Voting Algorithm https://leetcode.com/problems/majority-element
         // https://en.wikipedia.org/wiki/Boyer–Moore_majority_vote_algorithm
         public int MajorityElement(int[] num)
         {
@@ -117,7 +117,7 @@ namespace DataStructuresAndAlgorithms
             return major;
         }
 
-        // Medium 81 https://leetcode.com/problems/majority-element-ii/description/
+        // Medium 81 https://leetcode.com/problems/majority-element-ii
         // Max 2 numbers can be repeated n/3 times in n.
         public List<int> MajorityElement2(int[] nums)
         {
@@ -189,7 +189,7 @@ namespace DataStructuresAndAlgorithms
             return majList;
         }
         
-        // 643 https://leetcode.com/problems/maximum-average-subarray-i/description/
+        // 643 https://leetcode.com/problems/maximum-average-subarray-i
         public double FindMaxAverage(int[] nums, int k)
         {
             long sumVal = 0;
@@ -332,7 +332,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        // 219 https://leetcode.com/problems/contains-duplicate-ii/description/
+        // 219 https://leetcode.com/problems/contains-duplicate-ii
         public bool ContainsNearbyDuplicate(int[] nums, int k)
         {
             HashSet<int> hashSet = new HashSet<int>();
@@ -352,7 +352,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        // https://leetcode.com/problems/contains-duplicate-iii/description/
+        // https://leetcode.com/problems/contains-duplicate-iii
         // Failing to be fixed.
         public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
         {
@@ -605,7 +605,7 @@ From this we can calculate a and b, the two missing numbers.
         //  printf("\n MIN steps : %d\n",find_min_steps(arr,len));
         //}
 
-        // Easy 414. https://leetcode.com/problems/third-maximum-number/description/
+        // Easy 414. https://leetcode.com/problems/third-maximum-number
         public int ThirdMax(int[] nums)
         {
             int? max1st = null;
@@ -675,7 +675,7 @@ From this we can calculate a and b, the two missing numbers.
             return max3rd == long.MinValue ? (int)max1st : (int)max3rd;
         }
 
-        // 485 Easy https://leetcode.com/problems/max-consecutive-ones/description/
+        // 485 Easy https://leetcode.com/problems/max-consecutive-ones
         public int FindMaxConsecutiveOnes(int[] nums)
         {
             if (nums == null || nums.Length == 0)
@@ -704,7 +704,7 @@ From this we can calculate a and b, the two missing numbers.
             return maxCnt;
         }
 
-        // 268 Easy https://leetcode.com/problems/missing-number/description/
+        // 268 Easy https://leetcode.com/problems/missing-number
         // Gauss Formula
         public int MissingNumber(int[] nums)
         {

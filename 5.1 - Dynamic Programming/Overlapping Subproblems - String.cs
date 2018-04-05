@@ -82,7 +82,7 @@ namespace DataStructuresAndAlgorithms
             MessageBox.Show("Length of LCS is \n" + LongestCommonSubSequenceDP(str1, str2));
         }
 
-        // 522 Medium https://leetcode.com/problems/longest-uncommon-subsequence-ii/description/
+        // 522 Medium https://leetcode.com/problems/longest-uncommon-subsequence-ii
         int LongestUnCommonSubSequenceDP(string str1, string str2)
         {
             int[,] lkUpMtrx = new int[str1.Length + 1, str2.Length + 1];
@@ -194,7 +194,7 @@ namespace DataStructuresAndAlgorithms
             return res;
         }
 
-        // https://leetcode.com/problems/repeated-substring-pattern/description/
+        // https://leetcode.com/problems/repeated-substring-pattern
         public bool repeatedSubstringPattern(String str)
         {
             int l = str.Length;
@@ -219,7 +219,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        // 22 https://leetcode.com/problems/generate-parentheses/description/
+        // 22 https://leetcode.com/problems/generate-parentheses
         /*
         For each valid parenthesis, there must be a pair whose right parenthesis is at the rightmost location. 
         Thus, a valid parenthesis has to be of the following form:
@@ -533,7 +533,7 @@ So the number of overall comparisons is a most 2N.
             return filteredCharArray;
         }
 
-        // 680 Easy https://leetcode.com/problems/valid-palindrome-ii/description/
+        // 680 Easy https://leetcode.com/problems/valid-palindrome-ii
         public bool ValidPalindromeII(string s)
         {
             int left = 0;

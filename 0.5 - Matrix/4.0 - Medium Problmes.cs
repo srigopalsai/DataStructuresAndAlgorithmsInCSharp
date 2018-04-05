@@ -110,7 +110,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // 59 Generate Spiral Matrix https://leetcode.com/problems/spiral-matrix-ii/description/
+        // 59 Generate Spiral Matrix https://leetcode.com/problems/spiral-matrix-ii
         public int[,] GenerateMatrix(int n)
         {
             if (n == 0)
@@ -479,9 +479,9 @@ namespace DataStructuresAndAlgorithms
             return maxSum;
         }      
 
-        // https://leetcode.com/problems/cut-off-trees-for-golf-event/description/
+        // https://leetcode.com/problems/cut-off-trees-for-golf-event
 
-        // 766 https://leetcode.com/problems/toeplitz-matrix/description/
+        // 766 https://leetcode.com/problems/toeplitz-matrix
         /* A matrix is Toeplitz if every diagonal from top-left to bottom-right has the same element.
         Now given an M x N matrix, return True if and only if the matrix is Toeplitz.
 
@@ -514,7 +514,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        //73 https://leetcode.com/problems/set-matrix-zeroes/description/
+        //73 https://leetcode.com/problems/set-matrix-zeroes
 
         public void SetZeroes(int[,] matrix)
         {
@@ -566,13 +566,13 @@ namespace DataStructuresAndAlgorithms
             //}
         }
 
-        // https://leetcode.com/problems/cut-off-trees-for-golf-event/description/
+        // https://leetcode.com/problems/cut-off-trees-for-golf-event
         public void TBDCutTrees()
         {
 
         }
 
-        // 417 https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+        // 417 https://leetcode.com/problems/pacific-atlantic-water-flow
 
         public List<int[]> PacificAtlantic(int[,] matrix)
         {
@@ -634,7 +634,7 @@ namespace DataStructuresAndAlgorithms
             return rIndx >= 0 && rIndx < rLen && cIndx >= 0 && cIndx < cLen;
         }
 
-        // 207 https://leetcode.com/problems/course-schedule/description/
+        // 207 https://leetcode.com/problems/course-schedule
         // BFS, Can also solve with DFS, Topological Sort, UnionFind
         public bool CanFinish(int numCourses, int[,] prerequisites)
         {
@@ -712,7 +712,7 @@ namespace DataStructuresAndAlgorithms
             return true;
         }
 
-        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/
+        // 363 https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k
         //public int maxSumSubmatrix(int[][] matrix, int k)
         //{
         //    int row = matrix.GetLength(0);
@@ -870,13 +870,13 @@ namespace DataStructuresAndAlgorithms
         //    return max;
         //}
 
-        // 407 https://leetcode.com/problems/trapping-rain-water-ii/description/
+        // 407 https://leetcode.com/problems/trapping-rain-water-ii
         public int TrapRainWater(int[,] heightMap)
         {
             return -1;
         }
 
-        // 304 https://leetcode.com/problems/range-sum-query-2d-immutable/description/
+        // 304 https://leetcode.com/problems/range-sum-query-2d-immutable
         public class NumMatrix
         {
             private int[,] dpMat;

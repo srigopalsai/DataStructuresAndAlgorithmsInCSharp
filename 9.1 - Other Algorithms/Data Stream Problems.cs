@@ -186,7 +186,7 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
     // LC 295 Median from Data Stream
     //---------------------------------------------------------------------------------------------------------------------------------
-    // https://leetcode.com/problems/find-median-from-data-stream/description/
+    // https://leetcode.com/problems/find-median-from-data-stream
     // https://www.programcreek.com/2015/01/leetcode-find-median-from-data-stream-java/
 
     // Using Ordered Multi Set (Sorted Set and Dictionary)
@@ -394,7 +394,7 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
     // LC 352 Data Stream as Disjoint Interval
     //------------------------------------------------------------------------------------------------------------
-    // https://leetcode.com/problems/data-stream-as-disjoint-intervals/description/
+    // https://leetcode.com/problems/data-stream-as-disjoint-intervals
     // https://www.programcreek.com/2014/08/leetcode-data-stream-as-disjoint-intervals-java/
 
     public class SummaryRanges

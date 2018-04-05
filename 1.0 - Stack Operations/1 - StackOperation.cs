@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace DataStructuresAndAlgorithms
 {
     // Implement Stack using Queue.
-    // 225 Easy https://leetcode.com/problems/implement-stack-using-queues/description/
+    // 225 Easy https://leetcode.com/problems/implement-stack-using-queues
     public class MyStack
     {
         Queue<int> queue = new Queue<int>();

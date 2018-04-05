@@ -8,7 +8,7 @@ namespace DataStructuresAndAlgorithms
 {
     public  partial class BinaryAndBitwiseOperations
     {
-        // 338 https://leetcode.com/problems/counting-bits/description/
+        // 338 https://leetcode.com/problems/counting-bits
         //    An easy recurrence for this problem is f[i] = f[i / 2] + i % 2.
         /*      Given a non negative integer number num.For every numbers i in the range 0 ≤ i ≤ num calculate the number of 1's in their binary representation and return them as an array.
                 Thinking:

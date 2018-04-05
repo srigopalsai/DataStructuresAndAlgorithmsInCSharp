@@ -150,7 +150,7 @@ Space Complexity O(N)
 //            MessageBox.Show("Input String : " + inputWord + Environment.NewLine + "Output String : " + newStr);
         }
 
-        // LC 557 https://leetcode.com/problems/reverse-words-in-a-string-iii/description/
+        // LC 557 https://leetcode.com/problems/reverse-words-in-a-string-iii
         public string ReverseWords(string srcStr)
         {
             if (string.IsNullOrWhiteSpace(srcStr))
@@ -189,7 +189,7 @@ Space Complexity O(N)
             return strBldr.ToString().Trim();
         }
 
-        // LC 345 https://leetcode.com/problems/reverse-vowels-of-a-string/description/
+        // LC 345 https://leetcode.com/problems/reverse-vowels-of-a-string
         public string ReverseVowels(string s)
         {
             if (string.IsNullOrWhiteSpace(s))
@@ -238,7 +238,7 @@ Space Complexity O(N)
                 return false;
         }
 
-        // 541 https://leetcode.com/problems/reverse-string-ii/description/
+        // 541 https://leetcode.com/problems/reverse-string-ii
         public string ReverseStr(string srcStr, int k)
         {
             if (string.IsNullOrWhiteSpace(srcStr))
@@ -272,7 +272,7 @@ Space Complexity O(N)
             return new string(chars);
         }
 
-        // 434 https://leetcode.com/problems/number-of-segments-in-a-string/description/
+        // 434 https://leetcode.com/problems/number-of-segments-in-a-string
         public int CountSegments(string srcStr)
         {
             if (string.IsNullOrWhiteSpace(srcStr))
@@ -289,7 +289,7 @@ Space Complexity O(N)
             return spaceCnt;
         }
 
-        // 125 https://leetcode.com/problems/valid-palindrome/description/
+        // 125 https://leetcode.com/problems/valid-palindrome
 
         public bool IsPalindrome(string srcStr)
         {
@@ -431,7 +431,7 @@ Space Complexity O(N)
             return resultLists;
         }
 
-        // 415 Implement LargeInt Additions https://leetcode.com/problems/add-strings/description/
+        // 415 Implement LargeInt Additions https://leetcode.com/problems/add-strings
         public String AddStrings(String num1Str, String num2Str)
         {
             StringBuilder strBldr = new StringBuilder();

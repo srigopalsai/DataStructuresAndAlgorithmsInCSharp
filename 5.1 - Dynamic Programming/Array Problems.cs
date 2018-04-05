@@ -14,7 +14,7 @@ namespace DataStructuresAndAlgorithms
         Note that 1 is typically treated as an ugly number, and n does not exceed 1690.
         */
         // http://www.geeksforgeeks.org/ugly-numbers/
-        // 263 https://leetcode.com/problems/ugly-number/description/
+        // 263 https://leetcode.com/problems/ugly-number
 
         // Divides num1 by Greatest Divisible Power of num2
         public int MaxDivide(int num1, int num2)
@@ -103,7 +103,7 @@ namespace DataStructuresAndAlgorithms
             return nextUglyNo;
         }
 
-        //121 https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
+        //121 https://leetcode.com/problems/best-time-to-buy-and-sell-stock
         //================================================================================================================================
 
         public int MaxProfitI(int[] prices)
@@ -121,7 +121,7 @@ namespace DataStructuresAndAlgorithms
             return maxSoFar;
         }
 
-        //122 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/
+        //122 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii
         //================================================================================================================================
 
         public int MaxProfitII(int[] prices)
@@ -141,7 +141,7 @@ namespace DataStructuresAndAlgorithms
             return maxprofit;
         }
 
-        // 123 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/
+        // 123 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii
         public int MaxProfitIII(int[] prices)
         {
             int buy1 = Int32.MinValue;
@@ -162,7 +162,7 @@ namespace DataStructuresAndAlgorithms
             return sell2; ///Since sell1 is initiated as 0, so sell2 will always higher than sell1.
         }
 
-        // 309 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
+        // 309 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown
         //================================================================================================================================
 
         public int MaxProfitIV3(int[] prices)
@@ -265,7 +265,7 @@ namespace DataStructuresAndAlgorithms
             return result.Length == 0 ? 0 : result[result.Length - 1];
         }
 
-        // 714 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/description/
+        // 714 https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee
         //================================================================================================================================
 
         public int MaxProfitV(int[] prices, int fee)

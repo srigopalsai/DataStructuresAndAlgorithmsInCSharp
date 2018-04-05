@@ -4,7 +4,7 @@ namespace DataStructuresAndAlgorithms
 {
 
     /*
-    https://leetcode.com/problems/permutation-in-string/#/description
+    https://leetcode.com/problems/permutation-in-string
     https://discuss.leetcode.com/topic/87861/c-java-clean-code-with-explanation
     https://discuss.leetcode.com/topic/87845/java-solution-sliding-window
     https://discuss.leetcode.com/topic/87846/java-o-n-time-o-1-space-sliding-window

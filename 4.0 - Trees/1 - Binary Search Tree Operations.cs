@@ -337,39 +337,85 @@ http://powercollections.codeplex.com
             return isSymmetricHelp(t1.LeftNode, t2.RightNode) && isSymmetricHelp(t1.RightNode, t2.LeftNode);
         }
 
-        public TreeNode InvertTree(TreeNode currentNode)
+        //  226 Easy https://leetcode.com/problems/invert-binary-tree
+        //  Invert a binary tree.
+        //      4
+        //    /   \
+        //   2     7
+        //  / \   / \
+        // 1   3 6   9
+        //  Output:
+        //      4
+        //    /   \
+        //   7     2
+        //  / \   / \
+        // 9   6 3   1
+
+        public TreeNode InvertTreeStack(TreeNode currentNode)
         {
-            //if (currentNode == null)
-            //    return null;
-
-            //TreeNode rightNode = InvertTree(currentNode.RightNode);
-            //TreeNode leftNode = InvertTree(currentNode.LeftNode);
-
-            //currentNode.LeftNode = rightNode;
-            //currentNode.RightNode = leftNode;
-
-            //return currentNode;
-
             if (currentNode == null)
                 return null;
 
-            Stack<TreeNode> nodesStack = new Stack<TreeNode>();
-            nodesStack.Push(currentNode);
+            Stack<TreeNode> tnStack = new Stack<TreeNode>();
+            tnStack.Push(currentNode);
 
-            while (nodesStack.Count > 0)
+            while (tnStack.Count > 0)
             {
-                TreeNode node = nodesStack.Pop();
+                TreeNode node = tnStack.Pop();
+
                 TreeNode temp = node.LeftNode;
                 node.LeftNode = node.RightNode;
                 node.RightNode = temp;
 
                 if (node.LeftNode != null)
-                    nodesStack.Push(node.LeftNode);
+                    tnStack.Push(node.LeftNode);
                 if (node.RightNode != null)
-                    nodesStack.Push(node.RightNode);
+                    tnStack.Push(node.RightNode);
             }
 
             return currentNode;
+        }
+
+        public TreeNode InvertTreeQueue(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+
+            tnQ.Enqueue(root);
+
+            while (tnQ.Count > 0)
+            {
+                TreeNode current = tnQ.Dequeue();
+
+                TreeNode temp = current.LeftNode;
+                current.LeftNode = current.RightNode;
+                current.RightNode = temp;
+
+                if (current.LeftNode != null)
+                    tnQ.Enqueue(current.LeftNode);
+
+                if (current.RightNode != null)
+                    tnQ.Enqueue(current.RightNode);
+            }
+
+            return root;
+        }
+
+        public TreeNode InvertTreeRecur(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            TreeNode temp = root.LeftNode;
+            root.LeftNode = root.RightNode;
+            root.RightNode = temp;
+
+            InvertTreeRecur(root.LeftNode);
+            InvertTreeRecur(root.RightNode);
+
+            return root;
         }
 
         public bool RemoveNode(int NodeValue)
@@ -489,11 +535,11 @@ http://powercollections.codeplex.com
 
         public TreeNode SortedArrayToBST(int[] sortedArray)
         {
-            TreeNode tn = createTreeFromSortedArray(sortedArray, 0, sortedArray.Length - 1);
+            TreeNode tn = SortedArrayToBSTHelperRecursion(sortedArray, 0, sortedArray.Length - 1);
             return tn;
         }
 
-        public TreeNode createTreeFromSortedArray(int[] sortedArray, int leftPos, int rightPos)
+        public TreeNode SortedArrayToBSTHelperRecursion(int[] sortedArray, int leftPos, int rightPos)
         {
             if (leftPos > rightPos) // Creation done.
                 return null;
@@ -504,14 +550,14 @@ http://powercollections.codeplex.com
             TreeNode parentNode = new TreeNode(sortedArray[mid]);
 
             // Left side exclude mid.
-            parentNode.LeftNode = createTreeFromSortedArray(sortedArray, leftPos, mid - 1);
+            parentNode.LeftNode = SortedArrayToBSTHelperRecursion(sortedArray, leftPos, mid - 1);
 
             // Right side exclude mid.
-            parentNode.RightNode = createTreeFromSortedArray(sortedArray, mid + 1, rightPos);
+            parentNode.RightNode = SortedArrayToBSTHelperRecursion(sortedArray, mid + 1, rightPos);
             return parentNode;
         }
 
-        public TreeNode createTreeFromSortedArrayUsingStack(int[] sortedArray)
+        public TreeNode SortedArrayToBSTIteration(int[] sortedArray)
         {
             int leftPos = 0;
             int rightPos = sortedArray.Length;
@@ -525,7 +571,6 @@ http://powercollections.codeplex.com
 
             while (nodesStack.Count > 0)
             {
-
                 TreeNode parentNode = nodesStack.Pop();
 
                 mid = (leftPos + (rightPos - leftPos) / 2);
@@ -535,10 +580,10 @@ http://powercollections.codeplex.com
 
 
                 // Left side exclude mid.
-                parentNode.LeftNode = createTreeFromSortedArray(sortedArray, leftPos, mid - 1);
+                parentNode.LeftNode = SortedArrayToBSTHelperRecursion(sortedArray, leftPos, mid - 1);
 
                 // Right side exclude mid.
-                parentNode.RightNode = createTreeFromSortedArray(sortedArray, mid + 1, rightPos);
+                parentNode.RightNode = SortedArrayToBSTHelperRecursion(sortedArray, mid + 1, rightPos);
 
             }
             return rootNode;
@@ -709,32 +754,29 @@ http://powercollections.codeplex.com
 
             while (stack.Count > 0 || currentNode != null)
             {
-                if (currentNode != null)
+                while (currentNode != null)
                 {
                     stack.Push(currentNode);
                     currentNode = currentNode.LeftNode;
                 }
-                else
+
+                peekNode = stack.Peek();
+
+                if (peekNode.RightNode != null && peekNode.RightNode != lastVisitedNode)
                 {
-                    peekNode = stack.Peek();
-
-                    if (peekNode.RightNode != null && peekNode.RightNode != lastVisitedNode)
-                    {
-                        currentNode = peekNode.RightNode;
-                    }
-                    else
-                    {
-                        stack.Pop();
-                        resultString.Append("  " + peekNode.NodeValue);
-
-                        lastVisitedNode = peekNode;
-                    }
+                    currentNode = peekNode.RightNode;
+                    continue;
                 }
+
+                stack.Pop();
+                resultString.Append("  " + peekNode.NodeValue);
+
+                lastVisitedNode = peekNode;
             }
 
             return Convert.ToString(resultString);
         }
-
+      
         // BFS : Also called as Level Order Traversal.
         // We can remove the stack requirement by maintaining parent pointers in each node, or by 'Morris in-order traversal using threading'
         public string BreadthFirstSearchUsingQueue(TreeNode parentNode)
@@ -771,7 +813,7 @@ http://powercollections.codeplex.com
 
         public void RecoverTree(TreeNode root)
         {
-            recoverTree(root);
+            RecoverTreeHelper(root);
             if (firstWrongElement != null && secondWrongElement != null)
             {
                 int temp = firstWrongElement.NodeValue;
@@ -780,12 +822,12 @@ http://powercollections.codeplex.com
             }
         }
 
-        private void recoverTree(TreeNode node)
+        private void RecoverTreeHelper(TreeNode node)
         {
             if (node == null)
                 return;
 
-            recoverTree(node.LeftNode);
+            RecoverTreeHelper(node.LeftNode);
 
             if (firstWrongElement == null && prevNode != null && prevNode.NodeValue > node.NodeValue)
                 firstWrongElement = prevNode;
@@ -796,7 +838,7 @@ http://powercollections.codeplex.com
 
             prevNode = node;
 
-            recoverTree(node.RightNode);
+            RecoverTreeHelper(node.RightNode);
         }
 
         public TreeNode ConvertToDLL(TreeNode currentNode)
@@ -1996,7 +2038,7 @@ http://powercollections.codeplex.com
             return currNode.NodeValue;
         }
 
-        // LC 653 https://leetcode.com/problems/two-sum-iv-input-is-a-bst/description/
+        // LC 653 https://leetcode.com/problems/two-sum-iv-input-is-a-bst
         public bool FindTarget(TreeNode root, int targetVal)
         {
             HashSet<int> valsSet = new HashSet<int>();
@@ -2017,7 +2059,7 @@ http://powercollections.codeplex.com
                     DfsPreOrderHelper(root.RightNode, hset, targetVal);
         }
 
-        // 538 https://leetcode.com/problems/convert-bst-to-greater-tree/description/
+        // 538 https://leetcode.com/problems/convert-bst-to-greater-tree
         public TreeNode ConvertBST(TreeNode root)
         {
             if (root == null)
@@ -2047,7 +2089,7 @@ http://powercollections.codeplex.com
             return root;
         }
 
-        // 530 https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/
+        // 530 https://leetcode.com/problems/minimum-absolute-difference-in-bst
         public int GetMinimumDifference(TreeNode root)
         {
             Stack<TreeNode> stack = new Stack<TreeNode>();

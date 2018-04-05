@@ -245,7 +245,7 @@ namespace DataStructuresAndAlgorithms
             return -1;
         }
 
-        // 35 Easy https://leetcode.com/problems/search-insert-position/description/
+        // 35 Easy https://leetcode.com/problems/search-insert-position
         public int SearchInsert(int[] nums, int target)
         {
             int lIndx = 0;

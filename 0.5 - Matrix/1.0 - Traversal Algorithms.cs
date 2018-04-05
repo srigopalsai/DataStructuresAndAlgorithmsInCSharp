@@ -314,7 +314,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        //741 https://leetcode.com/problems/cherry-pickup/description/
+        //741 https://leetcode.com/problems/cherry-pickup
         public int CherryPickup(int[,] grid)
         {
             int nLen = grid.GetLength(0);
@@ -391,7 +391,7 @@ namespace DataStructuresAndAlgorithms
             return Math.Max(0, dpArr1[nLen - 1, nLen - 1]);
         }
 
-        // 661 https://leetcode.com/problems/image-smoother/description/
+        // 661 https://leetcode.com/problems/image-smoother
         public int[,] ImageSmoother(int[,] matrix)
         {
             if (matrix == null)
@@ -436,7 +436,7 @@ namespace DataStructuresAndAlgorithms
             return rIndx >= 0 && rIndx < rLen && cIndx >= 0 && cIndx < cLen;
         }
 
-        // 547 https://leetcode.com/problems/friend-circles/description/
+        // 547 https://leetcode.com/problems/friend-circles
         public int FindCircleNum(int[,] matrix)
         {
             int circleCnt = 0;
@@ -595,7 +595,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // 529 https://leetcode.com/problems/minesweeper/description/
+        // 529 https://leetcode.com/problems/minesweeper
         public char[][] UpdateBoard(char[][] board, int[] click)
         {
             int m = board.GetLength(0);

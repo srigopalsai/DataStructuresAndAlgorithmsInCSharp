@@ -111,7 +111,7 @@ namespace DataStructuresAndAlgorithms
             return dummyHead.NextNode;
         }
 
-        // 203 Easy https://leetcode.com/problems/remove-linked-list-elements/description/
+        // 203 Easy https://leetcode.com/problems/remove-linked-list-elements
         public ListNode RemoveElements(ListNode head, int val)
         {
             if (head == null) return null;
@@ -194,7 +194,7 @@ namespace DataStructuresAndAlgorithms
 
         //=============================================================================================================================================
 
-        // 234 Easy https://leetcode.com/problems/palindrome-linked-list/description/
+        // 234 Easy https://leetcode.com/problems/palindrome-linked-list
         // Using global start pointer and recursion.
         ListNode front = null;
         public bool IsPalindrome1(ListNode head)
@@ -298,7 +298,7 @@ namespace DataStructuresAndAlgorithms
             return -1;
         }
 
-        // 160 Easy https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+        // 160 Easy https://leetcode.com/problems/intersection-of-two-linked-lists
 
         /*• Maintain two pointers pA and pB initialized at the head of A and B, respectively. 
               Then let them both traverse through the lists, one node at a time.
@@ -350,7 +350,7 @@ namespace DataStructuresAndAlgorithms
             return result.NodeValue;
         }
 
-        // LC 382 https://leetcode.com/problems/linked-list-random-node/#/description
+        // LC 382 https://leetcode.com/problems/linked-list-random-node
         public int GetRandom(ListNode head)
         {
             int result = head.NodeValue;
@@ -487,7 +487,7 @@ namespace DataStructuresAndAlgorithms
             return previousNode;
         }
 
-        // 206 Easy https://leetcode.com/problems/reverse-linked-list/description/
+        // 206 Easy https://leetcode.com/problems/reverse-linked-list
         public ListNode ReverseList(ListNode head)
         {
             if (head == null || head.NextNode == null)
@@ -652,7 +652,7 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             return list1Head.NextNode;
         }
 
-        // 141 Easy https://leetcode.com/problems/linked-list-cycle/description/
+        // 141 Easy https://leetcode.com/problems/linked-list-cycle
         public bool HasCycle(ListNode headNode)
         {
             if (headNode == null)
@@ -673,7 +673,7 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             return false;
         }
 
-        // 21 Easy https://leetcode.com/problems/merge-two-sorted-lists/description/
+        // 21 Easy https://leetcode.com/problems/merge-two-sorted-lists
         public ListNode MergeTwoLists(ListNode l1, ListNode l2)
         {
             ListNode l3Head = new ListNode(0);
@@ -1234,7 +1234,7 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
 
         }
 
-        // 2 https://leetcode.com/problems/add-two-numbers/description/
+        // 2 https://leetcode.com/problems/add-two-numbers
         public ListNode AddTwoNumbers(ListNode l1List, ListNode l2List)
         {
             int carry = 0;
@@ -1262,7 +1262,7 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
             return resultHead.NextNode;
         }
 
-        // 61 Medium https://leetcode.com/problems/rotate-list/description/
+        // 61 Medium https://leetcode.com/problems/rotate-list
         public ListNode RotateRight(ListNode head, int kPos)
         {
             if (head == null)
@@ -1302,7 +1302,7 @@ Output     : 3  ->  2   ->  1   ->  6   ->  5   ->  4   ->  8   ->  7
          *     ListNode(int x) { NodeValue = x; }
          * }
          */
-        // 23 Hard https://leetcode.com/problems/merge-k-sorted-lists/description/
+        // 23 Hard https://leetcode.com/problems/merge-k-sorted-lists
 
         class Solution
         {

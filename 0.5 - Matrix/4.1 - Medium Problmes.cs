@@ -51,7 +51,7 @@ namespace DataStructuresAndAlgorithms
 
         }
 
-        //240 O(M+N) Top Right to Bottom Left https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+        //240 O(M+N) Top Right to Bottom Left https://leetcode.com/problems/search-a-2d-matrix-ii
         public bool SearchMatrix(int[,] matrix, int target)
         {
             if (matrix == null || matrix.Length == 0)
@@ -383,7 +383,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        //LC 378 https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
+        //LC 378 https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix
         //Input:      1   3    5
         //            2   4    7
         //            6   8    9

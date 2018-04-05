@@ -89,7 +89,7 @@ namespace DataStructuresAndAlgorithms
 
     public partial class ArrayProblems
     {
-        // 66 https://leetcode.com/problems/plus-one/description/
+        // 66 https://leetcode.com/problems/plus-one
         public int[] PlusOne(int[] digits)
         {
             for (int indx = digits.Length - 1; indx >= 0; indx--)
@@ -109,7 +109,7 @@ namespace DataStructuresAndAlgorithms
             return newNumber;
         }
 
-        // https://leetcode.com/problems/merge-sorted-array/description/
+        // https://leetcode.com/problems/merge-sorted-array
         public void Merge(int[] nums1, int nums1Indx, int[] nums2, int nums2Indx)
         {
             --nums1Indx;
@@ -144,7 +144,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
     
-        // 561 Array Partition I https://leetcode.com/problems/array-partition-i/description/
+        // 561 Array Partition I https://leetcode.com/problems/array-partition-i
 
         public int ArrayPairSum(int[] nums)
         {
@@ -180,7 +180,7 @@ namespace DataStructuresAndAlgorithms
             return maxSum;
         }
 
-        // 665 https://leetcode.com/problems/non-decreasing-array/description/
+        // 665 https://leetcode.com/problems/non-decreasing-array
         public bool CheckPossibility(int[] nums)
         {
             int numsCnt = 0;
@@ -213,7 +213,7 @@ namespace DataStructuresAndAlgorithms
                     Step 3) 3->6->9     - Result Array : 7, 8, 9, 1, 2, 3, 4, 5, 6 
                     
         k = k % n; Not really necessary if k is always less than n 
-        189 https://leetcode.com/problems/rotate-array/description/
+        189 https://leetcode.com/problems/rotate-array
         */
 
         public void Rotate(int[] nums, int k)
@@ -268,7 +268,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
       
-        // 532 https://leetcode.com/problems/k-diff-pairs-in-an-array/description/
+        // 532 https://leetcode.com/problems/k-diff-pairs-in-an-array
         public int FindPairs(int[] nums, int k)
         {
             if (nums == null || nums.Length < 1 || k < 0)
@@ -310,7 +310,7 @@ namespace DataStructuresAndAlgorithms
             return count;
         }
 
-        // 581 https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
+        // 581 https://leetcode.com/problems/shortest-unsorted-continuous-subarray
         public int FindUnsortedSubarray(int[] nums)
         {
             int stIndx = -1;
@@ -337,7 +337,7 @@ namespace DataStructuresAndAlgorithms
             return endIndx - stIndx + 1;
         }
 
-        // 605 https://leetcode.com/problems/can-place-flowers/description/
+        // 605 https://leetcode.com/problems/can-place-flowers
 
         // K: number of flowers to plant
         // N: length of flower bed
@@ -845,7 +845,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        // 136 Easy https://leetcode.com/problems/single-number/description/
+        // 136 Easy https://leetcode.com/problems/single-number
         public int SingleNumber(int[] nums)
         {
             int result = nums[0];

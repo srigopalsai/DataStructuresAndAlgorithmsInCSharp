@@ -8,7 +8,7 @@ namespace DataStructuresAndAlgorithms
 {
     partial class DynamicProgrammingStringSamples
     {
-        // 718 Medium https://leetcode.com/problems/maximum-length-of-repeated-subarray/description/
+        // 718 Medium https://leetcode.com/problems/maximum-length-of-repeated-subarray
         // Given two integer arrays A and B, return the maximum length of an subarray that appears in both arrays.
         // Example 1:
         // Input:

@@ -9,7 +9,7 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
 {
     public class HardProblems
     {
-        // 42 https://leetcode.com/problems/trapping-rain-water/description/
+        // 42 https://leetcode.com/problems/trapping-rain-water
         // O(N) Time O(1) Space
         public int Trap(int[] height)
         {
@@ -160,7 +160,7 @@ namespace DataStructuresAndAlgorithms._0._5___Matrix
          * int param_2 = obj.sumRegion(row1,col1,row2,col2);
          */
 
-        //https://leetcode.com/problems/trapping-rain-water-ii/description/
+        //https://leetcode.com/problems/trapping-rain-water-ii
         // https://leetcode.com/problems/trapping-rain-water-ii/discuss/89460/Alternative-approach-using-Dijkstra-in-O(rc-max(log-r-log-c))-time
         int[,] dirs = new int[,] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
 
