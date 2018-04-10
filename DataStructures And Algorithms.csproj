@@ -167,6 +167,7 @@
     <Compile Include="3.0 - Linked Lists\SortedList.cs" />
     <Compile Include="3.0 - Linked Lists\TriplyLinkedList.cs" />
     <Compile Include="4.0 - Trees\0 - Notes.cs" />
+    <Compile Include="4.0 - Trees\1 - Binary Search Tree Operations - Medium.cs" />
     <Compile Include="4.0 - Trees\1 - Binary Tree Operations - Medium.cs" />
     <Compile Include="4.0 - Trees\1 - Binary Tree Operations - Easy.cs" />
     <Compile Include="4.0 - Trees\2 - Min Max Heaps.cs" />
@@ -356,7 +357,7 @@
       <DependentUpon>LinkedListDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="3.0 - Linked Lists\ListNode.cs" />
-    <Compile Include="4.0 - Trees\1 - Binary Search Tree Operations.cs" />
+    <Compile Include="4.0 - Trees\1 - Binary Search Tree Operations - Easy.cs" />
     <Compile Include="4.0 - Trees\2 - Heap Operations.cs" />
     <Compile Include="4.0 - Trees\TreeNode.cs" />
     <Compile Include="4.0 - Trees\TreesDemo.xaml.cs">

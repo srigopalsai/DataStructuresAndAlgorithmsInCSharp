@@ -189,7 +189,7 @@ http://powercollections.codeplex.com
     ============================================================================================================================================================================================================================
     */
 
-    public class BinarySearchTreeOperations
+    public partial class BinarySearchTreeOperations
     {
         public TreeNode RootdNode;
         StringBuilder resultString;
@@ -335,87 +335,6 @@ http://powercollections.codeplex.com
                 return false;
 
             return isSymmetricHelp(t1.LeftNode, t2.RightNode) && isSymmetricHelp(t1.RightNode, t2.LeftNode);
-        }
-
-        //  226 Easy https://leetcode.com/problems/invert-binary-tree
-        //  Invert a binary tree.
-        //      4
-        //    /   \
-        //   2     7
-        //  / \   / \
-        // 1   3 6   9
-        //  Output:
-        //      4
-        //    /   \
-        //   7     2
-        //  / \   / \
-        // 9   6 3   1
-
-        public TreeNode InvertTreeStack(TreeNode currentNode)
-        {
-            if (currentNode == null)
-                return null;
-
-            Stack<TreeNode> tnStack = new Stack<TreeNode>();
-            tnStack.Push(currentNode);
-
-            while (tnStack.Count > 0)
-            {
-                TreeNode node = tnStack.Pop();
-
-                TreeNode temp = node.LeftNode;
-                node.LeftNode = node.RightNode;
-                node.RightNode = temp;
-
-                if (node.LeftNode != null)
-                    tnStack.Push(node.LeftNode);
-                if (node.RightNode != null)
-                    tnStack.Push(node.RightNode);
-            }
-
-            return currentNode;
-        }
-
-        public TreeNode InvertTreeQueue(TreeNode root)
-        {
-            if (root == null)
-                return null;
-
-            Queue<TreeNode> tnQ = new Queue<TreeNode>();
-
-            tnQ.Enqueue(root);
-
-            while (tnQ.Count > 0)
-            {
-                TreeNode current = tnQ.Dequeue();
-
-                TreeNode temp = current.LeftNode;
-                current.LeftNode = current.RightNode;
-                current.RightNode = temp;
-
-                if (current.LeftNode != null)
-                    tnQ.Enqueue(current.LeftNode);
-
-                if (current.RightNode != null)
-                    tnQ.Enqueue(current.RightNode);
-            }
-
-            return root;
-        }
-
-        public TreeNode InvertTreeRecur(TreeNode root)
-        {
-            if (root == null)
-                return null;
-
-            TreeNode temp = root.LeftNode;
-            root.LeftNode = root.RightNode;
-            root.RightNode = temp;
-
-            InvertTreeRecur(root.LeftNode);
-            InvertTreeRecur(root.RightNode);
-
-            return root;
         }
 
         public bool RemoveNode(int NodeValue)
@@ -1274,10 +1193,24 @@ http://powercollections.codeplex.com
             return -1;
         }
 
+        // 235 Easy https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+
+        // Given a binary search tree(BST), find the lowest common ancestor(LCA) of two given nodes in the BST.
+        // According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).” 
+        //         _______6______
+        //        /              \
+        //     ___2__ ___8__
+        //    /      \        /      \
+        //    0      _4       7       9
+        //          /  \
+        //          3   5
+        // E.g1 The lowest common ancestor(LCA) of nodes 2 and 8 is 6. 
+        // E.g2 LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
+
         //Lowest Common Ancestor 
-        public int LowestCommonAncestor(int NodeValue1, int NodeValue2)
+        public int LowestCommonAncestorTest(int NodeValue1, int NodeValue2)
         {
-            TreeNode CommonAncestorNode = LowestCommonAncestor(RootdNode, NodeValue1, NodeValue2);
+            TreeNode CommonAncestorNode = LowestCommonAncestorIteration(RootdNode, NodeValue1, NodeValue2);
             //TreeNode CommonAncestorNode = LowestCommonAncestorLoop(RootdNode, NodeValue1, NodeValue2);
 
             int CommonAncestorValue = 0;
@@ -1289,32 +1222,8 @@ http://powercollections.codeplex.com
             return CommonAncestorValue;
         }
 
-        bool foundFlag = false;
-        //Recursion
-        private TreeNode LowestCommonAncestor(TreeNode currentNode, int NodeValue1, int NodeValue2)
-        {
-            if (currentNode == null || currentNode.NodeValue == NodeValue1 || currentNode.NodeValue == NodeValue2)
-                return currentNode;
-
-            TreeNode leftNode = LowestCommonAncestor(currentNode.LeftNode, NodeValue1, NodeValue2);
-
-            TreeNode rightNode = null;
-            if (foundFlag == false)
-                rightNode = LowestCommonAncestor(currentNode.RightNode, NodeValue1, NodeValue2);
-
-            if (leftNode != null && rightNode != null)
-            {
-                foundFlag = true;
-                return currentNode;
-            }
-            else if (leftNode != null)
-                return leftNode;
-            else
-                return rightNode;
-        }
-
         //Using loop - log(n) operations
-        TreeNode LowestCommonAncestorLoop(TreeNode currentNode, int Node1Value, int Node2Value)
+        TreeNode LowestCommonAncestorIteration(TreeNode currentNode, int Node1Value, int Node2Value)
         {
             while (currentNode != null)
             {
@@ -1522,6 +1431,80 @@ http://powercollections.codeplex.com
                 return (RightMaxHeight + 1);
         }
 
+        // 100 Easy https://leetcode.com/problems/same-tree/description/
+        // Given two binary trees, write a function to check if they are the same or not.
+        // Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
+           
+        // E.g. 1: 
+        // Input:     1         1
+        //           / \       / \
+        //          2   3     2   3
+           
+        //         [1,2,3], [1,2,3]
+           
+        // Output: true
+           
+        // E.g. 2: 
+        // Input:     1         1
+        //           /           \
+        //          2             2
+           
+        //         [1,2], [1,null,2]
+           
+        // Output: false
+           
+        // E.g. 3: 
+        // Input:     1         1
+        //           / \       / \
+        //          2   1     1   2
+           
+        //         [1,2,1], [1,1,2]
+           
+        // Output: false
+        public bool IsSameTreeIteration(TreeNode p, TreeNode q)
+        {
+
+            if (p == null || q == null)
+                return p == q;
+
+            Stack<TreeNode> t1Stack = new Stack<TreeNode>();
+            Stack<TreeNode> t2Stack = new Stack<TreeNode>();
+
+            if (p != null)
+                t1Stack.Push(p);
+            if (q != null)
+                t2Stack.Push(q);
+
+            while (t1Stack.Count() > 0 && t2Stack.Count() > 0)
+            {
+                TreeNode t1 = t1Stack.Pop();
+                TreeNode t2 = t2Stack.Pop();
+
+                if (t1.NodeValue != t2.NodeValue)
+                    return false;
+
+                if (t1.LeftNode != null)
+                    t1Stack.Push(t1.LeftNode);
+
+                if (t2.LeftNode != null)
+                    t2Stack.Push(t2.LeftNode);
+
+                if (t1Stack.Count() != t2Stack.Count())
+                    return false;
+
+                if (t1.RightNode != null)
+                    t1Stack.Push(t1.RightNode);
+
+                if (t2.RightNode != null)
+                    t2Stack.Push(t2.RightNode);
+
+                if (t1Stack.Count() != t2Stack.Count())
+                    return false;
+            }
+
+            return (t1Stack.Count() == t2Stack.Count());
+        }
+
         public bool IsSameTree(TreeNode t1Node, TreeNode t2Node)
         {
             if (t1Node == null || t2Node == null)
@@ -1571,6 +1554,58 @@ http://powercollections.codeplex.com
             }
 
             return (t1Stack.Count() == t2Stack.Count());
+        }
+
+        // 404 Easy https://leetcode.com/problems/sum-of-left-leaves/description/
+        // Find the sum of all left leaves in a given binary tree.
+        // Example: 
+        //     3
+        //    / \
+        //   9  20
+        //     /  \
+        //    15   7
+           
+        // There are two left leaves in the binary tree, with values 9 and 15 respectively.Return 24.
+        public int SumOfLeftLeaves(TreeNode root)
+        {
+            if (root == null || root.LeftNode == null && root.RightNode == null)
+                return 0;
+
+            int res = 0;
+
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                TreeNode curr = queue.Dequeue();
+
+                if (curr.LeftNode != null && curr.LeftNode.LeftNode == null && curr.LeftNode.RightNode == null)
+                    res += curr.LeftNode.NodeValue;
+
+                if (curr.LeftNode != null)
+                    queue.Enqueue(curr.LeftNode);
+
+                if (curr.RightNode != null)
+                    queue.Enqueue(curr.RightNode);
+            }
+            return res;
+        }
+
+        public int SumOfLeftLeavesRecursive(TreeNode root)
+        {
+            return SumOfLeftLeavesHelper(root, false);
+        }
+
+        int SumOfLeftLeavesHelper(TreeNode root, bool isleft = false)
+        {
+            if (root == null)
+                return 0;
+
+            if (root.LeftNode == null && root.RightNode == null)
+                return isleft ? root.NodeValue : 0;
+
+            return SumOfLeftLeavesHelper(root.LeftNode, true) + SumOfLeftLeavesHelper(root.RightNode, false);
         }
 
         //======================================================================================================================================================================================================================
@@ -1836,57 +1871,7 @@ http://powercollections.codeplex.com
         public void Convert2CircularDoublyLinkedList()
         {
 
-        }
-
-        //LC 103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
-        // https://discuss.leetcode.com/topic/4545/accepted-c-recursive-solution-with-no-queues
-        // https://discuss.leetcode.com/topic/33809/4ms-concise-dfs-c-implementation
-        public IList<IList<int>> ZigzagLevelOrder()
-        {
-            TreeNode rootNode = this.RootdNode;
-            Stack<TreeNode> evenStack = new Stack<TreeNode>();
-            Stack<TreeNode> oddStack = new Stack<TreeNode>();
-
-            IList<IList<int>> itemsColl = new List<IList<int>>();
-            IList<int> items = new List<int>();
-
-            oddStack.Push(rootNode);
-
-            while (evenStack.Count > 0 || oddStack.Count > 0)
-            {
-                if (oddStack.Count > 0)
-                {
-                    while (oddStack.Count > 0)
-                    {
-                        TreeNode currNode = oddStack.Pop();
-                        items.Add(currNode.NodeValue);
-
-                        if (currNode.LeftNode != null)
-                            evenStack.Push(currNode.LeftNode);
-
-                        if (currNode.RightNode != null)
-                            evenStack.Push(currNode.RightNode);
-                    }
-                }
-                else
-                {
-                    while (evenStack.Count > 0)
-                    {
-                        TreeNode currNode = evenStack.Pop();
-                        items.Add(currNode.NodeValue);
-
-                        if (currNode.RightNode != null)
-                            oddStack.Push(currNode.RightNode);
-
-                        if (currNode.LeftNode != null)
-                            oddStack.Push(currNode.LeftNode);
-                    }
-                }
-                itemsColl.Add(items);
-                items = new List<int>();
-            }
-            return itemsColl;
-        }
+        }        
 
         /* Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
         E.g. Given n = 3, there are a total of 5 unique BST's. 
@@ -2059,6 +2044,36 @@ http://powercollections.codeplex.com
                     DfsPreOrderHelper(root.RightNode, hset, targetVal);
         }
 
+        public bool FindTargetIterative(TreeNode root, int kVal)
+        {
+            if (root == null)
+                return false;
+
+            HashSet<int> set = new HashSet<int>();
+
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+            tnQ.Enqueue(root);
+
+            while (tnQ.Any())
+            {
+                TreeNode temp = tnQ.Dequeue();
+                int required = kVal - temp.NodeValue;
+
+                if (set.Contains(required))
+                    return true;
+                else
+                    set.Add(temp.NodeValue);
+
+                if (temp.LeftNode != null)
+                    tnQ.Enqueue(temp.LeftNode);
+
+                if (temp.RightNode != null)
+                    tnQ.Enqueue(temp.RightNode);
+            }
+
+            return false;
+        }
+
         // 538 https://leetcode.com/problems/convert-bst-to-greater-tree
         public TreeNode ConvertBST(TreeNode root)
         {
@@ -2119,19 +2134,23 @@ http://powercollections.codeplex.com
             return minAbsDiff;
         }
 
-        // a given array can represent Preorder traversal of a Binary Search Tree
-        bool canRepresentBST(int[] pre, int n)
+        // An array can represent Preorder traversal of a Binary Search Tree
+        public bool IsValidPreorderTraversal(int[] preNums)
         {
-            Stack<int> s = new Stack<int>();
+            if (preNums == null || preNums.Length == 0)
+                return false;
+
+            Stack<int> stack = new Stack<int>();
+            int preNumsLen = preNums.Length;
 
             // Initialize current root as minimum possible value
             int root = int.MinValue;
 
             // Traverse given array
-            for (int i = 0; i < n; i++)
+            for (int indx = 0; indx < preNumsLen; indx++)
             {
                 // If we find a node who is on right side and smaller than root, return false
-                if (pre[i] < root)
+                if (preNums[indx] < root)
                 {
                     return false;
                 }
@@ -2140,28 +2159,28 @@ http://powercollections.codeplex.com
                 // Keep removing items smaller than pre[i]
                 // and make the last removed item as new root.
 
-                while (s.Count() > 0 && s.Peek() < pre[i])
+                while (stack.Count() > 0 && stack.Peek() < preNums[indx])
                 {
-                    root = s.Peek();
-                    s.Pop();
+                    root = stack.Peek();
+                    stack.Pop();
                 }
 
                 // At this point either stack is empty or
                 // pre[i] is smaller than root, push pre[i]
-                s.Push(pre[i]);
+                stack.Push(preNums[indx]);
             }
             return true;
         }
 
-        public void Test()
+        public void IsValidPreorderTraversalTest()
         {
             int[] pre1 = new int[] { 40, 30, 35, 80, 100 };
             int n = pre1.Length;
-            bool result = canRepresentBST(pre1, n);
+            bool result = IsValidPreorderTraversal(pre1);
 
             int[] pre2 = new int[] { 40, 30, 35, 20, 80, 100 };
             int n1 = pre2.Length;
-            result = canRepresentBST(pre1, n);
+            result = IsValidPreorderTraversal(pre1);
 
             if (result == true)
             {
@@ -2174,13 +2193,12 @@ http://powercollections.codeplex.com
         }
 
         // http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
-        // http://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/
-        bool ValidateBSTPostOrderTraversal(int[] post)
+        public bool IsValidPostOrderTraversal(int[] postNums)
         {
-            return IsValidBSTHelper(post, 0, post.Length - 1);
+            return IsValidPostOrderTraversalHelper(postNums, 0, postNums.Length - 1);
         }
 
-        private static bool IsValidBSTHelper(int[] nums, int lIndx, int rIndx)
+        private static bool IsValidPostOrderTraversalHelper(int[] nums, int lIndx, int rIndx)
         {
             if (lIndx >= rIndx)
             {
@@ -2205,112 +2223,58 @@ http://powercollections.codeplex.com
                 index++;
             }
 
-            return IsValidBSTHelper(nums, lIndx, midIndx - 1)
-                && IsValidBSTHelper(nums, midIndx + 1, rIndx - 1);
+            return IsValidPostOrderTraversalHelper(nums, lIndx, midIndx - 1)
+                && IsValidPostOrderTraversalHelper(nums, midIndx + 1, rIndx - 1);
         }
 
-        // 105 Medium https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
-        // Given preorder and inorder traversal of a tree, construct the binary tree.
-        // Note:
-        // You may assume that duplicates do not exist in the tree.
-        // E.g
-        // preorder = [3, 9, 20, 15, 7]
-        // inorder = [9, 3, 15, 20, 7]
-        // Return the following binary tree:
-        //     3
-        //    / \
-        //   9  20
-        //     /  \
-        //    15   7
-        // Time O(N^2)
-        public TreeNode BuildTreeFromPreAndInOrder(int[] preOrder, int[] inOrder)
+        // 669 Easy https://leetcode.com/problems/trim-a-binary-search-tree/description/
+        public TreeNode TrimBST(TreeNode root, int lowVal, int highVal)
         {
-            if (preOrder == null || preOrder.Length == 0 || inOrder == null || inOrder.Length == 0)
-                return null;
+            if (root == null)
+                return root;
+         
+            //Find a valid root which is used to return.
 
-            int preIndx = 0;
-            return BuildTreeFromPreAndInOrderHelper(preOrder, inOrder, ref preIndx, 0, inOrder.Length - 1);
-        }
-
-        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inStrt, int inEnd)
-        {
-            if (inStrt > inEnd)
-                return null;
-
-            TreeNode tNode = new TreeNode(preNums[preIndx]);
-            preIndx++;
-
-            // When there is no childern for the current node then return
-            if (inStrt == inEnd)
-                return tNode;
-
-            // Else find the index of the current node in Inorder traversal
-            int inIndex = SearchIndex(inNums, inStrt, inEnd, tNode.NodeValue);
-
-            // Using index in Inorder traversal, construct left and right subtress
-            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inStrt, inIndex - 1);
-            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inEnd);
-
-            return tNode;
-        }
-
-        // Do binary search, since in Array is sorted if no duplicates.
-        public int SearchIndex(int[] nums, int start, int end, int val)
-        {
-            if (nums == null || nums.Length == 0)
-                return -1;
-
-            int indx = -1;
-
-            for (indx = start; indx <= end; indx++)
+            while (root.NodeValue < lowVal || root.NodeValue > highVal)
             {
-                if (nums[indx] == val)
-                    return indx;
+                if (root.NodeValue < lowVal)
+                {
+                    root = root.RightNode;
+                }
+
+                if (root.NodeValue > highVal)
+                {
+                    root = root.LeftNode;
+                }
             }
 
-            return indx;
+            TreeNode dummy = root;
+            // Remove the invalid nodes from left subtree.
+
+            while (dummy != null)
+            {
+                while (dummy.LeftNode != null && dummy.LeftNode.NodeValue < lowVal)
+                {
+                    dummy.LeftNode = dummy.LeftNode.RightNode;
+                    // If the left child is smaller than L, then we just keep the right subtree of it.
+                }
+                dummy = dummy.LeftNode;
+            }
+
+            dummy = root;
+            // Remove the invalid nodes from right subtree
+
+            while (dummy != null)
+            {
+                while (dummy.RightNode != null && dummy.RightNode.NodeValue > highVal)
+                {
+                    dummy.RightNode = dummy.RightNode.LeftNode;
+                    // If the right child is biggrt than R, then we just keep the left subtree of it.
+                }
+                dummy = dummy.RightNode;
+            }
+            return root;
         }
 
-        // 106 Medium https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
-        // Given inorder and postorder traversal of a tree, construct the binary tree.
-        // You may assume that duplicates do not exist in the tree.
-        // For example, given inorder = [9, 3, 15, 20, 7]
-        // postorder = [9, 15, 7, 20, 3]
-        // Return the following binary tree:
-        //    3
-        //   / \
-        //  9  20
-        //    /  \
-        //   15   7
-        public TreeNode BuildTreeFromInAndPostOrder(int[] inOrder, int[] postOrder)
-        {
-            if (postOrder == null || postOrder.Length == 0 || inOrder == null || inOrder.Length == 0)
-                return null;
-
-            int postIndx = postOrder.Length - 1;
-            return BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndx, 0, inOrder.Length - 1);
-        }
-
-        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inStrt, int inEnd)
-        {
-            if (inStrt > inEnd)
-                return null;
-
-            TreeNode node = new TreeNode(postOrder[postIndex]);
-            postIndex--;
-
-            // If current node has has no children then return current node.
-            if (inStrt == inEnd)
-                return node;
-
-            // Else find the index of this node in Inorder  traversal
-            int inCurIndex = SearchIndex(inOrder, inStrt, inEnd, node.NodeValue);
-
-            // Right node first and left node next
-            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inEnd);
-            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inStrt, inCurIndex - 1);
-
-            return node;
-        }
     }
 }

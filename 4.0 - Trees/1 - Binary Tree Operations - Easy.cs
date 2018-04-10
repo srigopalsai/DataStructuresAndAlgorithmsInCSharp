@@ -323,16 +323,14 @@ namespace DataStructuresAndAlgorithms
                 PathSumDfsHelper(node.RightNode, sum - node.NodeValue);
         }
 
-        /*  Given a binary tree, return all root-to-leaf paths.  E.g. Given the following binary tree: 
-
-           1
-         /   \
-        2     3
-         \
-          5
-
-            All root-to-leaf paths are:  ["1->2->5", "1->3"]
-        */
+        // 257 Easy https://leetcode.com/problems/binary-tree-paths
+        // Given a binary tree, return all root-to-leaf paths.  E.g. Given the following binary tree: 
+        //    1
+        //  /   \
+        // 2     3
+        //  \
+        //   5
+        // All root-to-leaf paths are:  ["1->2->5", "1->3"]
 
         IList<string> paths = new List<string>();
 
@@ -341,13 +339,12 @@ namespace DataStructuresAndAlgorithms
             if (node == null)
                 return paths;
             paths = new List<string>();
-            BinaryTreePaths(node, string.Empty);
+            BinaryTreePathsHelper(node, string.Empty);
 
             return paths;
         }
-        // TODO: Need to use string builder so that we can recreating string on every string append.
 
-        private void BinaryTreePaths(TreeNode node, string path)
+        private void BinaryTreePathsHelper(TreeNode node, string path)
         {
             if (node == null)
                 return;
@@ -359,8 +356,103 @@ namespace DataStructuresAndAlgorithms
 
             path += "->";
 
-            BinaryTreePaths(node.LeftNode, path);
-            BinaryTreePaths(node.RightNode, path);
+            BinaryTreePathsHelper(node.LeftNode, path);
+            BinaryTreePathsHelper(node.RightNode, path);
+        }
+
+        // Not space efficient
+        public List<String> BinaryTreePathsIteration1(TreeNode currNode)
+        {
+            Queue<TreeNode> nodesQ = new Queue<TreeNode>();
+            Queue<String> strQ = new Queue<string>();
+            List<String> resultList = new List<string>();
+
+            if (currNode != null)
+            {
+                nodesQ.Enqueue(currNode);
+                strQ.Enqueue(currNode.NodeValue.ToString());
+            }
+
+            while (!nodesQ.Any())
+            {
+                TreeNode node = nodesQ.Dequeue();
+
+                if (node.LeftNode == null && node.RightNode == null)
+                {
+                    resultList.Add(strQ.Dequeue());
+                }
+                else
+                {
+                    String newStr = strQ.Dequeue();
+
+                    if (node.LeftNode != null)
+                    {
+                        nodesQ.Enqueue(node.LeftNode);
+                        strQ.Enqueue(newStr + "->" + node.LeftNode.NodeValue);
+                    }
+                    if (node.RightNode != null)
+                    {
+                        nodesQ.Enqueue(node.RightNode);
+                        strQ.Enqueue(newStr + "->" + node.RightNode.NodeValue);
+                    }
+                }
+            }
+            return resultList;
+        }
+
+        // TODO Time limit exceeded
+        public List<String> BinaryTreePathsIteration(TreeNode currNode)
+        {
+            Stack<TreeNode> nStack = new Stack<TreeNode>();
+            List<String> resultList = new List<string>();
+            List<String> valsList = new List<string>();
+           
+            TreeNode prevNode = null;
+
+            if (currNode == null)
+                return null;
+
+            nStack.Push(currNode);
+
+            while (!nStack.Any() || currNode != null)
+            {
+                while (currNode != null)
+                {
+                    nStack.Push(currNode);
+                    valsList.Add(currNode.NodeValue.ToString());
+
+                    currNode = currNode.LeftNode;
+                }
+
+                TreeNode tNode = nStack.Peek();
+
+                if (tNode.RightNode != null && tNode.RightNode != prevNode)
+                {
+                    currNode = tNode.RightNode;
+                    prevNode = currNode;
+                    continue;
+                }
+
+                if (tNode.LeftNode == null && tNode.RightNode == null)
+                {
+                    StringBuilder strNodes = new StringBuilder();
+                    strNodes.Append(valsList[0]);
+
+                    for (int indx = 1; indx< valsList.Count; indx++)
+                    {
+                        strNodes.Append("->" + valsList[indx]);
+                    }
+
+                    resultList.Add(strNodes.ToString());
+                }
+
+                currNode = nStack.Pop();
+
+                if (valsList.Count > 0)
+                    valsList.RemoveAt(valsList.Count - 1);
+            }
+
+            return resultList;
         }
 
         public TreeNode LowestCommonAncestor(TreeNode node, TreeNode p, TreeNode q)
@@ -472,6 +564,87 @@ namespace DataStructuresAndAlgorithms
 
             bool rightVisitResult = ValidatePreOrder(nodesList, ref index);
             return leftVisitResult && rightVisitResult;
+        }
+
+        //  226 Easy https://leetcode.com/problems/invert-binary-tree
+        //  Invert a binary tree.
+        //      4
+        //    /   \
+        //   2     7
+        //  / \   / \
+        // 1   3 6   9
+        //  Output:
+        //      4
+        //    /   \
+        //   7     2
+        //  / \   / \
+        // 9   6 3   1
+
+        public TreeNode InvertTreeStack(TreeNode currentNode)
+        {
+            if (currentNode == null)
+                return null;
+
+            Stack<TreeNode> tnStack = new Stack<TreeNode>();
+            tnStack.Push(currentNode);
+
+            while (tnStack.Count > 0)
+            {
+                TreeNode node = tnStack.Pop();
+
+                TreeNode temp = node.LeftNode;
+                node.LeftNode = node.RightNode;
+                node.RightNode = temp;
+
+                if (node.LeftNode != null)
+                    tnStack.Push(node.LeftNode);
+                if (node.RightNode != null)
+                    tnStack.Push(node.RightNode);
+            }
+
+            return currentNode;
+        }
+
+        public TreeNode InvertTreeQueue(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+
+            tnQ.Enqueue(root);
+
+            while (tnQ.Count > 0)
+            {
+                TreeNode current = tnQ.Dequeue();
+
+                TreeNode temp = current.LeftNode;
+                current.LeftNode = current.RightNode;
+                current.RightNode = temp;
+
+                if (current.LeftNode != null)
+                    tnQ.Enqueue(current.LeftNode);
+
+                if (current.RightNode != null)
+                    tnQ.Enqueue(current.RightNode);
+            }
+
+            return root;
+        }
+
+        public TreeNode InvertTreeRecur(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            TreeNode temp = root.LeftNode;
+            root.LeftNode = root.RightNode;
+            root.RightNode = temp;
+
+            InvertTreeRecur(root.LeftNode);
+            InvertTreeRecur(root.RightNode);
+
+            return root;
         }
 
         // Encodes a tree to a single string.

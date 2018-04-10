@@ -126,22 +126,20 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
     }
 
     // Using Array
-    /*
-    The idea is to use an array int[] arr = new int[size] to keep the previous elements.
-    Use an int to keep the count of the inserting elements and a double to keep the sum.
-    If a new element is waiting to insert:
-    if count<arr.size
-    put the new in the array
-    sum = sum + new val;
-    count ++
-    $) cal the average
-    else if count >= arr.length
-    replace index = count % arr.length
-    sum -= arr[replace index];
-    arr[replace index] = new val
-    sum += new val;
-    avg = sum / arr.length;
-    */
+    // The idea is to use an array int[] arr = new int[size] to keep the previous elements.
+    // Use an int to keep the count of the inserting elements and a double to keep the sum.
+    // If a new element is waiting to insert:
+    // if count<arr.size
+    // put the new in the array
+    // sum = sum + new val;
+    // count ++
+    // $) cal the average
+    // else if count >= arr.length
+    // replace index = count % arr.length
+    // sum -= arr[replace index];
+    // arr[replace index] = new val
+    // sum += new val;
+    // avg = sum / arr.length;
 
     public class MovingAverage2
     {

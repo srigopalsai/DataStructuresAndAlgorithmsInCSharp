@@ -65,7 +65,7 @@ namespace DataStructuresAndAlgorithms
             outputString.Append(Environment.NewLine + "Is Tree Balanced :" + BinarySearchTreeDemoObject.IsTreeBalanced(BinarySearchTreeDemoObject.RootdNode));
             outputString.Append(Environment.NewLine);
 
-            IList<IList<int>> zzitemsColl = BinarySearchTreeDemoObject.ZigzagLevelOrder();
+            //IList<IList<int>> zzitemsColl = BinarySearchTreeDemoObject.ZigzagLevelOrder();
             //BinarySearchTreeDemoObject.PrevNode = null;
             //BinarySearchTreeDemoObject.ReverseTree(BinarySearchTreeDemoObject.RootdNode);
             //outputString.Append(Environment.NewLine);
@@ -104,7 +104,7 @@ namespace DataStructuresAndAlgorithms
             outputString.Append(Environment.NewLine + "Max Value in tree : " + BinarySearchTreeDemoObject.FindMaxValue());
             outputString.Append(Environment.NewLine + "Size of the tree : " + BinarySearchTreeDemoObject.SizeOfTree(BinarySearchTreeDemoObject.RootdNode));
 
-            outputString.Append(Environment.NewLine + "Lowest Common Ancestor for 1,5 is : " + BinarySearchTreeDemoObject.LowestCommonAncestor(1, 5));
+            outputString.Append(Environment.NewLine + "Lowest Common Ancestor for 1,5 is : " + BinarySearchTreeDemoObject.LowestCommonAncestorTest(1, 5));
             outputString.Append(Environment.NewLine);
 
             //BinarySearchTreeDemoObject.RemoveNode(7);
