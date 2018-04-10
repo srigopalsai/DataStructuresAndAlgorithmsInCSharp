@@ -37,7 +37,7 @@ namespace DataStructuresAndAlgorithms
     
     ===================================================================================================================================================================================================
     */
-    partial class ArrayProblems 
+    partial class ArrayProblems
     {
         // 35 https://leetcode.com/problems/search-insert-position
         public int SearchInsert(int[] nums, int target)
@@ -188,7 +188,7 @@ namespace DataStructuresAndAlgorithms
 
             return majList;
         }
-        
+
         // 643 https://leetcode.com/problems/maximum-average-subarray-i
         public double FindMaxAverage(int[] nums, int k)
         {
@@ -222,7 +222,7 @@ namespace DataStructuresAndAlgorithms
             {
                 arraySum += inputArr[lpCnt];
             }
-                     
+
             // O (N/2) Logic by using heap technique. May not be effcient for small blocks.
 
             //int num1 = 0;
@@ -733,5 +733,103 @@ From this we can calculate a and b, the two missing numbers.
 
             return diff + indx;
         }
+
+        // 532 Easy https://leetcode.com/problems/k-diff-pairs-in-an-array
+        // Given an array of integers and an integer k, you need to find the number of unique k-diff pairs in the array.Here a k-diff pair is defined as an integer pair (i, j), where i and j are both numbers in the array and their absolute difference is k.
+        // Example 1:
+        // Input: [3, 1, 4, 1, 5], k = 2
+        //         Output: 2
+        // Explanation: There are two 2-diff pairs in the array, (1, 3) and(3, 5).
+        // Although we have two 1s in the input, we should only return the number of unique pairs.
+
+        // Example 2:
+        // Input:[1, 2, 3, 4, 5], k = 1
+        // Output: 4
+        // Explanation: There are four 1-diff pairs in the array, (1, 2), (2, 3), (3, 4) and(4, 5).
+
+        // Example 3:
+        // Input: [1, 3, 1, 5, 4], k = 0
+        // Output: 1
+        // Explanation: There is one 0-diff pair in the array, (1, 1).
+
+        // Note:
+        // The pairs(i, j) and(j, i) count as the same pair.
+        // The length of the array won't exceed 10,000.
+        // All the integers in the given input belong to the range: [-1e7, 1e7].
+
+        public int FindPairs(int[] nums, int k)
+        {
+            if (nums == null || nums.Length == 0 || k < 0)
+                return 0;
+
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            int count = 0;
+
+            foreach (int num in nums)
+            {
+                if (dict.ContainsKey(num))
+                {
+                    dict[num] += 1;
+                }
+                else
+                {
+                    dict.Add(num, 1);
+                }
+            }
+
+            foreach (KeyValuePair<int, int> kvp in dict)
+            {
+                if (k == 0)
+                {
+                    //count how many elements in the array that appear more than twice.
+                    if (kvp.Value >= 2)
+                    {
+                        count++;
+                    }
+                }
+                else if (dict.ContainsKey(kvp.Key + k))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public int ThreeSumSmaller(int[] nums, int target)
+        {
+            Array.Sort(nums);
+            int sum = 0;
+
+            for (int indx = 0; indx < nums.Length - 2; indx++)
+            {
+                sum += TwoSumSmaller(nums, indx + 1, target - nums[indx]);
+            }
+
+            return sum;
+        }
+
+        private int TwoSumSmaller(int[] nums, int left, int target)
+        {
+            int curSum = 0;
+            int right = nums.Length - 1;
+
+            while (left < right)
+            {
+                if (nums[left] + nums[right] < target)
+                {
+                    curSum += right - left;
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+
+            return curSum;
+        }
+
+        // 75 Medium https://leetcode.com/problems/sort-colors/description/
     }
 }

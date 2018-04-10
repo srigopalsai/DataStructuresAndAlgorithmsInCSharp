@@ -827,10 +827,28 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
                 return true;
             }
         }
+
+        // 75 Medium https://leetcode.com/problems/Sort-Colors
+
+        public void SortColors(int[] nums)
+        {
+            int n = nums.Length;
+
+            int indx0 = 0;
+            int indx2 = n - 1;
+
+            for (int indx = 0; indx <= indx2; indx++)
+            {
+                while (nums[indx] == 2 && indx < indx2)
+                {
+                    Common.Swap(ref nums[indx], ref nums[indx2--]);
+                }
+
+                while (nums[indx] == 0 && indx > indx0)
+                {
+                    Common.Swap(ref nums[indx], ref nums[indx0++]);
+                }
+            }
+        }
     }
 }
-
-/*
-Testing.
-Pass only one element in array.
-*/
