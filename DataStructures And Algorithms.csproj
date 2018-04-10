@@ -144,7 +144,7 @@
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\6 - FibonacciNumbersTillN.cs" />
     <Compile Include="0.5 - Matrix\1.0 - FloodFill or SeedFill Algorithm DFS or BFS.cs" />
     <Compile Include="0.5 - Matrix\1.0 - Traversal Algorithms.cs" />
-    <Compile Include="0.5 - Matrix\4.1 - Medium Problmes.cs" />
+    <Compile Include="0.5 - Matrix\4.1 - Medium Problems.cs" />
     <Compile Include="0.5 - Matrix\5.2 - Dynamic Programming Patterns.cs" />
     <Compile Include="0.5 - Matrix\6.0 - Puzzle and Games.cs" />
     <Compile Include="0.5 - Matrix\7.0 - Matrix - Arithmatic Operations.cs" />
@@ -305,7 +305,7 @@
     <Compile Include="0.3 - Arrays\3 - Medium Problems.cs" />
     <Compile Include="0.3 - Arrays\1 - Introduction and Basics.cs" />
     <Compile Include="7.0 - Searching Techniques\zTopNFromUnSortedArrayNI.cs" />
-    <Compile Include="0.5 - Matrix\4.0 - Medium Problmes.cs" />
+    <Compile Include="0.5 - Matrix\4.0 - Medium Problems.cs" />
     <Compile Include="1.0 - Stack Operations\3 - PushPopGetMinWithConstantTime.cs" />
     <Compile Include="2.0 - Queue Operations\3-EnQueueDeQueueGetMinWithConstantTime.cs" />
     <Compile Include="2.0 - Queue Operations\3-SortElementsUsing2Queues.cs" />

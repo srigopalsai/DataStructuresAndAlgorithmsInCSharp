@@ -914,5 +914,59 @@ namespace DataStructuresAndAlgorithms
                        dpMat[r1Indx, c2Indx] + dpMat[r1Indx, c1Indx];
             }
         }
+
+        public class TicTacToe
+        {
+            int[] rows;
+            int[] cols;
+            int dc1;
+            int dc2;
+            int boardLen;
+
+            public TicTacToe(int len)
+            {
+                this.boardLen = len;
+                this.rows = new int[len];
+                this.cols = new int[len];
+            }
+
+            // Player {player} makes a move at ({row}, {col}).
+            //    @param row The row of the board.
+            //    @param col The column of the board.
+            //    @param player The player, can be either 1 or 2.
+            //    @return The current winning condition, can be either:
+            //            0: No one wins.
+            //            1: Player 1 wins.
+            //            2: Player 2 wins. 
+
+            public int Move(int row, int col, int player)
+            {
+                int val = (player == 1 ? 1 : -1);
+
+                rows[row] += val;
+                cols[col] += val;
+
+                if (row == col)
+                {
+                    dc1 += val;
+                }
+                if (col == boardLen - row - 1)
+                {
+                    dc2 += val;
+                }
+
+                if (Math.Abs(rows[row]) == boardLen
+                || Math.Abs(cols[col]) == boardLen
+                || Math.Abs(dc1) == boardLen
+                || Math.Abs(dc2) == boardLen)
+                {
+                    return player;
+                }
+
+                return 0;
+            }
+        }
+
+        // https://www.leetfree.com/problems/candy-crush.html
     }
 }
