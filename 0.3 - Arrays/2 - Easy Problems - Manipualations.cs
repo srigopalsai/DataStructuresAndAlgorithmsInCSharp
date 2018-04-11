@@ -269,7 +269,7 @@ namespace DataStructuresAndAlgorithms
         }
       
         // 532 https://leetcode.com/problems/k-diff-pairs-in-an-array
-        public int FindPairs(int[] nums, int k)
+        public int FindPairs2(int[] nums, int k)
         {
             if (nums == null || nums.Length < 1 || k < 0)
             {

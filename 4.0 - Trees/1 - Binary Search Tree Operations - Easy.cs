@@ -286,6 +286,125 @@ http://powercollections.codeplex.com
             }
         }
 
+        // 572 Easy https://leetcode.com/problems/subtree-of-another-tree
+        // Given two non-empty binary trees s and t, check whether tree t has exactly the same structure and node values with a subtree of s.A subtree of s is a tree consists of a node in s and all of this node's descendants. The tree s could also be considered as a subtree of itself. 
+        // E.g. 1:
+        // Given tree s: 
+        //      3
+        //     / \
+        //    4   5
+        //   / \
+        //  1   2
+        // Given tree t: 
+        //    4 
+        //   / \
+        //  1   2
+        // Return true, because t has the same structure and node values with a subtree of s. 
+                     
+        // E.g. 2:
+        // Given tree s: 
+        //      3
+        //     / \
+        //    4   5
+        //   / \
+        //  1   2
+        //     /
+        //    0
+        // Given tree t: 
+        //    4
+        //   / \
+        //  1   2
+        // Return false. 
+
+        public bool IsSubtree(TreeNode s, TreeNode t)
+        {
+            if (s == null || t == null)
+                return s == null && t == null;
+
+            return IsSubTreeHelper(s, t) || IsSubtree(s.LeftNode, t) || IsSubtree(s.RightNode, t);
+        }
+
+        private bool IsSubTreeHelper(TreeNode s, TreeNode t)
+        {
+            if (s == null || t == null)
+                return s == null && t == null;
+
+            return IsSubTreeHelper(s.LeftNode, t.LeftNode) &&
+                    IsSubTreeHelper(s.RightNode, t.RightNode);
+        }
+
+        // Failing 2 cases
+        private bool IsSubTreeHelperIterative(TreeNode s, TreeNode t)
+        {
+            if (s == null || t == null)
+                return s == null && t == null;
+
+            Stack<TreeNode> srcNodeStack = new Stack<TreeNode>();
+            Stack<TreeNode> trgtNodeStack = new Stack<TreeNode>();
+
+            srcNodeStack.Push(s);
+            trgtNodeStack.Push(t);
+
+            while (srcNodeStack.Count > 0 && trgtNodeStack.Count > 0)
+            {
+                s = srcNodeStack.Pop();
+                t = trgtNodeStack.Pop();
+
+                if (s.NodeValue != t.NodeValue)
+                    return false;
+
+                if (s.LeftNode != null)
+                {
+                    srcNodeStack.Push(s.LeftNode);
+                    if (t.LeftNode != null)
+                        trgtNodeStack.Push(t.LeftNode);
+                    else
+                        return false;
+                }
+
+                if (s.RightNode != null)
+                {
+                    srcNodeStack.Push(s.RightNode);
+                    if (t.RightNode != null)
+                        trgtNodeStack.Push(t.RightNode);
+                    else
+                        return false;
+                }
+            }
+
+            if (srcNodeStack.Count > 0 || trgtNodeStack.Count > 0)
+                return false;
+            else
+                return true;
+        }
+
+        public bool IsSubtree2(TreeNode s, TreeNode t)
+        {
+            return SerializeTree(s).Contains(SerializeTree(t)); // Java uses a naive contains algorithm so to ensure linear time, 
+                                                        // replace with KMP algorithm
+        }
+
+        public String SerializeTree(TreeNode root)
+        {
+            StringBuilder resultStr = new StringBuilder();
+            SerializeTreeHelper(root, resultStr);
+            return resultStr.ToString();
+        }
+
+        private void SerializeTreeHelper(TreeNode curNode, StringBuilder res)
+        {
+            if (curNode == null)
+            {
+                res.Append(",#");
+                return;
+            }
+
+            res.Append("," + curNode.NodeValue);
+
+            SerializeTreeHelper(curNode.LeftNode, res);
+            SerializeTreeHelper(curNode.RightNode, res);
+        }
+
         public bool IsSymmetricRecursive(TreeNode root)
         {
             if (root == null)
@@ -315,26 +434,26 @@ http://powercollections.codeplex.com
 
             return true;
         }
-
+         
         // Mirror image of itself 
         public bool IsSymmetric(TreeNode root)
         {
             if (root == null)
                 return true;
 
-            return isSymmetricHelp(root.LeftNode, root.RightNode);
+            return IsSymmetricHelpHelper(root.LeftNode, root.RightNode);
         }
 
-        private bool isSymmetricHelp(TreeNode t1, TreeNode t2)
+        private bool IsSymmetricHelpHelper(TreeNode t1, TreeNode t2)
         {
-
             if (t1 == null || t2 == null)
                 return t1 == t2;
 
             else if (t1.NodeValue != t2.NodeValue)
                 return false;
 
-            return isSymmetricHelp(t1.LeftNode, t2.RightNode) && isSymmetricHelp(t1.RightNode, t2.LeftNode);
+            return  IsSymmetricHelpHelper(t1.LeftNode, t2.RightNode) &&
+                    IsSymmetricHelpHelper(t1.RightNode, t2.LeftNode);
         }
 
         public bool RemoveNode(int NodeValue)
@@ -863,15 +982,13 @@ http://powercollections.codeplex.com
             return itemsList;
         }
 
-
-        /*       Given   1
-                        / \
-                       2   5
-                      / \   \
-                     3   4   6
-
-        The flattened tree should look like:  1->2->3->4->5-6
-        Reverse Pre Order technique */
+        //         Given   1
+        //                / \
+        //               2   5
+        //              / \   \
+        //             3   4   6
+        // The flattened tree should look like:  1->2->3->4->5-6
+        // Reverse Pre Order technique
 
         public void FlattenTree(TreeNode currentNode)
         {
@@ -885,6 +1002,7 @@ http://powercollections.codeplex.com
             currentNode.LeftNode = null;
             PrevNode = currentNode;
         }
+       
         /*
          Iterative: Starting from parent node runner, keep a copy of right child, let it be right first since we are going to reset runner.right.
          if runner has left child(runner->left), it will become the new right child of runner, and then we set left child to nullptr. 
@@ -1324,7 +1442,10 @@ http://powercollections.codeplex.com
             }
         }
 
-        // MinHeight
+        // 111 Easy https://leetcode.com/problems/minimum-depth-of-binary-tree
+        // Given a binary tree, find its minimum depth.
+        // The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
         public int MinDepthOfTree(TreeNode currentNode)
         {
             if (currentNode == null)
@@ -1431,35 +1552,76 @@ http://powercollections.codeplex.com
                 return (RightMaxHeight + 1);
         }
 
+        // 687 Easy https://leetcode.com/problems/longest-univalue-path
+        //Given a binary tree, find the length of the longest path where each node in the path has the same value.This path may or may not pass through the root.
+        //Note: The length of path between two nodes is represented by the number of edges between them.
+        //  E.g 1: 
+        //              5
+        //             / \
+        //            4   5
+        //           / \   \
+        //          1   1   5
+        //  Output:  2
+        //  E.g. 2: 
+        //              1
+        //             / \
+        //            4   5
+        //           / \   \
+        //          4   4   5
+        //  Output: 2
+        public int LongestUnivaluePath(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int maxLength = 0;
+            LongestUnivaluePath(root, root.NodeValue, ref maxLength);
+
+            return maxLength;
+        }
+        // Post Order
+        public int LongestUnivaluePath(TreeNode node, int parentValue, ref int maxLength)
+        {
+            if (node == null)
+                return 0;
+
+            int left = LongestUnivaluePath(node.LeftNode, node.NodeValue, ref maxLength);
+            int right = LongestUnivaluePath(node.RightNode, node.NodeValue, ref maxLength);
+
+            maxLength = Math.Max(left + right, maxLength);
+
+            return node.NodeValue == parentValue ? 1 + Math.Max(left, right) : 0;
+        }
+
         // 100 Easy https://leetcode.com/problems/same-tree/description/
         // Given two binary trees, write a function to check if they are the same or not.
         // Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
-           
+
         // E.g. 1: 
         // Input:     1         1
         //           / \       / \
         //          2   3     2   3
-           
+
         //         [1,2,3], [1,2,3]
-           
+
         // Output: true
-           
+
         // E.g. 2: 
         // Input:     1         1
         //           /           \
         //          2             2
-           
+
         //         [1,2], [1,null,2]
-           
+
         // Output: false
-           
+
         // E.g. 3: 
         // Input:     1         1
         //           / \       / \
         //          2   1     1   2
-           
+
         //         [1,2,1], [1,1,2]
-           
+
         // Output: false
         public bool IsSameTreeIteration(TreeNode p, TreeNode q)
         {
@@ -2275,6 +2437,5 @@ http://powercollections.codeplex.com
             }
             return root;
         }
-
     }
 }

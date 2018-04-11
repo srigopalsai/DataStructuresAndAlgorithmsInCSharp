@@ -1263,6 +1263,19 @@ namespace DataStructuresAndAlgorithms
         //   / \
         //  4   4
         // Return false.
+
+        bool IsBalancedRecursive(TreeNode root)
+        {
+            if (root == null)
+                return true;
+
+            int left = MaxDepth(root.LeftNode);
+            int right = MaxDepth(root.RightNode);
+
+            return Math.Abs(left - right) <= 1 &&   IsBalancedRecursive(root.LeftNode) && 
+                                                    IsBalancedRecursive(root.RightNode);
+        }
+
         public bool IsBalanced(TreeNode root)
         {
             if (root == null)
