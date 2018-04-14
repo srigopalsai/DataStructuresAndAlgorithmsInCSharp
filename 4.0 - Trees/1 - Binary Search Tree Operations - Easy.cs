@@ -1326,22 +1326,9 @@ http://powercollections.codeplex.com
         // E.g2 LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
 
         //Lowest Common Ancestor 
-        public int LowestCommonAncestorTest(int NodeValue1, int NodeValue2)
-        {
-            TreeNode CommonAncestorNode = LowestCommonAncestorIteration(RootdNode, NodeValue1, NodeValue2);
-            //TreeNode CommonAncestorNode = LowestCommonAncestorLoop(RootdNode, NodeValue1, NodeValue2);
-
-            int CommonAncestorValue = 0;
-            if (CommonAncestorNode != null)
-            {
-                CommonAncestorValue = CommonAncestorNode.NodeValue;
-            }
-
-            return CommonAncestorValue;
-        }
 
         //Using loop - log(n) operations
-        TreeNode LowestCommonAncestorIteration(TreeNode currentNode, int Node1Value, int Node2Value)
+        public TreeNode LowestCommonAncestorIteration(TreeNode currentNode, int Node1Value, int Node2Value)
         {
             while (currentNode != null)
             {

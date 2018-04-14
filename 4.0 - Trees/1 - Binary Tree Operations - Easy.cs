@@ -1264,19 +1264,33 @@ namespace DataStructuresAndAlgorithms
         //  4   4
         // Return false.
 
-        bool IsBalancedRecursive(TreeNode root)
+        public bool IsBalanced(TreeNode root)
         {
-            if (root == null)
-                return true;
-
-            int left = MaxDepth(root.LeftNode);
-            int right = MaxDepth(root.RightNode);
-
-            return Math.Abs(left - right) <= 1 &&   IsBalancedRecursive(root.LeftNode) && 
-                                                    IsBalancedRecursive(root.RightNode);
+            return DfsHeightHelper(root) != -1;
         }
 
-        public bool IsBalanced(TreeNode root)
+        private int DfsHeightHelper(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int leftHeight = DfsHeightHelper(root.LeftNode);
+
+            if (leftHeight == -1)
+                return -1;
+
+            int rightHeight = DfsHeightHelper(root.RightNode);
+
+            if (rightHeight == -1)
+                return -1;
+
+            if (Math.Abs(leftHeight - rightHeight) > 1)
+                return -1;
+
+            return Math.Max(leftHeight, rightHeight) + 1;
+        }
+
+        public bool IsBalancedIterative(TreeNode root)
         {
             if (root == null)
                 return true;

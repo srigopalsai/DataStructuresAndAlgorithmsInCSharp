@@ -266,18 +266,6 @@ namespace DataStructuresAndAlgorithms
             return root;
         }
 
-        public void ConstructFullCompleteTreeTest()
-        {
-            int preindex = 0;
-
-            int[] pre = { 1, 2, 4, 8, 9, 5, 3, 6, 7 };
-            int[] post = { 8, 9, 4, 5, 2, 6, 7, 3, 1 };
-            int size = pre.Length;
-
-            TreeNode root = ConstructFullCompleteTree(pre, post, 0, size - 1, size, ref preindex);
-            Console.WriteLine("Inorder traversal of the constructed tree:");
-        }
-
         // https://www.geeksforgeeks.org/construct-a-special-tree-from-given-preorder-traversal/
         
         public TreeNode ConstructSpecialTree(int[] pre, char[] preLN, ref int curIndx, int n, TreeNode temp)
@@ -299,17 +287,6 @@ namespace DataStructuresAndAlgorithms
             }
 
             return temp;
-        }
-
-        public void ConstructSpecialTreeTest()
-        {
-            int index = 0;
-            int[] preNums = new int[] { 10, 30, 20, 5, 15 };
-            char[] preLN = new char[] { 'N', 'N', 'L', 'L', 'L' };
-            int preLen = preNums.Length;
-
-            TreeNode treeNode = new TreeNode();
-            TreeNode mynode = ConstructSpecialTree(preNums, preLN, ref index, preLen, treeNode);
         }
     }
 }
