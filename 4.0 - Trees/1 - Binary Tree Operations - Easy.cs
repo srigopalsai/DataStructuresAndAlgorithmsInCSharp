@@ -190,28 +190,28 @@ namespace DataStructuresAndAlgorithms
 
         // Return true, as there exist a root-to-leaf path 5 -> 4 -> 11 -> 2 which sum is 22.
 
-        public bool HasPathSum(TreeNode root, int sum)
+        public bool HasPathSum(TreeNode root, int trgtSum)
         {
-            Stack<TreeNode> itemsStack = new Stack<TreeNode>();
+            Stack<TreeNode> nodeStack = new Stack<TreeNode>();
 
             if (root == null)
                 return false;
 
             TreeNode lastVisited = null;
-            int rSum = 0;
+            int curSum = 0;
 
-            while (itemsStack.Count() > 0 || root != null)
+            while (nodeStack.Count() > 0 || root != null)
             {
                 while (root != null)
                 {
-                    itemsStack.Push(root);
-                    rSum += root.NodeValue;
+                    nodeStack.Push(root);
+                    curSum += root.NodeValue;
                     root = root.LeftNode;
                 }
 
-                root = itemsStack.Peek();
+                root = nodeStack.Peek();
 
-                if (root.LeftNode == null && root.RightNode == null && rSum == sum)
+                if (root.LeftNode == null && root.RightNode == null && curSum == trgtSum)
                     return true;
 
                 else if (root.RightNode != null && root.RightNode != lastVisited)
@@ -221,8 +221,8 @@ namespace DataStructuresAndAlgorithms
                 else
                 {
                     lastVisited = root;
-                    rSum -= root.NodeValue;
-                    itemsStack.Pop();
+                    curSum -= root.NodeValue;
+                    nodeStack.Pop();
                     root = null;
                 }
             }

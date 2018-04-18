@@ -2321,26 +2321,6 @@ http://powercollections.codeplex.com
             return true;
         }
 
-        public void IsValidPreorderTraversalTest()
-        {
-            int[] pre1 = new int[] { 40, 30, 35, 80, 100 };
-            int n = pre1.Length;
-            bool result = IsValidPreorderTraversal(pre1);
-
-            int[] pre2 = new int[] { 40, 30, 35, 20, 80, 100 };
-            int n1 = pre2.Length;
-            result = IsValidPreorderTraversal(pre1);
-
-            if (result == true)
-            {
-                Console.WriteLine("CanRepresentBST true");
-            }
-            else
-            {
-                Console.WriteLine("CanRepresentBST false");
-            }
-        }
-
         // http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
         public bool IsValidPostOrderTraversal(int[] postNums)
         {

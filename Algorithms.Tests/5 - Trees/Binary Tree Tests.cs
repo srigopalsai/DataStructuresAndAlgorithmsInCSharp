@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Algorithms.Tests
 {
     [TestClass]
-    public class BinaryTreeTests
+    public class BinaryTreeTests : TestBase
     {
         TreeNode rootNode9;
         TreeNode rootNode15;
@@ -56,6 +56,17 @@ namespace Algorithms.Tests
 
             TreeNode treeNode = new TreeNode();
             TreeNode mynode = btOperations.ConstructSpecialTree(preNums, preLN, ref index, preLen, treeNode);
+        }
+
+        [TestMethod]
+        public void FindModeTest()
+        {
+            int[] modes = btOperations.FindMode(rootNode9);
+
+            foreach (int mode in modes)
+            {
+                TestContext.WriteLine(" " + mode);
+            }
         }
     }
 }

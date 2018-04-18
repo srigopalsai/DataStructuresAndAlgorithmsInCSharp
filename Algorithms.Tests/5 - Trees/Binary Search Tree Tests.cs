@@ -25,6 +25,27 @@ namespace Algorithms.Tests
             rootNode15 = bstOperations.SortedArrayToBST(inOrder15);
         }
 
+        [TestMethod]
+        public void IsValidPreorderTraversalTest()
+        {
+            int[] pre1 = new int[] { 40, 30, 35, 80, 100 };
+            int n = pre1.Length;
+            bool result = bstOperations.IsValidPreorderTraversal(pre1);
+
+            int[] pre2 = new int[] { 40, 30, 35, 20, 80, 100 };
+            int n1 = pre2.Length;
+            result = bstOperations.IsValidPreorderTraversal(pre1);
+
+            if (result == true)
+            {
+                Console.WriteLine("CanRepresentBST true");
+            }
+            else
+            {
+                Console.WriteLine("CanRepresentBST false");
+            }
+        }
+
         public int LowestCommonAncestorTest(int NodeValue1, int NodeValue2)
         {
             TreeNode CommonAncestorNode = bstOperations.LowestCommonAncestorIteration(rootNode9, NodeValue1, NodeValue2);
