@@ -629,7 +629,6 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
             return Math.Max(Math.Max(leftMax, rightMax), leftCellMax + righCellMax);
         }
 
-
         public int MinSubArrayLen(int s, int[] nums)
         {
             int cSum = 0;
@@ -849,6 +848,134 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
                     Common.Swap(ref nums[indx], ref nums[indx0++]);
                 }
             }
+        }
+
+        // https://leetcode.com/problems/3sum
+        // Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? 
+        // Find all unique triplets in the array which gives the sum of zero.
+        // Note:
+        // The solution set must not contain duplicate triplets.
+
+        // Example:
+        // Given array nums = [-1, 0, 1, 2, -1, -4],           
+        // A solution set is:
+        // [
+        //     [-1, 0, 1],
+        //     [-1, -1, 2]
+        // ]
+        public IList<IList<int>> ThreeSum(int[] nums)
+        {
+            IList<IList<int>> res = new List<IList<int>>();
+
+            if (nums == null || nums.Length == 0)
+                return res;
+
+            Array.Sort(nums);
+
+            for (int p1 = 0; p1 < nums.Length; p1++)
+            {
+                if (p1 - 1 >= 0 && nums[p1] == nums[p1 - 1])
+                {
+                    continue;// Skip equal elements to avoid duplicates
+                }
+
+                int p2 = p1 + 1;
+                int p3 = nums.Length - 1;
+
+                while (p2 < p3)
+                {
+                    // Two Pointers
+                    int sum = nums[p1] + nums[p2] + nums[p3];
+
+                    if (sum == 0)
+                    {
+                        res.Add( new List<int>() { nums[p1], nums[p2], nums[p3] });
+
+                        while (p2 + 1 < p3 && nums[p2] == nums[p2 + 1])// Skip equal elements to avoid duplicates
+                        {
+                            p2++;
+                        }
+
+                        while (p3 - 1 > p2 && nums[p3] == nums[p3 - 1])// Skip equal elements to avoid duplicates
+                        {
+                            p3--;
+                        }
+
+                        p2++;
+                        p3--;
+                    }
+                    else if (sum < 0)
+                    {
+                        p2++;
+                    }
+                    else
+                    {
+                        p3--;
+                    }
+                }
+            }
+            return res;
+        }
+
+        // https://leetcode.com/problems/3sum-closest
+        // Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target.
+        // Return the sum of the three integers.You may assume that each input would have exactly one solution.
+        // Example:
+        // Given array nums = [-1, 2, 1, -4], and target = 1.
+        // The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+        public int ThreeSumClosest(int[] nums, int target)
+        {
+            int MAX_VALUE = int.MaxValue;
+
+            if (nums.Length < 3)
+                return 0;
+
+            Array.Sort(nums);
+
+            int minDiff = MAX_VALUE;
+
+            int p2;
+            int p3;
+            int curSum;
+            int result = 0;
+
+            for (int p1 = 0; p1 < nums.Length - 2; p1++)
+            {
+                p2 = p1 + 1;
+                p3 = nums.Length - 1;
+
+                while (p2 < p3)
+                {
+                    curSum = nums[p1] + nums[p2] + nums[p3];
+
+                    if (curSum == target)
+                    {
+                        return curSum;
+                    }
+
+                    if (minDiff > Math.Abs(curSum - target))
+                    {
+                        minDiff = Math.Abs(curSum - target);
+                        result = curSum;
+                    }
+                    
+                    if (curSum > target)
+                    {
+                        p3--;
+                    }
+                    else
+                    {
+                        p2++;
+                    }
+                }
+
+                while (nums[p1 + 1] == nums[p1])
+                {
+                    p1++;
+                }
+            }
+
+            return result;
         }
     }
 }
