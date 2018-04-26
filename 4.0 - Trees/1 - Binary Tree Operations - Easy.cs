@@ -61,6 +61,45 @@ namespace DataStructuresAndAlgorithms
             resultString.Append("  " + currentNode.NodeValue);
         }
 
+        // https://www.geeksforgeeks.org/foldable-binary-trees/
+        public bool IsFoldable(TreeNode node)
+        {
+            if (node == null)
+                return true;
+
+            return IsFoldableHelper(node.LeftNode, node.RightNode);
+        }
+
+        // A utility function that checks if trees with roots as n1 and n2 are mirror of each other
+        private bool IsFoldableHelper(TreeNode n1, TreeNode n2)
+        {
+            // If both left and right subtrees are NULL, then return true
+            if (n1 == null && n2 == null)
+                return true;
+
+            // If one of the trees is NULL and other is not, then return false
+            if (n1 == null || n2 == null)
+                return false;
+
+            // Otherwise check if left and right subtrees are mirrors of their counterparts
+            return      IsFoldableHelper(n1.LeftNode, n2.RightNode)
+                    &&  IsFoldableHelper(n1.RightNode, n2.LeftNode);
+        }
+
+        // https://leetcode.com/problems/symmetric-tree
+        // For example, this binary tree[1, 2, 2, 3, 4, 4, 3] is symmetric: 
+        //        1
+        //       / \
+        //      2   2
+        //     / \ / \
+        //    3  4 4  3
+        //
+        //    But the following[1, 2, 2, null, 3, null, 3] is not:
+        //        1
+        //       / \
+        //      2   2
+        //       \   \
+        //       3    3        
         public bool IsSymmetricRecursive(TreeNode root)
         {
             if (root == null)
@@ -90,47 +129,17 @@ namespace DataStructuresAndAlgorithms
 
             return true;
         }
-
-        public bool NewMirrorTreeRecursive(TreeNode root)
-        {
-            if (root == null)
-                return true;
-
-            Stack<TreeNode> stack = new Stack<TreeNode>();
-            stack.Push(root.LeftNode);
-            stack.Push(root.RightNode);
-
-            while (stack.Count() > 0)
-            {
-                TreeNode n1Left = stack.Pop();
-                TreeNode n2Left = stack.Pop();
-
-                if (n1Left == null && n2Left == null)
-                    continue;
-
-                if (n1Left == null || n2Left == null || n1Left.NodeValue != n2Left.NodeValue)
-                    return false;
-
-                stack.Push(n1Left.LeftNode);
-                stack.Push(n2Left.RightNode);
-
-                stack.Push(n1Left.RightNode);
-                stack.Push(n2Left.LeftNode);
-            }
-
-            return true;
-        }
-
+        
         // Mirror image of itself 
         public bool IsSymmetric(TreeNode root)
         {
             if (root == null)
                 return true;
 
-            return isSymmetricHelp(root.LeftNode, root.RightNode);
+            return IsSymmetricHelper(root.LeftNode, root.RightNode);
         }
 
-        private bool isSymmetricHelp(TreeNode t1, TreeNode t2)
+        private bool IsSymmetricHelper(TreeNode t1, TreeNode t2)
         {
 
             if (t1 == null || t2 == null)
@@ -139,7 +148,7 @@ namespace DataStructuresAndAlgorithms
             else if (t1.NodeValue != t2.NodeValue)
                 return false;
 
-            return isSymmetricHelp(t1.LeftNode, t2.RightNode) && isSymmetricHelp(t1.RightNode, t2.LeftNode);
+            return IsSymmetricHelper(t1.LeftNode, t2.RightNode) && IsSymmetricHelper(t1.RightNode, t2.LeftNode);
         }
 
         int maxVal = int.MinValue;

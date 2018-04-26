@@ -850,5 +850,131 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
                 }
             }
         }
+
+        // 11 Medium https://leetcode.com/problems/container-with-most-water 
+        // Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate(i, ai). 
+        // n vertical lines are drawn such that the two endpoints of line i is at(i, ai) and(i, 0). 
+        // Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+        // Note: You may not slant the container and n is at least 2.          
+
+        public int MaxArea(int[] nums)
+        {
+            int maxArea = 0;
+
+            int lIndx = 0;
+            int rIndx = nums.Length - 1;
+
+            while (lIndx < rIndx)
+            {
+                int height = Math.Min(nums[lIndx], nums[rIndx]);
+                int width = rIndx - lIndx;
+
+                maxArea = Math.Max(maxArea, height * width);
+
+                while (lIndx < rIndx && nums[lIndx] <= height)
+                {
+                    ++lIndx;
+                }
+                while (lIndx < rIndx && nums[rIndx] <= height)
+                {
+                    --rIndx;
+                }
+            }
+            return maxArea;
+        }
+
+        public int MaxArea2(int[] nums)
+        {
+            int maxArea = 0;
+            int lIndx = 0;
+            int rIndx = nums.Length - 1;
+
+            while (lIndx < rIndx)
+            {
+                int height = Math.Min(nums[lIndx], nums[rIndx]);
+                int width = rIndx - lIndx;
+
+                maxArea = Math.Max(maxArea, height * width);
+
+                if (nums[lIndx] < nums[rIndx])
+                    lIndx++;
+                else
+                    rIndx--;
+            }
+            return maxArea;
+        }
+
+        //First, initiate variables for the product, the result, and the left pointer.
+        //Loop through the array with your second, or fast, pointer represented by “right”.
+        //For each loop, you want to multiply the current product, which starts at 1, by the current item in the array located at the right index.
+        //If the resulting product is greater than or equal to K, then we want to remove trailing values on the left.
+        //We do this by setting the product equal to the Product / nums[left++]
+        //We use ++ to increase the left pointer and move the sliding window over to exclude the left most item
+        //We continue to do so until the product is less than K
+        //We set K = K + Right - Left + 1
+        //Right represents the right side of the window or total number of places we have moved through the array
+        //We subtract left to reduce the right be the number of items to the left that are not included in the current window / product total
+        //We add 1 for the current index. Finally, we return the result
+        public int NumSubarrayProductLessThanK(int[] nums, int target)
+        {
+            if (target <= 1)
+                return 0;
+
+            int curProd = 1;
+            int resCnt = 0;
+
+            int p1Indx = 0;
+            int p2Indx = 0;
+
+            while (p1Indx < nums.Length)
+            {
+                curProd *= nums[p1Indx];
+
+                while (curProd >= target)
+                {
+                    curProd /= nums[p2Indx];
+                    p2Indx++;
+                }
+
+                resCnt += p1Indx - p2Indx + 1;
+                p1Indx++;
+            }
+            return resCnt;
+        }
+
+        // Brute force O (N^2) 
+        public int NumSubarrayProductLessThanK1(int[] nums, int target)
+        {
+            int resCnt = 0;
+            int adj = 0;
+
+            for (int p1Indx = 0; p1Indx < nums.Length; p1Indx++)
+            {
+                if (nums[p1Indx] == 1 && target > 1)
+                {
+                    resCnt += 1 + adj;
+
+                    adj++;
+                    continue;
+                }
+
+                int currentProduct = 1;
+
+                for (int p2Indx = p1Indx; p2Indx < nums.Length; p2Indx++)
+                {
+                    currentProduct *= nums[p2Indx];
+
+                    if (currentProduct < target)
+                        resCnt += 1 + adj;
+                    else
+                    {
+                        adj = 0;
+                        break;
+                    }
+                }
+                adj = 0;
+            }
+            return resCnt;
+        }
     }
 }

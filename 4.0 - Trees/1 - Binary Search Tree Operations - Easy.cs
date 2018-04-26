@@ -2122,14 +2122,15 @@ http://powercollections.codeplex.com
                 }
                 else
                 {
-                    TreeNode run = currNode.LeftNode;
-                    while (run.RightNode != null && run.RightNode != currNode)
+                    TreeNode runNode = currNode.LeftNode;
+                    while (runNode.RightNode != null && runNode.RightNode != currNode)
                     {
-                        run = run.RightNode;
+                        runNode = runNode.RightNode;
                     }
-                    if (run.RightNode == null)
+
+                    if (runNode.RightNode == null)
                     {
-                        run.RightNode = currNode;
+                        runNode.RightNode = currNode;
                         currNode = currNode.LeftNode;
                     }
                     else
@@ -2137,7 +2138,7 @@ http://powercollections.codeplex.com
                         if (--kIndx == 0)
                             return currNode.NodeValue;
 
-                        run.RightNode = null;
+                        runNode.RightNode = null;
                         currNode = currNode.RightNode;
                     }
                 }

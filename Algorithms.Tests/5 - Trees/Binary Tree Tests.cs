@@ -40,9 +40,8 @@ namespace Algorithms.Tests
 
             int[] pre = { 1, 2, 4, 8, 9, 5, 3, 6, 7 };
             int[] post = { 8, 9, 4, 5, 2, 6, 7, 3, 1 };
-            int size = pre.Length;
 
-            TreeNode root = btOperations.ConstructFullCompleteTree(pre, post, 0, size - 1, size, ref preindex);
+            TreeNode root = btOperations.BuildFullCompleteTree(pre, post, 0, pre.Length - 1, ref preindex);
             Console.WriteLine("Inorder traversal of the constructed tree:");
         }
 
@@ -52,10 +51,9 @@ namespace Algorithms.Tests
             int index = 0;
             int[] preNums = new int[] { 10, 30, 20, 5, 15 };
             char[] preLN = new char[] { 'N', 'N', 'L', 'L', 'L' };
-            int preLen = preNums.Length;
 
             TreeNode treeNode = new TreeNode();
-            TreeNode mynode = btOperations.ConstructSpecialTree(preNums, preLN, ref index, preLen, treeNode);
+            TreeNode mynode = btOperations.BuildSpecialTree(preNums, preLN, ref index, treeNode);
         }
 
         [TestMethod]

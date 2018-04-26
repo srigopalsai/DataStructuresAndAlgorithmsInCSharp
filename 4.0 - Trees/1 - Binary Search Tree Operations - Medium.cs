@@ -43,15 +43,7 @@ namespace DataStructuresAndAlgorithms
 
             return root;
         }
-       
-        public void ConstructTreeByPreOrderTest(String[] args)
-        {
-            int[] pre = { 10, 5, 1, 7, 40, 50 };
-            int index = 0;
-            TreeNode root = ConstructTreeByPreOrder(pre, ref index, pre[0], int.MinValue, int.MaxValue, pre.Length);
-            Console.WriteLine("Inorder traversal of the constructed tree is ..TODO");
-        }
-
+              
         // http://www.geeksforgeeks.org/construct-a-binary-search-tree-from-given-postorder/
 
         // 606 Medium https://leetcode.com/problems/construct-string-from-binary-tree/description/

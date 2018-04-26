@@ -46,6 +46,7 @@ namespace Algorithms.Tests
             }
         }
 
+        [TestMethod]
         public int LowestCommonAncestorTest(int NodeValue1, int NodeValue2)
         {
             TreeNode CommonAncestorNode = bstOperations.LowestCommonAncestorIteration(rootNode9, NodeValue1, NodeValue2);
@@ -60,5 +61,12 @@ namespace Algorithms.Tests
             return CommonAncestorValue;
         }
 
+        [TestMethod]
+        public void ConstructTreeByPreOrderTest(String[] args)
+        {
+            int index = 0;
+            TreeNode root = bstOperations.ConstructTreeByPreOrder(preOrder9, ref index, preOrder9[0], int.MinValue, int.MaxValue, preOrder9.Length);
+            Console.WriteLine("Inorder traversal of the constructed tree is ..TODO");
+        }
     }
 }
