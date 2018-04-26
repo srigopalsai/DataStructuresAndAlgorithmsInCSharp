@@ -1044,42 +1044,35 @@ Search Logic    : O(n X n)
             return uniqueItemIndx;
         }
 
-        /*
-===================================================================================================================================================================================================
+        //WAP to modify the array such that arr[I] = arr[arr[I]]. 
+        //Do this in place i.e. without using additional memory. 
 
-WAP to modify the array such that arr[I] = arr[arr[I]]. 
-Do this in place i.e. without using additional memory. 
+        //E.g:
+        //Input:  arr[] = {3, 2, 0, 1}
+        //Output: arr[] = {1, 0, 3, 2}
 
-E.g:
-Input:  arr[] = {3, 2, 0, 1}
-Output: arr[] = {1, 0, 3, 2}
+        //Input:  arr[] = {4, 0, 2, 1, 3}
+        //Output: arr[] = {3, 4, 2, 0, 1}
 
-Input:  arr[] = {4, 0, 2, 1, 3}
-Output: arr[] = {3, 4, 2, 0, 1}
+        //Input:  arr[] = {0, 1, 2, 3}
+        //Output: arr[] = {0, 1, 2, 3}
 
-Input:  arr[] = {0, 1, 2, 3}
-Output: arr[] = {0, 1, 2, 3}
+        //1) Increase every array element arr[i] by (arr[arr[i]] % n) * n.
+        //2) Divide every element by n.
 
-1) Increase every array element arr[i] by (arr[arr[i]] % n) * n.
-2) Divide every element by n.
+        //Step1:
+        //Every value is incremented by (arr[arr[i]] % n) * n
+        //After first step array becomes {7, 2, 12, 9}. 
 
-Step1:
-Every value is incremented by (arr[arr[i]] % n) * n
-After first step array becomes {7, 2, 12, 9}. 
+        //The important thing is, after the increment operation of first step, every element holds both old values and new values. 
+        //Old value can be obtained by arr[i]%n and new value can be obtained by arr[i]/n.
 
-The important thing is, after the increment operation of first step, every element holds both old values and new values. 
-Old value can be obtained by arr[i]%n and new value can be obtained by arr[i]/n.
-
-Step2:
-All elements are updated to new or output values by doing arr[i] = arr[i]/n.
-Now, array becomes {1, 0, 3, 2}
+        //Step2:
+        //All elements are updated to new or output values by doing arr[i] = arr[i]/n.
+        //Now, array becomes {1, 0, 3, 2}
 
 
-http://www.geeksforgeeks.org/rearrange-given-array-place/
-
-===================================================================================================================================================================================================
-
-*/
+        //http://www.geeksforgeeks.org/rearrange-given-array-place/
 
         public static void GetArrayPositionsBasedOnItsElements()
         {
@@ -1104,32 +1097,26 @@ http://www.geeksforgeeks.org/rearrange-given-array-place/
             }
         }
 
-        /*
-===================================================================================================================================================================================================
+        //In an integer array which contains some zeros. Move the zeros to the right side of the array with minimum number of swaps. 
+        //The order of the original array can be destroyed.
 
-In an integer array which contains some zeros. Move the zeros to the right side of the array with minimum number of swaps. 
-The order of the original array can be destroyed.
+        //Solution: 
 
-Solution: 
+        // * It will take O(N) time in worst case, where there are no zeros. 
+        // * Best and average case it will be less than O(N/2)
 
- * It will take O(N) time in worst case, where there are no zeros. 
- * Best and average case it will be less than O(N/2)
+        // * Repeat loop from front index to rear index.
+        // * Consider front and rear pointers which points to front and rear elements in the array.
+        // * Front pointer should move from front to rear. rear pointer should move from rear to front. Based on the below conditions.
+        //    * Increment front pointer and decrement rear pointer when front element contains zero and rear element contains non zero.
+        //    * Increment only front pointer if it contains non zero.
+        //    * Decrement only rear pointer if it contains zero.  
 
- * Repeat loop from front index to rear index.
- * Consider front and rear pointers which points to front and rear elements in the array.
- * Front pointer should move from front to rear. rear pointer should move from rear to front. Based on the below conditions.
-    * Increment front pointer and decrement rear pointer when front element contains zero and rear element contains non zero.
-    * Increment only front pointer if it contains non zero.
-    * Decrement only rear pointer if it contains zero.  
+        //===================================================================================================================================================================================================     
+        //* Worst case O(N-1) Time. 
+        //* E.g if there is only one zero at the end of the array. 
+        //* Front Index shoul reach n-1.
 
-===================================================================================================================================================================================================     
-*/
-
-        /*
-            * Worst case O(N-1) Time. 
-            * E.g if there is only one zero at the end of the array. 
-            * Front Index shoul reach n-1.
-            */
         public void MoveZerosToRightInArray()
         {
             //int[] arrayElements = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
