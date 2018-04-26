@@ -282,13 +282,13 @@ namespace DataStructuresAndAlgorithms
 
                 while (cSum >= s)
                 {
-                    sLen = Math.Min(sLen, indx2 - indx1 + 1);
+                    sLen = Math.Min(sLen, indx2 - indx1);
                     cSum -= nums[indx1];
                     indx1++;
                 }
             }
 
-            return (sLen == int.MaxValue) ? 0 : sLen;
+            return (sLen == int.MaxValue) ? 0 : sLen + 1;
         }
 
         public int[] SearchRange(int[] nums, int target)

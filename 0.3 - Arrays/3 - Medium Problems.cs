@@ -629,7 +629,6 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
             return Math.Max(Math.Max(leftMax, rightMax), leftCellMax + righCellMax);
         }
 
-
         public int MinSubArrayLen(int s, int[] nums)
         {
             int cSum = 0;
@@ -851,130 +850,132 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
             }
         }
 
-        // 11 Medium https://leetcode.com/problems/container-with-most-water 
-        // Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate(i, ai). 
-        // n vertical lines are drawn such that the two endpoints of line i is at(i, ai) and(i, 0). 
-        // Find two lines, which together with x-axis forms a container, such that the container contains the most water.
-        // Note: You may not slant the container and n is at least 2.          
+        // https://leetcode.com/problems/3sum
+        // Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? 
+        // Find all unique triplets in the array which gives the sum of zero.
+        // Note:
+        // The solution set must not contain duplicate triplets.
 
-        public int MaxArea(int[] nums)
+        // Example:
+        // Given array nums = [-1, 0, 1, 2, -1, -4],           
+        // A solution set is:
+        // [
+        //     [-1, 0, 1],
+        //     [-1, -1, 2]
+        // ]
+        public IList<IList<int>> ThreeSum(int[] nums)
         {
-            int maxArea = 0;
+            IList<IList<int>> res = new List<IList<int>>();
 
-            int lIndx = 0;
-            int rIndx = nums.Length - 1;
+            if (nums == null || nums.Length == 0)
+                return res;
 
-            while (lIndx < rIndx)
+            Array.Sort(nums);
+
+            for (int p1 = 0; p1 < nums.Length; p1++)
             {
-                int height = Math.Min(nums[lIndx], nums[rIndx]);
-                int width = rIndx - lIndx;
-
-                maxArea = Math.Max(maxArea, height * width);
-
-                while (lIndx < rIndx && nums[lIndx] <= height)
+                if (p1 - 1 >= 0 && nums[p1] == nums[p1 - 1])
                 {
-                    ++lIndx;
-                }
-                while (lIndx < rIndx && nums[rIndx] <= height)
-                {
-                    --rIndx;
-                }
-            }
-            return maxArea;
-        }
-
-        public int MaxArea2(int[] nums)
-        {
-            int maxArea = 0;
-            int lIndx = 0;
-            int rIndx = nums.Length - 1;
-
-            while (lIndx < rIndx)
-            {
-                int height = Math.Min(nums[lIndx], nums[rIndx]);
-                int width = rIndx - lIndx;
-
-                maxArea = Math.Max(maxArea, height * width);
-
-                if (nums[lIndx] < nums[rIndx])
-                    lIndx++;
-                else
-                    rIndx--;
-            }
-            return maxArea;
-        }
-
-        //First, initiate variables for the product, the result, and the left pointer.
-        //Loop through the array with your second, or fast, pointer represented by “right”.
-        //For each loop, you want to multiply the current product, which starts at 1, by the current item in the array located at the right index.
-        //If the resulting product is greater than or equal to K, then we want to remove trailing values on the left.
-        //We do this by setting the product equal to the Product / nums[left++]
-        //We use ++ to increase the left pointer and move the sliding window over to exclude the left most item
-        //We continue to do so until the product is less than K
-        //We set K = K + Right - Left + 1
-        //Right represents the right side of the window or total number of places we have moved through the array
-        //We subtract left to reduce the right be the number of items to the left that are not included in the current window / product total
-        //We add 1 for the current index. Finally, we return the result
-        public int NumSubarrayProductLessThanK(int[] nums, int target)
-        {
-            if (target <= 1)
-                return 0;
-
-            int curProd = 1;
-            int resCnt = 0;
-
-            int p1Indx = 0;
-            int p2Indx = 0;
-
-            while (p1Indx < nums.Length)
-            {
-                curProd *= nums[p1Indx];
-
-                while (curProd >= target)
-                {
-                    curProd /= nums[p2Indx];
-                    p2Indx++;
+                    continue;// Skip equal elements to avoid duplicates
                 }
 
-                resCnt += p1Indx - p2Indx + 1;
-                p1Indx++;
-            }
-            return resCnt;
-        }
+                int p2 = p1 + 1;
+                int p3 = nums.Length - 1;
 
-        // Brute force O (N^2) 
-        public int NumSubarrayProductLessThanK1(int[] nums, int target)
-        {
-            int resCnt = 0;
-            int adj = 0;
-
-            for (int p1Indx = 0; p1Indx < nums.Length; p1Indx++)
-            {
-                if (nums[p1Indx] == 1 && target > 1)
+                while (p2 < p3)
                 {
-                    resCnt += 1 + adj;
+                    // Two Pointers
+                    int sum = nums[p1] + nums[p2] + nums[p3];
 
-                    adj++;
-                    continue;
-                }
+                    if (sum == 0)
+                    {
+                        res.Add( new List<int>() { nums[p1], nums[p2], nums[p3] });
 
-                int currentProduct = 1;
+                        while (p2 + 1 < p3 && nums[p2] == nums[p2 + 1])// Skip equal elements to avoid duplicates
+                        {
+                            p2++;
+                        }
 
-                for (int p2Indx = p1Indx; p2Indx < nums.Length; p2Indx++)
-                {
-                    currentProduct *= nums[p2Indx];
+                        while (p3 - 1 > p2 && nums[p3] == nums[p3 - 1])// Skip equal elements to avoid duplicates
+                        {
+                            p3--;
+                        }
 
-                    if (currentProduct < target)
-                        resCnt += 1 + adj;
+                        p2++;
+                        p3--;
+                    }
+                    else if (sum < 0)
+                    {
+                        p2++;
+                    }
                     else
                     {
-                        adj = 0;
-                        break;
+                        p3--;
                     }
                 }
-                adj = 0;
             }
-            return resCnt;
+            return res;
+        }
+
+        // https://leetcode.com/problems/3sum-closest
+        // Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target.
+        // Return the sum of the three integers.You may assume that each input would have exactly one solution.
+        // Example:
+        // Given array nums = [-1, 2, 1, -4], and target = 1.
+        // The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+        public int ThreeSumClosest(int[] nums, int target)
+        {
+            int MAX_VALUE = int.MaxValue;
+
+            if (nums.Length < 3)
+                return 0;
+
+            Array.Sort(nums);
+
+            int minDiff = MAX_VALUE;
+
+            int p2;
+            int p3;
+            int curSum;
+            int result = 0;
+
+            for (int p1 = 0; p1 < nums.Length - 2; p1++)
+            {
+                p2 = p1 + 1;
+                p3 = nums.Length - 1;
+
+                while (p2 < p3)
+                {
+                    curSum = nums[p1] + nums[p2] + nums[p3];
+
+                    if (curSum == target)
+                    {
+                        return curSum;
+                    }
+
+                    if (minDiff > Math.Abs(curSum - target))
+                    {
+                        minDiff = Math.Abs(curSum - target);
+                        result = curSum;
+                    }
+                    
+                    if (curSum > target)
+                    {
+                        p3--;
+                    }
+                    else
+                    {
+                        p2++;
+                    }
+                }
+
+                while (nums[p1 + 1] == nums[p1])
+                {
+                    p1++;
+                }
+            }
+
+            return result;
         }
     }
 }
