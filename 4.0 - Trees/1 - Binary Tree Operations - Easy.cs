@@ -27,10 +27,14 @@ namespace DataStructuresAndAlgorithms
             PreOrderDisplayRecursion(currentNode.RightNode);
         }
 
-        public string InOrderDisplay()
+        public string InOrderDisplay(TreeNode treeNode = null)
         {
             resultString.Clear();
-            InOrderDisplayRecursion(RootdNode);
+
+            if (treeNode == null)
+                treeNode = RootdNode;
+
+            InOrderDisplayRecursion(treeNode);
             return resultString.ToString();
         }
 

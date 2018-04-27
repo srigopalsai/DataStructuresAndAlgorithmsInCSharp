@@ -34,6 +34,20 @@ namespace Algorithms.Tests
         }
 
         [TestMethod]
+        public void BuildTreeFromInAndLevelOrderTest()
+        {
+            int[] inOrder = { 4, 8, 10, 12, 14, 20, 22 };
+            int[] levelOrder = { 20, 8, 22, 4, 12, 10, 14 };
+            TreeNode tNode = btOperations.BuildTreeFromInAndLevelOrder(null, levelOrder, inOrder, 0, inOrder.Length - 1);
+
+            string result = btOperations.InOrderDisplay(tNode);
+            DisplayOutput(result);
+
+            int[] resultArr = ToArray(result);
+            bool istrue = AssertAreArraysEqual(inOrder, resultArr);            
+        }
+
+        [TestMethod]
         public void ConstructFullCompleteTreeTest()
         {
             int preindex = 0;

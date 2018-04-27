@@ -234,7 +234,7 @@ namespace DataStructuresAndAlgorithms
         // 4   12
         //    /  \
         //   10   14
-        TreeNode BuildTreeFromInAndLevelOrder(TreeNode currNode, int[] levelOrder, int[] inOrder, int inStart, int inEnd)
+        public TreeNode BuildTreeFromInAndLevelOrder(TreeNode currNode, int[] levelOrder, int[] inOrder, int inStart, int inEnd)
         {
             if (inStart > inEnd)
                 return null;
@@ -246,16 +246,16 @@ namespace DataStructuresAndAlgorithms
             int rootIndx = 0;
 
             // it represents the index in inOrder array of element that appear first in levelOrder array.
-            for (int indx = 0; indx < levelOrder.Length - 1; indx++)
+            for (int indxLvlOrdr = 0; indxLvlOrdr < levelOrder.Length - 1; indxLvlOrdr++)
             {
-                int data = levelOrder[indx];
+                int lvlOrdrVal = levelOrder[indxLvlOrdr];
 
-                for (int j = inStart; j < inEnd; j++)
+                for (int indxInOrdr = inStart; indxInOrdr < inEnd; indxInOrdr++)
                 {
-                    if (data == inOrder[j])
+                    if (lvlOrdrVal == inOrder[indxInOrdr])
                     {
-                        currNode = new TreeNode(data);
-                        rootIndx = j;
+                        currNode = new TreeNode(lvlOrdrVal);
+                        rootIndx = indxInOrdr;
                         found = true;
                         break;
                     }
