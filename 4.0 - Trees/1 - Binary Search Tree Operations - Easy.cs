@@ -571,6 +571,8 @@ http://powercollections.codeplex.com
             }
         }
 
+        // Create or Conversion Operations =====================================================================================================================================================================================
+
         public TreeNode SortedArrayToBST(int[] sortedArray)
         {
             TreeNode tn = SortedArrayToBSTHelperRecursion(sortedArray, 0, sortedArray.Length - 1);
@@ -627,13 +629,259 @@ http://powercollections.codeplex.com
             return rootNode;
         }
 
-        // Traversal Operations ================================================================================================================================================================================================
-        public void FindDistance()
+        //http://cslibrary.stanford.edu/109/TreeListRecursion.html
+        public void Convert2CircularDoublyLinkedList()
         {
 
         }
 
+        /// <summary>
+        /// The nodes in the doubly linked list are arranged in a sequence formed by a zig-zag level order traversal
+        /// </summary>
+        /// <param name="currNode"></param>
+        /// <returns></returns>
+        public TreeNode ConvertToLinkedList(TreeNode currNode)
+        {
+            if (currNode.LeftNode == null && currNode.RightNode == null)
+                return currNode;
+
+            TreeNode temp = null;
+
+            if (currNode.LeftNode != null)
+            {
+                temp = ConvertToLinkedList(currNode.LeftNode);
+
+                while (temp.RightNode != null)
+                    temp = temp.RightNode;
+
+                temp.RightNode = currNode;
+                currNode.LeftNode = temp;
+            }
+
+            if (currNode.RightNode != null)
+            {
+                temp = ConvertToLinkedList(currNode.RightNode);
+
+                while (temp.LeftNode != null)
+                    temp = temp.LeftNode;
+
+                temp.LeftNode = currNode;
+                currNode.RightNode = temp;
+            }
+            return currNode;
+        }
+
+        ListNode listNode;
+        public TreeNode CreateTreeFromSLLTest()
+        {
+            listNode = new ListNode(1);
+            listNode.NextNode = new ListNode(2);
+            listNode.NextNode.NextNode = new ListNode(3);
+            listNode.NextNode.NextNode.NextNode = new ListNode(4);
+            listNode.NextNode.NextNode.NextNode.NextNode = new ListNode(5);
+            listNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(6);
+            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(7);
+            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(8);
+            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(9);
+
+            int listLen = GetSLLLen(listNode);
+            //            TreeNode treeNode = createTreeFromSLL(listLen);
+            TreeNode treeNode = CreateTreeFromSLLIterative(1, listLen);
+            return treeNode;
+        }
+
+        private TreeNode CreateTreeFromSLLRecurisve(int n)
+        {
+            if (n <= 0)
+                return null;
+
+            TreeNode treenode = new TreeNode(0);
+            treenode.LeftNode = CreateTreeFromSLLRecurisve(n / 2);
+            treenode.NodeValue = listNode.NodeValue;
+
+            listNode = listNode.NextNode;
+            treenode.RightNode = CreateTreeFromSLLRecurisve(n - n / 2 - 1);
+            return treenode;
+        }
+
+        public TreeNode CreateTreeFromSLLIterative(int leftPos, int rightPos)
+        {
+            if (leftPos > rightPos) // Creation done.
+                return null;
+
+            int mid = (leftPos + (rightPos - leftPos) / 2);
+
+            // Mid Creation
+            TreeNode parentNode = new TreeNode();
+
+            // Left side exclude mid.
+            parentNode.LeftNode = CreateTreeFromSLLIterative(leftPos, mid - 1);
+            parentNode.NodeValue = listNode.NodeValue;
+
+            listNode = listNode.NextNode;
+            // Right side exclude mid.
+            parentNode.RightNode = CreateTreeFromSLLIterative(mid + 1, rightPos);
+            return parentNode;
+        }
+
+        public TreeNode ConverToAdjustcentList(TreeNode currentNode)
+        {
+            if (currentNode == null)
+                return null;
+
+            Queue<TreeNode> parentQueue = new Queue<TreeNode>();
+            Queue<TreeNode> childQueue = new Queue<TreeNode>();
+
+            parentQueue.Enqueue(currentNode);
+
+            TreeNode leftTraverseList = currentNode;
+            TreeNode rightTraverseList = null;
+            TreeNode rightTraverseParent = currentNode;
+
+            while (parentQueue.Count > 0)
+            {
+                TreeNode dqNode = parentQueue.Dequeue();
+
+                // Push left and right
+                if (dqNode.LeftNode != null)
+                {
+                    childQueue.Enqueue(dqNode.LeftNode);
+                    dqNode.LeftNode = null;
+                }
+
+                if (dqNode.RightNode != null)
+                {
+                    childQueue.Enqueue(dqNode.RightNode);
+                    dqNode.RightNode = null;
+                }
+
+                // Right first node.
+                if (rightTraverseList == null)
+                {
+                    rightTraverseList = dqNode;
+                    rightTraverseParent = rightTraverseList;
+                }
+                // All other right nodes (except right first)
+                else
+                {
+                    rightTraverseList.RightNode = dqNode;
+                    rightTraverseList = rightTraverseList.RightNode;
+                }
+
+                // Level Completes
+                if (parentQueue.Count == 0)
+                {
+                    // So Traverse down to next level(i.e. left)
+                    parentQueue = childQueue;
+                    childQueue = new Queue<TreeNode>();
+
+                    leftTraverseList.LeftNode = rightTraverseParent;
+                    leftTraverseList = leftTraverseList.LeftNode;
+
+                    rightTraverseList = null;
+                }
+            }
+
+            return currentNode;
+        }
+
+        public TreeNode ToAdjacencyList(TreeNode node)
+        {
+            if (node == null)
+                return node;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            stack.Push(node);
+
+            Stack<TreeNode> childStack = new Stack<TreeNode>();
+
+            TreeNode treeNode = new TreeNode(-1);
+            TreeNode newTree = treeNode;
+            TreeNode rightTree = null;
+
+            while (stack.Count != 0)
+            {
+                TreeNode currentNode = stack.Pop();
+                if (currentNode.RightNode != null)
+                    childStack.Push(currentNode.RightNode);
+
+                if (currentNode.LeftNode != null)
+                    childStack.Push(currentNode.LeftNode);
+
+                if (stack.Count == 0)
+                {
+                    stack = childStack;
+                    childStack = new Stack<TreeNode>();
+                    treeNode.LeftNode = new TreeNode(currentNode.NodeValue);
+                    treeNode = treeNode.LeftNode;
+                    rightTree = null;
+                }
+                else
+                {
+                    if (rightTree == null)
+                        rightTree = new TreeNode(currentNode.NodeValue);
+                    else
+                    {
+                        rightTree.RightNode = new TreeNode(currentNode.NodeValue);
+                        rightTree = rightTree.RightNode;
+                    }
+                }
+            }
+
+            return newTree.LeftNode;
+        }
+
+        // 538 https://leetcode.com/problems/convert-bst-to-greater-tree
+        public TreeNode ConvertBST(TreeNode root)
+        {
+            if (root == null)
+                return null;
+
+            int sum = 0;
+
+            Stack<TreeNode> tnStack = new Stack<TreeNode>();
+            TreeNode currNode = root;
+
+            while (tnStack.Count > 0 || currNode != null)
+            {
+                while (currNode != null)
+                {
+                    tnStack.Push(currNode);
+                    currNode = currNode.RightNode;
+                }
+
+                currNode = tnStack.Pop();
+
+                sum += currNode.NodeValue;
+                currNode.NodeValue = sum;
+
+                currNode = currNode.LeftNode;
+            }
+
+            return root;
+        }
+
+        public TreeNode ConvertToDLL(TreeNode currentNode)
+        {
+            if (currentNode == null)
+                return null;
+
+            ConvertToDLL(currentNode.LeftNode);
+
+            if (PrevNode != null)
+                PrevNode.RightNode = currentNode;
+
+            currentNode.LeftNode = PrevNode;
+            PrevNode = currentNode;
+
+            ConvertToDLL(currentNode.RightNode);
+            return PrevNode;
+        }
+
+        // Traversal Operations ================================================================================================================================================================================================
+
         // Depth First Search       
+
         public string PreOrderDisplay()
         {
             resultString.Clear();
@@ -845,70 +1093,45 @@ http://powercollections.codeplex.com
             return Convert.ToString(resultString);
         }
 
-        //======================================================================================================================================================================================================================
+        // http://datastructuresinterview.blogspot.com/2013/03/zig-zag-traversal-on-binary-tree.html
 
-        TreeNode prevNode, firstWrongElement, secondWrongElement;
+        // 1. Use 2 stacks stack1 and stack2
+        // 2. Push the root to stack1
+        // 3. Till stack1 becomes empty perform steps 4 and 5
+        // 4. Pop from stack1 and display the popped element
+        // 5. Push children of popped element into stack2 from left to right
+        // 6. Till stack2 becomes empty perform steps 7 and 8
+        // 7. Pop from stack2 and display the popped element
+        // 8. Push children of popped element into stack1 from right to left
+        // 9. Repeat steps 3 to 8 till both stacks become empty        
 
-        public void RecoverTree(TreeNode root)
+        public void ZigZagDisplay()
         {
-            RecoverTreeHelper(root);
-            if (firstWrongElement != null && secondWrongElement != null)
-            {
-                int temp = firstWrongElement.NodeValue;
-                firstWrongElement.NodeValue = secondWrongElement.NodeValue;
-                secondWrongElement.NodeValue = temp;
-            }
         }
 
-        private void RecoverTreeHelper(TreeNode node)
+        // http://www.dsalgo.com/2013/02/print-binary-tree-from-bottom-to-top.html
+        public void DisplayFromBottonToTop()
         {
-            if (node == null)
-                return;
-
-            RecoverTreeHelper(node.LeftNode);
-
-            if (firstWrongElement == null && prevNode != null && prevNode.NodeValue > node.NodeValue)
-                firstWrongElement = prevNode;
-
-            // This condition satisfies multiple times, so we will consider the last element.
-            if (firstWrongElement != null && prevNode != null && prevNode.NodeValue > node.NodeValue)
-                secondWrongElement = node;
-
-            prevNode = node;
-
-            RecoverTreeHelper(node.RightNode);
         }
 
-        public TreeNode ConvertToDLL(TreeNode currentNode)
+        // http://www.dsalgo.com/2013/02/print-binary-tree-bottom-to-top-level.html
+        public void DisplayFromBottonToTopLevelWise()
         {
-            if (currentNode == null)
-                return null;
-
-            ConvertToDLL(currentNode.LeftNode);
-
-            if (PrevNode != null)
-                PrevNode.RightNode = currentNode;
-
-            currentNode.LeftNode = PrevNode;
-            PrevNode = currentNode;
-
-            ConvertToDLL(currentNode.RightNode);
-            return PrevNode;
         }
 
-        /* Given binary tree[3, 9, 20, null, null, 15, 7],
+        // Given binary tree[3, 9, 20, null, null, 15, 7],
 
-            3
-           / \
-          9  20
-            /  \
-           15   7
+        //    3
+        //   / \
+        //  9  20
+        //    /  \
+        //   15   7
 
-        return its bottom-up level order traversal as:
+        //return its bottom-up level order traversal as:
 
-        [ [15, 7],
-          [9, 20],
-          [3] ]  */
+        //[ [15, 7],
+        //  [9, 20],
+        //  [3] ] 
 
         public IList<IList<int>> LevelOrderBottomIterative(TreeNode curNode)
         {
@@ -982,7 +1205,73 @@ http://powercollections.codeplex.com
             return itemsList;
         }
 
-        //         Given   1
+        //Note it mess ups the existing tree structure.
+        public string InOrderIterativeWithoutStak(TreeNode root)
+        {
+            resultString.Clear();
+            InOrderIterativeWithoutStak(root.LeftNode, root);
+            return resultString.ToString();
+        }
+
+        void InOrderIterativeWithoutStak(TreeNode current, TreeNode parent)
+        {
+            while (current != null)
+            {
+                if (parent != null)
+                {
+                    parent.LeftNode = current.RightNode;
+                    current.RightNode = parent;
+                }
+
+                if (current.LeftNode != null)
+                {
+                    parent = current;
+                    current = current.LeftNode;
+                }
+                else
+                {
+                    resultString.Append("  " + current.NodeValue);
+                    current = current.RightNode;
+                    parent = null;
+                }
+            }
+        }
+
+        //======================================================================================================================================================================================================================
+
+        TreeNode prevNode, firstWrongElement, secondWrongElement;
+
+        public void RecoverTree(TreeNode root)
+        {
+            RecoverTreeHelper(root);
+            if (firstWrongElement != null && secondWrongElement != null)
+            {
+                int temp = firstWrongElement.NodeValue;
+                firstWrongElement.NodeValue = secondWrongElement.NodeValue;
+                secondWrongElement.NodeValue = temp;
+            }
+        }
+
+        private void RecoverTreeHelper(TreeNode node)
+        {
+            if (node == null)
+                return;
+
+            RecoverTreeHelper(node.LeftNode);
+
+            if (firstWrongElement == null && prevNode != null && prevNode.NodeValue > node.NodeValue)
+                firstWrongElement = prevNode;
+
+            // This condition satisfies multiple times, so we will consider the last element.
+            if (firstWrongElement != null && prevNode != null && prevNode.NodeValue > node.NodeValue)
+                secondWrongElement = node;
+
+            prevNode = node;
+
+            RecoverTreeHelper(node.RightNode);
+        }
+
+        // Given           1
         //                / \
         //               2   5
         //              / \   \
@@ -1067,25 +1356,6 @@ http://powercollections.codeplex.com
             }
         }
 
-        ListNode listNode;
-        public TreeNode CreateTreeFromSLL()
-        {
-            listNode = new ListNode(1);
-            listNode.NextNode = new ListNode(2);
-            listNode.NextNode.NextNode = new ListNode(3);
-            listNode.NextNode.NextNode.NextNode = new ListNode(4);
-            listNode.NextNode.NextNode.NextNode.NextNode = new ListNode(5);
-            listNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(6);
-            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(7);
-            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(8);
-            listNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ListNode(9);
-
-            int listLen = GetSLLLen(listNode);
-            //            TreeNode treeNode = createTreeFromSLL(listLen);
-            TreeNode treeNode = createTreeFromSLL(1, listLen);
-            return treeNode;
-        }
-
         public int GetSLLLen(ListNode rootNode)
         {
             int len = 0;
@@ -1097,40 +1367,6 @@ http://powercollections.codeplex.com
                 currentNode = currentNode.NextNode;
             }
             return len;
-        }
-
-        private TreeNode createTreeFromSLL(int n)
-        {
-            if (n <= 0)
-                return null;
-
-            TreeNode treenode = new TreeNode(0);
-            treenode.LeftNode = createTreeFromSLL(n / 2);
-            treenode.NodeValue = listNode.NodeValue;
-
-            listNode = listNode.NextNode;
-            treenode.RightNode = createTreeFromSLL(n - n / 2 - 1);
-            return treenode;
-        }
-
-        public TreeNode createTreeFromSLL(int leftPos, int rightPos)
-        {
-            if (leftPos > rightPos) // Creation done.
-                return null;
-
-            int mid = (leftPos + (rightPos - leftPos) / 2);
-
-            // Mid Creation
-            TreeNode parentNode = new TreeNode();
-
-            // Left side exclude mid.
-            parentNode.LeftNode = createTreeFromSLL(leftPos, mid - 1);
-            parentNode.NodeValue = listNode.NodeValue;
-
-            listNode = listNode.NextNode;
-            // Right side exclude mid.
-            parentNode.RightNode = createTreeFromSLL(mid + 1, rightPos);
-            return parentNode;
         }
 
         int left, right;
@@ -1150,111 +1386,9 @@ http://powercollections.codeplex.com
             }
         }
 
-        public TreeNode ConverToAdjustcentList(TreeNode currentNode)
+        public void FindDistance()
         {
-            if (currentNode == null)
-                return null;
 
-            Queue<TreeNode> parentQueue = new Queue<TreeNode>();
-            Queue<TreeNode> childQueue = new Queue<TreeNode>();
-
-            parentQueue.Enqueue(currentNode);
-
-            TreeNode leftTraverseList = currentNode;
-            TreeNode rightTraverseList = null;
-            TreeNode rightTraverseParent = currentNode;
-
-            while (parentQueue.Count > 0)
-            {
-                TreeNode dqNode = parentQueue.Dequeue();
-
-                // Push left and right
-                if (dqNode.LeftNode != null)
-                {
-                    childQueue.Enqueue(dqNode.LeftNode);
-                    dqNode.LeftNode = null;
-                }
-
-                if (dqNode.RightNode != null)
-                {
-                    childQueue.Enqueue(dqNode.RightNode);
-                    dqNode.RightNode = null;
-                }
-
-                // Right first node.
-                if (rightTraverseList == null)
-                {
-                    rightTraverseList = dqNode;
-                    rightTraverseParent = rightTraverseList;
-                }
-                // All other right nodes (except right first)
-                else
-                {
-                    rightTraverseList.RightNode = dqNode;
-                    rightTraverseList = rightTraverseList.RightNode;
-                }
-
-                // Level Completes
-                if (parentQueue.Count == 0)
-                {
-                    // So Traverse down to next level(i.e. left)
-                    parentQueue = childQueue;
-                    childQueue = new Queue<TreeNode>();
-
-                    leftTraverseList.LeftNode = rightTraverseParent;
-                    leftTraverseList = leftTraverseList.LeftNode;
-
-                    rightTraverseList = null;
-                }
-            }
-
-            return currentNode;
-        }
-
-        public TreeNode ToAdjacencyList(TreeNode node)
-        {
-            if (node == null)
-                return node;
-
-            Stack<TreeNode> stack = new Stack<TreeNode>();
-            stack.Push(node);
-
-            Stack<TreeNode> childStack = new Stack<TreeNode>();
-
-            TreeNode treeNode = new TreeNode(-1);
-            TreeNode newTree = treeNode;
-            TreeNode rightTree = null;
-
-            while (stack.Count != 0)
-            {
-                TreeNode currentNode = stack.Pop();
-                if (currentNode.RightNode != null)
-                    childStack.Push(currentNode.RightNode);
-
-                if (currentNode.LeftNode != null)
-                    childStack.Push(currentNode.LeftNode);
-
-                if (stack.Count == 0)
-                {
-                    stack = childStack;
-                    childStack = new Stack<TreeNode>();
-                    treeNode.LeftNode = new TreeNode(currentNode.NodeValue);
-                    treeNode = treeNode.LeftNode;
-                    rightTree = null;
-                }
-                else
-                {
-                    if (rightTree == null)
-                        rightTree = new TreeNode(currentNode.NodeValue);
-                    else
-                    {
-                        rightTree.RightNode = new TreeNode(currentNode.NodeValue);
-                        rightTree = rightTree.RightNode;
-                    }
-                }
-            }
-
-            return newTree.LeftNode;
         }
 
         public int FindMinValue()
@@ -1566,6 +1700,7 @@ http://powercollections.codeplex.com
 
             return maxLength;
         }
+
         // Post Order
         public int LongestUnivaluePath(TreeNode node, int parentValue, ref int maxLength)
         {
@@ -1579,6 +1714,60 @@ http://powercollections.codeplex.com
 
             return node.NodeValue == parentValue ? 1 + Math.Max(left, right) : 0;
         }
+      
+        // 404 Easy https://leetcode.com/problems/sum-of-left-leaves/description/
+        // Find the sum of all left leaves in a given binary tree.
+        // Example: 
+        //     3
+        //    / \
+        //   9  20
+        //     /  \
+        //    15   7
+           
+        // There are two left leaves in the binary tree, with values 9 and 15 respectively.Return 24.
+        public int SumOfLeftLeaves(TreeNode root)
+        {
+            if (root == null || root.LeftNode == null && root.RightNode == null)
+                return 0;
+
+            int res = 0;
+
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                TreeNode curr = queue.Dequeue();
+
+                if (curr.LeftNode != null && curr.LeftNode.LeftNode == null && curr.LeftNode.RightNode == null)
+                    res += curr.LeftNode.NodeValue;
+
+                if (curr.LeftNode != null)
+                    queue.Enqueue(curr.LeftNode);
+
+                if (curr.RightNode != null)
+                    queue.Enqueue(curr.RightNode);
+            }
+            return res;
+        }
+
+        public int SumOfLeftLeavesRecursive(TreeNode root)
+        {
+            return SumOfLeftLeavesHelper(root, false);
+        }
+
+        int SumOfLeftLeavesHelper(TreeNode root, bool isleft = false)
+        {
+            if (root == null)
+                return 0;
+
+            if (root.LeftNode == null && root.RightNode == null)
+                return isleft ? root.NodeValue : 0;
+
+            return SumOfLeftLeavesHelper(root.LeftNode, true) + SumOfLeftLeavesHelper(root.RightNode, false);
+        }
+
+        // Tree Validation =====================================================================================================================================================================================================
 
         // 100 Easy https://leetcode.com/problems/same-tree/description/
         // Given two binary trees, write a function to check if they are the same or not.
@@ -1610,6 +1799,7 @@ http://powercollections.codeplex.com
         //         [1,2,1], [1,1,2]
 
         // Output: false
+
         public bool IsSameTreeIteration(TreeNode p, TreeNode q)
         {
 
@@ -1704,78 +1894,22 @@ http://powercollections.codeplex.com
 
             return (t1Stack.Count() == t2Stack.Count());
         }
-
-        // 404 Easy https://leetcode.com/problems/sum-of-left-leaves/description/
-        // Find the sum of all left leaves in a given binary tree.
-        // Example: 
-        //     3
-        //    / \
-        //   9  20
-        //     /  \
-        //    15   7
+             
+        // A well-formed binary tree is said to be "Height-Balanced" 
            
-        // There are two left leaves in the binary tree, with values 9 and 15 respectively.Return 24.
-        public int SumOfLeftLeaves(TreeNode root)
-        {
-            if (root == null || root.LeftNode == null && root.RightNode == null)
-                return 0;
+        // 1. If it is empty, or 
+        // 2. Its left and right children are height-balanced and the height of the left tree is within 1 of the height of the right tree.
+           
+        // Tree is considered balanced when the difference between the min depth and max depth does not exceed 1. 
+           
+        // Binary tree in which the height of the two subtrees of every node never differ by more than 1.
+           
+        // E.g:
+           
+        // 1. Let A = Depth of the Highest-Level Node - MaxDepth
+        // 2. Let B = Depth of the Lowest-Level Node - MinDepth
+        // 3. If Math.Abs(A-B) <= 1, then the tree is balanced
 
-            int res = 0;
-
-            Queue<TreeNode> queue = new Queue<TreeNode>();
-            queue.Enqueue(root);
-
-            while (queue.Count > 0)
-            {
-                TreeNode curr = queue.Dequeue();
-
-                if (curr.LeftNode != null && curr.LeftNode.LeftNode == null && curr.LeftNode.RightNode == null)
-                    res += curr.LeftNode.NodeValue;
-
-                if (curr.LeftNode != null)
-                    queue.Enqueue(curr.LeftNode);
-
-                if (curr.RightNode != null)
-                    queue.Enqueue(curr.RightNode);
-            }
-            return res;
-        }
-
-        public int SumOfLeftLeavesRecursive(TreeNode root)
-        {
-            return SumOfLeftLeavesHelper(root, false);
-        }
-
-        int SumOfLeftLeavesHelper(TreeNode root, bool isleft = false)
-        {
-            if (root == null)
-                return 0;
-
-            if (root.LeftNode == null && root.RightNode == null)
-                return isleft ? root.NodeValue : 0;
-
-            return SumOfLeftLeavesHelper(root.LeftNode, true) + SumOfLeftLeavesHelper(root.RightNode, false);
-        }
-
-        //======================================================================================================================================================================================================================
-
-        /*
-        
-        A well-formed binary tree is said to be "Height-Balanced" 
-        
-        1. If it is empty, or 
-        2. Its left and right children are height-balanced and the height of the left tree is within 1 of the height of the right tree.
-
-        Tree is considered balanced when the difference between the min depth and max depth does not exceed 1. 
- 
-        Binary tree in which the height of the two subtrees of every node never differ by more than 1.
-
-        E.g:
-
-        1. Let A = Depth of the Highest-Level Node - MaxDepth
-        2. Let B = Depth of the Lowest-Level Node - MinDepth
-        3. If Math.Abs(A-B) <= 1, then the tree is balanced
-        */
         public bool IsTreeBalanced(TreeNode currentNode)
         {
             if (currentNode == null)
@@ -1798,38 +1932,6 @@ http://powercollections.codeplex.com
                 return 0;
 
             return 1 + SizeOfTree(currentNode.LeftNode) + SizeOfTree(currentNode.RightNode);
-        }
-
-        //Note it mess ups the existing tree structure.
-        public string InOrderIterativeWithoutStak(TreeNode root)
-        {
-            resultString.Clear();
-            InOrderIterativeWithoutStak(root.LeftNode, root);
-            return resultString.ToString();
-        }
-
-        void InOrderIterativeWithoutStak(TreeNode current, TreeNode parent)
-        {
-            while (current != null)
-            {
-                if (parent != null)
-                {
-                    parent.LeftNode = current.RightNode;
-                    current.RightNode = parent;
-                }
-
-                if (current.LeftNode != null)
-                {
-                    parent = current;
-                    current = current.LeftNode;
-                }
-                else
-                {
-                    resultString.Append("  " + current.NodeValue);
-                    current = current.RightNode;
-                    parent = null;
-                }
-            }
         }
 
         //If the given binary tree is a binary search tree, then the inorder traversal should output the elements in increasing order. 
@@ -1867,42 +1969,6 @@ http://powercollections.codeplex.com
             return true;
         }
 
-        /// <summary>
-        /// The nodes in the doubly linked list are arranged in a sequence formed by a zig-zag level order traversal
-        /// </summary>
-        /// <param name="currNode"></param>
-        /// <returns></returns>
-        public TreeNode ConvertToLinkedList(TreeNode currNode)
-        {
-            if (currNode.LeftNode == null && currNode.RightNode == null)
-                return currNode;
-
-            TreeNode temp = null;
-
-            if (currNode.LeftNode != null)
-            {
-                temp = ConvertToLinkedList(currNode.LeftNode);
-
-                while (temp.RightNode != null)
-                    temp = temp.RightNode;
-
-                temp.RightNode = currNode;
-                currNode.LeftNode = temp;
-            }
-
-            if (currNode.RightNode != null)
-            {
-                temp = ConvertToLinkedList(currNode.RightNode);
-
-                while (temp.LeftNode != null)
-                    temp = temp.LeftNode;
-
-                temp.LeftNode = currNode;
-                currNode.RightNode = temp;
-            }
-            return currNode;
-        }
-
         // Keep traverse the tree in order and compare with its previous value.
         public TreeNode PrevNode { get; set; }
 
@@ -1924,36 +1990,77 @@ http://powercollections.codeplex.com
             return IsBSTInInOrderRecursion(currentNode.RightNode);
         }
 
-        /*
-                // http://datastructuresinterview.blogspot.com/2013/03/zig-zag-traversal-on-binary-tree.html
-
-        1. Use 2 stacks stack1 and stack2
-        2. Push the root to stack1
-        3. Till stack1 becomes empty perform steps 4 and 5
-        4. Pop from stack1 and display the popped element
-        5. Push children of popped element into stack2 from left to right
-        6. Till stack2 becomes empty perform steps 7 and 8
-        7. Pop from stack2 and display the popped element
-        8. Push children of popped element into stack1 from right to left
-        9. Repeat steps 3 to 8 till both stacks become empty
-         */
-
-        public void ZigZagDisplay()
+        // An array can represent Preorder traversal of a Binary Search Tree
+        public bool IsValidPreorderTraversal(int[] preNums)
         {
+            if (preNums == null || preNums.Length == 0)
+                return false;
+
+            Stack<int> stack = new Stack<int>();
+            int preNumsLen = preNums.Length;
+
+            // Initialize current root as minimum possible value
+            int root = int.MinValue;
+
+            // Traverse given array
+            for (int indx = 0; indx < preNumsLen; indx++)
+            {
+                // If we find a node who is on right side and smaller than root, return false
+                if (preNums[indx] < root)
+                {
+                    return false;
+                }
+
+                // If pre[i] is in right subtree of stack top,
+                // Keep removing items smaller than pre[i]
+                // and make the last removed item as new root.
+
+                while (stack.Count() > 0 && stack.Peek() < preNums[indx])
+                {
+                    root = stack.Peek();
+                    stack.Pop();
+                }
+
+                // At this point either stack is empty or
+                // pre[i] is smaller than root, push pre[i]
+                stack.Push(preNums[indx]);
+            }
+            return true;
         }
 
-        /*
-        http://www.dsalgo.com/2013/02/print-binary-tree-from-bottom-to-top.html
-        */
-        public void DisplayFromBottonToTop()
+        // http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
+        public bool IsValidPostOrderTraversal(int[] postNums)
         {
+            return IsValidPostOrderTraversalHelper(postNums, 0, postNums.Length - 1);
         }
 
-        /*
-        http://www.dsalgo.com/2013/02/print-binary-tree-bottom-to-top-level.html
-        */
-        public void DisplayFromBottonToTopLevelWise()
+        private static bool IsValidPostOrderTraversalHelper(int[] nums, int lIndx, int rIndx)
         {
+            if (lIndx >= rIndx)
+            {
+                return true;
+            }
+
+            int root = nums[rIndx];
+            int index = lIndx;
+
+            while (index < rIndx && nums[index] <= root)
+            {
+                index++;
+            }
+
+            int midIndx = index;
+
+            while (index < rIndx)
+            {
+                if (nums[index] < root)
+                    return false;
+
+                index++;
+            }
+
+            return IsValidPostOrderTraversalHelper(nums, lIndx, midIndx - 1)
+                && IsValidPostOrderTraversalHelper(nums, midIndx + 1, rIndx - 1);
         }
 
         public void ReverseTree(TreeNode currentNode)
@@ -2014,45 +2121,36 @@ http://powercollections.codeplex.com
         return CheckBalance(l);
         }
          */
-
-        //======================================================================================================================================================================================================================
-        //http://cslibrary.stanford.edu/109/TreeListRecursion.html
-        public void Convert2CircularDoublyLinkedList()
-        {
-
-        }        
-
-        /* Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
-        E.g. Given n = 3, there are a total of 5 unique BST's. 
-
-           1         3     3      2      1
-            \       /     /      / \      \
-             3     2     1      1   3      2
-            /     /       \                 \
-           2     1         2                 3              
-               E.g. n = 4
-    
-        1 is the root: left 0 node right 3 nodes :temp[1] = trCnt[0] * trCnt[3] = 5
-        2 is the root: left 1 node right 2 nodes :temp[2] = trCnt[1] * trCnt[2] = 2
-        3 is the root: left 2 node right 1 nodes :temp[3] = trCnt[2] * trCnt[1] = 2
-        4 is the root: left 3 node right 0 nodes :temp[4] = trCnt[3] * trCnt[0] = 5
-   
-        trCnt[4] = temp[1] +... temp[4] = 14
-   
-        We know that for n = 0 we can have 1 bst of null
-                     for n = 1 we have 1 bst of 1
-                 and for n = 2 we can arrange using two ways Now idea is simple for rest numbers. 
-                     for n = 3 make 1 as root node so there will be 0 nodes in left subtree and 2 nodes in right subtree. 
-
-        We know the solution for 2 nodes that they can be used to make 2 bsts.
-        Now making 2 as the root node , there will be 1 in left subtree and 1 node in right subtree. ! node results in 1 way for making a BST.
-        Now making 3 as root node. 
-        There will be 2 nodes in left subtree and 0 nodes in right subtree. 
-        We know 2 will give 2 BST and zero will give 1 BST.
-        Totalling the result of all the 3 nodes as root will give 5. Same process can be applied for more numbers.
+     
+        //  Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+        // E.g. Given n = 3, there are a total of 5 unique BST's. 
+           
+        //    1         3     3      2      1
+        //     \       /     /      / \      \
+        //      3     2     1      1   3      2
+        //     /     /       \                 \
+        //    2     1         2                 3              
+        //        E.g. n = 4
+           
+        // 1 is the root: left 0 node right 3 nodes :temp[1] = trCnt[0] * trCnt[3] = 5
+        // 2 is the root: left 1 node right 2 nodes :temp[2] = trCnt[1] * trCnt[2] = 2
+        // 3 is the root: left 2 node right 1 nodes :temp[3] = trCnt[2] * trCnt[1] = 2
+        // 4 is the root: left 3 node right 0 nodes :temp[4] = trCnt[3] * trCnt[0] = 5
+           
+        // trCnt[4] = temp[1] +... temp[4] = 14
+           
+        // We know that for n = 0 we can have 1 bst of null
+        //              for n = 1 we have 1 bst of 1
+        //          and for n = 2 we can arrange using two ways Now idea is simple for rest numbers. 
+        //              for n = 3 make 1 as root node so there will be 0 nodes in left subtree and 2 nodes in right subtree. 
+           
+        // We know the solution for 2 nodes that they can be used to make 2 bsts.
+        // Now making 2 as the root node , there will be 1 in left subtree and 1 node in right subtree. ! node results in 1 way for making a BST.
+        // Now making 3 as root node. 
+        // There will be 2 nodes in left subtree and 0 nodes in right subtree. 
+        // We know 2 will give 2 BST and zero will give 1 BST.
+        // Totalling the result of all the 3 nodes as root will give 5. Same process can be applied for more numbers.
  
-*/
-
         public int GetUniqueBSTsCount(int n)
         {
             if (n == 0) return 0;
@@ -2224,36 +2322,6 @@ http://powercollections.codeplex.com
             return false;
         }
 
-        // 538 https://leetcode.com/problems/convert-bst-to-greater-tree
-        public TreeNode ConvertBST(TreeNode root)
-        {
-            if (root == null)
-                return null;
-
-            int sum = 0;
-
-            Stack<TreeNode> tnStack = new Stack<TreeNode>();
-            TreeNode currNode = root;
-
-            while (tnStack.Count > 0 || currNode != null)
-            {
-                while (currNode != null)
-                {
-                    tnStack.Push(currNode);
-                    currNode = currNode.RightNode;
-                }
-
-                currNode = tnStack.Pop();
-
-                sum += currNode.NodeValue;
-                currNode.NodeValue = sum;
-
-                currNode = currNode.LeftNode;
-            }
-
-            return root;
-        }
-
         // 530 https://leetcode.com/problems/minimum-absolute-difference-in-bst
         public int GetMinimumDifference(TreeNode root)
         {
@@ -2282,79 +2350,6 @@ http://powercollections.codeplex.com
 
             }
             return minAbsDiff;
-        }
-
-        // An array can represent Preorder traversal of a Binary Search Tree
-        public bool IsValidPreorderTraversal(int[] preNums)
-        {
-            if (preNums == null || preNums.Length == 0)
-                return false;
-
-            Stack<int> stack = new Stack<int>();
-            int preNumsLen = preNums.Length;
-
-            // Initialize current root as minimum possible value
-            int root = int.MinValue;
-
-            // Traverse given array
-            for (int indx = 0; indx < preNumsLen; indx++)
-            {
-                // If we find a node who is on right side and smaller than root, return false
-                if (preNums[indx] < root)
-                {
-                    return false;
-                }
-
-                // If pre[i] is in right subtree of stack top,
-                // Keep removing items smaller than pre[i]
-                // and make the last removed item as new root.
-
-                while (stack.Count() > 0 && stack.Peek() < preNums[indx])
-                {
-                    root = stack.Peek();
-                    stack.Pop();
-                }
-
-                // At this point either stack is empty or
-                // pre[i] is smaller than root, push pre[i]
-                stack.Push(preNums[indx]);
-            }
-            return true;
-        }
-
-        // http://codercareer.blogspot.com/2011/09/no-06-post-order-traversal-sequences-of.html
-        public bool IsValidPostOrderTraversal(int[] postNums)
-        {
-            return IsValidPostOrderTraversalHelper(postNums, 0, postNums.Length - 1);
-        }
-
-        private static bool IsValidPostOrderTraversalHelper(int[] nums, int lIndx, int rIndx)
-        {
-            if (lIndx >= rIndx)
-            {
-                return true;
-            }
-
-            int root = nums[rIndx];
-            int index = lIndx;
-
-            while (index < rIndx && nums[index] <= root)
-            {
-                index++;
-            }
-
-            int midIndx = index;
-
-            while (index < rIndx)
-            {
-                if (nums[index] < root)
-                    return false;
-
-                index++;
-            }
-
-            return IsValidPostOrderTraversalHelper(nums, lIndx, midIndx - 1)
-                && IsValidPostOrderTraversalHelper(nums, midIndx + 1, rIndx - 1);
         }
 
         // 669 Easy https://leetcode.com/problems/trim-a-binary-search-tree/description/

@@ -76,7 +76,7 @@ namespace DataStructuresAndAlgorithms
         //Explanation: Almost the same as the first example, 
         //except we can't omit the first parenthesis pair to break the one-to-one mapping relationship between the input and the output.
 
-        public string Tree2str(TreeNode currentNode)
+        public string Tree2String(TreeNode currentNode)
         {
             if (currentNode == null)
                 return string.Empty;
