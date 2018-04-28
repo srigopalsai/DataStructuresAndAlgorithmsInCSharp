@@ -87,7 +87,7 @@ namespace DataStructuresAndAlgorithms
 
             //TreeNode listNode = BinarySearchTreeDemoObject.ToAdjacencyList(BinarySearchTreeDemoObject.RootdNode);
 
-            rootNode = BinarySearchTreeDemoObject.SortedArrayToBST(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            rootNode = BinarySearchTreeDemoObject.ConstructTreeByInOrder(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
             outputString.Append(Environment.NewLine);
             //BinarySearchTreeDemoObject.CreateTreeFromSLL();
 

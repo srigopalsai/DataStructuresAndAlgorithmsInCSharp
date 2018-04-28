@@ -5,13 +5,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Algorithms.Tests
 {
     [TestClass]
-    public class BinarySearchTreeTests
+    public class BinarySearchTreeTests : TestBase
     {
         TreeNode rootNode9;
         TreeNode rootNode15;
         BinarySearchTreeOperations bstOperations = new BinarySearchTreeOperations();
 
         int[] preOrder9 = new int[] { 6, 4, 2, 1, 3, 5, 8, 7, 9 };
+        int[] preOrder92 = new int[] { 5, 2, 1, 3, 4, 7, 6, 8, 9 };
         int[] inOrder9 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
         int[] postOrder9 = new int[] { 1, 3, 2, 5, 4, 7, 9, 8, 6 };
 
@@ -21,8 +22,8 @@ namespace Algorithms.Tests
 
         public BinarySearchTreeTests()
         {
-            rootNode9 = bstOperations.SortedArrayToBST(inOrder9);
-            rootNode15 = bstOperations.SortedArrayToBST(inOrder15);
+            rootNode9 = bstOperations.ConstructTreeByInOrder(inOrder9);
+            rootNode15 = bstOperations.ConstructTreeByInOrder(inOrder15);
         }
 
         [TestMethod]
@@ -62,10 +63,23 @@ namespace Algorithms.Tests
         }
 
         [TestMethod]
-        public void ConstructTreeByPreOrderTest(String[] args)
+        public void ConstructTreeByInOrderTest()
+        {
+            TreeNode tNode = bstOperations.ConstructTreeByInOrder(inOrder9);
+
+            string result = bstOperations.PreOrderIterative(tNode);
+            DisplayOutput(result);
+            Console.WriteLine("Inorder traversal of the constructed tree is ..TODO");
+        }
+
+        [TestMethod]
+        public void ConstructTreeByPreOrderTest()
         {
             int index = 0;
-            TreeNode root = bstOperations.ConstructTreeByPreOrder(preOrder9, ref index, preOrder9[0], int.MinValue, int.MaxValue, preOrder9.Length);
+            TreeNode tNode = bstOperations.ConstructTreeByPreOrderHeler(preOrder92, ref index, preOrder92[0], int.MinValue, int.MaxValue);
+
+            string result = bstOperations.InOrderDisplayIterative(tNode);
+            DisplayOutput(result);
             Console.WriteLine("Inorder traversal of the constructed tree is ..TODO");
         }
     }
