@@ -41,82 +41,6 @@ namespace DataStructuresAndAlgorithms
                 return rightNode;
         }
 
-        // Medium 654 https://leetcode.com/submissions/detail/120667189/
-        //public TreeNode constructMaximumBinaryTree(int[] nums)
-        //{
-        //    if (nums == null || nums.Length == 0)
-        //        return null;
-
-        //    Queue<TreeNode> st = new Queue<TreeNode>();
-        //    foreach (int num in nums)
-        //    {
-        //        TreeNode cur = new TreeNode(num);
-
-        //        while (!st.isEmpty() && st.peekLast().val < num)
-        //        {
-        //            cur.LeftNode = st.removeLast();
-        //        }
-
-        //        if (!st.isEmpty())
-        //            st.peekLast().right = cur;
-
-        //        st.addLast(cur);
-        //    }
-
-        //    return st.peekFirst();
-        //}
-
-        //LC 103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
-        // https://discuss.leetcode.com/topic/4545/accepted-c-recursive-solution-with-no-queues
-        // https://discuss.leetcode.com/topic/33809/4ms-concise-dfs-c-implementation
-        public IList<IList<int>> ZigzagLevelOrder()
-        {
-            TreeNode rootNode = this.RootdNode;
-            Stack<TreeNode> evenStack = new Stack<TreeNode>();
-            Stack<TreeNode> oddStack = new Stack<TreeNode>();
-
-            IList<IList<int>> itemsColl = new List<IList<int>>();
-            IList<int> items = new List<int>();
-
-            oddStack.Push(rootNode);
-
-            while (evenStack.Count > 0 || oddStack.Count > 0)
-            {
-                if (oddStack.Count > 0)
-                {
-                    while (oddStack.Count > 0)
-                    {
-                        TreeNode currNode = oddStack.Pop();
-                        items.Add(currNode.NodeValue);
-
-                        if (currNode.LeftNode != null)
-                            evenStack.Push(currNode.LeftNode);
-
-                        if (currNode.RightNode != null)
-                            evenStack.Push(currNode.RightNode);
-                    }
-                }
-                else
-                {
-                    while (evenStack.Count > 0)
-                    {
-                        TreeNode currNode = evenStack.Pop();
-                        items.Add(currNode.NodeValue);
-
-                        if (currNode.RightNode != null)
-                            oddStack.Push(currNode.RightNode);
-
-                        if (currNode.LeftNode != null)
-                            oddStack.Push(currNode.LeftNode);
-                    }
-                }
-
-                itemsColl.Add(items);
-                items = new List<int>();
-            }
-            return itemsColl;
-        }
-
         // 105 Medium https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
         // Given preorder and inorder traversal of a tree, construct the binary tree.
         // Note:
@@ -199,6 +123,7 @@ namespace DataStructuresAndAlgorithms
             return BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndx, 0, inOrder.Length - 1);
         }
 
+        // Note Build Right node first
         private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inStrt, int inEnd)
         {
             if (inStrt > inEnd)
@@ -273,41 +198,35 @@ namespace DataStructuresAndAlgorithms
 
         // https://www.geeksforgeeks.org/full-and-complete-binary-tree-from-given-preorder-and-postorder-traversals/
 
-        public TreeNode BuildFullCompleteTree(int[] preOrder, int[] postOrder, int stIndx, int endIndx, ref int preIndx)
+        public TreeNode BuildFullCompleteTree(int[] preOrder, int[] postOrder, int pstLIndx, int pstRIndx, ref int preIndx)
         {
-            if (preIndx >= preOrder.Length || stIndx > endIndx)
+            if (preIndx >= preOrder.Length || pstLIndx > pstRIndx)
                 return null;
-
-            // The first node in preorder traversal is root.
-            // So take the node at preIndex from preorder and make it root, and increment
-            // preIndex
 
             TreeNode root = new TreeNode(preOrder[preIndx]);
             preIndx++;
 
-            // If the current subarry has only one element,
-            // No need to recur or preIndex > size after incrementing
+            // If the current subarry has only one element, No need to recur or preIndex > size after incrementing
 
-            if (stIndx == endIndx || preIndx >= preOrder.Length)
+            if (pstLIndx == pstRIndx || preIndx >= preOrder.Length)
                 return root;
 
-            int indx;
+            int pstCIndx;
 
             // Search the next element of pre[] in post[]
 
-            for (indx = stIndx; indx <= endIndx; indx++)
+            for (pstCIndx = pstLIndx; pstCIndx <= pstRIndx; pstCIndx++)
             {
-                if (postOrder[indx] == preOrder[preIndx])
+                if (postOrder[pstCIndx] == preOrder[preIndx])
                     break;
             }
 
             // Use the index of element found in postorder to divide postorder array in two parts. 
-            // Left subtree and right subtree
 
-            if (indx <= endIndx)
+            if (pstCIndx <= pstRIndx)
             {
-                root.LeftNode = BuildFullCompleteTree(preOrder, postOrder, stIndx, indx, ref preIndx);
-                root.RightNode = BuildFullCompleteTree(preOrder, postOrder, indx + 1, endIndx, ref preIndx);
+                root.LeftNode = BuildFullCompleteTree(preOrder, postOrder, pstLIndx, pstCIndx, ref preIndx);
+                root.RightNode = BuildFullCompleteTree(preOrder, postOrder, pstCIndx + 1, pstRIndx, ref preIndx);
             }
 
             return root;
@@ -322,7 +241,7 @@ namespace DataStructuresAndAlgorithms
         //            30   15
         //           /  \
         //          20   5
-        public TreeNode BuildSpecialTree(int[] preOrder, char[] preLN, ref int curIndx, TreeNode temp)
+        public TreeNode BuildSpecialTree(int[] preOrder, char[] preLN, ref int curIndx, TreeNode cNode)
         {
             // Base Case: All nodes are constructed
             if (curIndx == preOrder.Length)
@@ -330,17 +249,65 @@ namespace DataStructuresAndAlgorithms
 
             int index = curIndx;
 
-            temp = new TreeNode(preOrder[index]);
+            cNode = new TreeNode(preOrder[index]);
             curIndx++;
 
             // If this is an internal node, construct left and right subtrees and link the subtrees
             if (preLN[index] == 'N')
             {
-                temp.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx,  temp.LeftNode);
-                temp.RightNode = BuildSpecialTree(preOrder, preLN, ref curIndx, temp.RightNode);
+                cNode.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx,  cNode.LeftNode);
+                cNode.RightNode = BuildSpecialTree(preOrder, preLN, ref curIndx, cNode.RightNode);
             }
 
-            return temp;
+            return cNode;
+        }
+
+        // Medium 654 https://leetcode.com/submissions/detail/120667189/
+        // Given an integer array with no duplicates, build A maximum tree building as follow: 
+        // The root is the maximum number in the array. 
+        // The left  subtree is the maximum tree constructed from left  part subarray divided by the maximum number.
+        // The right subtree is the maximum tree constructed from right part subarray divided by the maximum number.
+           
+        // Construct the maximum tree by the given array and output the root node of this tree.
+        // Example 1:
+        // Input: [3,2,1,6,0,5]
+        // Output: return the tree root node representing the following tree:
+           
+        //       6
+        //     /   \
+        //    3     5
+        //     \    / 
+        //      2  0   
+        //        \
+        //         1
+           
+        // Note:
+        // The size of the given array will be in the range [1,1000].
+        public TreeNode BuildMaximumBinaryTree(int[] nums)
+        {
+            return BuildMaximumBinaryTreeHelper(nums, 0, nums.Length - 1);
+        }
+
+        // maxIndex denotes the index of the maximum number in range [left, right]
+        public TreeNode BuildMaximumBinaryTreeHelper(int[] nums, int lIndx, int rIndx)
+        {
+            if (lIndx > rIndx)
+                return null;
+
+            int maxIndx = lIndx;
+
+            for (int indx = lIndx; indx <= rIndx; indx++)
+            {
+                if (nums[indx] > nums[maxIndx])
+                    maxIndx = indx;
+            }
+
+            TreeNode root = new TreeNode(nums[maxIndx]);
+
+            root.LeftNode = BuildMaximumBinaryTreeHelper(nums, lIndx, maxIndx - 1);
+            root.RightNode = BuildMaximumBinaryTreeHelper(nums, maxIndx + 1, rIndx);
+
+            return root;
         }
 
         // https://www.geeksforgeeks.org/construct-tree-from-ancestor-matrix/
@@ -582,6 +549,134 @@ namespace DataStructuresAndAlgorithms
                     }
                 }
             }
+        }
+
+        //LC 103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+        // https://discuss.leetcode.com/topic/4545/accepted-c-recursive-solution-with-no-queues
+        // https://discuss.leetcode.com/topic/33809/4ms-concise-dfs-c-implementation
+        public IList<IList<int>> ZigzagLevelOrder()
+        {
+            TreeNode rootNode = this.RootdNode;
+            Stack<TreeNode> evenStack = new Stack<TreeNode>();
+            Stack<TreeNode> oddStack = new Stack<TreeNode>();
+
+            IList<IList<int>> itemsColl = new List<IList<int>>();
+            IList<int> items = new List<int>();
+
+            oddStack.Push(rootNode);
+
+            while (evenStack.Count > 0 || oddStack.Count > 0)
+            {
+                if (oddStack.Count > 0)
+                {
+                    while (oddStack.Count > 0)
+                    {
+                        TreeNode currNode = oddStack.Pop();
+                        items.Add(currNode.NodeValue);
+
+                        if (currNode.LeftNode != null)
+                            evenStack.Push(currNode.LeftNode);
+
+                        if (currNode.RightNode != null)
+                            evenStack.Push(currNode.RightNode);
+                    }
+                }
+                else
+                {
+                    while (evenStack.Count > 0)
+                    {
+                        TreeNode currNode = evenStack.Pop();
+                        items.Add(currNode.NodeValue);
+
+                        if (currNode.RightNode != null)
+                            oddStack.Push(currNode.RightNode);
+
+                        if (currNode.LeftNode != null)
+                            oddStack.Push(currNode.LeftNode);
+                    }
+                }
+
+                itemsColl.Add(items);
+                items = new List<int>();
+            }
+            return itemsColl;
+        }
+
+        // 366 Medium https://leetcode.com/problems/find-leaves-of-binary-tree
+        // Given a binary tree, collect a tree's nodes as if you were doing this: Collect and remove all leaves, repeat until the tree is empty. 
+        // Example:
+        // Given binary tree 
+        //           1
+        //          / \
+        //         2   3
+        //        / \     
+        //       4   5    
+
+        // Returns[4, 5, 3], [2], [1]. 
+        // Explanation:
+        // 1. Removing the leaves[4, 5, 3] would result in this tree: 
+        //           1
+        //          / 
+        //         2          
+
+        // 2. Now removing the leaf[2] would result in this tree: 
+        //           1             
+        // 3. Now removing the leaf[1] would result in the empty tree: 
+        //           []   
+        //    Returns[4, 5, 3], [2], [1]. 
+
+        // https://leetcode.com/problems/second-minimum-node-in-a-binary-tree
+
+        //  Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node.If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. 
+        //  Given such a binary tree, you need to output the second minimum value in the set made of all the nodes' value in the whole tree. 
+        //  If no such second minimum value exists, output -1 instead.
+        //  Example 1:
+        //  Input: 
+        //      2
+        //     / \
+        //    2   5
+        //       / \
+        //      5   7
+        //  Output: 5
+        //  Explanation: The smallest value is 2, the second smallest value is 5.
+        //  Example 2:
+        //  Input: 
+        //      2
+        //     / \
+        //    2   2
+        //  Output: -1
+        //  Explanation: The smallest value is 2, but there isn't any second smallest value.
+        public int FindSecondMinimumValue(TreeNode root)
+        {
+            if (root == null)
+                return -1;
+
+            int rootValue = root.NodeValue;
+            int secondMinVal = int.MaxValue;
+
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+            tnQ.Enqueue(root);
+
+            while (tnQ.Count > 0)
+            {
+                TreeNode node = tnQ.Dequeue();
+
+                if (node.NodeValue != rootValue && node.NodeValue < secondMinVal)
+                {
+                    secondMinVal = node.NodeValue;
+                }
+
+                if (node.LeftNode != null)
+                {
+                    if (node.LeftNode.NodeValue < secondMinVal)
+                        tnQ.Enqueue(node.LeftNode);
+
+                    if (node.RightNode.NodeValue < secondMinVal)
+                        tnQ.Enqueue(node.RightNode);
+                }
+            }
+
+            return secondMinVal == int.MaxValue ? -1 : secondMinVal;
         }
     }
 }
