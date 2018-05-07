@@ -22,8 +22,9 @@ namespace Algorithms.Tests
         int[] postOrder15 = new int[] { 1, 3, 2, 5, 4, 7, 6, 9, 11, 10, 13, 15, 14, 12, 8 };
         int[] levelOrder15 = new int[] { 8, 6, 12, 4, 7, 10, 14, 2, 5, 9, 11, 13, 15, 1, 3 };
 
-        int[] preOrder92 = new int[] { 5, 2, 1, 3, 4, 7, 6, 8, 9 };
+        int[] inOrder92    = new int[] { 1, 3, 4, 5, 6, 7, 8, 10, 12};
         int[] levelOrder92 = new int[] { 7, 4, 12, 3, 6, 8, 1, 5, 10 };
+        int[] preOrder93 = new int[] { 5, 2, 1, 3, 4, 7, 6, 8, 9 };
 
         public BinarySearchTreeTests()
         {
@@ -98,20 +99,22 @@ namespace Algorithms.Tests
         }
 
         [TestMethod]
-        public void BuildTreeFromLevelOrderTest()
+        public void BuildTreeFromLevelOrderTests()
         {
-            TreeNode tNode = bstOperations.BuildTreeFromLevelOrderIterative(levelOrder9);
+            BuildTreeFromLevelOrderTest(levelOrder9, inOrder9);
+            BuildTreeFromLevelOrderTest(levelOrder15, inOrder15);
+            BuildTreeFromLevelOrderTest(levelOrder92, inOrder92);
+        }
+
+        public void BuildTreeFromLevelOrderTest(int[] source, int[] target)
+        {
+            TreeNode tNode = bstOperations.BuildTreeFromLevelOrderIterative(source);
             string result = bstOperations.InOrderDisplayIterative(tNode);
             DisplayOutput(result);
-            Console.WriteLine("Inorder traversal of the constructed tree is ..TODO");
-
-            tNode = bstOperations.BuildTreeFromLevelOrderIterative(levelOrder15);
-            result = bstOperations.InOrderDisplayIterative(tNode);
-            DisplayOutput(result);
-
-            tNode = bstOperations.BuildTreeFromLevelOrderIterative(levelOrder92);
-            result = bstOperations.InOrderDisplayIterative(tNode);
-            DisplayOutput(result);
+    
+            int[] resultArr = ToArray(result);
+            bool istrue = AreArraysEqual(target, resultArr);
+            Assert.AreEqual(true, istrue);
         }
 
         [TestMethod]

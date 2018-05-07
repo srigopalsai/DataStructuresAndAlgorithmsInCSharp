@@ -44,7 +44,7 @@ namespace Algorithms.Tests
             DisplayOutput(result);
 
             int[] resultArr = ToArray(result);
-            bool istrue = AssertAreArraysEqual(inOrder, resultArr);            
+            bool istrue = AreArraysEqual(inOrder, resultArr);
         }
 
         [TestMethod]

@@ -36,20 +36,18 @@ namespace Algorithms.Tests
             return array;
         }
 
-        public bool AssertAreArraysEqual(int[] array1, int[] array2)
+        public bool AreArraysEqual(int[] array1, int[] array2)
         {
-            bool hasFailed = false;
-
             for (int indx = 0; indx < array1.Length; indx++)
             {
                 if (array1[indx] != array2[indx])
                 {
-                    hasFailed = true;
                     Assert.Fail("Values are not matching Val 1 " + array1[indx] + " Val 2 " + array2[indx]);
+                    return false;
                 }
             }
 
-            return hasFailed;
+            return true;
         }
 
     }
