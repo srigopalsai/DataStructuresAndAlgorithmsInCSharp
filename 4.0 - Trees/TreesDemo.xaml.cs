@@ -79,15 +79,12 @@ namespace DataStructuresAndAlgorithms
             //outputString.Append(Environment.NewLine + "In Order aftare Invert Tree :" + BinarySearchTreeDemoObject.InOrderDisplay());
             //outputString.Append(Environment.NewLine);
 
-            rootNode = BinarySearchTreeDemoObject.CreateTreeFromSLLTest();
-            outputString.Append(Environment.NewLine + "CreateTreeFromSLL");
-
             //TreeNode listNode = BinarySearchTreeDemoObject.ConverToAdjustcentList(BinarySearchTreeDemoObject.RootdNode);
             //outputString.Append(Environment.NewLine);
 
             //TreeNode listNode = BinarySearchTreeDemoObject.ToAdjacencyList(BinarySearchTreeDemoObject.RootdNode);
 
-            rootNode = BinarySearchTreeDemoObject.ConstructTreeByInOrder(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            rootNode = BinarySearchTreeDemoObject.BuildTreeFromInOrder(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
             outputString.Append(Environment.NewLine);
             //BinarySearchTreeDemoObject.CreateTreeFromSLL();
 
