@@ -64,37 +64,37 @@ namespace DataStructuresAndAlgorithms
             return BuildTreeFromPreAndInOrderHelper(preOrder, inOrder, ref preIndx, 0, inOrder.Length - 1);
         }
 
-        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inStrt, int inEnd)
+        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inLIndx, int inRIndx)
         {
-            if (inStrt > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
             TreeNode tNode = new TreeNode(preNums[preIndx]);
             preIndx++;
 
             // When there is no childern for the current node then return
-            if (inStrt == inEnd)
+            if (inLIndx == inRIndx)
                 return tNode;
 
             // Else find the index of the current node in Inorder traversal
-            int inIndex = SearchIndex(inNums, inStrt, inEnd, tNode.NodeValue);
+            int inIndex = SearchIndex(inNums, inLIndx, inRIndx, tNode.NodeValue);
 
             // Using index in Inorder traversal, construct left and right subtress
-            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inStrt, inIndex - 1);
-            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inEnd);
+            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inLIndx, inIndex - 1);
+            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inRIndx);
 
             return tNode;
         }
 
         // Do binary search, since in Array is sorted if no duplicates.
-        public int SearchIndex(int[] nums, int start, int end, int val)
+        public int SearchIndex(int[] nums, int lIndx, int rIndx, int val)
         {
             if (nums == null || nums.Length == 0)
                 return -1;
 
             int indx = -1;
 
-            for (indx = start; indx <= end; indx++)
+            for (indx = lIndx; indx <= rIndx; indx++)
             {
                 if (nums[indx] == val)
                     return indx;
@@ -124,24 +124,24 @@ namespace DataStructuresAndAlgorithms
         }
 
         // Note Build Right node first
-        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inStrt, int inEnd)
+        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inLIndx, int inRIndx)
         {
-            if (inStrt > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
             TreeNode node = new TreeNode(postOrder[postIndex]);
             postIndex--;
 
             // If current node has has no children then return current node.
-            if (inStrt == inEnd)
+            if (inLIndx == inRIndx)
                 return node;
 
             // Else find the index of this node in Inorder  traversal
-            int inCurIndex = SearchIndex(inOrder, inStrt, inEnd, node.NodeValue);
+            int inCurIndex = SearchIndex(inOrder, inLIndx, inRIndx, node.NodeValue);
 
             // Right node first and left node next
-            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inEnd);
-            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inStrt, inCurIndex - 1);
+            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inRIndx);
+            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inLIndx, inCurIndex - 1);
 
             return node;
         }
@@ -159,23 +159,25 @@ namespace DataStructuresAndAlgorithms
         // 4   12
         //    /  \
         //   10   14
-        public TreeNode BuildTreeFromInAndLevelOrder(TreeNode currNode, int[] levelOrder, int[] inOrder, int inStart, int inEnd)
+        public TreeNode BuildTreeFromInAndLevelOrder(int[] levelOrder, int[] inOrder, int inLIndx, int inRIndx)
         {
-            if (inStart > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
-            if (inStart == inEnd)
-                return new TreeNode(inOrder[inStart]);
+            TreeNode currNode = null;
+
+            if (inLIndx == inRIndx)
+                return new TreeNode(inOrder[inLIndx]);
 
             bool found = false;
             int rootIndx = 0;
 
             // it represents the index in inOrder array of element that appear first in levelOrder array.
-            for (int indxLvlOrdr = 0; indxLvlOrdr < levelOrder.Length - 1; indxLvlOrdr++)
+            for (int lvlOrdrIndx = 0; lvlOrdrIndx < levelOrder.Length - 1; lvlOrdrIndx++)
             {
-                int lvlOrdrVal = levelOrder[indxLvlOrdr];
+                int lvlOrdrVal = levelOrder[lvlOrdrIndx];
 
-                for (int indxInOrdr = inStart; indxInOrdr < inEnd; indxInOrdr++)
+                for (int indxInOrdr = inLIndx; indxInOrdr < inRIndx; indxInOrdr++)
                 {
                     if (lvlOrdrVal == inOrder[indxInOrdr])
                     {
@@ -190,10 +192,31 @@ namespace DataStructuresAndAlgorithms
                     break;
             }
 
-            currNode.LeftNode = BuildTreeFromInAndLevelOrder(currNode, levelOrder, inOrder, inStart, rootIndx - 1);
-            currNode.RightNode = BuildTreeFromInAndLevelOrder(currNode, levelOrder, inOrder, rootIndx + 1, inEnd);
+            if (found == false)
+                return null;
+
+            currNode.LeftNode = BuildTreeFromInAndLevelOrder(levelOrder, inOrder, inLIndx, rootIndx - 1);
+            currNode.RightNode = BuildTreeFromInAndLevelOrder(levelOrder, inOrder, rootIndx + 1, inRIndx);
 
             return currNode;
+        }
+
+        TreeNode construct_bst3(int[] inorder, int[] levelorder, int inLIndx, int inRIndx)
+        {
+            int levelIndx = 0;
+            TreeNode treeNode = new TreeNode(levelorder[levelIndx++]);
+
+            if (inLIndx == inRIndx)
+                return treeNode;
+
+            //else find the index of this node in inorder array. left of it is left subtree, right of this index is right.
+            int inIndex = SearchIndex(inorder, inLIndx, inRIndx, treeNode.NodeValue);
+
+            //using in_index from inorder array, constructing left & right subtrees.
+            treeNode.LeftNode = construct_bst3(inorder, levelorder, inLIndx, inIndex - 1);
+            treeNode.RightNode = construct_bst3(inorder, levelorder, inIndex + 1, inRIndx);
+
+            return treeNode;
         }
 
         // https://www.geeksforgeeks.org/full-and-complete-binary-tree-from-given-preorder-and-postorder-traversals/
@@ -255,7 +278,7 @@ namespace DataStructuresAndAlgorithms
             // If this is an internal node, construct left and right subtrees and link the subtrees
             if (preLN[index] == 'N')
             {
-                cNode.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx,  cNode.LeftNode);
+                cNode.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx, cNode.LeftNode);
                 cNode.RightNode = BuildSpecialTree(preOrder, preLN, ref curIndx, cNode.RightNode);
             }
 
@@ -267,12 +290,12 @@ namespace DataStructuresAndAlgorithms
         // The root is the maximum number in the array. 
         // The left  subtree is the maximum tree constructed from left  part subarray divided by the maximum number.
         // The right subtree is the maximum tree constructed from right part subarray divided by the maximum number.
-           
+
         // Construct the maximum tree by the given array and output the root node of this tree.
         // Example 1:
         // Input: [3,2,1,6,0,5]
         // Output: return the tree root node representing the following tree:
-           
+
         //       6
         //     /   \
         //    3     5
@@ -280,7 +303,7 @@ namespace DataStructuresAndAlgorithms
         //      2  0   
         //        \
         //         1
-           
+
         // Note:
         // The size of the given array will be in the range [1,1000].
         public TreeNode BuildMaximumBinaryTree(int[] nums)

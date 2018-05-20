@@ -528,7 +528,7 @@ namespace DataStructuresAndAlgorithms
 
             currNode.RightNode = BuildTreeFromPostOrderHeler(postOrder, ref postIndex, postOrder[postIndex], key, maxVal);
             currNode.LeftNode = BuildTreeFromPostOrderHeler(postOrder, ref postIndex, postOrder[postIndex], minVal, key);
-            
+
             return currNode;
         }
 
@@ -565,10 +565,10 @@ namespace DataStructuresAndAlgorithms
 
             TreeNode rootNode = prntNodeInfo.TreeNode;
             NodeInfo chldNodeInfo;
-            
+
             int childVal = 0;
 
-            for(int currIndx = 1; currIndx != levelOrder.Length;)
+            for (int currIndx = 1; currIndx != levelOrder.Length;)
             {
                 prntNodeInfo = nodeInfoQ.Dequeue();
                 childVal = levelOrder[currIndx];
@@ -597,6 +597,46 @@ namespace DataStructuresAndAlgorithms
                     nodeInfoQ.Enqueue(chldNodeInfo);
                     prntNodeInfo.TreeNode.RightNode = chldNodeInfo.TreeNode;
                     currIndx++;
+                }
+            }
+
+            return rootNode;
+        }
+
+        TreeNode BuildTreeFromPreOrderIterative(int[] preOrder)
+        {
+            if (preOrder == null || preOrder.Length == 0)
+                return null;
+
+            TreeNode rootNode = new TreeNode(preOrder[0]);
+            Stack<TreeNode> tnStack = new Stack<TreeNode>();
+
+            tnStack.Push(rootNode);
+
+            for (int indx = 1; indx < preOrder.Length; ++indx)
+            {
+                TreeNode prevNode = null;
+                int currVal = preOrder[indx];
+
+                while (tnStack.Count > 0 && currVal > tnStack.Peek().NodeValue)
+                {
+                    prevNode = tnStack.Pop();
+                }
+
+                // Make this greater value as the right child and push it to the stack
+                if (prevNode != null)
+                {
+                    prevNode.RightNode = new TreeNode(currVal);
+                    tnStack.Push(prevNode.RightNode);
+                }
+                else
+                {
+                    // If the next value is less than the stack's top value, make this value
+                    // as the left child of the stack's top node. Push the new node to stack
+
+                    prevNode = tnStack.Peek();
+                    prevNode.LeftNode = new TreeNode(currVal);
+                    tnStack.Push(prevNode.LeftNode);
                 }
             }
 
@@ -674,6 +714,54 @@ namespace DataStructuresAndAlgorithms
             }
 
             return sb.ToString().Substring(1, sb.ToString().Length - 2);//Convert.ToString(resultString);
+        }
+
+        // This function counts the number of nodes in Linked List and then calls sortedListToBSTRecur() to construct BST
+        public TreeNode sortedListToBST(ListNode head)
+        {
+            // Count the number of nodes in Linked List
+            int n = CountLNodes(head);
+
+            return SortedListToBSTRecur(head, n);
+        }
+
+        /* The main function that constructs balanced BST and returns root of it.
+               head_ref -->  Pointer to pointer to head node of linked list
+               n  --> No. of nodes in Linked List */
+        public TreeNode SortedListToBSTRecur(ListNode head_ref, int n)
+        {
+            if (n <= 0)
+                return null;
+
+            // Recursively construct the left subtree
+            TreeNode left = SortedListToBSTRecur(head_ref, n / 2);
+
+            // Allocate memory for root, and link the above constructed left subtree with root
+            TreeNode root = new TreeNode((head_ref).NodeValue);
+            root.LeftNode = left;
+
+            /* Change head pointer of Linked List for parent recursive calls */
+            head_ref = (head_ref).NextNode;
+
+            /* Recursively construct the right subtree and link it with root 
+              The number of nodes in right subtree  is total nodes - nodes in 
+              left subtree - 1 (for root) which is n-n/2-1*/
+            root.RightNode = SortedListToBSTRecur(head_ref, n - n / 2 - 1);
+
+            return root;
+        }
+
+        public int CountLNodes(ListNode head)
+        {
+            int count = 0;
+            ListNode temp = head;
+
+            while (temp != null)
+            {
+                temp = temp.NextNode;
+                count++;
+            }
+            return count;
         }
     }
 }

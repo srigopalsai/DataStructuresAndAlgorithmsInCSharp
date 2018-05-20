@@ -12,20 +12,6 @@ namespace Algorithms.Tests
         BinarySearchTreeOperations bstOperations = new BinarySearchTreeOperations();
         SingleLinkedListDemo singleLinkedList = new SingleLinkedListDemo();
 
-        int[] preOrder9 = new int[] { 6, 4, 2, 1, 3, 5, 8, 7, 9 };
-        int[] inOrder9 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-        int[] postOrder9 = new int[] { 1, 3, 2, 5, 4, 7, 9, 8, 6 };
-        int[] levelOrder9 = new int[] { 6, 4, 8, 2, 5, 7, 9, 1, 3 };
-
-        int[] preOrder15 = new int[] { 8, 6, 4, 2, 1, 3, 5, 7, 12, 10, 9, 11, 14, 13, 15 };
-        int[] inOrder15 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-        int[] postOrder15 = new int[] { 1, 3, 2, 5, 4, 7, 6, 9, 11, 10, 13, 15, 14, 12, 8 };
-        int[] levelOrder15 = new int[] { 8, 6, 12, 4, 7, 10, 14, 2, 5, 9, 11, 13, 15, 1, 3 };
-
-        int[] inOrder92    = new int[] { 1, 3, 4, 5, 6, 7, 8, 10, 12};
-        int[] levelOrder92 = new int[] { 7, 4, 12, 3, 6, 8, 1, 5, 10 };
-        int[] preOrder93 = new int[] { 5, 2, 1, 3, 4, 7, 6, 8, 9 };
-
         public BinarySearchTreeTests()
         {
             rootNode9 = bstOperations.BuildTreeFromInOrder(inOrder9);
