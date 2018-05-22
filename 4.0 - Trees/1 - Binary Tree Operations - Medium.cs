@@ -5,7 +5,7 @@ namespace DataStructuresAndAlgorithms
 {
     public partial class BinaryTreeOperations
     {
-        // 236 Medium https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+        // Medium 236 https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
         // Given a binary tree, find the lowest common ancestor(LCA) of two given nodes in the tree.
         // The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).
         //         _______3______
@@ -41,7 +41,7 @@ namespace DataStructuresAndAlgorithms
                 return rightNode;
         }
 
-        // 105 Medium https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
+        // Medium 105 https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
         // Given preorder and inorder traversal of a tree, construct the binary tree.
         // Note:
         // You may assume that duplicates do not exist in the tree.
@@ -103,7 +103,7 @@ namespace DataStructuresAndAlgorithms
             return indx;
         }
 
-        // 106 Medium https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
+        // Medium 106 https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
         // Given inorder and postorder traversal of a tree, construct the binary tree.
         // You may assume that duplicates do not exist in the tree.
         // For example, given inorder = [9, 3, 15, 20, 7]
@@ -574,7 +574,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        //LC 103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+        //Medium 103 https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
         // https://discuss.leetcode.com/topic/4545/accepted-c-recursive-solution-with-no-queues
         // https://discuss.leetcode.com/topic/33809/4ms-concise-dfs-c-implementation
         public IList<IList<int>> ZigzagLevelOrder()
@@ -700,6 +700,43 @@ namespace DataStructuresAndAlgorithms
             }
 
             return secondMinVal == int.MaxValue ? -1 : secondMinVal;
+        }
+
+        public class TreeLinkNode
+        {
+            public int val;
+
+            public TreeLinkNode left, right, next;
+
+            public TreeLinkNode(int x) { val = x; }
+        }
+
+        // Medium 116 https://leetcode.com/problems/populating-next-right-pointers-in-each-node
+        public void Connect(TreeLinkNode root)
+        {
+            if (root == null)
+                return;
+
+            TreeLinkNode lvlStart = root;
+            TreeLinkNode curNode = null;
+
+            while (lvlStart.left != null)
+            {
+                curNode = lvlStart;
+
+                while (curNode != null)
+                {
+                    curNode.left.next = curNode.right;
+
+                    if (curNode.next != null)
+                    {
+                        curNode.right.next = curNode.next.left;
+                    }
+                    curNode = curNode.next;
+                }
+
+                lvlStart = lvlStart.left;
+            }
         }
     }
 }
