@@ -997,5 +997,75 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
             }
             return n + 1;
         }
+
+        // Hard 689 https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/description/
+        public int[] MaxSumOfThreeSubarrays(int[] nums, int k)
+        {
+            int[] dp = new int[nums.Length - k + 1];
+            int sum = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+
+                if (i >= k)
+                {
+                    sum -= nums[i - k];
+                }
+                if (i >= k - 1)
+                {
+                    dp[i - (k - 1)] = sum;
+                }
+            }
+
+            int maxIndx = 0;
+            int[] leftIndx = new int[dp.Length];
+            // First max.
+            for (int i = 0; i < dp.Length; i++)
+            {
+                if (dp[i] > dp[maxIndx])
+                {
+                    maxIndx = i;
+                }
+
+                leftIndx[i] = maxIndx;
+            }
+
+            maxIndx = dp.Length - 1;
+            int[] rightIndx = new int[dp.Length];
+
+            for (int i = dp.Length - 1; i >= 0; i--)
+            {
+                if (dp[i] >= dp[maxIndx])
+                {
+                    maxIndx = i;
+                }
+
+                rightIndx[i] = maxIndx;
+            }
+
+            int[] max3 = new int[] { -1, -1, -1 };
+
+            for (int i2 = k; i2 < dp.Length - k; i2++)
+            {
+                int i1 = leftIndx[i2 - k];
+                int i3 = rightIndx[i2 + k];
+
+                int m1 = dp[max3[0]];
+                int m2 = dp[max3[1]];
+                int m3 = dp[max3[2]];
+
+                int mSum = dp[i1] + dp[i2] + dp[i3];
+
+                if (max3[0] == -1 || 
+                   mSum  > m1 + m2 + m3)
+                {
+                    max3[0] = i1;
+                    max3[1] = i2;
+                    max3[2] = i3;
+                }
+            }
+            return max3;
+        }
     }
 }

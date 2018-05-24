@@ -362,8 +362,9 @@ Shift Operations:
 E.g. 38 << 1     Output: Double in size 76 (Multiply by 2)
 E.g. 38 >> 1     Output: Half in size 19   (Devide by 2)
 
+01 << 4     01 X 2^4    =  32  Can be 01 X (int)Math.Pow(2,4)  
 40 << 1   	40 X 2^1    =  80
-40 << 2   	40 X 2^2    =  160
+40 << 2   	40 X 2^2    =  160 Can be 40 X (int)Math.Pow(2,2)
 40 << 3   	40 X 2^3    =  320
 -40 << 3   	40 X 2^3    = -320 ( Imp to note )
 40 << 4   	40 X 2^4    =  640

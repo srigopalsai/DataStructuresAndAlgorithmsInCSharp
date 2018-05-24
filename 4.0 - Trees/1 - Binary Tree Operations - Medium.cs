@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStructuresAndAlgorithms
 {
@@ -329,6 +330,50 @@ namespace DataStructuresAndAlgorithms
 
             root.LeftNode = BuildMaximumBinaryTreeHelper(nums, lIndx, maxIndx - 1);
             root.RightNode = BuildMaximumBinaryTreeHelper(nums, maxIndx + 1, rIndx);
+
+            return root;
+        }
+
+        public TreeNode BuildMaximumBinaryTree2(int[] nums)
+        {
+            if (nums.Length <= 0)
+                return null;
+
+            TreeNode root = new TreeNode(nums[0]);
+            TreeNode curNode;
+            TreeNode prevNode = root;
+
+            for (int indx = 1; indx < nums.Length; indx++)
+            {
+                curNode = new TreeNode(nums[indx]);
+
+                if (curNode.NodeValue < prevNode.NodeValue)
+                {
+                    prevNode.RightNode = curNode;
+                }
+                else
+                {
+                    prevNode = root;
+
+                    if (curNode.NodeValue >= prevNode.NodeValue)
+                    {
+                        curNode.LeftNode = root;
+                        root = curNode;
+                    }
+                    else
+                    {
+                        while (prevNode.RightNode != null && prevNode.RightNode.NodeValue > curNode.NodeValue)
+                        {
+                            prevNode = prevNode.RightNode;
+                        }
+
+                        curNode.LeftNode = prevNode.RightNode;
+                        prevNode.RightNode = curNode;
+                    }
+                }
+
+                prevNode = curNode;
+            }
 
             return root;
         }
@@ -738,5 +783,316 @@ namespace DataStructuresAndAlgorithms
                 lvlStart = lvlStart.left;
             }
         }
+
+        // Medium 117 https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii
+        // Un balenced
+
+        public void ConnectII(TreeLinkNode root)
+        {
+            while (root != null)
+            {
+                TreeLinkNode tempChild = new TreeLinkNode(0);
+                TreeLinkNode currentChild = tempChild;
+
+                while (root != null)
+                {
+                    if (root.left != null)
+                    {
+                        currentChild.next = root.left;
+                        currentChild = currentChild.next;
+                    }
+
+                    if (root.right != null)
+                    {
+                        currentChild.next = root.right;
+                        currentChild = currentChild.next;
+                    }
+
+                    root = root.next;
+                }
+
+                root = tempChild.next;
+            }
+        }
+
+        public void ConnectII2(TreeLinkNode root)
+        {
+            if (root == null)
+                return;
+
+            Queue<TreeLinkNode> queue = new Queue<TreeLinkNode>();
+
+            queue.Enqueue(root);
+
+            while (queue.Count() > 0)
+            {
+                int size = queue.Count();
+
+                TreeLinkNode next = null;
+
+                for (int indx = 0; indx < size; indx++)
+                {
+                    TreeLinkNode currNode = queue.Dequeue();
+
+                    currNode.next = next;
+                    next = currNode;
+
+                    if (currNode.right != null)
+                    {
+                        queue.Enqueue(currNode.right);
+                    }
+                    if (currNode.left != null)
+                    {
+                        queue.Enqueue(currNode.left);
+                    }
+                }
+            }
+        }
+
+        // Medium 513 https://leetcode.com/problems/find-bottom-left-tree-value
+        // Visit right first.
+        public int FindBottomLeftValue(TreeNode root)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            TreeNode curNode = root;
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                curNode = queue.Dequeue();
+
+                if (curNode.RightNode != null)
+                {
+                    queue.Enqueue(curNode.RightNode);
+                }
+
+                if (curNode.LeftNode != null)
+                {
+                    queue.Enqueue(curNode.LeftNode);
+                }
+            }
+
+            return curNode.NodeValue;
+        }
+
+        public int FindBottomLeftValue2(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int result = 0;
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+
+            tnQ.Enqueue(root);
+
+            while (tnQ.Count > 0)
+            {
+                int lvlSize = tnQ.Count();
+
+                for (int indx = 0; indx < lvlSize; indx++)
+                {
+                    TreeNode node = tnQ.Dequeue();
+
+                    if (indx == 0)
+                        result = node.NodeValue;
+
+                    if (node.LeftNode != null)
+                        tnQ.Enqueue(node.LeftNode);
+
+                    if (node.RightNode != null)
+                        tnQ.Enqueue(node.RightNode);
+                }
+            }
+
+            return result;
+        }
+
+        // Medium 222 https://leetcode.com/problems/count-complete-tree-nodes
+        // In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
+        // It can have between 1 and 2h nodes inclusive at the last level h.
+       
+        // Input: 
+        //            1
+        //           / \
+        //          2   3
+        //         / \  /
+        //        4  5 6
+
+        // Output: 6
+        public int GetLeftHeight(TreeNode treeNode)
+        {
+            int heightCnt = 0;
+
+            while (treeNode != null)
+            {
+                heightCnt++;
+                treeNode = treeNode.LeftNode;
+            }
+            return heightCnt;
+        }
+
+        public int CountNodes(TreeNode treeNode)
+        {
+            int leftHeight = GetLeftHeight(treeNode);
+
+            int nodeCnt = 0;
+
+            while (treeNode != null)
+            {
+                int rightHeight = GetLeftHeight(treeNode.RightNode);
+
+                nodeCnt += (int)Math.Pow(2, rightHeight); //(1 << rightHeight);
+
+                if (rightHeight == leftHeight - 1)
+                {
+                    treeNode = treeNode.RightNode;
+                }
+                else
+                {
+                    treeNode = treeNode.LeftNode;
+                }
+
+                leftHeight--;
+            }
+
+            return nodeCnt;
+        }
+
+        // 1st we need to find the height of the binary tree and count the nodes above the last level.
+        // Then we should find a way to count the nodes on the last level.
+
+        // Use binary search and define the "midNode" of the last level as a node following the path "root->left->right->right->...->last level".
+        // If midNode is null, then it means we should count the nodes on the last level in the left subtree.
+        // If midNode is not null, then we add half of the last level nodes to our result and then count the nodes on the last level in the right subtree.
+
+        public int CountNodes2(TreeNode treeNode)
+        {
+            if (treeNode == null)
+                return 0;
+
+            if (treeNode.LeftNode == null)
+                return 1;
+
+            int height = 0;
+            int nodesCount = 0;
+            TreeNode curr = treeNode;
+
+            while (curr.LeftNode != null)
+            {
+                nodesCount += (1 << height);
+                height++;
+                curr = curr.LeftNode;
+            }
+
+            return nodesCount + CountLastLevel(treeNode, height);
+        }
+
+        private int CountLastLevel(TreeNode root, int height)
+        {
+            if (height == 1)
+            {
+                if (root.RightNode != null)
+                    return 2;
+                else if (root.LeftNode != null)
+                    return 1;
+                else
+                    return 0;
+            }
+
+            TreeNode midNode = root.LeftNode;
+            int currHeight = 1;
+
+            while (currHeight < height)
+            {
+                currHeight++;
+                midNode = midNode.RightNode;
+            }
+
+            if (midNode == null)
+            {
+                return CountLastLevel(root.LeftNode, height - 1);
+            }
+            else
+            {
+                return CountLastLevel(root.RightNode, height - 1) + (int)Math.Pow(2, height);// (1 << (height - 1));
+            }
+        }
+
+        // Medium 95 https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+        public IList<TreeNode> GenerateTrees(int n)
+        {
+            if (n == 0)
+                return new List<TreeNode>();
+
+            return GenerateTreesHelper(1, n);
+        }
+
+        private List<TreeNode> GenerateTreesHelper(int start, int end)
+        {
+            List<TreeNode> resultList = new List<TreeNode>();
+            if (start > end)
+            {
+                resultList.Add(null);
+                return resultList;
+            }
+
+            for (int indx = start; indx <= end; indx++)
+            {
+                List<TreeNode> leftChilds = GenerateTreesHelper(start, indx - 1);
+                List<TreeNode> rightChilds = GenerateTreesHelper(indx + 1, end);
+
+                foreach (TreeNode leftChild in leftChilds)
+                {
+                    foreach (TreeNode rightChild in rightChilds)
+                    {
+                        TreeNode rootNode = new TreeNode(indx);
+
+                        rootNode.LeftNode = leftChild;
+                        rootNode.RightNode = rightChild;
+
+                        resultList.Add(rootNode);
+                    }
+                }
+            }
+            return resultList;
+        }
+
+        // Jiuzhang Algorithm
+
+        //vector<TreeNode*> generate(int beg, int end)
+        //{
+        //    vector<TreeNode*> ret;
+        //    if (beg > end)
+        //    {
+        //        ret.push_back(NULL);
+        //        return ret;
+        //    }
+
+        //    for (int i = beg; i <= end; i++)
+        //    {
+        //        vector<TreeNode*> leftTree = generate(beg, i - 1);
+        //        vector<TreeNode*> rightTree = generate(i + 1, end);
+        //        for (int j = 0; j < leftTree.size(); j++)
+        //            for (int k = 0; k < rightTree.size(); k++)
+        //            {
+        //                TreeNode* node = new TreeNode(i + 1);
+        //                ret.push_back(node);
+        //                node->left = leftTree[j];
+        //                node->right = rightTree[k];
+        //            }
+        //    }
+
+        //    return ret;
+        //}
+        //vector<TreeNode*> generateTrees(int n)
+        //{
+        //    if (n == 0)
+        //    {
+        //        vector<TreeNode*> ret;
+        //        return ret;
+        //    }
+        //    return generate(0, n - 1);
+        //}
     }
 }

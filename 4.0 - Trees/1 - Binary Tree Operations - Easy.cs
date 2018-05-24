@@ -763,65 +763,7 @@ namespace DataStructuresAndAlgorithms
             }
             return depth;
         }
-        /*
-        1st we need to find the height of the binary tree and count the nodes above the last level.
-        Then we should find a way to count the nodes on the last level.
-
-        Use binary search and define the "midNode" of the last level as a node following the path "root->left->right->right->...->last level".
-        If midNode is null, then it means we should count the nodes on the last level in the left subtree.
-        If midNode is not null, then we add half of the last level nodes to our result and then count the nodes on the last level in the right subtree.
-        */
-
-        public int CountNodes(TreeNode root)
-        {
-            if (root == null)
-                return 0;
-
-            if (root.LeftNode == null)
-                return 1;
-
-            int height = 0;
-            int nodesCount = 0;
-            TreeNode curr = root;
-
-            while (curr.LeftNode != null)
-            {
-                nodesCount += (1 << height);
-                height++;
-                curr = curr.LeftNode;
-            }
-
-            return nodesCount + CountLastLevel(root, height);
-        }
-
-        private int CountLastLevel(TreeNode root, int height)
-        {
-            if (height == 1)
-            {
-                if (root.RightNode != null)
-                    return 2;
-                else if (root.LeftNode != null)
-                    return 1;
-                else
-                    return 0;
-            }
-
-            TreeNode midNode = root.LeftNode;
-            int currHeight = 1;
-
-            while (currHeight < height)
-            {
-                currHeight++;
-                midNode = midNode.RightNode;
-            }
-
-            if (midNode == null)
-                return CountLastLevel(root.LeftNode, height - 1);
-
-            else
-                return (1 << (height - 1)) + CountLastLevel(root.RightNode, height - 1);
-        }
-
+        
         /*
          Visit nodes from right to left in DFS. 
          E.g.       6
