@@ -999,6 +999,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
         }
 
         // Hard 689 https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/description/
+
         public int[] MaxSumOfThreeSubarrays(int[] nums, int k)
         {
             int[] dp = new int[nums.Length - k + 1];
@@ -1012,6 +1013,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 {
                     sum -= nums[i - k];
                 }
+
                 if (i >= k - 1)
                 {
                     dp[i - (k - 1)] = sum;
@@ -1020,7 +1022,7 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
 
             int maxIndx = 0;
             int[] leftIndx = new int[dp.Length];
-            // First max.
+
             for (int i = 0; i < dp.Length; i++)
             {
                 if (dp[i] > dp[maxIndx])
@@ -1044,28 +1046,129 @@ Block Swap or Juggling or Reversal or Reversing Algorithms      */
                 rightIndx[i] = maxIndx;
             }
 
-            int[] max3 = new int[] { -1, -1, -1 };
+            int[] result = new int[] { -1, -1, -1 };
 
             for (int i2 = k; i2 < dp.Length - k; i2++)
             {
                 int i1 = leftIndx[i2 - k];
                 int i3 = rightIndx[i2 + k];
 
-                int m1 = dp[max3[0]];
-                int m2 = dp[max3[1]];
-                int m3 = dp[max3[2]];
-
                 int mSum = dp[i1] + dp[i2] + dp[i3];
 
-                if (max3[0] == -1 || 
-                   mSum  > m1 + m2 + m3)
+                if (result[0] == -1 || mSum > dp[result[0]] + dp[result[1]] + dp[result[2]])
                 {
-                    max3[0] = i1;
-                    max3[1] = i2;
-                    max3[2] = i3;
+                    result[0] = i1;
+                    result[1] = i2;
+                    result[2] = i3;
                 }
             }
-            return max3;
+            return result;
         }
+
+        // Hard 381 https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed
+
+        //Design a data structure that supports all following operations in average O(1) time.
+        //Note: Duplicate elements are allowed.
+
+        //insert(val): Inserts an item val to the collection.
+        //remove(val): Removes an item val from the collection if present.
+        //getRandom: Returns a random element from current collection of elements.
+        // The probability of each element being returned is linearly related to the number of same value the collection contains.
+
+        //Example: 
+        //// Init an empty collection.
+        //RandomizedCollection collection = new RandomizedCollection();
+
+        // Inserts 1 to the collection. Returns true as the collection did not contain 1.
+        //collection.insert(1);
+
+        //// Inserts another 1 to the collection. Returns false as the collection contained 1. Collection now contains [1,1].
+        //collection.insert(1);
+
+        //// Inserts 2 to the collection, returns true. Collection now contains [1,1,2].
+        //collection.insert(2);
+
+        //// getRandom should return 1 with the probability 2/3, and returns 2 with the probability 1/3.
+        //collection.getRandom();
+
+        //// Removes 1 from the collection, returns true. Collection now contains [1,2].
+        //collection.remove(1);
+
+        //// getRandom should return 1 and 2 both equally likely.
+        //collection.getRandom();
+
+        public class RandomizedCollection
+        {
+            Dictionary<int, int> indexSet; // Key: index, Value : value
+            Dictionary<int, HashSet<int>> valueSet; // Key : value, Value : HashSet<int> - indx
+            int indx;
+            Random random;
+
+            public RandomizedCollection()
+            {
+                indexSet = new Dictionary<int, int>();
+                valueSet = new Dictionary<int, HashSet<int>>();
+                random = new Random();
+                indx = 0;
+            }
+
+            public bool Insert(int val)
+            {
+                indexSet.Add(indx, val);
+
+                if (valueSet.ContainsKey(val))
+                {
+                    valueSet[val].Add(indx);
+                    indx++;
+                    return false;
+                }
+
+                valueSet.Add(val, new HashSet<int>() { indx });
+                indx++;
+                return true;
+            }
+
+            public bool Remove(int val)
+            {
+                if (!valueSet.ContainsKey(val))
+                {
+                    return false;
+                }
+
+                int valIndx = valueSet[val].First();
+                indexSet.Remove(valIndx);
+
+                valueSet[val].Remove(valIndx);
+
+                if (valueSet[val].Count == 0)
+                {
+                    valueSet.Remove(val);
+                }
+
+                if (valIndx != indx - 1)
+                {
+                    MoveIndexInIndexSet(indx - 1, valIndx);
+                }
+
+                indx--;
+                return true;
+            }
+
+            public int GetRandom()
+            {
+                var index = random.Next(indx);
+                return indexSet[index];
+            }
+
+            private void MoveIndexInIndexSet(int from, int to)
+            {
+                var val = indexSet[from];
+                indexSet.Remove(from);
+                indexSet.Add(to, val);
+                valueSet[val].Remove(from);
+                valueSet[val].Add(to);
+            }
+        }
+
     }
 }

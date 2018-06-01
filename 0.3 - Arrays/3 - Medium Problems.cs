@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Windows;
@@ -889,7 +890,7 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
 
                     if (sum == 0)
                     {
-                        res.Add( new List<int>() { nums[p1], nums[p2], nums[p3] });
+                        res.Add(new List<int>() { nums[p1], nums[p2], nums[p3] });
 
                         while (p2 + 1 < p3 && nums[p2] == nums[p2 + 1])// Skip equal elements to avoid duplicates
                         {
@@ -958,7 +959,7 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
                         minDiff = Math.Abs(curSum - target);
                         result = curSum;
                     }
-                    
+
                     if (curSum > target)
                     {
                         p3--;
@@ -1039,7 +1040,7 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
         // Output: 8
         // Explanation: The 8 subarrays that have product less than 100 are: [10], [5], [2], [6], [10, 5], [5, 2], [2, 6], [5, 2, 6].
         // Note that[10, 5, 2] is not included as the product of 100 is not strictly less than k.
-           
+
         // First, initiate variables for the product, the result, and the left pointer.
         // Loop through the array with your second, or fast, pointer represented by “right”.
         // For each loop, you want to multiply the current product, which starts at 1, by the current item in the array located at the right index.
@@ -1112,6 +1113,59 @@ http://www.geeksforgeeks.org/google-mountain-view-interview/
                 adj = 0;
             }
             return resCnt;
+        }
+
+        // 560 https://leetcode.com/problems/subarray-sum-equals-k
+        // O(N) Time and O(N) Space 
+        public int SubarraySum(int[] nums, int k)
+        {
+            Dictionary<int, int> subArrays = new Dictionary<int, int>();
+            subArrays.Add(0, 1);
+
+            int count = 0;
+            int currSum = 0;
+
+            foreach (int num in nums)
+            {
+                currSum += num;            
+
+                if (!subArrays.ContainsKey(currSum))
+                {
+                    subArrays.Add(currSum, 0);
+                }
+
+                int key = currSum - k;
+
+                // When key is zero or subArrays[key] value exists then consider for counting.
+                if (subArrays.ContainsKey(key))
+                {
+                    count += subArrays[key];
+                }
+
+                subArrays[currSum]++;
+            }
+
+            return count;
+        }
+
+        // O(N^2)
+        public int SubarraySum2(int[] nums, int k)
+        {
+            int count = 0;
+
+            for (int start = 0; start < nums.Length; start++)
+            {
+                int sum = 0;
+
+                for (int end = start; end < nums.Length; end++)
+                {
+                    sum += nums[end];
+
+                    if (sum == k)
+                        count++;
+                }
+            }
+            return count;
         }
     }
 }

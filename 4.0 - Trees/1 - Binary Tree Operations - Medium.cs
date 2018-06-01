@@ -1094,5 +1094,250 @@ namespace DataStructuresAndAlgorithms
         //    }
         //    return generate(0, n - 1);
         //}
+
+        // Medium 96 https://leetcode.com/problems/unique-binary-search-trees
+
+        public int NumTrees(int n)
+        {
+            if (n == 0 || n == 1)
+                return n;
+
+            int[] dp = new int[n + 1];
+
+            dp[0] = 1;
+            dp[1] = 1; // n = 1
+            dp[2] = 2; // n = 2
+
+            int leftPos = 0;
+            int rightPos = 0;
+
+            for (int i = 3; i <= n; i++)
+            {
+                for (int j = 1; j <= i; j++)
+                {
+                    leftPos = j - 1;
+                    rightPos = i - j;
+
+                    dp[i] += dp[leftPos] * dp[rightPos];
+                }
+            }
+
+            return dp[n];
+        }
+
+        // Medium 114 https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+        // Given           1
+        //                / \
+        //               2   5
+        //              / \   \
+        //             3   4   6
+        // The flattened tree should look like:  1->2->3->4->5-6
+        // Reverse Pre Order technique
+
+        public void Flatten(TreeNode root)
+        {
+            if (root == null)
+                return;
+
+            TreeNode currNode = root;
+
+            while (currNode != null)
+            {
+                if (currNode.LeftNode != null)
+                {
+                    TreeNode oldRight = currNode.RightNode;
+
+                    currNode.RightNode = currNode.LeftNode;
+                    currNode.LeftNode = null;
+                    currNode = currNode.RightNode;
+
+                    TreeNode rightRunner = currNode;
+
+                    while (rightRunner.RightNode != null)
+                    {
+                        rightRunner = rightRunner.RightNode;
+                    }
+
+                    // Hook back the oldRight to the new right child's last node.
+                    rightRunner.RightNode = oldRight; 
+                }
+                else
+                {
+                    currNode = currNode.RightNode;
+                }
+            }
+        }
+
+        public void FlattenByStack(TreeNode root)
+        {
+            if (root == null)
+                return;
+
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            s.Push(root.RightNode);
+            s.Push(root.LeftNode);
+
+            root.LeftNode = null;
+            TreeNode result = new TreeNode(0);
+            root.RightNode = result;
+
+            while (s.Any())
+            {
+                var node = s.Pop();
+
+                if (node == null)
+                    continue;
+
+                result.RightNode = node;
+                result = result.RightNode;
+
+                s.Push(node.RightNode);
+                s.Push(node.LeftNode);
+
+                result.LeftNode = null;
+                result.RightNode = null;
+            }
+
+            root.RightNode = root.RightNode.RightNode;
+        }
+
+        TreeNode PrevNode = null;
+
+        public void FlattenTree(TreeNode currentNode)
+        {
+            if (currentNode == null)
+                return;
+
+            FlattenTree(currentNode.RightNode);
+            FlattenTree(currentNode.LeftNode);
+
+            currentNode.RightNode = PrevNode;
+            currentNode.LeftNode = null;
+
+            PrevNode = currentNode;
+        }
+
+        public void FlattenTreeStack(TreeNode traverseNode)
+        {
+            if (traverseNode == null)
+                return;
+
+            Stack<TreeNode> treeStack = new Stack<TreeNode>();
+            treeStack.Push(traverseNode);
+
+            while (treeStack.Any())
+            {
+                while (traverseNode.RightNode != null)
+                {
+                    treeStack.Push(traverseNode.RightNode);
+                    traverseNode = traverseNode.RightNode;
+                }
+
+                TreeNode currNode = treeStack.Pop();
+                if (currNode.LeftNode != null)
+                {
+                   
+                }
+
+            }
+
+            FlattenTree(traverseNode.RightNode);
+            FlattenTree(traverseNode.LeftNode);
+
+            traverseNode.RightNode = PrevNode;
+            traverseNode.LeftNode = null;
+
+            PrevNode = traverseNode;
+        }
+
+
+        public TreeNode FlattenRec(TreeNode currNode)
+        {
+            if (currNode == null)
+                return null;
+
+            TreeNode lastLeft = FlattenRec(currNode.LeftNode);
+            TreeNode lastRight = FlattenRec(currNode.RightNode);
+
+            if (currNode.LeftNode != null)
+            {
+                TreeNode right = currNode.RightNode;
+                currNode.RightNode = currNode.LeftNode;
+                currNode.LeftNode = null;
+                lastLeft.RightNode = right;
+            }
+
+            if (lastRight != null)
+                return lastRight;
+
+            if (lastLeft != null)
+                return lastLeft;
+
+            return currNode;
+        }
+
+        /*
+         Iterative: Starting from parent node runner, keep a copy of right child, let it be right first since we are going to reset runner.right.
+         if runner has left child(runner->left), it will become the new right child of runner, and then we set left child to nullptr. 
+         How to deal the old right child right? We need to find it a new parent, which should be the rightmost node in the subtree rooted at the old left child, 
+         which we just set as the new right child(runner->right), so rRunner is doing this work to find the new parent for right. 
+         After all of this, we continue with runner's right child.
+
+         current runner: 1
+
+            before update:
+                 1
+                / \
+               2   5
+              / \   \
+             3   4   6
+
+            update:
+            right = 1->right = 5
+            1->right = 2
+            rRunner = 4
+            4->right = right = 5
+
+            after update:   
+                 1
+                  \
+                   2   
+                  / \   
+                 3   4   
+                      \
+                       5
+                        \
+                         6
+
+            next runner: 2
+
+
+         */
+        public void FlattenIterative(TreeNode listBuilder)
+        {
+            while (listBuilder != null)
+            {
+                if (listBuilder.LeftNode != null)
+                {
+                    TreeNode oldRight = listBuilder.RightNode;
+
+                    listBuilder.RightNode = listBuilder.LeftNode;
+                    listBuilder.LeftNode = null;
+
+                    //Move listBuilder to next (new right child)
+                    listBuilder = listBuilder.RightNode;
+
+                    TreeNode newRight = listBuilder;
+
+                    while (newRight.RightNode != null)
+                        newRight = newRight.RightNode;
+
+                    // Hook back the oldRight to the new right child's last node.
+                    newRight.RightNode = oldRight;
+                }
+                else
+                    listBuilder = listBuilder.RightNode;
+            }
+        }
     }
 }
