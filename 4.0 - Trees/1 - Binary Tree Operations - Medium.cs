@@ -1339,5 +1339,60 @@ namespace DataStructuresAndAlgorithms
                     listBuilder = listBuilder.RightNode;
             }
         }
+
+        // Medium 310 https://leetcode.com/problems/minimum-height-trees
+        public IList<int> FindMinHeightTrees(int n, int[,] edges)
+        {
+            if (n == 1)
+                return new List<int> { 0 };
+
+            if (n <2 || edges == null || edges.GetLength(0) == 0 || edges.GetLength(1) == 0)
+                return new List<int>();
+
+            Dictionary<int, List<int>> dic = new Dictionary<int, List<int>>();
+
+            for (int i = 0; i < edges.GetLength(0); i++)
+            {
+                if (!dic.ContainsKey(edges[i, 0]))
+                {
+                    dic.Add(edges[i, 0], new List<int>());
+                }
+
+                dic[edges[i, 0]].Add(edges[i, 1]);
+
+                if (!dic.ContainsKey(edges[i, 1]))
+                {
+                    dic.Add(edges[i, 1], new List<int>());
+                }
+
+                dic[edges[i, 1]].Add(edges[i, 0]);
+            }
+
+            Queue<int> fstLeafsQ = new Queue<int>(dic.Where(d => d.Value.Count == 1).Select(item => item.Key));
+
+            while (dic.Count > 2)
+            {
+                Queue<int> nextLeafsQ = new Queue<int>();
+
+                while (fstLeafsQ.Any())
+                {
+                    int pNode = fstLeafsQ.Dequeue();
+                    int fstChild = dic[pNode][0];
+
+                    dic.Remove(pNode);
+                    dic[fstChild].Remove(pNode);
+
+                    if (dic[fstChild].Count == 1)
+                    {
+                        nextLeafsQ.Enqueue(fstChild);
+                    }
+                }
+
+                fstLeafsQ = nextLeafsQ;
+            }
+
+            return fstLeafsQ.ToList();
+        }
+
     }
 }
