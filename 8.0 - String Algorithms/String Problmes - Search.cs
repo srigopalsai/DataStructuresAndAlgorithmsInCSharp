@@ -1726,6 +1726,98 @@ namespace DataStructuresAndAlgorithms
 
             return ansQ.ToList();
         }
+
+
+        // https://www.geeksforgeeks.org/find-all-occurrences-of-the-word-in-a-matrix/
+        // https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
+
+        static int[] rowPos = { -1, -1, -1, 0, 0, 1, 1, 1 };
+        static int[] colPos = { -1, 0, 1, -1, 1, -1, 0, 1 };
+        static bool found = false;
+
+        public void FindWordPosTest(String[] args)
+        {
+            char[,] M = {
+                     { 'a', 'b', 'n', 'd', 'e' },
+                     { 'd', 'f', 'u', 'g', 'n' },
+                     { 'f', 'l', 'n', 'n', 's' },
+                     { 'b', 'f', 'u', 'o', 'o' },
+                     { 'n', 'u', 'f', 'u', 'n' } };
+
+            String input = "fun";
+
+            FindWordPos(M, input);
+        }
+
+        bool IsSafe(char[,] matrix, int rIndx, int cIndx)
+        {
+            if (rIndx >= 0 && rIndx <= (matrix.GetLength(0) - 1) &&
+                cIndx >= 0 && cIndx <= matrix.GetLength(1) - 1)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        void FindWordPos(char[,] matrix, String input)
+        {
+            // TODO Auto-generated method stub
+
+            for (int rIndx = 0; rIndx < matrix.GetLength(0); rIndx++)
+            {
+                for (int cIndx = 0; cIndx < matrix.GetLength(1); cIndx++)
+                {
+                    FindWordPosHelper(matrix, rIndx, cIndx, input);
+                }
+            }
+
+            if (!found == false)
+            {
+                Console.WriteLine("not found the input");
+            }
+        }
+
+        void FindWordPosHelper(char[,] matrix, int row, int col, String word)
+        {
+            if (matrix[row, col] != word[0])
+                return;
+
+            int len = word.Length;
+
+            for (int direction = 0; direction < 8; ++direction)
+            {
+                int rIndx = row + rowPos[direction];
+                int cIndx = col + colPos[direction];
+                int k;
+
+                String path = word[0] + "(" + row + "," + col + ")";
+                //System.out.println(" checking for  (" + rd + "," + cd + ")");
+
+                for (k = 1; k <= len - 1; k++)
+                {
+                    if (IsSafe(matrix, rIndx, cIndx) == false) // if(!IsSafe(rd, cd))
+                        break;
+
+                    if (matrix[rIndx, cIndx] != word[k]) // if (!(m[rd,cd] == word[k]))
+                        break;
+                    else
+                    {
+                        // To be fixed
+//                        path = path.Concat(matrix[rIndx, cIndx] + "(" + rIndx + "," + cIndx + ")");
+                    }
+
+                    rIndx = rIndx + rowPos[direction];
+                    cIndx = cIndx + colPos[direction];
+                }
+
+                if (k == len)
+                {
+                    Console.WriteLine("found the word: path:" + path);
+                    found = true;
+                }
+            }
+        }
     }
 
     public static class AnagramExtensions

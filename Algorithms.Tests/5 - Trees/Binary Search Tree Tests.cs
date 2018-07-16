@@ -11,11 +11,16 @@ namespace Algorithms.Tests
         TreeNode rootNode15;
         BinarySearchTreeOperations bstOperations = new BinarySearchTreeOperations();
         SingleLinkedListDemo singleLinkedList = new SingleLinkedListDemo();
+        TreeNode node5rt9;
+        TreeNode node4rt9;
 
         public BinarySearchTreeTests()
         {
             rootNode9 = bstOperations.BuildTreeFromInOrder(inOrder9);
             rootNode15 = bstOperations.BuildTreeFromInOrder(inOrder15);
+
+            node5rt9 = bstOperations.SearchNode(rootNode9, 5);
+            node4rt9 = bstOperations.SearchNode(rootNode9, 4);
         }
 
         [TestMethod]
@@ -113,6 +118,33 @@ namespace Algorithms.Tests
 
                 string result = bstOperations.InOrderDisplayIterative(treeNode);
             DisplayOutput(result);
+        }
+
+        [TestMethod]
+        public void GetPredecessorRecurTest()
+        {
+            TreeNode predicessor = bstOperations.GetPredecessorRecur(rootNode9, node4rt9);
+            if (predicessor != null)
+                Console.WriteLine(node4rt9.NodeValue + "'s Predecessor Node is " + predicessor.NodeValue);
+            else
+                Console.WriteLine("Predecessor not found");
+        }
+
+        [TestMethod]
+        public void GetSuccessorRecurTest()
+        {
+            //TreeNode successor = bstOperations.GetSuccessorRecur(rootNode9, node4rt9);
+            //if (successor != null)
+            //    Console.WriteLine(node4rt9.NodeValue + "'s Successor Node is " + successor.NodeValue);
+            //else
+            //    Console.WriteLine("Predecessor not found");
+
+            TreeNode successor = bstOperations.GetSuccessorRecur(rootNode9, node5rt9);
+            if (successor != null)
+                Console.WriteLine(node5rt9.NodeValue + "'s Successor Node is " + successor.NodeValue);
+            else
+                Console.WriteLine("Predecessor not found");
+
         }
     }
 }

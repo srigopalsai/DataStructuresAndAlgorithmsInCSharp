@@ -130,6 +130,7 @@
     <Compile Include="0.3 - Arrays\4 - Hard Problems.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackTracking - Medium.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5- RecursionInLoop.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\Min Max In Array.cs" />

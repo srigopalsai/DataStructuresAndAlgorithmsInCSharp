@@ -1050,10 +1050,28 @@ http://powercollections.codeplex.com
             return currentNode;
         }
 
-        public int SearchNode(int valueToFind)
+        public TreeNode SearchNode(TreeNode currentNode, int valueToFind)
         {
-            //            if 
-            return 0;
+            while (currentNode != null)
+            {
+                // Move to the left subtree if the given value is less than current node's value.
+                if (valueToFind < currentNode.NodeValue)
+                {
+                    currentNode = currentNode.LeftNode;
+                }
+                // Move to right subtree if the given value is greater than current node's value.
+                else if (valueToFind > currentNode.NodeValue)
+                {
+                    currentNode = currentNode.RightNode;
+                }
+                else
+                {
+                    // We have found the common ancestor.
+                    break;
+                }
+            }
+
+            return currentNode;
         }
 
         //Need to implement
@@ -2016,6 +2034,104 @@ http://powercollections.codeplex.com
                 }
                 dummy = dummy.RightNode;
             }
+            return root;
+        }
+
+        TreeNode pred = null;
+
+        // https://www.geeksforgeeks.org/inorder-predecessor-successor-given-key-bst/
+
+        public TreeNode GetPredecessor(TreeNode rootNode, TreeNode node)
+        {
+            if (rootNode == null || node == null)
+                return null;
+
+            TreeNode treeNode = rootNode;
+            TreeNode predNode = null;
+
+            Stack<TreeNode> tStack = new Stack<TreeNode>();
+//            tStack.Push(rootNode);
+
+            while (tStack.Count() > 0 || treeNode != null)
+            {
+                while (treeNode != null)
+                {
+                    if (treeNode.NodeValue < node.NodeValue)
+                    {
+                        break;
+                    }
+                    tStack.Push(treeNode.LeftNode);
+                    treeNode = treeNode.LeftNode;
+                }
+
+                if (treeNode.NodeValue == node.NodeValue)
+                {
+                    return predNode;
+                }
+                treeNode = tStack.Pop();
+                predNode = treeNode;
+
+                Console.WriteLine(treeNode.NodeValue);
+
+                if (treeNode.RightNode != null && treeNode.NodeValue < node.NodeValue)
+                {
+                    treeNode = treeNode.RightNode;    
+                }
+            }
+
+            return treeNode;
+        }
+
+        public TreeNode GetPredecessorRecur(TreeNode root, TreeNode node)
+        {
+            pred = null;
+            return GetPredecessorRecurHelper(root, node);
+        }
+
+        public TreeNode GetPredecessorRecurHelper(TreeNode root, TreeNode node)
+        {
+            if (root == null)
+                return null;
+
+            if (root.NodeValue == node.NodeValue)
+                return pred;
+
+            else if (root.NodeValue > node.NodeValue)
+                GetPredecessorRecurHelper(root.LeftNode, node);
+
+            pred = root;
+
+            GetPredecessorRecurHelper(root.RightNode, node);
+
+            return pred;
+        }
+
+        // Failing
+        public TreeNode GetSuccessorRecur(TreeNode root, TreeNode node)
+        {
+            pred = null;
+            return GetSuccessorRecurHelper(root, node);
+        }
+        
+        public TreeNode GetSuccessorRecurHelper(TreeNode root, TreeNode node)
+        {
+            if (root == null)
+                return null;
+
+            if (pred != null && pred.NodeValue == node.NodeValue)
+                return root;
+
+            TreeNode result = null;
+
+            if (root.NodeValue > node.NodeValue)
+                result = GetSuccessorRecurHelper(root.LeftNode, node);
+            if (result != null)
+                return result;
+
+            pred = root;
+
+            GetSuccessorRecurHelper(root.RightNode, node);
+
             return root;
         }
     }
