@@ -1147,5 +1147,74 @@ Search Logic    : O(n X n)
                 }
             }
         }
+
+        // Easy 832 https://leetcode.com/problems/flipping-an-image/description/
+        public int[][] FlipAndInvertImage(int[][] A)
+        {
+            for (int r = 0; r < A.Length; r++)
+            {
+                int cl = 0;
+                int cr = A[r].Length - 1;
+
+                while (cl < cr)
+                {
+                    int temp = 1 - A[r][cl];
+                    A[r][cl] = 1 - A[r][cr];
+                    A[r][cr] = temp;
+
+                    cl++;
+                    cr--;
+                }
+
+                if (cl == cr)
+                    A[r][cl] = 1 - A[r][cl];
+
+            }
+            return A;
+        }
+
+        // Easy 830 https://leetcode.com/problems/positions-of-large-groups/description/
+        public IList<IList<int>> LargeGroupPositions(String str)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+
+            if (str.Length < 3)
+            {
+                return result;
+            }
+
+            int p1 = 0;
+            int p2 = 1;
+
+            while (p2 < str.Length)
+            {
+                if (str[p1] == str[p2])
+                {
+                    p2++;
+                    continue;
+                }
+
+                if (p2 - p1 > 2)
+                {
+                    List<int> temp = new List<int>();
+                    temp.Add(p1);
+                    temp.Add(p2 - 1);
+                    result.Add(temp);
+                }
+
+                p1 = p2;
+                p2 = p2 + 1;
+            }
+
+            if (p2 - p1 > 2)
+            {
+                List<int> temp = new List<int>();
+                temp.Add(p1);
+                temp.Add(p2 - 1);
+                result.Add(temp);
+            }
+
+            return result;
+        }
     }
 }

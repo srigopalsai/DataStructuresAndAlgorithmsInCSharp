@@ -442,13 +442,13 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
     public class KthSmallest
     {
-        public void TestKth()
+        public void FindKthTest()
         {
             Console.WriteLine("Enter the value of k : ");
-            int k = Convert.ToInt32(Console.ReadLine());
-            PriorityQueue<int> min = new PriorityQueue<int>();
-            //PriorityQueue<integer> min = new PriorityQueue<>(k, new Comparator<integer>() {
+            int kthPos = Convert.ToInt32(Console.ReadLine());
+            PriorityQueue<int> minPQ = new PriorityQueue<int>();
 
+            //PriorityQueue<integer> min = new PriorityQueue<>(k, new Comparator<integer>() {
             //int compare(int a, int b)
             //{
             //if(a < b) {
@@ -462,40 +462,40 @@ namespace DataStructuresAndAlgorithms.OtherAlgorithms
 
             while (true)
             {
-                Console.WriteLine("Enter the next Element : ");
-                int n = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter the Element : ");
+                int currNum = Convert.ToInt32(Console.ReadLine());
 
-                if (n == -1)
+                if (currNum == -1)
                 {
                     break;
                 }
-                FindKth(min, n, k);
+                FindKth(minPQ, currNum, kthPos);
             }
         }
 
-        private void FindKth(PriorityQueue<int> min, int n, int k)
+        private void FindKth(PriorityQueue<int> min, int currNum, int kthPos)
         {
             int count = min.Count;
 
-            if (count < k - 1)
+            if (count < kthPos - 1)
             {
-                min.Enqueue(n);
+                min.Enqueue(currNum);
                 Console.WriteLine("_");
             }
             else
             {
 
-                if (count == k - 1)
+                if (count == kthPos - 1)
                 {
-                    min.Enqueue(n);
+                    min.Enqueue(currNum);
                 }
                 else
                 {
 
-                    if (n > min.Peek())
+                    if (currNum > min.Peek())
                     {
                         min.Dequeue();
-                        min.Enqueue(n);
+                        min.Enqueue(currNum);
                     }
                 }
                 Console.WriteLine(min.Peek());

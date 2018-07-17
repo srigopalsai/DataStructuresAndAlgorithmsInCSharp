@@ -130,6 +130,7 @@
     <Compile Include="0.3 - Arrays\4 - Hard Problems.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\7 - Reverse Array.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackJumping.cs" />
+    <Compile Include="0.4 - Recursion Back Tracking Back Jumping\BackTracking - Medium.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\LuckyNumber.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\5- RecursionInLoop.cs" />
     <Compile Include="0.4 - Recursion Back Tracking Back Jumping\Min Max In Array.cs" />
@@ -156,8 +157,7 @@
     <Compile Include="0.5 - Matrix\Multiple Problems - Binary Matrices.cs" />
     <Compile Include="0.6 - Sets\Set Operations.cs" />
     <Compile Include="1.0 - Stack Operations\6 - TowersOfHanoi.cs" />
-    <Compile Include="1.0 - Stack Operations\Implement K Stacks.cs" />
-    <Compile Include="1.0 - Stack Operations\Implement 2 Stacks.cs" />
+    <Compile Include="1.0 - Stack Operations\Implement Multiple Stacks.cs" />
     <Compile Include="1.0 - Stack Operations\Stack with Enumeration.cs" />
     <Compile Include="0.0 - Recap Maths\0.0 - Basics.cs" />
     <Compile Include="2.0 - Queue Operations\Array Based Queue.cs" />

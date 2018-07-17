@@ -55,6 +55,7 @@
     <Compile Include="5 - Trees\Binary Search Tree Tests.cs" />
     <Compile Include="5 - Trees\Binary Tree Tests.cs" />
     <Compile Include="0 - Common\Test Data.cs" />
+    <Compile Include="6 - Recursion and Back Tracking\BackTrackingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

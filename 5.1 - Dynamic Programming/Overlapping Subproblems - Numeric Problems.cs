@@ -423,22 +423,36 @@ and make it out of the array at the other end in minimum number of hops.*/
             Console.WriteLine(hopsguide);
         }
 
-        // Triangle https://www.programcreek.com/2013/01/leetcode-triangle-java/
-        /*
-        Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
-        For example, given the following triangle
-        [
-             [2],
-            [3,4],
-           [6,5,7],
-          [4,1,8,3]
-        ]
-        The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+        // Medium 120 https://leetcode.com/problems/triangle/
+        // Given a triangle, find the minimum path sum from top to bottom. 
+        // Each step you may move to adjacent numbers on the row below. For E.g.
+        // [
+        //     [2],
+        //    [3,4],
+        //   [6,5,7],
+        //  [4,1,8,3]
+        // ]
+        // The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
 
-        Bottom-Up (Good Solution)        We can actually start from the bottom of the triangle.
-        */
+        //Bottom-Up - We can actually start from the bottom of the triangle.
+        public int MinimumTotal(IList<IList<int>> triangle)
+        {
+            int[] dp = new int[triangle.Count + 1];
 
-        public int MinimumTotal(List<List<int>> triangle)
+            for (int bottumIndx = triangle.Count - 1; bottumIndx >= 0; bottumIndx--)
+            {
+                IList<int> list = triangle[bottumIndx];
+
+                for (int rIndx = 0; rIndx < list.Count; rIndx++)
+                {
+                    dp[rIndx] = list[rIndx] + Math.Min(dp[rIndx], dp[rIndx + 1]);
+                }
+            }
+
+            return dp[0];
+        }
+
+        public int MinimumTotal1(List<List<int>> triangle)
         {
             int[] total = new int[triangle.Count];
             int length = triangle.Count() - 1;
@@ -449,15 +463,79 @@ and make it out of the array at the other end in minimum number of hops.*/
             }
 
             // iterate from last second row
-            for (int indx = triangle.Count() - 2; indx >= 0; indx--)
+            for (int rIndx = triangle.Count() - 2; rIndx >= 0; rIndx--)
             {
-                for (int j = 0; j < triangle[indx + 1].Count() - 1; j++)
+                for (int cIndx = 0; cIndx < triangle[rIndx + 1].Count() - 1; cIndx++)
                 {
-                    total[j] = triangle[indx][j] + Math.Min(total[j], total[j + 1]);
+                    total[cIndx] = triangle[rIndx][cIndx] + Math.Min(total[cIndx], total[cIndx + 1]);
                 }
             }
 
             return total[0];
+        }
+
+        public int MinimumTotal2(List<List<int>> triangle)
+        {
+            if (triangle == null || triangle.Count == 0)
+                return 0;
+
+            int[] dp = new int[triangle.Count];
+
+            for (int indx = 1; indx < triangle.Count; indx++)
+            {
+                dp[indx] = int.MaxValue;
+            }
+
+            foreach(List<int> list in triangle)
+            {
+                for (int indx = list.Count - 1; indx >= 0; indx--)
+                {
+                    dp[indx] = list[indx] + (indx > 0 ? Math.Min(dp[indx], dp[indx - 1]) : dp[indx]);
+                }
+            }
+
+            int result = dp[0];
+
+            for (int i = 1; i < dp.Length; i++)
+            {
+                if (dp[i] < result)
+                {
+                    result = dp[i];
+                }
+            }
+            return result;
+        }
+
+        public int MinimumTotal3(IList<IList<int>> triangle)
+        {
+            if (triangle == null || triangle.Count == 0)
+                return 0;
+
+            int[] dp = new int[triangle[triangle.Count - 1].Count + 1];
+            int cIndx = 0;
+            dp[0] = triangle[0][0];
+            dp[1] = int.MaxValue;
+
+            for (int rIndx = 1; rIndx < triangle.Count; rIndx++)
+            {
+                for (cIndx = 0; cIndx < triangle[rIndx].Count - 1; cIndx++)
+                {
+                    dp[cIndx] = Math.Min(dp[cIndx], dp[cIndx - 1]) + triangle[rIndx][cIndx];
+                }
+
+                dp[cIndx] = int.MaxValue;
+            }
+
+            int result = dp[0];
+
+            for (int indx = 1; indx < dp.Length; indx++)
+            {
+                if (dp[indx] < result)
+                {
+                    result = dp[indx];
+                }
+            }
+            return result;
         }
 
         // 276 Paint Fence (locked) https://www.programcreek.com/2014/05/leetcode-pain-fence-java/
@@ -1102,6 +1180,6 @@ and make it out of the array at the other end in minimum number of hops.*/
             temp = lhs;
             lhs = rhs;
             rhs = temp;
-        }
+        }        
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataStructuresAndAlgorithms
 {
     public partial class BinaryTreeOperations
     {
-        // 236 Medium https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+        // Medium 236 https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
         // Given a binary tree, find the lowest common ancestor(LCA) of two given nodes in the tree.
         // The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).
         //         _______3______
@@ -41,7 +42,7 @@ namespace DataStructuresAndAlgorithms
                 return rightNode;
         }
 
-        // 105 Medium https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
+        // Medium 105 https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal
         // Given preorder and inorder traversal of a tree, construct the binary tree.
         // Note:
         // You may assume that duplicates do not exist in the tree.
@@ -64,37 +65,37 @@ namespace DataStructuresAndAlgorithms
             return BuildTreeFromPreAndInOrderHelper(preOrder, inOrder, ref preIndx, 0, inOrder.Length - 1);
         }
 
-        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inStrt, int inEnd)
+        private TreeNode BuildTreeFromPreAndInOrderHelper(int[] preNums, int[] inNums, ref int preIndx, int inLIndx, int inRIndx)
         {
-            if (inStrt > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
             TreeNode tNode = new TreeNode(preNums[preIndx]);
             preIndx++;
 
             // When there is no childern for the current node then return
-            if (inStrt == inEnd)
+            if (inLIndx == inRIndx)
                 return tNode;
 
             // Else find the index of the current node in Inorder traversal
-            int inIndex = SearchIndex(inNums, inStrt, inEnd, tNode.NodeValue);
+            int inIndex = SearchIndex(inNums, inLIndx, inRIndx, tNode.NodeValue);
 
             // Using index in Inorder traversal, construct left and right subtress
-            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inStrt, inIndex - 1);
-            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inEnd);
+            tNode.LeftNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inLIndx, inIndex - 1);
+            tNode.RightNode = BuildTreeFromPreAndInOrderHelper(preNums, inNums, ref preIndx, inIndex + 1, inRIndx);
 
             return tNode;
         }
 
         // Do binary search, since in Array is sorted if no duplicates.
-        public int SearchIndex(int[] nums, int start, int end, int val)
+        public int SearchIndex(int[] nums, int lIndx, int rIndx, int val)
         {
             if (nums == null || nums.Length == 0)
                 return -1;
 
             int indx = -1;
 
-            for (indx = start; indx <= end; indx++)
+            for (indx = lIndx; indx <= rIndx; indx++)
             {
                 if (nums[indx] == val)
                     return indx;
@@ -103,7 +104,7 @@ namespace DataStructuresAndAlgorithms
             return indx;
         }
 
-        // 106 Medium https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
+        // Medium 106 https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal
         // Given inorder and postorder traversal of a tree, construct the binary tree.
         // You may assume that duplicates do not exist in the tree.
         // For example, given inorder = [9, 3, 15, 20, 7]
@@ -124,24 +125,24 @@ namespace DataStructuresAndAlgorithms
         }
 
         // Note Build Right node first
-        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inStrt, int inEnd)
+        private TreeNode BuildTreeFromInAndPostOrderHelper(int[] inOrder, int[] postOrder, ref int postIndex, int inLIndx, int inRIndx)
         {
-            if (inStrt > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
             TreeNode node = new TreeNode(postOrder[postIndex]);
             postIndex--;
 
             // If current node has has no children then return current node.
-            if (inStrt == inEnd)
+            if (inLIndx == inRIndx)
                 return node;
 
             // Else find the index of this node in Inorder  traversal
-            int inCurIndex = SearchIndex(inOrder, inStrt, inEnd, node.NodeValue);
+            int inCurIndex = SearchIndex(inOrder, inLIndx, inRIndx, node.NodeValue);
 
             // Right node first and left node next
-            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inEnd);
-            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inStrt, inCurIndex - 1);
+            node.RightNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inCurIndex + 1, inRIndx);
+            node.LeftNode = BuildTreeFromInAndPostOrderHelper(inOrder, postOrder, ref postIndex, inLIndx, inCurIndex - 1);
 
             return node;
         }
@@ -159,23 +160,25 @@ namespace DataStructuresAndAlgorithms
         // 4   12
         //    /  \
         //   10   14
-        public TreeNode BuildTreeFromInAndLevelOrder(TreeNode currNode, int[] levelOrder, int[] inOrder, int inStart, int inEnd)
+        public TreeNode BuildTreeFromInAndLevelOrder(int[] levelOrder, int[] inOrder, int inLIndx, int inRIndx)
         {
-            if (inStart > inEnd)
+            if (inLIndx > inRIndx)
                 return null;
 
-            if (inStart == inEnd)
-                return new TreeNode(inOrder[inStart]);
+            TreeNode currNode = null;
+
+            if (inLIndx == inRIndx)
+                return new TreeNode(inOrder[inLIndx]);
 
             bool found = false;
             int rootIndx = 0;
 
             // it represents the index in inOrder array of element that appear first in levelOrder array.
-            for (int indxLvlOrdr = 0; indxLvlOrdr < levelOrder.Length - 1; indxLvlOrdr++)
+            for (int lvlOrdrIndx = 0; lvlOrdrIndx < levelOrder.Length - 1; lvlOrdrIndx++)
             {
-                int lvlOrdrVal = levelOrder[indxLvlOrdr];
+                int lvlOrdrVal = levelOrder[lvlOrdrIndx];
 
-                for (int indxInOrdr = inStart; indxInOrdr < inEnd; indxInOrdr++)
+                for (int indxInOrdr = inLIndx; indxInOrdr < inRIndx; indxInOrdr++)
                 {
                     if (lvlOrdrVal == inOrder[indxInOrdr])
                     {
@@ -190,10 +193,31 @@ namespace DataStructuresAndAlgorithms
                     break;
             }
 
-            currNode.LeftNode = BuildTreeFromInAndLevelOrder(currNode, levelOrder, inOrder, inStart, rootIndx - 1);
-            currNode.RightNode = BuildTreeFromInAndLevelOrder(currNode, levelOrder, inOrder, rootIndx + 1, inEnd);
+            if (found == false)
+                return null;
+
+            currNode.LeftNode = BuildTreeFromInAndLevelOrder(levelOrder, inOrder, inLIndx, rootIndx - 1);
+            currNode.RightNode = BuildTreeFromInAndLevelOrder(levelOrder, inOrder, rootIndx + 1, inRIndx);
 
             return currNode;
+        }
+
+        TreeNode construct_bst3(int[] inorder, int[] levelorder, int inLIndx, int inRIndx)
+        {
+            int levelIndx = 0;
+            TreeNode treeNode = new TreeNode(levelorder[levelIndx++]);
+
+            if (inLIndx == inRIndx)
+                return treeNode;
+
+            //else find the index of this node in inorder array. left of it is left subtree, right of this index is right.
+            int inIndex = SearchIndex(inorder, inLIndx, inRIndx, treeNode.NodeValue);
+
+            //using in_index from inorder array, constructing left & right subtrees.
+            treeNode.LeftNode = construct_bst3(inorder, levelorder, inLIndx, inIndex - 1);
+            treeNode.RightNode = construct_bst3(inorder, levelorder, inIndex + 1, inRIndx);
+
+            return treeNode;
         }
 
         // https://www.geeksforgeeks.org/full-and-complete-binary-tree-from-given-preorder-and-postorder-traversals/
@@ -255,7 +279,7 @@ namespace DataStructuresAndAlgorithms
             // If this is an internal node, construct left and right subtrees and link the subtrees
             if (preLN[index] == 'N')
             {
-                cNode.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx,  cNode.LeftNode);
+                cNode.LeftNode = BuildSpecialTree(preOrder, preLN, ref curIndx, cNode.LeftNode);
                 cNode.RightNode = BuildSpecialTree(preOrder, preLN, ref curIndx, cNode.RightNode);
             }
 
@@ -267,12 +291,12 @@ namespace DataStructuresAndAlgorithms
         // The root is the maximum number in the array. 
         // The left  subtree is the maximum tree constructed from left  part subarray divided by the maximum number.
         // The right subtree is the maximum tree constructed from right part subarray divided by the maximum number.
-           
+
         // Construct the maximum tree by the given array and output the root node of this tree.
         // Example 1:
         // Input: [3,2,1,6,0,5]
         // Output: return the tree root node representing the following tree:
-           
+
         //       6
         //     /   \
         //    3     5
@@ -280,7 +304,7 @@ namespace DataStructuresAndAlgorithms
         //      2  0   
         //        \
         //         1
-           
+
         // Note:
         // The size of the given array will be in the range [1,1000].
         public TreeNode BuildMaximumBinaryTree(int[] nums)
@@ -306,6 +330,50 @@ namespace DataStructuresAndAlgorithms
 
             root.LeftNode = BuildMaximumBinaryTreeHelper(nums, lIndx, maxIndx - 1);
             root.RightNode = BuildMaximumBinaryTreeHelper(nums, maxIndx + 1, rIndx);
+
+            return root;
+        }
+
+        public TreeNode BuildMaximumBinaryTree2(int[] nums)
+        {
+            if (nums.Length <= 0)
+                return null;
+
+            TreeNode root = new TreeNode(nums[0]);
+            TreeNode curNode;
+            TreeNode prevNode = root;
+
+            for (int indx = 1; indx < nums.Length; indx++)
+            {
+                curNode = new TreeNode(nums[indx]);
+
+                if (curNode.NodeValue < prevNode.NodeValue)
+                {
+                    prevNode.RightNode = curNode;
+                }
+                else
+                {
+                    prevNode = root;
+
+                    if (curNode.NodeValue >= prevNode.NodeValue)
+                    {
+                        curNode.LeftNode = root;
+                        root = curNode;
+                    }
+                    else
+                    {
+                        while (prevNode.RightNode != null && prevNode.RightNode.NodeValue > curNode.NodeValue)
+                        {
+                            prevNode = prevNode.RightNode;
+                        }
+
+                        curNode.LeftNode = prevNode.RightNode;
+                        prevNode.RightNode = curNode;
+                    }
+                }
+
+                prevNode = curNode;
+            }
 
             return root;
         }
@@ -551,7 +619,7 @@ namespace DataStructuresAndAlgorithms
             }
         }
 
-        //LC 103. https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+        //Medium 103 https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
         // https://discuss.leetcode.com/topic/4545/accepted-c-recursive-solution-with-no-queues
         // https://discuss.leetcode.com/topic/33809/4ms-concise-dfs-c-implementation
         public IList<IList<int>> ZigzagLevelOrder()
@@ -678,5 +746,653 @@ namespace DataStructuresAndAlgorithms
 
             return secondMinVal == int.MaxValue ? -1 : secondMinVal;
         }
+
+        public class TreeLinkNode
+        {
+            public int val;
+
+            public TreeLinkNode left, right, next;
+
+            public TreeLinkNode(int x) { val = x; }
+        }
+
+        // Medium 116 https://leetcode.com/problems/populating-next-right-pointers-in-each-node
+        public void Connect(TreeLinkNode root)
+        {
+            if (root == null)
+                return;
+
+            TreeLinkNode lvlStart = root;
+            TreeLinkNode curNode = null;
+
+            while (lvlStart.left != null)
+            {
+                curNode = lvlStart;
+
+                while (curNode != null)
+                {
+                    curNode.left.next = curNode.right;
+
+                    if (curNode.next != null)
+                    {
+                        curNode.right.next = curNode.next.left;
+                    }
+                    curNode = curNode.next;
+                }
+
+                lvlStart = lvlStart.left;
+            }
+        }
+
+        // Medium 117 https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii
+        // Un balenced
+
+        public void ConnectII(TreeLinkNode root)
+        {
+            while (root != null)
+            {
+                TreeLinkNode tempChild = new TreeLinkNode(0);
+                TreeLinkNode currentChild = tempChild;
+
+                while (root != null)
+                {
+                    if (root.left != null)
+                    {
+                        currentChild.next = root.left;
+                        currentChild = currentChild.next;
+                    }
+
+                    if (root.right != null)
+                    {
+                        currentChild.next = root.right;
+                        currentChild = currentChild.next;
+                    }
+
+                    root = root.next;
+                }
+
+                root = tempChild.next;
+            }
+        }
+
+        public void ConnectII2(TreeLinkNode root)
+        {
+            if (root == null)
+                return;
+
+            Queue<TreeLinkNode> queue = new Queue<TreeLinkNode>();
+
+            queue.Enqueue(root);
+
+            while (queue.Count() > 0)
+            {
+                int size = queue.Count();
+
+                TreeLinkNode next = null;
+
+                for (int indx = 0; indx < size; indx++)
+                {
+                    TreeLinkNode currNode = queue.Dequeue();
+
+                    currNode.next = next;
+                    next = currNode;
+
+                    if (currNode.right != null)
+                    {
+                        queue.Enqueue(currNode.right);
+                    }
+                    if (currNode.left != null)
+                    {
+                        queue.Enqueue(currNode.left);
+                    }
+                }
+            }
+        }
+
+        // Medium 513 https://leetcode.com/problems/find-bottom-left-tree-value
+        // Visit right first.
+        public int FindBottomLeftValue(TreeNode root)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            TreeNode curNode = root;
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                curNode = queue.Dequeue();
+
+                if (curNode.RightNode != null)
+                {
+                    queue.Enqueue(curNode.RightNode);
+                }
+
+                if (curNode.LeftNode != null)
+                {
+                    queue.Enqueue(curNode.LeftNode);
+                }
+            }
+
+            return curNode.NodeValue;
+        }
+
+        public int FindBottomLeftValue2(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int result = 0;
+            Queue<TreeNode> tnQ = new Queue<TreeNode>();
+
+            tnQ.Enqueue(root);
+
+            while (tnQ.Count > 0)
+            {
+                int lvlSize = tnQ.Count();
+
+                for (int indx = 0; indx < lvlSize; indx++)
+                {
+                    TreeNode node = tnQ.Dequeue();
+
+                    if (indx == 0)
+                        result = node.NodeValue;
+
+                    if (node.LeftNode != null)
+                        tnQ.Enqueue(node.LeftNode);
+
+                    if (node.RightNode != null)
+                        tnQ.Enqueue(node.RightNode);
+                }
+            }
+
+            return result;
+        }
+
+        // Medium 222 https://leetcode.com/problems/count-complete-tree-nodes
+        // In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.
+        // It can have between 1 and 2h nodes inclusive at the last level h.
+       
+        // Input: 
+        //            1
+        //           / \
+        //          2   3
+        //         / \  /
+        //        4  5 6
+
+        // Output: 6
+        public int GetLeftHeight(TreeNode treeNode)
+        {
+            int heightCnt = 0;
+
+            while (treeNode != null)
+            {
+                heightCnt++;
+                treeNode = treeNode.LeftNode;
+            }
+            return heightCnt;
+        }
+
+        public int CountNodes(TreeNode treeNode)
+        {
+            int leftHeight = GetLeftHeight(treeNode);
+
+            int nodeCnt = 0;
+
+            while (treeNode != null)
+            {
+                int rightHeight = GetLeftHeight(treeNode.RightNode);
+
+                nodeCnt += (int)Math.Pow(2, rightHeight); //(1 << rightHeight);
+
+                if (rightHeight == leftHeight - 1)
+                {
+                    treeNode = treeNode.RightNode;
+                }
+                else
+                {
+                    treeNode = treeNode.LeftNode;
+                }
+
+                leftHeight--;
+            }
+
+            return nodeCnt;
+        }
+
+        // 1st we need to find the height of the binary tree and count the nodes above the last level.
+        // Then we should find a way to count the nodes on the last level.
+
+        // Use binary search and define the "midNode" of the last level as a node following the path "root->left->right->right->...->last level".
+        // If midNode is null, then it means we should count the nodes on the last level in the left subtree.
+        // If midNode is not null, then we add half of the last level nodes to our result and then count the nodes on the last level in the right subtree.
+
+        public int CountNodes2(TreeNode treeNode)
+        {
+            if (treeNode == null)
+                return 0;
+
+            if (treeNode.LeftNode == null)
+                return 1;
+
+            int height = 0;
+            int nodesCount = 0;
+            TreeNode curr = treeNode;
+
+            while (curr.LeftNode != null)
+            {
+                nodesCount += (1 << height);
+                height++;
+                curr = curr.LeftNode;
+            }
+
+            return nodesCount + CountLastLevel(treeNode, height);
+        }
+
+        private int CountLastLevel(TreeNode root, int height)
+        {
+            if (height == 1)
+            {
+                if (root.RightNode != null)
+                    return 2;
+                else if (root.LeftNode != null)
+                    return 1;
+                else
+                    return 0;
+            }
+
+            TreeNode midNode = root.LeftNode;
+            int currHeight = 1;
+
+            while (currHeight < height)
+            {
+                currHeight++;
+                midNode = midNode.RightNode;
+            }
+
+            if (midNode == null)
+            {
+                return CountLastLevel(root.LeftNode, height - 1);
+            }
+            else
+            {
+                return CountLastLevel(root.RightNode, height - 1) + (int)Math.Pow(2, height);// (1 << (height - 1));
+            }
+        }
+
+        // Medium 95 https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+        public IList<TreeNode> GenerateTrees(int n)
+        {
+            if (n == 0)
+                return new List<TreeNode>();
+
+            return GenerateTreesHelper(1, n);
+        }
+
+        private List<TreeNode> GenerateTreesHelper(int start, int end)
+        {
+            List<TreeNode> resultList = new List<TreeNode>();
+            if (start > end)
+            {
+                resultList.Add(null);
+                return resultList;
+            }
+
+            for (int indx = start; indx <= end; indx++)
+            {
+                List<TreeNode> leftChilds = GenerateTreesHelper(start, indx - 1);
+                List<TreeNode> rightChilds = GenerateTreesHelper(indx + 1, end);
+
+                foreach (TreeNode leftChild in leftChilds)
+                {
+                    foreach (TreeNode rightChild in rightChilds)
+                    {
+                        TreeNode rootNode = new TreeNode(indx);
+
+                        rootNode.LeftNode = leftChild;
+                        rootNode.RightNode = rightChild;
+
+                        resultList.Add(rootNode);
+                    }
+                }
+            }
+            return resultList;
+        }
+
+        // Jiuzhang Algorithm
+
+        //vector<TreeNode*> generate(int beg, int end)
+        //{
+        //    vector<TreeNode*> ret;
+        //    if (beg > end)
+        //    {
+        //        ret.push_back(NULL);
+        //        return ret;
+        //    }
+
+        //    for (int i = beg; i <= end; i++)
+        //    {
+        //        vector<TreeNode*> leftTree = generate(beg, i - 1);
+        //        vector<TreeNode*> rightTree = generate(i + 1, end);
+        //        for (int j = 0; j < leftTree.size(); j++)
+        //            for (int k = 0; k < rightTree.size(); k++)
+        //            {
+        //                TreeNode* node = new TreeNode(i + 1);
+        //                ret.push_back(node);
+        //                node->left = leftTree[j];
+        //                node->right = rightTree[k];
+        //            }
+        //    }
+
+        //    return ret;
+        //}
+        //vector<TreeNode*> generateTrees(int n)
+        //{
+        //    if (n == 0)
+        //    {
+        //        vector<TreeNode*> ret;
+        //        return ret;
+        //    }
+        //    return generate(0, n - 1);
+        //}
+
+        // Medium 96 https://leetcode.com/problems/unique-binary-search-trees
+
+        public int NumTrees(int n)
+        {
+            if (n == 0 || n == 1)
+                return n;
+
+            int[] dp = new int[n + 1];
+
+            dp[0] = 1;
+            dp[1] = 1; // n = 1
+            dp[2] = 2; // n = 2
+
+            int leftPos = 0;
+            int rightPos = 0;
+
+            for (int i = 3; i <= n; i++)
+            {
+                for (int j = 1; j <= i; j++)
+                {
+                    leftPos = j - 1;
+                    rightPos = i - j;
+
+                    dp[i] += dp[leftPos] * dp[rightPos];
+                }
+            }
+
+            return dp[n];
+        }
+
+        // Medium 114 https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
+        // Given           1
+        //                / \
+        //               2   5
+        //              / \   \
+        //             3   4   6
+        // The flattened tree should look like:  1->2->3->4->5-6
+        // Reverse Pre Order technique
+
+        public void Flatten(TreeNode root)
+        {
+            if (root == null)
+                return;
+
+            TreeNode currNode = root;
+
+            while (currNode != null)
+            {
+                if (currNode.LeftNode != null)
+                {
+                    TreeNode oldRight = currNode.RightNode;
+
+                    currNode.RightNode = currNode.LeftNode;
+                    currNode.LeftNode = null;
+                    currNode = currNode.RightNode;
+
+                    TreeNode rightRunner = currNode;
+
+                    while (rightRunner.RightNode != null)
+                    {
+                        rightRunner = rightRunner.RightNode;
+                    }
+
+                    // Hook back the oldRight to the new right child's last node.
+                    rightRunner.RightNode = oldRight; 
+                }
+                else
+                {
+                    currNode = currNode.RightNode;
+                }
+            }
+        }
+
+        public void FlattenByStack(TreeNode root)
+        {
+            if (root == null)
+                return;
+
+            Stack<TreeNode> s = new Stack<TreeNode>();
+            s.Push(root.RightNode);
+            s.Push(root.LeftNode);
+
+            root.LeftNode = null;
+            TreeNode result = new TreeNode(0);
+            root.RightNode = result;
+
+            while (s.Any())
+            {
+                var node = s.Pop();
+
+                if (node == null)
+                    continue;
+
+                result.RightNode = node;
+                result = result.RightNode;
+
+                s.Push(node.RightNode);
+                s.Push(node.LeftNode);
+
+                result.LeftNode = null;
+                result.RightNode = null;
+            }
+
+            root.RightNode = root.RightNode.RightNode;
+        }
+
+        TreeNode PrevNode = null;
+
+        public void FlattenTree(TreeNode currentNode)
+        {
+            if (currentNode == null)
+                return;
+
+            FlattenTree(currentNode.RightNode);
+            FlattenTree(currentNode.LeftNode);
+
+            currentNode.RightNode = PrevNode;
+            currentNode.LeftNode = null;
+
+            PrevNode = currentNode;
+        }
+
+        public void FlattenTreeStack(TreeNode traverseNode)
+        {
+            if (traverseNode == null)
+                return;
+
+            Stack<TreeNode> treeStack = new Stack<TreeNode>();
+            treeStack.Push(traverseNode);
+
+            while (treeStack.Any())
+            {
+                while (traverseNode.RightNode != null)
+                {
+                    treeStack.Push(traverseNode.RightNode);
+                    traverseNode = traverseNode.RightNode;
+                }
+
+                TreeNode currNode = treeStack.Pop();
+                if (currNode.LeftNode != null)
+                {
+                   
+                }
+
+            }
+
+            FlattenTree(traverseNode.RightNode);
+            FlattenTree(traverseNode.LeftNode);
+
+            traverseNode.RightNode = PrevNode;
+            traverseNode.LeftNode = null;
+
+            PrevNode = traverseNode;
+        }
+
+
+        public TreeNode FlattenRec(TreeNode currNode)
+        {
+            if (currNode == null)
+                return null;
+
+            TreeNode lastLeft = FlattenRec(currNode.LeftNode);
+            TreeNode lastRight = FlattenRec(currNode.RightNode);
+
+            if (currNode.LeftNode != null)
+            {
+                TreeNode right = currNode.RightNode;
+                currNode.RightNode = currNode.LeftNode;
+                currNode.LeftNode = null;
+                lastLeft.RightNode = right;
+            }
+
+            if (lastRight != null)
+                return lastRight;
+
+            if (lastLeft != null)
+                return lastLeft;
+
+            return currNode;
+        }
+
+        /*
+         Iterative: Starting from parent node runner, keep a copy of right child, let it be right first since we are going to reset runner.right.
+         if runner has left child(runner->left), it will become the new right child of runner, and then we set left child to nullptr. 
+         How to deal the old right child right? We need to find it a new parent, which should be the rightmost node in the subtree rooted at the old left child, 
+         which we just set as the new right child(runner->right), so rRunner is doing this work to find the new parent for right. 
+         After all of this, we continue with runner's right child.
+
+         current runner: 1
+
+            before update:
+                 1
+                / \
+               2   5
+              / \   \
+             3   4   6
+
+            update:
+            right = 1->right = 5
+            1->right = 2
+            rRunner = 4
+            4->right = right = 5
+
+            after update:   
+                 1
+                  \
+                   2   
+                  / \   
+                 3   4   
+                      \
+                       5
+                        \
+                         6
+
+            next runner: 2
+
+
+         */
+        public void FlattenIterative(TreeNode listBuilder)
+        {
+            while (listBuilder != null)
+            {
+                if (listBuilder.LeftNode != null)
+                {
+                    TreeNode oldRight = listBuilder.RightNode;
+
+                    listBuilder.RightNode = listBuilder.LeftNode;
+                    listBuilder.LeftNode = null;
+
+                    //Move listBuilder to next (new right child)
+                    listBuilder = listBuilder.RightNode;
+
+                    TreeNode newRight = listBuilder;
+
+                    while (newRight.RightNode != null)
+                        newRight = newRight.RightNode;
+
+                    // Hook back the oldRight to the new right child's last node.
+                    newRight.RightNode = oldRight;
+                }
+                else
+                    listBuilder = listBuilder.RightNode;
+            }
+        }
+
+        // Medium 310 https://leetcode.com/problems/minimum-height-trees
+        public IList<int> FindMinHeightTrees(int n, int[,] edges)
+        {
+            if (n == 1)
+                return new List<int> { 0 };
+
+            if (n <2 || edges == null || edges.GetLength(0) == 0 || edges.GetLength(1) == 0)
+                return new List<int>();
+
+            Dictionary<int, List<int>> dic = new Dictionary<int, List<int>>();
+
+            for (int i = 0; i < edges.GetLength(0); i++)
+            {
+                if (!dic.ContainsKey(edges[i, 0]))
+                {
+                    dic.Add(edges[i, 0], new List<int>());
+                }
+
+                dic[edges[i, 0]].Add(edges[i, 1]);
+
+                if (!dic.ContainsKey(edges[i, 1]))
+                {
+                    dic.Add(edges[i, 1], new List<int>());
+                }
+
+                dic[edges[i, 1]].Add(edges[i, 0]);
+            }
+
+            Queue<int> fstLeafsQ = new Queue<int>(dic.Where(d => d.Value.Count == 1).Select(item => item.Key));
+
+            while (dic.Count > 2)
+            {
+                Queue<int> nextLeafsQ = new Queue<int>();
+
+                while (fstLeafsQ.Any())
+                {
+                    int pNode = fstLeafsQ.Dequeue();
+                    int fstChild = dic[pNode][0];
+
+                    dic.Remove(pNode);
+                    dic[fstChild].Remove(pNode);
+
+                    if (dic[fstChild].Count == 1)
+                    {
+                        nextLeafsQ.Enqueue(fstChild);
+                    }
+                }
+
+                fstLeafsQ = nextLeafsQ;
+            }
+
+            return fstLeafsQ.ToList();
+        }
+
     }
 }
