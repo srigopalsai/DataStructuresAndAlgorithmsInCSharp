@@ -118,9 +118,9 @@ namespace DataStructuresAndAlgorithms
             return StrMessage.ToString();
         }
 
-        public static void ShowMatrixOnConsole(int[,] matrix, string preMessage = "", string postMessage = "")
+        public static void ShowMatrixOnConsole<T>(T[,] matrix, string preMessage = "", string postMessage = "")
         {
-            Console.WriteLine("\n" + preMessage);
+            Console.WriteLine(Environment.NewLine + preMessage + Environment.NewLine);
 
             for (int lpRCnt = 0; lpRCnt < matrix.GetLength(0); lpRCnt++)
             {
@@ -128,8 +128,10 @@ namespace DataStructuresAndAlgorithms
                 {
                     Console.Write(string.Format(" {0}  ", matrix[lpRCnt, lpCCnt]));
                 }
+
                 Console.WriteLine();
             }
+
             Console.WriteLine(postMessage);
         }
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

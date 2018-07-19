@@ -538,7 +538,7 @@ namespace DataStructuresAndAlgorithms
 
         //-----------------------------------------------------------------------------------------------------------------------
         // 20 https://leetcode.com/problems/valid-parentheses
-        
+
         public bool IsValid(String srcStr)
         {
             int c1Cntr = 0;
@@ -1195,7 +1195,7 @@ namespace DataStructuresAndAlgorithms
             {
                 int indxJ = 0;
 
-                while(indxJ < srcStr.Length)
+                while (indxJ < srcStr.Length)
                 {
                     if (indexI == indxJ)
                     {
@@ -1281,7 +1281,7 @@ namespace DataStructuresAndAlgorithms
             }
             else
             {
-                return (srcStr[0] == srcStr[rIndx - 1] && 
+                return (srcStr[0] == srcStr[rIndx - 1] &&
                     IsPalindromeRecursive(srcStr + 1, rIndx - 2));
             }
         }
@@ -1332,7 +1332,7 @@ namespace DataStructuresAndAlgorithms
                 }
                 else if (srcStr[index] == '.')
                 {
-                    if (eSeen ==true || pointSeen == true)
+                    if (eSeen == true || pointSeen == true)
                     {
                         return false;
                     }
@@ -1340,7 +1340,7 @@ namespace DataStructuresAndAlgorithms
                 }
                 else if (srcStr[index] == 'e')
                 {
-                    if (eSeen == true|| !numberSeen == true)
+                    if (eSeen == true || !numberSeen == true)
                     {
                         return false;
                     }
@@ -1727,7 +1727,6 @@ namespace DataStructuresAndAlgorithms
             return ansQ.ToList();
         }
 
-
         // https://www.geeksforgeeks.org/find-all-occurrences-of-the-word-in-a-matrix/
         // https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
 
@@ -1804,7 +1803,7 @@ namespace DataStructuresAndAlgorithms
                     else
                     {
                         // To be fixed
-//                        path = path.Concat(matrix[rIndx, cIndx] + "(" + rIndx + "," + cIndx + ")");
+                        //                        path = path.Concat(matrix[rIndx, cIndx] + "(" + rIndx + "," + cIndx + ")");
                     }
 
                     rIndx = rIndx + rowPos[direction];
@@ -1818,6 +1817,8 @@ namespace DataStructuresAndAlgorithms
                 }
             }
         }
+
+        // Search Word In Matrix/ Find Word in Matrix refer in BackTracking problems
     }
 
     public static class AnagramExtensions
