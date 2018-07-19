@@ -10,7 +10,7 @@ namespace DataStructuresAndAlgorithms
 
     partial class DynamicProgrammingProblems
     {
-        // 62 https://leetcode.com/problems/unique-paths
+        // Medium 62 https://leetcode.com/problems/unique-paths
         public int UniquePaths(int m, int n)
         {
             int[,] dpLkUp = new int[m, n];
@@ -58,7 +58,7 @@ namespace DataStructuresAndAlgorithms
             return dpLkUp[n - 1];
         }
 
-        // 63 https://leetcode.com/problems/unique-paths-ii
+        // Medium 63 https://leetcode.com/problems/unique-paths-ii
         public int UniquePathsWithObstacles(int[,] obstacleGrid)
         {
             int rowLen = obstacleGrid.GetLength(0);
