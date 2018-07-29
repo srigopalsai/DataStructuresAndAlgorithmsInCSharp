@@ -134,6 +134,7 @@ namespace DataStructuresAndAlgorithms
 
             Console.WriteLine(postMessage);
         }
+
         //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         public static void ShowArrayOnConsole(int[] array, int stIndx =0 , int endIndx = 0)
@@ -149,6 +150,12 @@ namespace DataStructuresAndAlgorithms
             }
 
             Console.Write(array[endIndx] + "]");
+        }
+
+        public static bool IsSafe(int rIndx, int cIndx, int[,] visitMatrix, int val = 0)
+        {
+            return (rIndx >= 0 && rIndx < visitMatrix.GetLength(0) &&
+                    cIndx >= 0 && cIndx < visitMatrix.GetLength(1) && visitMatrix[rIndx, cIndx] == val);
         }
     }
 }
