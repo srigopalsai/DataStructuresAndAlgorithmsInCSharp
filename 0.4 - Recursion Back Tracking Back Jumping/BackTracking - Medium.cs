@@ -176,6 +176,115 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
+        // Pick least possible cell first.
+        private bool KnightsTourBackTrackingWarnsdorf(int[,] board, int curRIndx, int curCIndx, int visitPos)
+        {
+            if (visitPos == board.GetLength(0) * board.GetLength(1))
+            {
+                return true;
+            }
+
+            IEnumerable<Cell> validCells = GetCells(board, curRIndx, curCIndx);
+
+            // Try all next moves from the current coordinate x, y
+            foreach (Cell cell in validCells)
+            {
+                if (Common.IsSafe(cell.Row, cell.Col, board, -1) == false)
+                {
+                    continue;
+                }
+
+                board[cell.Row, cell.Col] = visitPos;
+
+                if (KnightsTourBackTracking(board, cell.Row, cell.Col, visitPos + 1) == true)
+                {
+                    return true;
+                }
+
+                // Backtracking
+                board[cell.Row, cell.Col] = -1;
+                //Console.WriteLine(" Back tracing " + nextRIndx + " " + nextCIndx);
+            }
+
+            return false;
+        }
+
+        public IEnumerable<Cell> GetCells(int[,] board, int curRIndx, int curCIndx)
+        {
+            int nextRIndx;
+            int nextCIndx;
+            int weight = 0;
+
+            List<Cell> validMoves = new List<Cell>();
+
+            // Try all next moves from the current coordinate x, y
+            for (int nextIndx = 0; nextIndx < 8; nextIndx++)
+            {
+                nextRIndx = curRIndx + rMove[nextIndx];
+                nextCIndx = curCIndx + cMove[nextIndx];
+
+                if (Common.IsSafe(nextRIndx, nextCIndx, board, -1) == false)
+                {
+                    continue;
+                }
+
+                weight = GetWeight(board, nextRIndx, nextCIndx);
+                validMoves.Add(new Cell(nextRIndx, nextCIndx, weight));
+            }
+
+            //validMoves.Sort(new CellComparer());
+            //return validMoves.AsEnumerable();
+            return (validMoves.Count == 0) ? validMoves.AsEnumerable() : validMoves.OrderBy(item => item.Weight);
+        }
+
+        public int GetWeight(int[,] board, int curRIndx, int curCIndx)
+        {
+            int nextRIndx;
+            int nextCIndx;
+            int weight = 0;
+
+            for (int nextIndx = 0; nextIndx < 8; nextIndx++)
+            {
+                nextRIndx = curRIndx + rMove[nextIndx];
+                nextCIndx = curCIndx + cMove[nextIndx];
+
+                if (Common.IsSafe(nextRIndx, nextCIndx, board, -1) == false)
+                {
+                    continue;
+                }
+
+                weight++;
+            }
+
+            return weight;
+        }
+
+        public class CellComparer : IComparer<Cell>
+        {
+            public int Compare(Cell cell1, Cell cell2)
+            {
+                return cell1.Weight > cell2.Weight ? 0 : -1;
+            }
+        }
+
+        public class Cell
+        {
+            public int Row { get; set; }
+
+            public int Col { get; set; }
+
+            public int Weight { get; set; }
+
+            public bool Visited { get; set; }
+
+            public Cell(int row, int col, int weight = 0)
+            {
+                this.Row = row;
+                this.Col = col;
+                this.Weight = weight;
+            }
+        }
+
         // Search Word in Matrix - Brute Force O(N^2) 
         // https://algorithms.tutorialhorizon.com/backtracking-search-a-word-in-a-matrix/
         // https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
