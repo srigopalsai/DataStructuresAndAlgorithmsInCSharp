@@ -131,7 +131,7 @@ namespace DataStructuresAndAlgorithms
             chessBoard[0, 0] = 0;
 
             // Start from 0,0 and explore all tours.
-            bool result = KnightsTourBackTracking(chessBoard, 0, 0, 1);
+            bool result = KnightsTourBackTrackingWarnsdorf(chessBoard, 0, 0, 1);
             Common.ShowMatrixOnConsole(chessBoard, "Knight Tour as follows ");
 
             return result;
@@ -176,7 +176,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        // Pick least possible cell first.
+        // Pick least possible cell first. Mostly linear, takes 20+ secs, regular is 320 sec+
         private bool KnightsTourBackTrackingWarnsdorf(int[,] board, int curRIndx, int curCIndx, int visitPos)
         {
             if (visitPos == board.GetLength(0) * board.GetLength(1))
@@ -209,7 +209,7 @@ namespace DataStructuresAndAlgorithms
             return false;
         }
 
-        public IEnumerable<Cell> GetCells(int[,] board, int curRIndx, int curCIndx)
+        public IEnumerable<Cell> GetCells(int[,] board, int curRIndx, int curCIndx) 
         {
             int nextRIndx;
             int nextCIndx;
@@ -232,9 +232,9 @@ namespace DataStructuresAndAlgorithms
                 validMoves.Add(new Cell(nextRIndx, nextCIndx, weight));
             }
 
-            //validMoves.Sort(new CellComparer());
-            //return validMoves.AsEnumerable();
-            return (validMoves.Count == 0) ? validMoves.AsEnumerable() : validMoves.OrderBy(item => item.Weight);
+            validMoves.Sort(new CellComparer());
+            return validMoves.AsEnumerable();
+            //return (validMoves.Count == 0) ? validMoves.AsEnumerable() : validMoves.OrderBy(item => item.Weight);
         }
 
         public int GetWeight(int[,] board, int curRIndx, int curCIndx)
@@ -258,33 +258,7 @@ namespace DataStructuresAndAlgorithms
 
             return weight;
         }
-
-        public class CellComparer : IComparer<Cell>
-        {
-            public int Compare(Cell cell1, Cell cell2)
-            {
-                return cell1.Weight > cell2.Weight ? 0 : -1;
-            }
-        }
-
-        public class Cell
-        {
-            public int Row { get; set; }
-
-            public int Col { get; set; }
-
-            public int Weight { get; set; }
-
-            public bool Visited { get; set; }
-
-            public Cell(int row, int col, int weight = 0)
-            {
-                this.Row = row;
-                this.Col = col;
-                this.Weight = weight;
-            }
-        }
-
+        
         // Search Word in Matrix - Brute Force O(N^2) 
         // https://algorithms.tutorialhorizon.com/backtracking-search-a-word-in-a-matrix/
         // https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/

@@ -158,6 +158,76 @@ namespace DataStructuresAndAlgorithms
                     cIndx >= 0 && cIndx < visitMatrix.GetLength(1) && visitMatrix[rIndx, cIndx] == val);
         }
     }
+
+    public class CellComparer : IComparer<Cell>
+    {
+        public int Compare(Cell cell1, Cell cell2)
+        {
+            if (cell1.Weight == cell2.Weight)
+            {
+                return 0;// Equal
+            }
+            else if (cell1.Weight < cell2.Weight)
+            {
+                return -1; // cell1 Smaller
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
+
+    public class CellComparer1 : IComparer<Cell>
+    {
+        bool IsDesc;
+
+        public CellComparer1(bool isDesc = false)
+        {
+            IsDesc = isDesc;
+        }
+
+        public int Compare(Cell cell1, Cell cell2)
+        {
+            if (cell1.Weight < cell2.Weight)
+            {
+                if (IsDesc == true)
+                    return 1;
+                else
+                    return -1; // cell1 Smaller
+            }
+            else if (cell1.Weight == cell2.Weight)
+            {
+                return 0;// Equal
+            }
+            else
+            {
+                if (IsDesc == true)
+                    return -1;
+                else
+                    return 1;
+            }
+        }
+    }
+
+
+    public class Cell
+    {
+        public int Row { get; set; }
+
+        public int Col { get; set; }
+
+        public int Weight { get; set; }
+
+        public bool Visited { get; set; }
+
+        public Cell(int row, int col, int weight = 0)
+        {
+            this.Row = row;
+            this.Col = col;
+            this.Weight = weight;
+        }
+    }
 }
 /*
 http://cpe.njit.edu/dlnotes/CIS/CIS114/
