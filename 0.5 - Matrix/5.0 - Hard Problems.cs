@@ -5,84 +5,214 @@ using System.Text;
 using System.Threading.Tasks;
 using DataStructuresAndAlgorithms.OtherAlgorithms;
 
-namespace DataStructuresAndAlgorithms._0._5___Matrix
+namespace DataStructuresAndAlgorithms
 {
     public class HardProblems
     {
-        // 42 https://leetcode.com/problems/trapping-rain-water
-        // O(N) Time O(1) Space
-        public int Trap(int[] height)
+        // Hard 42 https://leetcode.com/problems/trapping-rain-water
+        // O(N) Time O(1) Space - DP Prev, Curr Pointer approach
+        public int Trap(int[] nums)
         {
             int lIndx = 0;
-            int rIndx = height.Length - 1;
+            int rIndx = nums.Length - 1;
 
-            int maxUnits = 0;
-            int curMinUnits = 0;
-            int prevMinUnits = 0;
+            int capacity = 0;
+            int prevMax = 0;
+            int curMax = 0;
 
             while (lIndx <= rIndx)
             {
-                curMinUnits = Math.Min(height[lIndx], height[rIndx]);
+                curMax = Math.Min(nums[lIndx], nums[rIndx]);
 
-                if (prevMinUnits < curMinUnits)
+                if (prevMax < curMax)
                 {
-                    prevMinUnits = curMinUnits;
+                    prevMax = curMax;
                 }
 
-                if (height[lIndx] < height[rIndx])
+                if (nums[lIndx] < nums[rIndx])
                 {
-                    maxUnits += prevMinUnits - height[lIndx];
+                    capacity += prevMax - nums[lIndx];
                     lIndx++;
                 }
                 else
                 {
-                    maxUnits += prevMinUnits - height[rIndx];
+                    capacity += prevMax - nums[rIndx];
                     rIndx--;
                 }
             }
 
-            return maxUnits;
+            return capacity;
+        }
+
+        // O(N) Time O(1) Space - DP Left, Right Pointer approach
+        public int TrapDP2(int[] nums)
+        {
+            int capacity = 0;
+
+            int lIndx = 0;
+            int rIndx = nums.Length - 1;
+
+            int leftMax = 0;
+            int rightMax = 0;
+
+            while (lIndx < rIndx)
+            {
+                if (nums[lIndx] < nums[rIndx])
+                {
+                    if (nums[lIndx] >= leftMax)
+                        leftMax = nums[lIndx];
+                    else
+                        capacity += leftMax - nums[lIndx];
+                    ++lIndx;
+                }
+                else
+                {
+                    if (nums[rIndx] >= rightMax)
+                        rightMax = nums[rIndx];
+                    else
+                        capacity += rightMax - nums[rIndx];
+                    --rIndx;
+                }
+            }
+            return capacity;
+        }
+
+        // O(n^2) - Brute Force, traverse each element and search leftMax and rightMax till the position.
+        // And consider Min from leftMax or rightMax and substract it from the current element. 
+        public int TrapBF(int[] nums)
+        {
+            int capacity = 0;
+            int indx = 1;
+
+            while (indx < nums.Length - 1)
+            {
+                int maxLeft = 0;
+                int maxRight = 0;
+
+                for (int lIndx = indx; lIndx >= 0; lIndx--)
+                {
+                    //Search the left part for max
+                    maxLeft = Math.Max(maxLeft, nums[lIndx]);
+                }
+
+                for (int rIndx = indx; rIndx < nums.Length; rIndx++)
+                {
+                    //Search the right part for max
+                    maxRight = Math.Max(maxRight, nums[rIndx]);
+                }
+
+                capacity += Math.Min(maxLeft, maxRight) - nums[indx];
+                indx++;
+            }
+
+            return capacity;
+        }
+
+        // O(n) time and O(n) Space
+        public int Trap2(int[] nums)
+        {
+            if (nums == null)
+                return 0;
+
+            int capacity = 0;
+            int size = nums.Length - 1;
+
+            int[] leftMax = new int[size];
+            int[] rightMax = new int[size];
+
+            leftMax[0] = nums[0];
+            rightMax[size] = nums[size];
+
+            // Keep taking the leftMax.
+            for (int i = 1; i <= size; i++)
+            {
+                leftMax[i] = Math.Max(nums[i], leftMax[i - 1]);
+            }
+
+            // Keep taking the rightMax.
+            for (int i = size - 1; i >= 0; i--)
+            {
+                rightMax[i] = Math.Max(nums[i], rightMax[i + 1]);
+            }
+
+            for (int i = 1; i < size; i++)
+            {
+                capacity += Math.Min(leftMax[i], rightMax[i]) - nums[i];
+            }
+
+            return capacity;
         }
 
         // O(n) Space and Time
-        public int trap(int[] heights)
+        // We add the index of the bar to the stack if bar is smaller than or equal to the bar at top of stack.
+        // Which means that the current bar is bounded by the previous bar in the stack.
+        // If we found a bar longer than that at the top, we are sure that the bar at the top 
+        //    of the stack is bounded by the current bar and a previous bar in the stack.
+        // Hence, we can pop it and add resulting trapped water to capacity.
+        public int Trap22(int[] nums)
         {
-            if (heights == null || heights.Length == 0)
+            if (nums == null || nums.Length == 0)
                 return 0;
 
             Stack<int> indxStack = new Stack<int>();
 
-            int maxWater = 0;
+            int capacity = 0;
             int maxBotWater = 0;
 
             int indx = 0;
             int prevIndx = 0;
             int currIndx = 0;
 
-            while (indx < heights.Length)
+            while (indx < nums.Length)
             {
-                if (indxStack.Count() == 0 || heights[indx] <= heights[indxStack.Peek()])
+                if (indxStack.Count() == 0 || nums[indx] <= nums[indxStack.Peek()])
                 {
                     indxStack.Push(indx++);
+                    continue;
+                }
+
+                currIndx = indxStack.Pop();
+
+                if (indxStack.Count == 0) // empty means no il
+                {
+                    maxBotWater = 0;
                 }
                 else
                 {
-                    currIndx = indxStack.Pop();
-
-                    if (indxStack.Count == 0) // empty means no il
-                    {
-                        maxBotWater = 0;
-                    }
-                    else
-                    {
-                        prevIndx = indxStack.Peek();
-                        maxBotWater = (Math.Min(heights[prevIndx], heights[indx]) - heights[currIndx]) * (indx - prevIndx - 1);
-                    }
-                    maxWater += maxBotWater;
+                    prevIndx = indxStack.Peek();
+                    maxBotWater = (Math.Min(nums[prevIndx], nums[indx]) - nums[currIndx]) * (indx - prevIndx - 1);
                 }
+                capacity += maxBotWater;
             }
 
-            return maxWater;
+            return capacity;
+        }
+
+        public int TrapByStack(int[] nums)
+        {
+            int capacity = 0;
+            
+            Stack<int> st = new Stack<int>();
+
+            for (int indx = 0; indx < nums.Length; indx++)
+            {
+                while (st.Count() > 0 && nums[indx] > nums[st.Peek()])
+                {
+                    int top = st.Pop();
+
+                    if (st.Any() == false)
+                        break;
+
+                    int distance = indx - st.Peek() - 1;
+                    int bounded_height = Math.Min(nums[indx], nums[st.Peek()]) - nums[top];
+
+                    capacity += distance * bounded_height;
+                }
+
+                st.Push(indx);
+            }
+
+            return capacity;
         }
 
         // Binary indexed tree or Fenwick Tree
